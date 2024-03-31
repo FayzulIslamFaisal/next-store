@@ -1,0 +1,35 @@
+
+.nagadhat-partner-area {
+    padding: 50px 0;
+}
+.nagadhat-partner {
+    overflow: hidden;
+    position: relative;
+}
+.nagadhat-partner::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(65, 64, 66, .4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.nagadhat-partner:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+.nagadhat-partner img {
+    transition: transform 0.4s ease;
+    height: 182px;
+    object-fit: cover;
+}
+.nagadhat-partner:hover img {
+    transform: scale(1.1);
+}
+.nagadhat-partner a {
+    cursor: pointer;
+}
