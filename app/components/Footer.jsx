@@ -1,6 +1,23 @@
-import Image from "next/image";
+import CopyRight from "./CopyRight";
+import Paywith from "./Paywith";
+import QuickLinks from "./QuickLinks";
 
 function Footer() {
+    const linkListsOptionOne = [
+        { title: "FAQ", path: "#" },
+        { title: "Support", path: "#" },
+        { title: "About Us", path: "#" },
+        { title: "Terms & Conditions", path: "#" },
+        { title: "Join Us", path: "#" },
+        { title: "Quiz", path: "#" },
+    ];
+    const myAccoutOptions = [
+        { title: "Login", path: "#" },
+        { title: "Be an Affiliate", path: "#" },
+        { title: "Be a Merchant", path: "#" },
+        { title: "Discount Partner", path: "#" },
+    ];
+
     return (
         <footer>
             <div className="container">
@@ -115,76 +132,26 @@ function Footer() {
                     </div>
                     <div className="col-xl-5">
                         <div className="row footer-widget">
-                            <div className="col-md-4">
-                                <h5>Quick Links</h5>
-                                <ul>
-                                    <li>
-                                        <a href="#">FAQ</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Support</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Terms & Conditions</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Join Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Quiz</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-md-4">
-                                <h5>My Account</h5>
-                                <ul>
-                                    <li>
-                                        <a href="#">Login</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Be an Affiliate</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Be a Merchant</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Discount Partner</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-md-4">
-                                <h5>Be a Seller</h5>
+                            <QuickLinks
+                                title="Quick Links"
+                                option={linkListsOptionOne}
+                            />
+                            <QuickLinks
+                                title="My Account"
+                                option={myAccoutOptions}
+                            />
+                            <QuickLinks title="Be A Seller">
                                 <div className="applay-now-btn">
                                     <a href="#">APPLY NOW</a>
                                 </div>
-                            </div>
+                            </QuickLinks>
                         </div>
                     </div>
                 </div>
                 <div className="row payment-method-row">
-                    <div className="col-md-12">
-                        <div className="payment-methods d-flex align-items-center">
-                            <p>Pay With</p>
-                            <div className="payment-method-img">
-                                <img
-                                    src="/images/payment-methods.jpg"
-                                    className="img-fluid"
-                                    alt="payment-methods"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <Paywith />
                 </div>
-                <div className="row copyright-area">
-                    <div className="col-md-12 text-center">
-                        <p className="text-white">
-                            &copy; All Rights Reserved nagadhat.com.bd
-                        </p>
-                    </div>
-                </div>
+                <CopyRight />
             </div>
         </footer>
     );
