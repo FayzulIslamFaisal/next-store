@@ -2,7 +2,7 @@ import LinkItem from "./LinkItem";
 
 function QuickLinks({ title, option = [], children }) {
     return (
-        <div className="col-md-4">
+        <>
             <h5>{title}</h5>
             {children ? (
                 children
@@ -17,7 +17,7 @@ function QuickLinks({ title, option = [], children }) {
                     ))}
                 </ul>
             )}
-        </div>
+        </>
     );
 }
 
