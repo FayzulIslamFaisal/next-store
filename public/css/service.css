@@ -1,12 +1,15 @@
-
 .nh-service-area {
     padding-top: 70px;
 }
+
 .nh-service-box {
+    display: -ms-grid;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    -ms-grid-columns: 1fr 6px 1fr 6px 1fr 6px 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 6px;
 }
+
 .nh-service-box-bg {
     position: relative;
     height: 100%;
@@ -14,6 +17,7 @@
     padding: 30px;
     gap: 15px;
 }
+
 .nh-service-box-img {
     padding: 15px;
     background: var(--color-white);
@@ -21,16 +25,19 @@
     height: 72px;
     border-radius: 50%;
 }
+
 .nh-service-box-img img {
     width: 33px;
     height: 30px;
     object-fit: scale-down;
 }
+
 .nh-service-box-info h5 {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 5px;
 }
+
 .nh-service-box-info p {
     font-size: 16px;
 }

@@ -1,6 +1,33 @@
 import Image from "next/image";
+import Service from "./Service";
 
 function Category() {
+    const serviceItems = [
+        {
+            imageurl: "/images/pickup.svg",
+            altText: "pickup image",
+            title: " Fast Delivery",
+            subTitle: "Free For All Type Order",
+        },
+        {
+            imageurl: "/images/gift-cart.svg",
+            altText: "gift cart",
+            title: " Best Quality",
+            subTitle: "Best Product Peices",
+        },
+        {
+            imageurl: "/images/gift-box.svg",
+            altText: "gift box",
+            title: " Exchange Offer",
+            subTitle: "One Day To Changes",
+        },
+        {
+            imageurl: "/images/headphone.svg",
+            altText: "headphone",
+            title: "  Help Center",
+            subTitle: "Support System 24/7",
+        },
+    ]
     return (
         <section className="nh-categories-area">
             <div className="container">
@@ -1321,78 +1348,8 @@ function Category() {
                     </div>
                 </div>
 
-                <div className="nh-service-area">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="nh-service-box">
-                                <div className="nh-service-box-item">
-                                    <div className="nh-service-box-bg d-flex align-items-center justify-content-center">
-                                        <div className="nh-service-box-img d-flex align-items-center justify-content-center">
-                                            <img
-                                                src="/images/pickup.svg"
-                                                alt="pickup image"
-                                            />
-                                        </div>
-                                        <div className="nh-service-box-info text-white">
-                                            <h5 className="text-capitalize text-white">
-                                                Fast Delivery
-                                            </h5>
-                                            <p>Free For All Type Order</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-service-box-item">
-                                    <div className="nh-service-box-bg d-flex align-items-center justify-content-center">
-                                        <div className="nh-service-box-img d-flex align-items-center justify-content-center">
-                                            <img
-                                                src="/images/gift-cart.svg"
-                                                alt="pickup image"
-                                            />
-                                        </div>
-                                        <div className="nh-service-box-info text-white">
-                                            <h5 className="text-capitalize text-white">
-                                                Best Quality
-                                            </h5>
-                                            <p>Best Product Peices</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-service-box-item">
-                                    <div className="nh-service-box-bg d-flex align-items-center justify-content-center">
-                                        <div className="nh-service-box-img d-flex align-items-center justify-content-center">
-                                            <img
-                                                src="/images/gift-box.svg"
-                                                alt="pickup image"
-                                            />
-                                        </div>
-                                        <div className="nh-service-box-info text-white">
-                                            <h5 className="text-capitalize text-white">
-                                                Exchange Offer
-                                            </h5>
-                                            <p>One Day To Changes</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-service-box-item">
-                                    <div className="nh-service-box-bg d-flex align-items-center justify-content-center">
-                                        <div className="nh-service-box-img d-flex align-items-center justify-content-center">
-                                            <img
-                                                src="/images/headphone.svg"
-                                                alt="pickup image"
-                                            />
-                                        </div>
-                                        <div className="nh-service-box-info text-white">
-                                            <h5 className="text-capitalize text-white">
-                                                Help Center{" "}
-                                            </h5>
-                                            <p>Support System 24/7</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Service serviceItems={serviceItems} />
+
             </div>
         </section>
     );
