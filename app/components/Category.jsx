@@ -29,7 +29,7 @@ function Category() {
             title: "  Help Center",
             subTitle: "Support System 24/7",
         },
-    ]
+    ];
     const categoryProductData = [
         {
             imageurl: "/images/meril.svg",
@@ -128,9 +128,7 @@ function Category() {
             path: "#",
             title: "Bedding Accessories",
         },
-
-    ]
-
+    ];
     const categoryBrandData = [
         {
             imageurl: "/images/bengal.svg",
@@ -229,24 +227,35 @@ function Category() {
             path: "#",
             title: "Bedding Accessories",
         },
-
-    ]
-
+    ];
 
     return (
         <section className="nh-categories-area">
             <div className="container">
-
-                <ProductTopTitle title="Categories" path="#" linkText="View All" />
+                <ProductTopTitle
+                    title="Categories"
+                    path="#"
+                    linkText="View All"
+                />
                 <ProductCategories categoryProductData={categoryProductData} />
 
                 <div className="nh-brands-area">
-                    <ProductTopTitle title="Brands" path="#" linkText="View All" />
-                    <ProductCategories categoryProductData={categoryBrandData} />
+                    <ProductTopTitle
+                        title="Brands"
+                        path="#"
+                        linkText="View All"
+                    />
+                    <ProductCategories
+                        categoryProductData={categoryBrandData}
+                    />
                 </div>
 
                 <div className="nh-just-for-you">
-                    <ProductTopTitle title="Just For You" path="#" linkText="View All" />
+                    <ProductTopTitle
+                        title="Just For You"
+                        path="#"
+                        linkText="View All"
+                    />
 
                     <div className="row just-for-random-product">
                         <div className="col-md-12">
@@ -951,7 +960,6 @@ function Category() {
                 </div>
 
                 <Service serviceItems={serviceItems} />
-
             </div>
         </section>
     );
