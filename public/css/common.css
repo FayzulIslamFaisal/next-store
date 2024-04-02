@@ -134,6 +134,12 @@ body {
     -ms-grid-columns: (1fr)[8];
 }
 
+.nh-categories-item {
+    width: 100% !important;
+    position: relative;
+    height: 100%;
+}
+
 .nh-categories-item-bg {
     border: 1px solid var(--color-D8D8D8);
     position: relative;
@@ -144,10 +150,11 @@ body {
 
 .nh-categories-img {
     margin-bottom: 20px;
+    height: 110px;
+    width: 100%;
 }
 
 .nh-categories-img img {
-    height: 110px;
     object-fit: scale-down;
     display: block;
     margin: 0 auto;
@@ -218,6 +225,7 @@ body {
 .load-more-btn-row {
     padding-top: 50px;
 }
+
 .load-more-btn {
     background: var(--color-44BC9D);
     max-width: 420px;
@@ -228,9 +236,9 @@ body {
     padding: 8px 15px;
     transition: all .2s linear;
 }
+
 .load-more-btn:hover {
     background: var(--color-414042);
 }
+
 /*------------------- End load-more-btn-row ---------------------------*/
-
-

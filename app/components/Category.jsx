@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Service from "./Service";
+import ProductTopTitle from "./ProductTopTitle";
+import ProductCategories from "./ProductCategories";
 
 function Category() {
     const serviceItems = [
@@ -27,624 +29,233 @@ function Category() {
             title: "  Help Center",
             subTitle: "Support System 24/7",
         },
-    ]
+    ];
+    const categoryProductData = [
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 1",
+            path: "#",
+            title: "Wardrobe Organisers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 2",
+            path: "#",
+            title: "Washing Powder",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 3",
+            path: "#",
+            title: "Women",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 4",
+            path: "#",
+            title: "LED Strip Lighting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 5",
+            path: "#",
+            title: "Wireless Earbud",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 6",
+            path: "#",
+            title: "Humidifiers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 7",
+            path: "#",
+            title: "Modelling & Sculpting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 8",
+            path: "#",
+            title: "Bedding Accessories",
+        },
+
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 9",
+            path: "#",
+            title: "Wardrobe Organisers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 10",
+            path: "#",
+            title: "Washing Powder",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 11",
+            path: "#",
+            title: "Women",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 12",
+            path: "#",
+            title: "LED Strip Lighting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 13",
+            path: "#",
+            title: "Wireless Earbud",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 14",
+            path: "#",
+            title: "Humidifiers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 15",
+            path: "#",
+            title: "Modelling & Sculpting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 16",
+            path: "#",
+            title: "Bedding Accessories",
+        },
+    ];
+    const categoryBrandData = [
+        {
+            imageurl: "/images/bengal.svg",
+            altText: "Brand image 1",
+            path: "#",
+            title: "Wardrobe Organisers",
+        },
+        {
+            imageurl: "/images/square.svg",
+            altText: "Brand image 2",
+            path: "#",
+            title: "Washing Powder",
+        },
+        {
+            imageurl: "/images/bd-food.svg",
+            altText: "Brand image 3",
+            path: "#",
+            title: "Women",
+        },
+        {
+            imageurl: "/images/bengal.svg",
+            altText: "Brand image 4",
+            path: "#",
+            title: "LED Strip Lighting",
+        },
+        {
+            imageurl: "/images/square.svg",
+            altText: "Brand image 5",
+            path: "#",
+            title: "Wireless Earbud",
+        },
+        {
+            imageurl: "/images/bd-food.svg",
+            altText: "Brand image 6",
+            path: "#",
+            title: "Humidifiers",
+        },
+        {
+            imageurl: "/images/bengal.svg",
+            altText: "Brand image 7",
+            path: "#",
+            title: "Modelling & Sculpting",
+        },
+        {
+            imageurl: "/images/square.svg",
+            altText: "Brand image 8",
+            path: "#",
+            title: "Bedding Accessories",
+        },
+
+        {
+            imageurl: "/images/bd-food.svg",
+            altText: "Brand image 9",
+            path: "#",
+            title: "Wardrobe Organisers",
+        },
+        {
+            imageurl: "/images/bengal.svg",
+            altText: "Brand image 10",
+            path: "#",
+            title: "Washing Powder",
+        },
+        {
+            imageurl: "/images/square.svg",
+            altText: "Brand image 11",
+            path: "#",
+            title: "Women",
+        },
+        {
+            imageurl: "/images/bd-food.svg",
+            altText: "Brand image 12",
+            path: "#",
+            title: "LED Strip Lighting",
+        },
+        {
+            imageurl: "/images/bengal.svg",
+            altText: "Brand image 13",
+            path: "#",
+            title: "Wireless Earbud",
+        },
+        {
+            imageurl: "/images/square.svg",
+            altText: "Brand image 14",
+            path: "#",
+            title: "Humidifiers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "Brand image 15",
+            path: "#",
+            title: "Modelling & Sculpting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "Brand image 16",
+            path: "#",
+            title: "Bedding Accessories",
+        },
+    ];
+
     return (
         <section className="nh-categories-area">
             <div className="container">
-                <div className="row nh-common-title-area">
-                    <div className="col-md-12">
-                        <div className="nh-common-title d-flex align-items-center justify-content-between">
-                            <div className="nh-common-item d-flex align-items-center">
-                                <h3>Categories</h3>
-                                <div className="common-border"></div>
-                            </div>
-                            <div className="nh-common-item">
-                                <a href="#">View All</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="row nh-categories-row">
-                    <div className="col-md-12">
-                        <div className="nh-categories-holder">
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">Wardrobe Organisers</a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">Washing Powder</a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Women </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> LED Strip Lighting </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Wireless Earbud </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Humidifiers </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">
-                                                {" "}
-                                                Modelling & Sculpting{" "}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">
-                                                {" "}
-                                                Bedding Accessories{" "}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">
-                                                {" "}
-                                                Wardrobe Organisers{" "}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Washing Powder </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Women </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> LED Strip Lighting </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Wireless Earbud </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#"> Humidifiers </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">
-                                                {" "}
-                                                Modelling & Sculpting{" "}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-categories-item">
-                                <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                    <div className="nh-categories-img image-hover-effect">
-                                        <img
-                                            src="/images/meril.svg"
-                                            className=" img-fluid"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                        <h4>
-                                            <a href="#">
-                                                {" "}
-                                                Bedding Accessories{" "}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProductTopTitle
+                    title="Categories"
+                    path="#"
+                    linkText="View All"
+                />
+                <ProductCategories categoryProductData={categoryProductData} />
 
                 <div className="nh-brands-area">
-                    <div className="row nh-common-title-area">
-                        <div className="col-md-12">
-                            <div className="nh-common-title d-flex align-items-center justify-content-between">
-                                <div className="nh-common-item d-flex align-items-center">
-                                    <h3>Brands</h3>
-                                    <div className="common-border"></div>
-                                </div>
-                                <div className="nh-common-item">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row nh-categories-row">
-                        <div className="col-md-12">
-                            <div className="nh-categories-holder">
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bengal.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    Wardrobe Organisers
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/square.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">Washing Powder</a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bd-food.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#"> Women </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bengal.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    LED Strip Lighting{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/square.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Wireless Earbud{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bd-food.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#"> Humidifiers </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bengal.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Modelling & Sculpting{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/square.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Bedding Accessories{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bd-food.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Wardrobe Organisers{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bengal.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#"> Washing Powder </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/square.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#"> Women </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bd-food.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    LED Strip Lighting{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bengal.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Wireless Earbud{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/square.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#"> Humidifiers </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bd-food.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Modelling & Sculpting{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nh-categories-item">
-                                    <div className="nh-categories-item-bg nh-hover-box-shadow">
-                                        <div className="nh-categories-img image-hover-effect">
-                                            <img
-                                                src="/images/bengal.svg"
-                                                className=" img-fluid"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                                            <h4>
-                                                <a href="#">
-                                                    {" "}
-                                                    Bedding Accessories{" "}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ProductTopTitle
+                        title="Brands"
+                        path="#"
+                        linkText="View All"
+                    />
+                    <ProductCategories
+                        categoryProductData={categoryBrandData}
+                    />
                 </div>
 
                 <div className="nh-just-for-you">
-                    <div className="row nh-common-title-area">
-                        <div className="col-md-12">
-                            <div className="nh-common-title d-flex align-items-center justify-content-between">
-                                <div className="nh-common-item d-flex align-items-center">
-                                    <h3>Just For You</h3>
-                                    <div className="common-border"></div>
-                                </div>
-                                <div className="nh-common-item">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ProductTopTitle
+                        title="Just For You"
+                        path="#"
+                        linkText="View All"
+                    />
 
                     <div className="row just-for-random-product">
                         <div className="col-md-12">
@@ -1349,7 +960,6 @@ function Category() {
                 </div>
 
                 <Service serviceItems={serviceItems} />
-
             </div>
         </section>
     );

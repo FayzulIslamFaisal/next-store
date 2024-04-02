@@ -1,54 +1,40 @@
 import Image from "next/image";
+import PartnerItems from "./PartnerItems";
 
 function Partner() {
+    const partnerStore = [
+        {
+            path: "https://nagadhat.com.bd",
+            imageUrl: "/images/nagadhat.jpg",
+            altText: "nagadhat image",
+        },
+        {
+            path: "https://paikarihat.nagadhat.com",
+            imageUrl: "/images/paikarihat.svg",
+            altText: "paikarihat image",
+        },
+        {
+            path: "#",
+            imageUrl: "/images/properties.svg",
+            altText: "properties image",
+        },
+        {
+            path: "#",
+            imageUrl: "/images/promise.svg",
+            altText: "promise image",
+        },
+    ]
     return (
         <section className="nagadhat-partner-area">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-3">
-                        <div className="nagadhat-partner">
-                            <a href="#">
-                                <img
-                                    className=" img-fluid"
-                                    src="/images/nagadhat.jpg"
-                                    alt="nagadhat image"
-                                />
-                            </a>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="nagadhat-partner">
-                            <a href="#">
-                                <img
-                                    className=" img-fluid"
-                                    src="/images/paikarihat.svg"
-                                    alt="paikarihat image"
-                                />
-                            </a>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="nagadhat-partner">
-                            <a href="#">
-                                <img
-                                    className=" img-fluid"
-                                    src="/images/properties.svg"
-                                    alt="properties image"
-                                />
-                            </a>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="nagadhat-partner">
-                            <a href="#">
-                                <img
-                                    className=" img-fluid"
-                                    src="/images/promise.svg"
-                                    alt="promise image"
-                                />
-                            </a>
-                        </div>
-                    </div>
+                    {
+                        partnerStore.map((item) => {
+                            return (
+                                <PartnerItems key={item.altText} optionData={item} />
+                            )
+                        })
+                    }
                 </div>
             </div>
         </section>
