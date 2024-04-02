@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Service from "./Service";
+import SectionTitle from "./SectionTitle";
 
 function Category() {
     const serviceItems = [
@@ -27,24 +27,11 @@ function Category() {
             title: "  Help Center",
             subTitle: "Support System 24/7",
         },
-    ]
+    ];
     return (
         <section className="nh-categories-area">
             <div className="container">
-                <div className="row nh-common-title-area">
-                    <div className="col-md-12">
-                        <div className="nh-common-title d-flex align-items-center justify-content-between">
-                            <div className="nh-common-item d-flex align-items-center">
-                                <h3>Categories</h3>
-                                <div className="common-border"></div>
-                            </div>
-                            <div className="nh-common-item">
-                                <a href="#">View All</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <SectionTitle title="Categories" path="#" />
                 <div className="row nh-categories-row">
                     <div className="col-md-12">
                         <div className="nh-categories-holder">
@@ -324,20 +311,7 @@ function Category() {
                 </div>
 
                 <div className="nh-brands-area">
-                    <div className="row nh-common-title-area">
-                        <div className="col-md-12">
-                            <div className="nh-common-title d-flex align-items-center justify-content-between">
-                                <div className="nh-common-item d-flex align-items-center">
-                                    <h3>Brands</h3>
-                                    <div className="common-border"></div>
-                                </div>
-                                <div className="nh-common-item">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <SectionTitle title="Brands" path="#" />
                     <div className="row nh-categories-row">
                         <div className="col-md-12">
                             <div className="nh-categories-holder">
@@ -632,20 +606,7 @@ function Category() {
                 </div>
 
                 <div className="nh-just-for-you">
-                    <div className="row nh-common-title-area">
-                        <div className="col-md-12">
-                            <div className="nh-common-title d-flex align-items-center justify-content-between">
-                                <div className="nh-common-item d-flex align-items-center">
-                                    <h3>Just For You</h3>
-                                    <div className="common-border"></div>
-                                </div>
-                                <div className="nh-common-item">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <SectionTitle title="Just For You" path="#" />
                     <div className="row just-for-random-product">
                         <div className="col-md-12">
                             <div className="flash-sale-content-area">
@@ -1349,7 +1310,6 @@ function Category() {
                 </div>
 
                 <Service serviceItems={serviceItems} />
-
             </div>
         </section>
     );

@@ -1,42 +1,13 @@
-import Image from "next/image";
+import FlipClock from "./FlipClock";
+import SectionTitle from "./SectionTitle";
 
 function Sales() {
     return (
         <section className="flash-sale-area">
             <div className="container">
-                <div className="row nh-common-title-area">
-                    <div className="col-md-12">
-                        <div className="nh-common-title d-flex align-items-center justify-content-between">
-                            <div className="nh-common-item d-flex align-items-center">
-                                <h3>Flash Sale</h3>
-                                <div className="common-border"></div>
-                            </div>
-                            <div className="nh-common-item d-flex align-items-center ">
-                                <div className="flash-end-time">Ending in</div>
-                                <div className="flash-sale-end-time d-flex align-items-center">
-                                    <div className="flash-sale-end-time-box d-flex align-items-center justify-content-center">
-                                        <span>08</span>
-                                    </div>
-                                    <div className="flash-sale-end-time-dot">
-                                        :
-                                    </div>
-                                    <div className="flash-sale-end-time-box d-flex align-items-center justify-content-center">
-                                        <span>20</span>
-                                    </div>
-                                    <div className="flash-sale-end-time-dot">
-                                        :
-                                    </div>
-                                    <div className="flash-sale-end-time-box d-flex align-items-center justify-content-center">
-                                        <span>50</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="nh-common-item">
-                                <a href="#">View All</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <SectionTitle title="Flash Sale" path="#">
+                    <FlipClock />
+                </SectionTitle>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="flash-sale-content-area">
