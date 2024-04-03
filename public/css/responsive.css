@@ -101,6 +101,13 @@
     }
 }
 
+@media (max-width:992px) {
+
+    .nagadhat-partner-area .row {
+        row-gap: 20px;
+    }
+}
+
 @media (max-width:767px) {
 
     .footer-widget-info.text-white,
