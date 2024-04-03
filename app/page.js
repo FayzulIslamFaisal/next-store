@@ -1,4 +1,4 @@
-import Hero from "./components/Hero";
+import HeroSlider from "./components/HeroSlider";
 import DistrictModal from "./components/DistrictModal";
 import Partner from "./components/Partner";
 import Sales from "./components/Sales";
@@ -7,7 +7,7 @@ import Category from "./components/Category";
 export default function Home() {
   return (
     <>
-     <Hero />
+     <HeroSlider />
      <DistrictModal />
      <Partner />
      <Sales />

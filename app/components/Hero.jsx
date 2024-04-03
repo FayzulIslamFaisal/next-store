@@ -1,5 +1,4 @@
-import Image from "next/image";
-
+import HeroSlider from "./HeroSlider";
 function Hero() {
     return (
         <>
@@ -250,6 +249,7 @@ function Hero() {
                             </li>
                         </ul>
                     </div>
+                    <HeroSlider />
                 </div>
             </div>
         </>
