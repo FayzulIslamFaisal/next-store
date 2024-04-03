@@ -1,9 +1,79 @@
+"use client";
 import Service from "./Service";
 import SectionTitle from "./SectionTitle";
 import ProductCategories from "./ProductCategories";
-import FlipClock from "./FlipClock";
+import ProductCard from "./ProductCard";
+import AddToCartButton from "./AddToCartButton";
+import Like from "./Like";
+import LoadMore from "./LoadMore";
+import { useEffect, useState } from "react";
 
 function Category() {
+    const justForYouProductList = [
+        {
+            id: 1,
+            image: "/images/flash-img1.jpg",
+            altText: "flash sale image",
+            path: "#",
+            title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
+            price: 685.0,
+            addToCart: <AddToCartButton />,
+            like: <Like />,
+        },
+        {
+            id: 2,
+            image: "/images/flash-img2.jpg",
+            altText: "flash sale image",
+            path: "#",
+            title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
+            price: 685.0,
+            addToCart: <AddToCartButton />,
+            like: <Like />,
+        },
+        {
+            id: 3,
+            image: "/images/flash-img3.jpg",
+            altText: "flash sale image",
+            path: "#",
+            title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
+            price: 685.0,
+            addToCart: <AddToCartButton />,
+            like: <Like />,
+        },
+        {
+            id: 4,
+            image: "/images/flash-img4.jpg",
+            altText: "flash sale image",
+            path: "#",
+            title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
+            price: 685.0,
+            addToCart: <AddToCartButton />,
+            like: <Like />,
+        },
+        {
+            id: 5,
+            image: "/images/flash-img5.jpg",
+            altText: "flash sale image",
+            path: "#",
+            title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
+            price: 685.0,
+            addToCart: <AddToCartButton />,
+            like: <Like />,
+        },
+        {
+            id: 6,
+            image: "/images/flash-img6.jpg",
+            altText: "flash sale image",
+            path: "#",
+            title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
+            price: 685.0,
+            addToCart: <AddToCartButton />,
+            like: <Like />,
+        },
+    ];
+    const [offset, setOffset] = useState(2);
+    const [showLoadMore, setLoadMore] = useState(true);
+    const [jfyProducts, setJfyProducts] = useState(justForYouProductList);
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -229,12 +299,28 @@ function Category() {
         },
     ];
 
+    const handleLoadMore = (e) => {
+        e.preventDefault();
+        setOffset((prev) => prev * 2);
+    };
+
+    useEffect(() => {
+        const newProductItem = justForYouProductList.slice(0, offset);
+        const fetchJfyProducts = () => {
+            setJfyProducts(newProductItem);
+            if (newProductItem.length == justForYouProductList.length) {
+                setLoadMore(false);
+            }
+            setJfyProducts(newProductItem);
+            console.log("showLoadMore", showLoadMore);
+        };
+        fetchJfyProducts();
+    }, [offset]);
+
     return (
         <section className="nh-categories-area">
             <div className="container">
-                <SectionTitle title="Categories" path="#">
-                    <FlipClock />
-                </SectionTitle>
+                <SectionTitle title="Categories" path="#" />
                 <ProductCategories categoryProductData={categoryProductData} />
 
                 <div className="nh-brands-area">
@@ -250,703 +336,17 @@ function Category() {
                     <div className="row just-for-random-product">
                         <div className="col-md-12">
                             <div className="flash-sale-content-area">
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img1.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img2.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img3.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img4.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img5.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img6.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img1.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img2.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img3.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img4.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img5.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img6.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img1.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img2.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img3.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img4.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img5.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flash-sale-content-item">
-                                    <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                        <div className="flash-sale-content-img image-hover-effect">
-                                            <img
-                                                src="/images/flash-img6.jpg"
-                                                className="img-fluid"
-                                                alt="flash sale image"
-                                            />
-                                        </div>
-                                        <div className="flash-sale-content-info text-hover-effect">
-                                            <h4>
-                                                <a href="#">
-                                                    Maggi Masala 620gm (8Pcs)
-                                                    Free 2 pcs (Nestle)
-                                                </a>
-                                            </h4>
-                                            <strong>৳ 685,00</strong>
-                                            <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                                <div className="add-to-cart-btn">
-                                                    <a
-                                                        href="#"
-                                                        className="add-to-cart-link"
-                                                    >
-                                                        ADD TO CART
-                                                    </a>
-                                                </div>
-                                                <div className="add-to-cart-icon">
-                                                    <a href="#">
-                                                        <img
-                                                            src="/images/add-to-cart.svg"
-                                                            alt="add to cart icon"
-                                                        />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {jfyProducts.map((product) => (
+                                    <ProductCard
+                                        key={product.id}
+                                        item={product}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>
 
-                    <div className="row load-more-btn-row">
-                        <div className="col-md-12">
-                            <div className="load-more-btn-area text-center text-uppercase">
-                                <a href="#" className="load-more-btn">
-                                    Load more
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    {showLoadMore && <LoadMore onLoadMore={handleLoadMore} />}
                 </div>
 
                 <Service serviceItems={serviceItems} />
