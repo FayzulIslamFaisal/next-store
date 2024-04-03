@@ -1,15 +1,15 @@
 
-$('.hero-slider-holder').slick({
-    speed: 300,
-    infinite: true,
-    autoplaySpeed: 5000,
-    autoplay: false,
-    dots: true,
-    fade: true,
-    cssEase: 'linear',
-    arrows: false,
+// $('.hero-slider-holder').slick({
+//     speed: 300,
+//     infinite: true,
+//     autoplaySpeed: 5000,
+//     autoplay: false,
+//     dots: true,
+//     fade: true,
+//     cssEase: 'linear',
+//     arrows: false,
 
-});
+// });
 
 function obserableHoverMenu() {
     var categoriesArrow = $('img.categories-arrow-img');
