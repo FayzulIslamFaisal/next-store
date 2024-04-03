@@ -95,21 +95,16 @@ function Sales() {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 8,
-        slidesToScroll: 8,
-        // rows: 1,
+        slidesToShow: 6,
+        slidesToScroll: 6,
         arrows: true,
-        // nextArrow: <p>Next slide</p>,
-        // prevArrow: <p>Prev slide</p>,
         responsive: [
             {
                 breakpoint: 1500,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToShow: 6,
+                    slidesToScroll: 6,
                     arrows: true,
-                    // nextArrow: <p>Next slide</p>,
-                    // prevArrow: <p>Prev slide</p>,
                 },
             },
             {
