@@ -134,5 +134,8 @@ footer {
 .copyright-area p {
     font-family: var(--open-sans);
     letter-spacing: -0.14px;
+}
 
+.footer-widget-address-info p {
+    max-width: 91%;
 }

@@ -54,7 +54,7 @@ function Footer() {
                         </div>
                     </div>
                     <div className="col-xl-5">
-                        <div className="row footer-widget">
+                        <div className="row footer-widget footer-widget-last">
                             <div className="col-md-4">
                                 <QuickLinks
                                     title="Quick Links"
