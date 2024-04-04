@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function MiniNav() {
     return (
         <div className="row">
@@ -6,48 +8,48 @@ function MiniNav() {
                     <div className="header-top-menu-item">
                         <ul className="d-flex align-items-center">
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/affiliate"
                                     className=" text-white text-capitalize"
                                 >
                                     Affiliate
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/career"
                                     className=" text-white text-capitalize"
                                 >
                                     Career
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
                     <div className="header-top-menu-item">
                         <ul className="d-flex align-items-center">
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/merchant"
                                     className=" text-white text-capitalize"
                                 >
                                     Merchant
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/discount"
                                     className=" text-white text-capitalize"
                                 >
                                     Discount
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/partner"
                                     className=" text-white text-capitalize"
                                 >
                                     Partner
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
