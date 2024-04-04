@@ -92,6 +92,7 @@ function Sales() {
         },
     ];
     const settings = {
+        centerPadding: "60px",
         dots: false,
         infinite: true,
         speed: 500,
@@ -102,8 +103,8 @@ function Sales() {
             {
                 breakpoint: 1500,
                 settings: {
-                    slidesToShow: 6,
-                    slidesToScroll: 6,
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
                     arrows: true,
                 },
             },

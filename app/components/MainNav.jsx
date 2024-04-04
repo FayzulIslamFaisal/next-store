@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 function MainNav() {
     return (
@@ -7,9 +8,9 @@ function MainNav() {
                 <div className="col-12">
                     <div className="main-header-area d-flex align-items-center">
                         <div className="logo">
-                            <a href="home.html">
+                            <Link href="/">
                                 <img src={`/images/logo.svg`} alt="logo" />
-                            </a>
+                            </Link>
                         </div>
                         <div className="header-search-area d-flex align-items-center w-100">
                             <div className="header-search-location">
@@ -22,7 +23,7 @@ function MainNav() {
                                     <img
                                         src={`/images/store-location.svg`}
                                         alt="store-location"
-                                    />{" "}
+                                    />
                                     Dhaka City, Dhaka
                                 </button>
                             </div>
@@ -58,9 +59,9 @@ function MainNav() {
                                         <img
                                             src={`/images/login-icon.svg`}
                                             alt="login-icon"
-                                        />{" "}
+                                        />
                                         Login
-                                    </a>{" "}
+                                    </a>
                                 </li>
                                 <li>
                                     <a
@@ -70,7 +71,7 @@ function MainNav() {
                                         <img
                                             src="/images/register-icon.svg"
                                             alt="register-icon"
-                                        />{" "}
+                                        />
                                         Register
                                     </a>
                                 </li>
@@ -84,7 +85,7 @@ function MainNav() {
                                                 src="/images/cart-icon.svg"
                                                 alt="cart-icon"
                                             />
-                                        </span>{" "}
+                                        </span>
                                         Cart
                                     </a>
                                 </li>
@@ -96,7 +97,7 @@ function MainNav() {
 
             <div className="row observerable-header-section">
                 <div className="col-12">
-                    <div className="main-header-mobile1199 d-flex align-items-center flex-column">
+                    {/* <div className="main-header-mobile1199 d-flex align-items-center flex-column">
                         <div className="main-header-mobile1199-item d-flex align-items-center justify-content-between">
                             <div className="logo">
                                 <a href="home.html">
@@ -113,9 +114,9 @@ function MainNav() {
                                             <img
                                                 src={`/images/login-icon.svg`}
                                                 alt="login-icon"
-                                            />{" "}
+                                            />
                                             Login
-                                        </a>{" "}
+                                        </a>
                                     </li>
                                     <li>
                                         <a
@@ -125,7 +126,7 @@ function MainNav() {
                                             <img
                                                 src="/images/register-icon.svg"
                                                 alt="register-icon"
-                                            />{" "}
+                                            />
                                             Register
                                         </a>
                                     </li>
@@ -139,7 +140,7 @@ function MainNav() {
                                                     src="/images/cart-icon.svg"
                                                     alt="cart-icon"
                                                 />
-                                            </span>{" "}
+                                            </span>
                                             Cart
                                         </a>
                                     </li>
@@ -157,7 +158,7 @@ function MainNav() {
                                         href="#"
                                         className="d-flex align-items-center text-white text-capitalize"
                                     >
-                                        <span>Categories</span>{" "}
+                                        <span>Categories</span>
                                         <img
                                             className="categories-arrow-img"
                                             src="/images/Categories-arrow.svg"
@@ -176,7 +177,7 @@ function MainNav() {
                                             <img
                                                 src={`/images/store-location.svg`}
                                                 alt="store-location"
-                                            />{" "}
+                                            />
                                             Dhaka City, Dhaka
                                         </button>
                                     </div>
@@ -204,12 +205,12 @@ function MainNav() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="main-header-area d-flex align-items-center">
                         <div className="logo">
-                            <a href="home.html">
+                            <Link href="/">
                                 <img src={`/images/logo.svg`} alt="logo" />
-                            </a>
+                            </Link>
                         </div>
                         <div className="header-search-area observerable-header-search-area">
                             <div className="header-search-inner-area d-flex align-items-center">
@@ -222,7 +223,7 @@ function MainNav() {
                                         href="#"
                                         className="d-flex align-items-center text-white text-capitalize"
                                     >
-                                        <span>Categories</span>{" "}
+                                        <span>Categories</span>
                                         <img
                                             className="categories-arrow-img"
                                             src="/images/Categories-arrow.svg"
@@ -241,7 +242,7 @@ function MainNav() {
                                             <img
                                                 src={`/images/store-location.svg`}
                                                 alt="store-location"
-                                            />{" "}
+                                            />
                                             Dhaka City, Dhaka
                                         </button>
                                     </div>
@@ -279,9 +280,9 @@ function MainNav() {
                                         <img
                                             src={`/images/login-icon.svg`}
                                             alt="login-icon"
-                                        />{" "}
+                                        />
                                         Login
-                                    </a>{" "}
+                                    </a>
                                 </li>
                                 <li>
                                     <a
@@ -291,7 +292,7 @@ function MainNav() {
                                         <img
                                             src="/images/register-icon.svg"
                                             alt="register-icon"
-                                        />{" "}
+                                        />
                                         Register
                                     </a>
                                 </li>
@@ -305,7 +306,7 @@ function MainNav() {
                                                 src="/images/cart-icon.svg"
                                                 alt="cart-icon"
                                             />
-                                        </span>{" "}
+                                        </span>
                                         Cart
                                     </a>
                                 </li>

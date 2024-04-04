@@ -248,3 +248,16 @@ body {
 }
 
 /*------------------- End load-more-btn-row ---------------------------*/
+
+.slick-prev:before,
+.slick-next:before {
+    color: var(--color-44BC9D) !important;
+}
+
+.flash-sale-content-area-grid .slick-list {
+    margin: 0 -7px !important;
+}
+
+.flash-sale-content-area-grid .slick-slide>div {
+    padding: 0 7px !important;
+}

@@ -1,0 +1,84 @@
+.user-login-section {
+    padding: 80px 0;
+}
+
+.user-login-area h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.user-login-area .form-control {
+    outline: none;
+    height: 36px;
+    line-height: 36px;
+    color: var(--color-black);
+    font-size: 14px;
+}
+
+.user-login-area .form-control:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+.user-login-area .btn.btn-primary {
+    background: var(--color-44BC9D);
+    width: 100%;
+    text-align: center;
+    color: var(--color-white);
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: 16px;
+    outline: none;
+    transition: all .2s linear;
+    border: none;
+}
+
+.user-login-area .btn.btn-primary:hover {
+    background: var(--color-414042);
+}
+
+.user-social-login-item {
+    gap: 15px;
+}
+
+.user-social-login-item button {
+    border: none;
+    outline: none;
+    background: var(--color-44BC9D);
+    padding: 8px 30px;
+    border-radius: 4px;
+    text-align: center;
+    color: var(--color-white);
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: 16px;
+    width: 150px;
+    transition: all .2s linear;
+}
+
+.user-social-login-item button:hover {
+    background: var(--color-414042);
+}
+
+.inner-field a,
+.user-social-login a {
+    color: var(--color-44BC9D);
+    font-weight: 600;
+}
+
+.inner-field .form-check-label {
+    cursor: pointer;
+}
+
+.user-login-form p a {
+    color: var(--color-44BC9D);
+}
+
+.form-check-label {
+    cursor: pointer;
+}
+
+.user-login-form label span {
+    color: red;
+}
