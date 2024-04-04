@@ -1,10 +1,23 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
 
-function MainNav() {
+function MainNav({
+    isObserverMenuVisible,
+    isCategoryHoverMenu,
+    setCategoryHoverMenu,
+}) {
+    if (isCategoryHoverMenu) {
+        console.log("show mini category now");
+    } else {
+        console.log("hide mini category now");
+    }
     return (
         <>
-            <div className="row main-header-section d-none">
+            <div
+                className={`row main-header-section ${
+                    !isObserverMenuVisible ? "" : "d-none"
+                }`}
+            >
                 <div className="col-12">
                     <div className="main-header-area d-flex align-items-center">
                         <div className="logo">
@@ -95,7 +108,11 @@ function MainNav() {
                 </div>
             </div>
 
-            <div className="row observerable-header-section">
+            <div
+                className={`row observerable-header-section ${
+                    isObserverMenuVisible ? "" : "d-none"
+                }`}
+            >
                 <div className="col-12">
                     {/* <div className="main-header-mobile1199 d-flex align-items-center flex-column">
                         <div className="main-header-mobile1199-item d-flex align-items-center justify-content-between">
@@ -215,9 +232,13 @@ function MainNav() {
                         <div className="header-search-area observerable-header-search-area">
                             <div className="header-search-inner-area d-flex align-items-center">
                                 <div
-                                    className="observerable-categories-item"
-                                    onMouseEnter="obserableHoverMenu()"
-                                    onMouseLeave="obserableHoverLeav()"
+                                    className="observerable-categories-item position-relative"
+                                    onMouseEnter={() =>
+                                        setCategoryHoverMenu(true)
+                                    }
+                                    onMouseLeave={() =>
+                                        setCategoryHoverMenu(false)
+                                    }
                                 >
                                     <a
                                         href="#"
