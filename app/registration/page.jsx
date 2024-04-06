@@ -6,7 +6,7 @@ const registration = () => {
         <div className='container'>
             <div className="row justify-content-center user-login-section">
                 <div className="col-md-5">
-                    <div className="user-login-area shadow rounded-4 px-4 py-5">
+                    <div className="user-login-area shadow rounded-4 px-3 py-5">
                         <h1 className='text-center text-capitalize'>registration.</h1>
                         <div className="user-login-form">
                             <form>
@@ -24,7 +24,7 @@ const registration = () => {
                                 </div>
                                 <div className="mb-3">
                                     <label for="password" className="form-label">Password  <span>*</span> </label>
-                                    <input type="password" className="form-control" id="password" />
+                                    <input type="password" className="form-control" placeholder='Enter Password' id="password" />
                                 </div>
                                 <div className="mb-3 ">
                                     <div className="form-check form-check-inline">
