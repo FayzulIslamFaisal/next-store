@@ -129,8 +129,8 @@ function Sales() {
     return (
         <section className="flash-sale-area">
             <div className="container">
-                <SectionTitle title="Flash Sale" path="#">
-                    <FlipClock />
+                <SectionTitle title="Flash Sale" path="#" isSale={true}>
+                    <FlipClock endsAt="2024-04-10 00:00" />
                 </SectionTitle>
                 <div className="row">
                     <div className="col-md-12">
