@@ -13,14 +13,19 @@ function Header() {
     const [showMiniVisible, setMiniMenuVisible] = useState(true);
     useEffect(() => {
         const handleScrollPosition = () => {
-            const scrollPosition = window.scrollY;
+            let scrollPosition = 0;
+            if (typeof window !== "undefined") {
+                scrollPosition = window.scrollY;
+            }
             scrollPosition > 5 ? setSticky(true) : setSticky(false);
             scrollPosition > 450
                 ? setObserverMenuVisible(true)
                 : setObserverMenuVisible(false);
         };
 
-        window.addEventListener("scroll", handleScrollPosition);
+        if (typeof window !== "undefined") {
+            window.addEventListener("scroll", handleScrollPosition);
+        }
         return () => {
             window.removeEventListener("scroll", handleScrollPosition);
         };
