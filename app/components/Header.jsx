@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import MiniNav from "./MiniNav";
 import MainNav from "./MainNav";
 import HeroSlider from "./HeroSlider";
-import { useParams } from "next/navigation";
 
 function Header() {
     const path = useParams();
@@ -15,12 +15,9 @@ function Header() {
         const handleScrollPosition = () => {
             const scrollPosition = window.scrollY;
             scrollPosition > 5 ? setSticky(true) : setSticky(false);
-            scrollPosition > 380
+            scrollPosition > 450
                 ? setObserverMenuVisible(true)
                 : setObserverMenuVisible(false);
-            scrollPosition > 550
-                ? setMiniMenuVisible(false)
-                : setMiniMenuVisible(true);
         };
 
         window.addEventListener("scroll", handleScrollPosition);
@@ -39,7 +36,7 @@ function Header() {
         <header className={`${isSticky ? "header-sticky" : ""}`}>
             <div className="header-wrapper">
                 <div className="container header-container">
-                    {showMiniVisible && <MiniNav />}
+                    {!isObserverMenuVisible && <MiniNav />}
                     <MainNav {...scrollOption} />
                     {!path && <HeroSlider />}
                 </div>
