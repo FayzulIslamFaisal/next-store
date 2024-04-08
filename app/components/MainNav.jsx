@@ -1,17 +1,11 @@
 "use client";
 import Link from "next/link";
-import HoverMenu from "./HoverMenu";
 
 function MainNav({
     isObserverMenuVisible,
     isCategoryHoverMenu,
     setCategoryHoverMenu,
 }) {
-    if (isCategoryHoverMenu) {
-        console.log("show hover menu");
-    } else {
-        console.log("hide hover menu");
-    }
     return (
         <>
             <div
@@ -107,7 +101,6 @@ function MainNav({
                         </div>
                     </div>
                 </div>
-                {isCategoryHoverMenu && <HoverMenu />}
             </div>
 
             <div
@@ -238,8 +231,9 @@ function MainNav({
                                     onMouseEnter={() =>
                                         setCategoryHoverMenu(true)
                                     }
-                                    onMouseLeave={() =>
-                                        setCategoryHoverMenu(false)
+                                    onMouseLeave={
+                                        () => console.log("...")
+                                        // setCategoryHoverMenu(false)
                                     }
                                 >
                                     <a
