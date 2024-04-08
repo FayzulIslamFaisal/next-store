@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import HoverMenu from "./HoverMenu";
 
 function MainNav({
     isObserverMenuVisible,
@@ -7,9 +8,9 @@ function MainNav({
     setCategoryHoverMenu,
 }) {
     if (isCategoryHoverMenu) {
-        console.log("show mini category now");
+        console.log("show hover menu");
     } else {
-        console.log("hide mini category now");
+        console.log("hide hover menu");
     }
     return (
         <>
@@ -106,6 +107,7 @@ function MainNav({
                         </div>
                     </div>
                 </div>
+                {isCategoryHoverMenu && <HoverMenu />}
             </div>
 
             <div
