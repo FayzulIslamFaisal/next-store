@@ -1,9 +1,7 @@
-import dynamic from "next/dynamic";
+import useScreenSize from "../hooks/useScreenSize";
 
 function SectionTitle({ title, path = "#", children, isSale = false }) {
-    const { width } = dynamic(() => import("../hooks/useScreenSize"), {
-        ssr: false,
-    });
+    const { width } = useScreenSize();
     const MAX_SCREEN_SIZE = 430;
     return (
         <div className="row nh-common-title-area">
