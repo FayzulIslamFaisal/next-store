@@ -12,14 +12,20 @@ function Header() {
     const [isSticky, setSticky] = useState(false);
     const [isObserverMenuVisible, setObserverMenuVisible] = useState(false);
     const [isCategoryHoverMenu, setCategoryHoverMenu] = useState(false);
+    const [isResponsive, setResponsive] = useState(false);
 
     useEffect(() => {
         const handleScrollPosition = () => {
             let scrollPosition = 0;
+            let scrollPositionWidth = 0;
             if (typeof window !== "undefined") {
                 scrollPosition = window.scrollY;
+                scrollPositionWidth = window.innerWidth;
             }
             scrollPosition > 5 ? setSticky(true) : setSticky(false);
+            scrollPositionWidth < 1199
+                ? setResponsive(true)
+                : setResponsive(false);
             if (scrollPosition > 450) {
                 setObserverMenuVisible(true);
             } else {
@@ -30,9 +36,11 @@ function Header() {
 
         if (typeof window !== "undefined") {
             window.addEventListener("scroll", handleScrollPosition);
+            window.addEventListener("resize", handleScrollPosition);
         }
         return () => {
             window.removeEventListener("scroll", handleScrollPosition);
+            window.removeEventListener("resize", handleScrollPosition);
         };
     }, []);
 
@@ -47,14 +55,20 @@ function Header() {
             <header className={`${isSticky ? "header-sticky" : ""}`}>
                 <div className="header-wrapper">
                     <div className="container header-container">
-                        {!isObserverMenuVisible && <MiniNav />}
-                        <MainNav {...scrollOption} />
-                        <MobileNav />
+                        {!isObserverMenuVisible && !isResponsive && <MiniNav />}
+                        {!isResponsive ? (
+                            <MainNav {...scrollOption} />
+                        ) : (
+                            <MobileNav />
+                        )}
                         {!path && <HeroSlider />}
                     </div>
                 </div>
             </header>
-            <CategoryHoverMenu isActive={isCategoryHoverMenu} />
+            <CategoryHoverMenu
+                isActive={isCategoryHoverMenu}
+                setCategoryHoverMenu={setCategoryHoverMenu}
+            />
         </>
     );
 }
