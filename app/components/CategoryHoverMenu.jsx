@@ -1,10 +1,11 @@
 import React from "react";
 
-function CategoryHoverMenu({ isActive }) {
+function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
     return (
         <div className="container">
-            <div className={`observer-hover-menu ${isActive ? "active" : ""}`}
-                onmouseleave="hideObserverHoverMenu()"
+            <div
+                className={`observer-hover-menu ${isActive ? "active" : ""}`}
+                onMouseLeave={() => setCategoryHoverMenu(false)}
             >
                 <ul className="category-menu-area">
                     <li className="menu-link">
