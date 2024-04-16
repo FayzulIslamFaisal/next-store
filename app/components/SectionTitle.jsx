@@ -2,14 +2,13 @@ import useScreenSize from "../hooks/useScreenSize";
 
 function SectionTitle({ title, path = "#", children, isSale = false }) {
     const { width } = useScreenSize();
-    const MAX_SCREEN_SIZE = 430;
+    const MAX_SCREEN_SIZE = 490;
     return (
         <div className="row nh-common-title-area">
             <div className="col-md-12">
                 <div
-                    className={`nh-common-title d-flex align-items-center justify-content-between ${
-                        isSale && width < MAX_SCREEN_SIZE ? "flex-column" : ""
-                    }`}
+                    className={`nh-common-title d-flex align-items-center justify-content-between ${isSale && width < MAX_SCREEN_SIZE ? "flex-column" : ""
+                        }`}
                 >
                     <div className="nh-common-item d-flex align-items-center">
                         <h3>{title}</h3>

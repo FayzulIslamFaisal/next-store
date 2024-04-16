@@ -5,6 +5,7 @@ import MiniNav from "./MiniNav";
 import MainNav from "./MainNav";
 import HeroSlider from "./HeroSlider";
 import CategoryHoverMenu from "./CategoryHoverMenu";
+import MobileNav from "./MobileNav";
 
 function Header() {
     const path = useParams();
@@ -48,6 +49,7 @@ function Header() {
                     <div className="container header-container">
                         {!isObserverMenuVisible && <MiniNav />}
                         <MainNav {...scrollOption} />
+                        <MobileNav />
                         {!path && <HeroSlider />}
                     </div>
                 </div>
