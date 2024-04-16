@@ -130,7 +130,7 @@ function Sales() {
         <section className="flash-sale-area">
             <div className="container">
                 <SectionTitle title="Flash Sale" path="#" isSale={true}>
-                    <FlipClock endsAt="2024-04-10 00:00" />
+                    <FlipClock endsAt="2024-04-20 23:59" />
                 </SectionTitle>
                 <div className="row">
                     <div className="col-md-12">
