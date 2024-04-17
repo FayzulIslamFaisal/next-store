@@ -75,6 +75,7 @@
     .header-auth-area ul {
         gap: 10px;
     }
+
     .nh-service-box-bg {
         flex-direction: column;
         text-align: center;
@@ -177,6 +178,12 @@
 }
 
 @media (max-width:767px) {
+    .district-modal-area .modal-dialog {
+        max-width: 100%;
+    }
+    .district-modal-area .modal-body strong {
+        font-size: 14px;
+    }
     .flash-sale-content-info h4 {
         line-height: 20px;
     }
