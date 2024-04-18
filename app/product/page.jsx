@@ -117,50 +117,69 @@ const ProductDetails = () => {
                                                 <li>Tempor invidunt</li>
                                             </ul>
                                         </div>
-                                        <div className="product-details-variant-area">
-                                            <div className="product-details-variant d-flex align-items-center">
-                                                <p>Size:</p>
-                                                <div className="product-details-variant-holder d-flex align-items-center">
-                                                    <div className="product-details-variant-item">
-                                                        <span>10 watt</span>
+                                        <div className="product-info-rtk-content">
+                                            <form>
+                                                <div className="product-details-variant-area">
+                                                    <div className="product-details-variant d-flex align-items-center">
+                                                        <p>Size:</p>
+                                                        <div className="product-details-variant-holder d-flex align-items-center">
+                                                            <div className="product-details-variant-item">
+                                                                <input type="checkbox" name="size1" id="size-variant1" />
+                                                                <label htmlFor="size-variant1">10 Watt</label>
+                                                            </div>
+                                                            <div className="product-details-variant-item">
+                                                                <input type="checkbox" name="size1" id="size-variant2" />
+                                                                <label htmlFor="size-variant2">20 watt</label>
+                                                            </div>
+                                                            <div className="product-details-variant-item">
+                                                                <input type="checkbox" name="size1" id="size-variant3" />
+                                                                <label htmlFor="size-variant3">100 watt</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className="product-details-variant-item">
-                                                        <span>20 watt</span>
+                                                </div>
+                                                <div className="product-details-quantity-area d-flex align-items-center justify-content-between">
+                                                    <div className="product-details-quantity d-flex align-items-center">
+                                                        <div className="product-details-inner-quantity d-flex align-items-center">
+                                                            <p>Quantity:</p>
+                                                        </div>
+                                                        <div className="product-details-inner-quantity product-details-inner-qty d-flex align-items-center">
+                                                            <button>-</button>
+                                                            <input type="text" value="1" />
+                                                            <button>+</button>
+                                                        </div>
                                                     </div>
-                                                    <div className="product-details-variant-item">
-                                                        <span>100 watt</span>
+                                                    <div className="product-details-quantity d-flex align-items-center">
+                                                        <p>Color</p>
+                                                        <div className="product-details-inner-quantity d-flex align-items-center">
+                                                            <div className="product-details-inner-color product-details-variant-item" style={{ background: '#BBB5FF' }}>
+                                                                <input type="checkbox" name="color1" id="color-variant1" />
+                                                                <label htmlFor="color-variant1"></label>
+                                                            </div>
+                                                            <div className="product-details-inner-color product-details-variant-item" style={{ background: '#FF0000' }}>
+                                                                <input type="checkbox" name="color2" id="color-variant2" />
+                                                                <label htmlFor="color-variant2"></label>
+                                                            </div>
+                                                            <div className="product-details-inner-color product-details-variant-item" style={{ background: '#1400FF' }}>
+                                                                <input type="checkbox" name="color3" id="color-variant3" />
+                                                                <label htmlFor="color-variant3"></label>
+                                                            </div>
+                                                            <div className="product-details-inner-color product-details-variant-item" style={{ background: '#32D118' }}>
+                                                                <input type="checkbox" name="color4" id="color-variant4" />
+                                                                <label htmlFor="color-variant4"></label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="product-details-quantity-area d-flex align-items-center justify-content-between">
-                                            <div className="product-details-quantity d-flex align-items-center">
-                                                <div className="product-details-inner-quantity d-flex align-items-center">
-                                                    <p>Quantity:</p>
+                                                <div className="product-details-add-cart-area d-flex align-items-center">
+                                                    <div className="product-details-add-cart">
+                                                        <button className="product-details-buy-now-btn">BUY NOW</button>
+                                                    </div>
+                                                    <div className="product-details-add-cart">
+                                                        <button className="product-details-add-to-cart-btn">ADD TO CART</button>
+                                                    </div>
                                                 </div>
-                                                <div className="product-details-inner-quantity d-flex align-items-center">
-                                                    <button>-</button>
-                                                    <input type="text" value="1" />
-                                                    <button>+</button>
-                                                </div>
-                                            </div>
-                                            <div className="product-details-quantity d-flex align-items-center">
-                                                <p>Color</p>
-                                                <div className="product-details-inner-quantity d-flex align-items-center">
-                                                    <div className="product-details-inner-color" style={{ background: 'red', width: '15px', height: '8px', }}></div>
-                                                    <div className="product-details-inner-color" style={{ background: 'yellow', width: '15px', height: '8px', }}></div>
-                                                    <div className="product-details-inner-color" style={{ background: 'red', width: '15px', height: '8px', }}></div>
-                                                    <div className="product-details-inner-color" style={{ background: 'black', width: '15px', height: '8px', }}></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="product-details-add-cart-area d-flex align-items-center">
-                                            <div className="product-details-add-cart">
-                                                <button className="product-details-buy-now-btn">BUY NOW</button>
-                                            </div>
-                                            <div className="product-details-add-cart">
-                                                <button className="product-details-add-to-cart-btn">ADD TO CART</button>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -207,45 +226,45 @@ const ProductDetails = () => {
                             <div className="product-sidebar">
                                 {/* <!-- Start product-details-delivery-area --> */}
                                 <div className="product-details-delivery-area">
-                                    <div className="product-details-delivery-bg bg-danger-subtle p-2">
+                                    <div className="product-details-delivery-bg ">
                                         <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
                                             <h2>Delivery</h2>
                                             <div className="product-delivery-top-img">
-                                                <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" width={100} height={100} />
+                                                <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" fill={true} />
                                             </div>
                                         </div>
-                                        <div className="product-delivery-address-area d-flex border-bottom ">
+                                        <div className="product-delivery-address-area d-flex  ">
                                             <div className="product-delivery-address-inner d-flex">
-                                                <div className="product-delivery-address-icon">
-                                                    <Image className="img-fluid" src="/images/location-black-img.svg" alt="location image" width={100} height={100} />
+                                                <div className="product-delivery-address-icon sidebar-common-img-size">
+                                                    <Image className="img-fluid" src="/images/location-black-img.svg" alt="location image" fill={true} />
                                                 </div>
                                                 <p>Dhaka, Dhaka North, Banani Road No. 12 - 19</p>
                                             </div>
                                             <div className="product-delivery-address-inner">
-                                                <Link href="#" className="text-primary">CHANGE</Link>
+                                                <Link href="#" className="custom-text-link">CHANGE</Link>
                                             </div>
                                         </div>
-                                        <div className="product-free-delivery-area py-3">
-                                            <div className="product-free-delivery-top d-flex">
+                                        <div className="product-free-delivery-area">
+                                            <div className="product-free-delivery-top d-flex justify-content-between">
                                                 <div className="product-free-delivery-info d-flex align-items-center">
-                                                    <div className="product-free-delivery-info-img">
-                                                        <Image className="img-fluid" src="/images/free-delivery.svg" width={100} height={100} className="img-fluid" alt="free-delivery" />
+                                                    <div className="product-free-delivery-info-img sidebar-common-img-size">
+                                                        <Image className="img-fluid" src="/images/free-delivery.svg" fill={true} alt="free-delivery" />
                                                     </div>
                                                     <h5>Free Delivery</h5>
                                                     <p>12 Apr - 19 Apr</p>
                                                 </div>
-                                                <div className="product-free-delivery-info">
-                                                    <Link href="#" className="text-primary">FREE</Link>
+                                                <div className="product-free-delivery-info ">
+                                                    <Link href="#" className="custom-text-link">FREE</Link>
                                                 </div>
                                             </div>
-                                            <div className="product-free-delivery-end-time p-2">
+                                            <div className="product-free-delivery-end-time">
                                                 <p>12 - 19 day(s)</p>
                                                 <div className="product-free-delivery-textarea">
                                                     <textarea className="form-control" value="Enjoy free shipping promotion with minimum spend of ৳ 499 from Buy More Save More." />
                                                 </div>
                                                 <div className="product-free-delivery-two-col d-flex align-items-center">
-                                                    <div className="product-free-delivery-two-col-img">
-                                                        <Image className="img-fluid" src="/images/cash-on-delivery.svg" width={100} height={100} alt="cash-on-delivery" />
+                                                    <div className="product-free-delivery-two-col-img sidebar-common-img-size">
+                                                        <Image className="img-fluid" src="/images/cash-on-delivery.svg" fill={true} alt="cash-on-delivery" />
                                                     </div>
                                                     <h5>Cash on Delivery Available</h5>
                                                 </div>
@@ -255,20 +274,20 @@ const ProductDetails = () => {
                                             <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
                                                 <h2>Service</h2>
                                                 <div className="product-delivery-top-img">
-                                                    <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" width={100} height={100} />
+                                                    <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" fill={true} />
                                                 </div>
                                             </div>
                                             <div className="product-details-service-info">
                                                 <div className="product-free-delivery-two-col d-flex align-items-center">
-                                                    <div className="product-free-delivery-two-col-img">
-                                                        <Image className="img-fluid" src="/images/return.svg" className="img-fluid" alt="return image" width={100} height={100} />
+                                                    <div className="product-free-delivery-two-col-img sidebar-common-img-size">
+                                                        <Image className="img-fluid" src="/images/return.svg" alt="return image" fill={true} />
                                                     </div>
                                                     <h5>7 Days Return</h5>
                                                 </div>
                                                 <p>Change of mind is not applicable</p>
                                                 <div className="product-free-delivery-two-col d-flex align-items-center">
-                                                    <div className="product-free-delivery-two-col-img">
-                                                        <Image className="img-fluid" src="/images/warrant.svg" className="img-fluid" alt="warrant image" width={100} height={100} />
+                                                    <div className="product-free-delivery-two-col-img sidebar-common-img-size">
+                                                        <Image className="img-fluid" src="/images/warrant.svg" alt="warrant image" fill={true} />
                                                     </div>
                                                     <h5>Warranty not available</h5>
                                                 </div>
@@ -277,10 +296,10 @@ const ProductDetails = () => {
                                                 <div className="product-details-sold-top d-flex align-items-center justify-content-between">
                                                     <div className="product-details-sold-item">Sold By</div>
                                                     <div className="product-details-sold-item d-flex align-items-center">
-                                                        <div className="product-details-sold-img">
-                                                            <Image className="img-fluid" src="/images/chat-img.svg" className="img-fluid" alt="cart image" width={100} height={100} />
+                                                        <div className="product-details-sold-img sidebar-common-img-size">
+                                                            <Image className="img-fluid" src="/images/chat-img.svg" alt="cart image" fill={true} />
                                                         </div>
-                                                        <Link href="#">Chat</Link>
+                                                        <Link href="#" className="custom-text-link">Chat</Link>
                                                     </div>
                                                 </div>
                                                 <p>Imran Fashion House</p>
@@ -305,7 +324,7 @@ const ProductDetails = () => {
                                                     </div>
                                                 </div>
                                                 <div className="product-sold-visit text-center">
-                                                    <Link href="#" className="text-primary">Visit Store</Link>
+                                                    <Link href="#" className="custom-text-link">Visit Store</Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -321,55 +340,55 @@ const ProductDetails = () => {
                                     <div className="similer-product-box">
                                         <div className="similer-product-box-item d-flex ">
                                             <div className="similer-product-img">
-                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" width={100} height={100} className="img-fluid" alt="similer product" />
+                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" fill={true} className="img-fluid" alt="similer product" />
                                             </div>
                                             <div className="similer-product-info">
                                                 <h4>2M LED Light String 60
                                                     Leds Computer Desk DIY
                                                     Backlight.
                                                 </h4>
-                                                <strong> ৳ 450</strong>
+                                                <strong> <span>৳</span> 450</strong>
                                             </div>
                                         </div>
                                         <div className="similer-product-box-item d-flex ">
                                             <div className="similer-product-img">
-                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" width={100} height={100} className="img-fluid" alt="similer product" />
+                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" fill={true} className="img-fluid" alt="similer product" />
                                             </div>
                                             <div className="similer-product-info">
                                                 <h4>2M LED Light String 60
                                                     Leds Computer Desk DIY
                                                     Backlight.
                                                 </h4>
-                                                <strong> ৳ 450</strong>
+                                                <strong> <span>৳</span> 450</strong>
                                             </div>
                                         </div>
                                         <div className="similer-product-box-item d-flex ">
                                             <div className="similer-product-img">
-                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" width={100} height={100} className="img-fluid" alt="similer product" />
+                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" fill={true} className="img-fluid" alt="similer product" />
                                             </div>
                                             <div className="similer-product-info">
                                                 <h4>2M LED Light String 60
                                                     Leds Computer Desk DIY
                                                     Backlight.
                                                 </h4>
-                                                <strong> ৳ 450</strong>
+                                                <strong> <span>৳</span> 450</strong>
                                             </div>
                                         </div>
                                         <div className="similer-product-box-item d-flex ">
                                             <div className="similer-product-img">
-                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" width={100} height={100} className="img-fluid" alt="similer product" />
+                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" fill={true} className="img-fluid" alt="similer product" />
                                             </div>
                                             <div className="similer-product-info">
                                                 <h4>2M LED Light String 60
                                                     Leds Computer Desk DIY
                                                     Backlight.
                                                 </h4>
-                                                <strong> ৳ 450</strong>
+                                                <strong> <span>৳</span> 450</strong>
                                             </div>
                                         </div>
                                         <div className="similer-product-box-item d-flex ">
                                             <div className="similer-product-img">
-                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" width={100} height={100} className="img-fluid" alt="similer product" />
+                                                <Image src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg" fill={true} className="img-fluid" alt="similer product" />
                                             </div>
                                             <div className="similer-product-info">
                                                 <h4>2M LED Light String 60

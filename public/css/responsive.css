@@ -132,6 +132,20 @@
         transform: translateY(-50%);
     }
 
+    .similer-product-title {
+        gap: 15px;
+    }
+
+    .similer-product-title h3 {
+        flex: none;
+    }
+
+    .similer-product-border {
+        width: 20%;
+        max-width: 20%;
+        flex: none;
+    }
+
 }
 
 @media (max-width:1024px) {
@@ -181,9 +195,11 @@
     .district-modal-area .modal-dialog {
         max-width: 100%;
     }
+
     .district-modal-area .modal-body strong {
         font-size: 14px;
     }
+
     .flash-sale-content-info h4 {
         line-height: 20px;
     }
