@@ -486,6 +486,10 @@
     padding-bottom: 30px;
 }
 
+.similer-product-box-item:last-child {
+    padding-bottom: 0;
+}
+
 .similer-product-img {
     position: relative;
     width: 120px;
@@ -520,3 +524,126 @@
 }
 
 /*************** End similer-product-area **********************/
+
+
+/*****************Start product-details-sold-area **************/
+.product-details-sold-area {
+    padding: 15px 10px;
+}
+
+.product-details-sold-item h5 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.product-details-sold-item.d-flex {
+    gap: 6px;
+}
+
+.product-details-sold-area p {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.14px;
+    padding-bottom: 10px;
+    text-transform: capitalize;
+}
+
+.product-details-sold-table table th {
+    color: var(--color-9f9f9f);
+    font-size: 13px;
+    border-color: #dee2e6;
+}
+
+.product-details-sold-table table td {
+    font-size: 20px;
+    font-weight: 700;
+    border-color: #dee2e6;
+}
+
+.product-details-sold-table table td.table-td-text {
+    font-size: 14px;
+    color: var(--color-9f9f9f);
+}
+
+.product-sold-visit .custom-text-link {
+    font-size: 14px;
+    letter-spacing: -0.14px;
+}
+
+/****************End product-details-sold-area ****************/
+
+
+/****************Start product-long-discription-area ****************/
+.product-long-discription-area {
+    padding-top: 70px;
+}
+
+.product-long-discription-tab .nav-link {
+    border: none;
+    font-size: 20px;
+    line-height: 24px;
+    padding: 5px 20px;
+    color: var(--color-414042);
+}
+
+.product-long-discription-tab .nav-tabs {
+    border: 0;
+    gap: 40px;
+}
+
+.product-long-discription-tab .nav-link.active {
+    color: var(--color-1A9D78);
+    border: 1px solid var(--color-1A9D78);
+    border-radius: 4px;
+}
+
+.product-long-discription-tab .tab-content {
+    padding: 30px 0;
+    padding-bottom: 0;
+}
+
+.tab-panel-info-details:last-child {
+    padding-bottom: 0;
+}
+
+.tab-panel-info-details {
+    padding-bottom: 15px;
+}
+
+.tab-panel-info-details h6 {
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.14px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.tab-panel-info-details p {
+    font-size: 16px;
+    letter-spacing: -0.14px;
+    padding-bottom: 15px;
+}
+
+.tab-panel-info-image-area {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+.tab-panel-info-image-col {
+    position: relative;
+    height: 229px;
+    width: 100%;
+}
+
+.tab-panel-info-image-col img {
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+
+/****************End product-long-discription-area ****************/

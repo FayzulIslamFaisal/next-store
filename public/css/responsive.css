@@ -146,6 +146,10 @@
         flex: none;
     }
 
+    .product-long-discription-tab .tab-content {
+        padding-bottom: 15px;
+    }
+
 }
 
 @media (max-width:1024px) {
@@ -184,14 +188,60 @@
     }
 }
 
-@media (max-width:992px) {
+@media (max-width:991px) {
+    .product-details-quantity-area {
+        gap: 15px;
+    }
 
     .nagadhat-partner-area .row {
         row-gap: 20px;
     }
+
+    .tab-panel-info-image-area {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 @media (max-width:767px) {
+    .similer-product-info h4 {
+        font-size: 14px;
+    }
+
+    .product-details-info-img {
+        padding: 15px;
+        height: 350px;
+    }
+
+    .tab-panel-info-image-area {
+        padding-top: 0;
+        padding-bottom: 30px;
+    }
+
+    .product-long-discription-tab .nav-tabs {
+        gap: 15px;
+    }
+
+    .product-long-discription-area {
+        padding-top: 50px;
+    }
+
+    .product-long-discription-tab .nav-link {
+        font-size: 18px;
+    }
+
+    .similer-product-info strong {
+        font-size: 20px;
+    }
+
+    .product-details-price-area strong {
+        font-size: 24px;
+    }
+
+    .product-details-content h1 {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
     .district-modal-area .modal-dialog {
         max-width: 100%;
     }
@@ -273,6 +323,12 @@
 
     .flash-sale-content-area-grid .slick-slide>div {
         padding: 0 5px !important;
+    }
+
+    .tab-panel-info-details h6 {
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 10px;
     }
 
 }
