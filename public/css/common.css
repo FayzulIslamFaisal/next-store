@@ -6,6 +6,7 @@
     --color-white: #fff;
     --color-black: #000;
     --color-414042: #414042;
+    --color-41ac8f: #41ac8f;
     --color-dfdfdf: #6f6f6f;
     --color-d9d9d9d: #d9d9d9;
     --color-1A9D78: #1A9D78;
@@ -17,6 +18,14 @@
     --color-53C0A0: #53C0A0;
     --color-F6F6F6: #F6F6F6;
     --color-D8D8D8: #D8D8D8;
+    --color-A7A7A7: #A7A7A7;
+    --color-D6D6D6: #D6D6D6;
+    --color-F0F0F0: #F0F0F0;
+    --color-C5EEE3: #C5EEE3;
+    --color-dcfff6: #dcfff6;
+    --color-7C79DD: #7C79DD;
+    --color-D3C5C5: #D3C5C5;
+    --color-9f9f9f: #9f9f9f;
 }
 
 ul {
