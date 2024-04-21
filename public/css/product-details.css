@@ -188,7 +188,7 @@
     flex-shrink: 0;
 }
 
-.product-details-variant-item input[type="checkbox"] {
+.product-details-variant-item input[type="radio"] {
     position: relative;
     width: 100%;
     height: 100%;
@@ -214,7 +214,7 @@
     letter-spacing: -0.14px;
 }
 
-.product-details-variant-item input[type="checkbox"]:checked+label {
+.product-details-variant-item input[type="radio"]:checked+label {
     background: var(--color-C5EEE3);
 }
 
@@ -502,7 +502,7 @@
 }
 
 .similer-product-img img {
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .similer-product-info h4 {

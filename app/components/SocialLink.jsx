@@ -1,6 +1,6 @@
 import SocialLinkItems from "./SocialLinkItems"
 
-const SocialLink = ({ socialLinkItem = [] }) => {
+const SocialLink = ({ socialLinkItem = [], children }) => {
 
     return (
         <div className="nh-social-link d-flex align-items-center">
