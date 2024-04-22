@@ -1,7 +1,5 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import SocialLink from '../SocialLink'
-import ProductSlider from './ProductSlider'
+import SocialLink from "../SocialLink";
+import ProductSlider from "./ProductSlider";
 
 const ProductImage = () => {
     const socialLinkItem = [
@@ -14,35 +12,28 @@ const ProductImage = () => {
     const productSliderData = [
         {
             id: 1,
-            imageUrl: "/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg",
+            imageUrl:
+                "/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg",
             altText: "product image 1",
         },
         {
             id: 2,
-            imageUrl: "/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg",
+            imageUrl:
+                "/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg",
             altText: "product image 2",
         },
-
-
-    ]
+    ];
     return (
         <div className="col-md-6">
-
             <div className="product-img-slider-area">
-                {
-                    productSliderData.map((sliderItem) => {
-                        return (
-                            <ProductSlider key={sliderItem.id} sliderItem={sliderItem} />
-                        )
-                    })
-                }
+                <ProductSlider sliderItems={productSliderData} />
             </div>
             <div className="product-details-social-link d-flex align-items-center justify-content-center pb-3">
                 <p>Share:</p>
                 <SocialLink socialLinkItem={socialLinkItem} />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ProductImage
+export default ProductImage;
