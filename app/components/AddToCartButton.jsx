@@ -1,19 +1,21 @@
 "use client";
 
-function AddToCartButton({ title = "", path = "#" }) {
+import Link from "next/link";
+
+function AddToCartButton({ title = "", path = "#", buyNowBtn }) {
     return (
         <div className="add-to-cart-btn">
-            <a
+            <Link
                 href={path}
-                className="add-to-cart-link"
+                className={`add-to-cart-link ${buyNowBtn}`}
                 onClick={(e) => {
                     e.preventDefault();
                     console.log("added to cart");
                 }}
             >
                 {!title ? "ADD TO CART" : title}
-            </a>
-        </div>
+            </Link>
+        </div >
     );
 }
 

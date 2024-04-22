@@ -2,10 +2,6 @@
     position: relative;
 }
 
-.hero-slider-area {
-    background: rgba(83, 192, 160, 0.5);
-}
-
 .category-menu-area li .link-item {
     padding: 7px 20px;
     font-size: 18px;
