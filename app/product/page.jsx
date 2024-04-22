@@ -1,13 +1,11 @@
-
-import Breadcrumb from "../components/productDetail/Breadcrumb"
-import Service from "../components/Service"
-import Sales from "../components/Sales"
-import ProductRightSide from "../components/productDetail/ProductRightSide"
-import ProductLeftSide from "../components/productDetail/ProductLeftSide"
-
+import Breadcrumb from "../components/productDetail/Breadcrumb";
+import Service from "../components/Service";
+import Sales from "../components/Sales";
+import ProductRightSide from "../components/productDetail/ProductRightSide";
+import ProductLeftSide from "../components/productDetail/ProductLeftSide";
+import SectionTitle from "../components/SectionTitle";
 
 const ProductDetails = () => {
-
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -37,19 +35,20 @@ const ProductDetails = () => {
 
     return (
         <>
-            <section className="product-details-section" >
+            <section className="product-details-section">
                 <div className="container">
                     <Breadcrumb />
                     <div className="row product-details-info">
                         <ProductLeftSide />
                         <ProductRightSide />
                     </div>
+                    <SectionTitle title="Recent view" />
                     <Sales />
                     <Service serviceItems={serviceItems} />
                 </div>
-            </section >
+            </section>
         </>
-    )
-}
+    );
+};
 
-export default ProductDetails
+export default ProductDetails;
