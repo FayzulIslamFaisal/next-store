@@ -119,12 +119,10 @@ const ProductInformetion = () => {
                         </div>
                         <div className="product-details-add-cart-area d-flex align-items-center">
                             <div className="product-details-add-cart">
-                                <AddToCartButton title="BUY NOW" />
-                                <button className="product-details-buy-now-btn">BUY NOW</button>
+                                <AddToCartButton title="BUY NOW" buyNowBtn="product-details-action-btn" />
                             </div>
                             <div className="product-details-add-cart">
-                                <AddToCartButton />
-                                <button className="product-details-add-to-cart-btn">ADD TO CART</button>
+                                <AddToCartButton buyNowBtn="product-details-action-btn" />
                             </div>
                         </div>
                     </form>

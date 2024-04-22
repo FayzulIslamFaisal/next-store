@@ -1,5 +1,4 @@
-import Image from "next/image"
-import Link from "next/link"
+
 import Breadcrumb from "../components/productDetail/Breadcrumb"
 import Service from "../components/Service"
 import Sales from "../components/Sales"
@@ -45,8 +44,6 @@ const ProductDetails = () => {
                         <ProductLeftSide />
                         <ProductRightSide />
                     </div>
-
-                    {/* <SectionTitle title="Recent View" path="#" /> */}
                     <Sales />
                     <Service serviceItems={serviceItems} />
                 </div>

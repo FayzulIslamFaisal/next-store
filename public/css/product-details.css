@@ -291,21 +291,22 @@
     gap: 17px;
 }
 
-.product-details-add-cart button {
+.product-details-action-btn {
     border: none;
     outline: none;
     background: var(--color-44BC9D);
-    padding: 8px 15px;
+    /* padding: 0 15px;
+    padding-top: 10px;
+    padding-bottom: 7px; */
     text-align: center;
     width: 122px;
     max-width: 100%;
     font-weight: 700;
     letter-spacing: -0.14px;
     color: var(--color-white);
-    transition: all .2s linear;
 }
 
-.product-details-add-cart button:hover {
+.product-details-action-btn:hover {
     background: var(--color-414042);
 }
 
