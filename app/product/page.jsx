@@ -42,8 +42,7 @@ const ProductDetails = () => {
                         <ProductLeftSide />
                         <ProductRightSide />
                     </div>
-                    <SectionTitle title="Recent view" />
-                    <Sales />
+                    <Sales bgcolor="bg-white" isHome={false} />
                     <Service serviceItems={serviceItems} />
                 </div>
             </section>

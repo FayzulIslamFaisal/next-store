@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-function Sales() {
+function Sales({ bgcolor = "", isHome = true }) {
     const flashSaleProductList = [
         {
             id: 1,
@@ -98,7 +98,7 @@ function Sales() {
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 6,
-        arrows: true,
+        arrows: isHome ? true : false,
         responsive: [
             {
                 breakpoint: 1500,
@@ -127,11 +127,9 @@ function Sales() {
         ],
     };
     return (
-        <section className="flash-sale-area">
+        <section className={`flash-sale-area ${bgcolor}`}>
             <div className="container">
-                <SectionTitle title="Flash Sale" path="#" isSale={true}>
-                    <FlipClock endsAt="2024-04-20 23:59" />
-                </SectionTitle>
+                <SectionTitle title="Recent view" path="#" />
                 <div className="row">
                     <div className="col-md-12">
                         <div className="flash-sale-content-area-grid">

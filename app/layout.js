@@ -48,10 +48,9 @@ export default function RootLayout({ children }) {
       <link rel="stylesheet" href="/css/product-details.css" precedence="default" />
       <link rel="stylesheet" href="/css/common.css" precedence="default" />
       <link rel="stylesheet" href="/css/responsive.css" precedence="default" />
-      <Script strategy="afterInteractive" src="/js/jquery.min.js" />
+      {/* <Script strategy="afterInteractive" src="/js/jquery.min.js" /> */}
       <Script strategy="afterInteractive" src="/js/bootstrap.bundle.min.js" />
-      <Script strategy="afterInteractive" src="/js/slick.min.js" />
-      <Script strategy="afterInteractive" src="/js/custom.js" />
+
       <body>
         <Header />
         {children}

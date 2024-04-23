@@ -22,7 +22,7 @@
     margin-right: -5px;
 }
 
-.product-details-info-multiple-photo .slick-list .slick-slide>div {
+.product-details-info-multiple-photo .slick-list .slick-slide > div {
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -89,8 +89,8 @@
     color: var(--color-414042);
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
-    content: '>' !important;
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">" !important;
     color: var(--color-41ac8f);
 }
 
@@ -187,7 +187,7 @@
 
 .product-short-description-area ul li::before {
     position: absolute;
-    content: '';
+    content: "";
     left: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -234,11 +234,14 @@
     letter-spacing: -0.14px;
 }
 
-.product-details-variant-item input[type="radio"]:checked+label {
+.product-details-variant-item input[type="radio"]:checked + label {
     background: var(--color-C5EEE3);
 }
 
-.product-details-quantity .product-details-variant-item input[type="radio"]:checked+label {
+.product-details-quantity
+    .product-details-variant-item
+    input[type="radio"]:checked
+    + label {
     background: inherit;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
 }
@@ -324,7 +327,7 @@
     padding-top: 10px;
     padding-bottom: 7px; */
     text-align: center;
-    width: 122px;
+    min-width: 122px;
     max-width: 100%;
     font-weight: 700;
     letter-spacing: -0.14px;
@@ -486,7 +489,6 @@
 
 .product-details-service-area {
     padding-top: 12px;
-
 }
 
 /****************End product-details-delivery-area ******************/
@@ -519,7 +521,7 @@
 
 .similer-product-border::before {
     position: absolute;
-    content: '';
+    content: "";
     left: 0;
     top: 100%;
     transform: translateY(-100%);
@@ -573,7 +575,6 @@
 
 /*************** End similer-product-area **********************/
 
-
 /*****************Start product-details-sold-area **************/
 .product-details-sold-area {
     padding: 15px 10px;
@@ -620,7 +621,6 @@
 }
 
 /****************End product-details-sold-area ****************/
-
 
 /****************Start product-long-discription-area ****************/
 .product-long-discription-area {
@@ -691,7 +691,5 @@
     object-fit: cover;
     border-radius: 10px;
 }
-
-
 
 /****************End product-long-discription-area ****************/
