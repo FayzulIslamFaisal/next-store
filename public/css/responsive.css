@@ -65,6 +65,10 @@
     .hero-slider-btn-area {
         padding-top: 30px;
     }
+
+    .product-details-info-multiple-photo {
+        max-width: 360px;
+    }
 }
 
 .main-header-mobile1199 {
@@ -74,6 +78,10 @@
 @media (max-width:1199px) {
     .header-auth-area ul {
         gap: 10px;
+    }
+
+    .product-details-info-multiple-photo {
+        max-width: 400px;
     }
 
     .nh-service-box-bg {
@@ -193,6 +201,10 @@
         gap: 15px;
     }
 
+    .product-details-info-multiple-photo {
+        max-width: 290px;
+    }
+
     .nagadhat-partner-area .row {
         row-gap: 20px;
     }
@@ -203,6 +215,10 @@
 }
 
 @media (max-width:767px) {
+    .product-details-info-multiple-photo {
+        max-width: 90%;
+    }
+
     .similer-product-info h4 {
         font-size: 14px;
     }
@@ -339,6 +355,10 @@
         z-index: 1010;
     }
 
+    .product-details-info-multiple-photo {
+        max-width: 100%;
+    }
+
     .slick-next {
         right: 0 !important;
         z-index: 1010;
@@ -347,5 +367,6 @@
     .add-to-cart-link {
         padding: 6px 8px;
         font-size: 12px;
+        padding-bottom: 4px;
     }
 }

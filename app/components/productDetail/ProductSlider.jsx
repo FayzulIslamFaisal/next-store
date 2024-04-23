@@ -15,7 +15,7 @@ function ProductSlider({ sliderItems }) {
     }, []);
     return (
         <div className="slider-container">
-            <Slider asNavFor={nav2} ref={(slider) => (sliderRef1 = slider)}>
+            <Slider arrows={false} asNavFor={nav2} ref={(slider) => (sliderRef1 = slider)}>
                 <div className="product-details-info-photo">
                     <div className="product-details-info-img">
                         {sliderItems.map((sliderItem) => (
@@ -53,14 +53,23 @@ function ProductSlider({ sliderItems }) {
                     </div>
                 </div>
             </Slider>
-            <Slider
-                asNavFor={nav1}
-                ref={(slider) => (sliderRef2 = slider)}
-                slidesToShow={4}
-                swipeToSlide={true}
-                focusOnSelect={true}
-            >
-                <div className="product-details-info-multiple-photo">
+            <div className="product-details-info-multiple-photo">
+                <Slider
+                    asNavFor={nav1}
+                    ref={(slider) => (sliderRef2 = slider)}
+                    slidesToShow={4}
+                    swipeToSlide={true}
+                    focusOnSelect={true}
+                    responsive={[
+                        {
+                            breakpoint: 767,
+                            settings: {
+                                slidesToShow: 3,
+                                // slidesToScroll: 3,
+                            }
+                        },
+                    ]}
+                >
                     <div className="product-multiple-photo-item">
                         <Image
                             className="img-fluid"
@@ -69,8 +78,6 @@ function ProductSlider({ sliderItems }) {
                             alt="multiple product image"
                         />
                     </div>
-                </div>
-                <div className="product-details-info-multiple-photo">
                     <div className="product-multiple-photo-item">
                         <Image
                             className="img-fluid"
@@ -79,8 +86,6 @@ function ProductSlider({ sliderItems }) {
                             alt="multiple product image"
                         />
                     </div>
-                </div>
-                <div className="product-details-info-multiple-photo">
                     <div className="product-multiple-photo-item">
                         <Image
                             className="img-fluid"
@@ -89,8 +94,9 @@ function ProductSlider({ sliderItems }) {
                             alt="multiple product image"
                         />
                     </div>
-                </div>
-            </Slider>
+                </Slider>
+            </div>
+
         </div>
     );
 }
