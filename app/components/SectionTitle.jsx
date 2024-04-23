@@ -1,7 +1,13 @@
 "use client";
 import useScreenSize from "../hooks/useScreenSize";
 
-function SectionTitle({ title, path = "#", children, isSale = false }) {
+function SectionTitle({
+    title,
+    path = "#",
+    children,
+    isSale = false,
+    showViewAll = true,
+}) {
     const { width } = useScreenSize();
     const MAX_SCREEN_SIZE = 490;
     return (
@@ -17,9 +23,11 @@ function SectionTitle({ title, path = "#", children, isSale = false }) {
                         <div className="common-border"></div>
                     </div>
                     {children}
-                    <div className="nh-common-item">
-                        <a href={path}>View All</a>
-                    </div>
+                    {showViewAll && (
+                        <div className="nh-common-item">
+                            <a href={path}>View All</a>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
