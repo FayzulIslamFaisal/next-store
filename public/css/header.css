@@ -25,7 +25,7 @@ header {
 
 .header-top-area {
     padding-top: 10px;
-    padding-bottom: 18px;
+    padding-bottom: 12px;
 }
 
 .header-top-menu-item ul li {
@@ -52,7 +52,7 @@ header {
 }
 
 .main-header-area {
-    padding-bottom: 20px;
+    padding-bottom: 12px;
 }
 
 .header-top-menu-item ul {
@@ -68,13 +68,32 @@ header {
     flex: 2;
 }
 
+.logo {
+    padding-top: 10px;
+}
+
 .header-auth-area {
     padding-left: 15px;
+    padding-top: 10px;
+}
+
+.observerable-header-section .main-header-area {
+    align-items: center;
+}
+
+.observerable-header-section .logo {
+    padding-top: 0;
+}
+
+.observerable-header-section .header-auth-area {
+    padding-top: 0;
 }
 
 .header-auth-area ul {
     gap: 20px;
 }
+
+
 
 .header-search-area {
     background: var(--color-white);
@@ -90,7 +109,7 @@ header {
 }
 
 .header-search-field {
-    flex: 1.3;
+    flex: 3;
 }
 
 .header-search-field .form-control {
@@ -253,7 +272,7 @@ header {
 
 .observer-hover-menu {
     position: fixed;
-    top: 79px;
+    top: 68px;
     z-index: 1050;
     opacity: 0;
     visibility: hidden;
@@ -266,11 +285,15 @@ header {
 }
 
 .observerable-header-section {
-    padding-top: 15px;
+    padding-top: 12px;
 }
 
 .mobile-nav-row-area {
-    padding-bottom: 20px;
+    padding-bottom: 15px;
+}
+
+.observerable-header-section .header-search-location button {
+    font-size: 12px;
 }
 
 .mobile-logo {
@@ -304,7 +327,7 @@ header {
 
 .mobile-nav-col-area {
     position: relative;
-    padding-top: 20px;
+    padding-top: 15px;
 }
 
 .mobile-popup-search-area {

@@ -2,8 +2,31 @@
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import Slider from "react-slick";
+import MultipleProductSlider from "./MultipleProductSlider";
 
 function ProductSlider({ sliderItems }) {
+    const multipleImageItems = [
+        {
+            id: 1,
+            imageUrl: "/images/m-Img-1.svg",
+            altText: "m-Img-1",
+        },
+        {
+            id: 2,
+            imageUrl: "/images/m-Img-2.svg",
+            altText: "m-Img-1",
+        },
+        {
+            id: 3,
+            imageUrl: "/images/m-Img-3.svg",
+            altText: "m-Img-1",
+        },
+        {
+            id: 4,
+            imageUrl: "/images/m-Img-2.svg",
+            altText: "m-Img-1",
+        },
+    ]
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
     let sliderRef1 = useRef(null);
@@ -42,16 +65,6 @@ function ProductSlider({ sliderItems }) {
                         ))}
                     </div>
                 </div>
-                <div className="product-details-info-photo">
-                    <div className="product-details-info-img">
-                        <Image
-                            src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg"
-                            fill={true}
-                            alt="product image"
-                            className="img-fluid"
-                        />
-                    </div>
-                </div>
             </Slider>
             <div className="product-details-info-multiple-photo">
                 <Slider
@@ -65,35 +78,17 @@ function ProductSlider({ sliderItems }) {
                             breakpoint: 767,
                             settings: {
                                 slidesToShow: 3,
-                                // slidesToScroll: 3,
                             }
                         },
                     ]}
                 >
-                    <div className="product-multiple-photo-item">
-                        <Image
-                            className="img-fluid"
-                            src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg"
-                            fill={true}
-                            alt="multiple product image"
-                        />
-                    </div>
-                    <div className="product-multiple-photo-item">
-                        <Image
-                            className="img-fluid"
-                            src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg"
-                            fill={true}
-                            alt="multiple product image"
-                        />
-                    </div>
-                    <div className="product-multiple-photo-item">
-                        <Image
-                            className="img-fluid"
-                            src="/images/transtec-bright-cdl-led-bulb-pin-15-watt-1-pcs 1.jpg"
-                            fill={true}
-                            alt="multiple product image"
-                        />
-                    </div>
+                    {
+                        multipleImageItems.map((mImageItem) => {
+                            return (
+                                <MultipleProductSlider key={mImageItem.id} multipleImage={mImageItem} />
+                            )
+                        })
+                    }
                 </Slider>
             </div>
 

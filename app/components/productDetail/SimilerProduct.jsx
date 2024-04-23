@@ -1,4 +1,5 @@
 
+import SectionTitle from '../SectionTitle';
 import SimilerProductItems from './SimilerProductItems';
 
 const SimilerProduct = ({ productData }) => {
