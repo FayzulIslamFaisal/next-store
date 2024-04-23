@@ -14,7 +14,7 @@ function MainNav({
                     }`}
             >
                 <div className="col-12">
-                    <div className="main-header-area d-flex align-items-center">
+                    <div className="main-header-area d-flex">
                         <div className="logo">
                             <Link href="/">
                                 <img src={`/images/logo.svg`} alt="logo" />
@@ -115,7 +115,7 @@ function MainNav({
 
             <div className={`row observerable-header-section ${isObserverMenuVisible ? "" : "d-none"}`} >
                 <div className="col-12">
-                    <div className="main-header-area d-flex align-items-center">
+                    <div className="main-header-area d-flex">
                         <div className="logo">
                             <Link href="/">
                                 <img src={`/images/logo.svg`} alt="logo" />

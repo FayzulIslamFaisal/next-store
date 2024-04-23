@@ -6,7 +6,7 @@ const ProductDeliveryDetail = () => {
         <div className="product-details-delivery-area">
             <div className="product-details-delivery-bg ">
                 <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
-                    <h2>Delivery</h2>
+                    <h2>shipping address</h2>
                     <div className="product-delivery-top-img">
                         <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" fill={true} />
                     </div>
@@ -23,29 +23,30 @@ const ProductDeliveryDetail = () => {
                     </div>
                 </div>
                 <div className="product-free-delivery-area">
-                    <div className="product-free-delivery-top d-flex justify-content-between">
+                    <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
+                        <h2>delivery charge</h2>
+                        <div className="product-delivery-top-img">
+                            <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" fill={true} />
+                        </div>
+                    </div>
+                    <div className="product-free-delivery-top d-flex justify-content-between flex-column">
                         <div className="product-free-delivery-info d-flex align-items-center">
                             <div className="product-free-delivery-info-img sidebar-common-img-size">
                                 <Image className="img-fluid" src="/images/free-delivery.svg" fill={true} alt="free-delivery" />
                             </div>
-                            <h5>Free Delivery</h5>
-                            <p>12 Apr - 19 Apr</p>
+                            <h5>Delivery</h5>
+                            {/* <p>12 Apr - 19 Apr</p> */}
                         </div>
                         <div className="product-free-delivery-info ">
-                            <Link href="#" className="custom-text-link">FREE</Link>
+                            <h6 className="custom-text-link">FREE</h6>
                         </div>
                     </div>
                     <div className="product-free-delivery-end-time">
-                        <p>12 - 19 day(s)</p>
+                        {/* <p>12 - 19 day(s)</p>
                         <div className="product-free-delivery-textarea">
                             <textarea className="form-control" value="Enjoy free shipping promotion with minimum spend of ৳ 499 from Buy More Save More." />
-                        </div>
-                        <div className="product-free-delivery-two-col d-flex align-items-center">
-                            <div className="product-free-delivery-two-col-img sidebar-common-img-size">
-                                <Image className="img-fluid" src="/images/cash-on-delivery.svg" fill={true} alt="cash-on-delivery" />
-                            </div>
-                            <h5>Cash on Delivery Available</h5>
-                        </div>
+                        </div> */}
+
                     </div>
                 </div>
                 <div className="product-details-service-area">
@@ -55,6 +56,18 @@ const ProductDeliveryDetail = () => {
                             <Image className="img-fluid" src="/images/delivery.svg" alt="delivery image" fill={true} />
                         </div>
                     </div>
+                    <div className="product-free-delivery-two-col-holder">
+                        <div className="product-free-delivery-two-col d-flex align-items-center">
+                            <div className="product-free-delivery-two-col-img sidebar-common-img-size">
+                                <Image className="img-fluid" src="/images/cash-on-delivery.svg" fill={true} alt="cash-on-delivery" />
+                            </div>
+                            <h5>Cash on Delivery </h5>
+                        </div>
+                        <div className="product-free-delivery-status">
+                            <h5>Available</h5>
+                        </div>
+                    </div>
+
                     <div className="product-details-service-info">
                         <div className="product-free-delivery-two-col d-flex align-items-center">
                             <div className="product-free-delivery-two-col-img sidebar-common-img-size">
