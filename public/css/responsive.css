@@ -44,6 +44,14 @@
         font-size: 13px;
     }
 
+    .nh-service-box-bg {
+        padding: 20px;
+    }
+
+    .similer-product-area .nh-common-title .common-border {
+        width: 70px;
+    }
+
     .observerable-header-section .header-search-location {
         flex: 1.4;
     }
@@ -86,6 +94,14 @@
 @media (max-width: 1199px) {
     .header-auth-area ul {
         gap: 10px;
+    }
+
+    .product-details-section .nh-service-area {
+        padding-top: 0;
+    }
+
+    .product-long-discription-area {
+        padding-top: 50px;
     }
 
     .product-details-info-multiple-photo {
@@ -178,13 +194,21 @@
         font-size: 14px;
     }
 
+    .nh-service-box-info h5 {
+        font-size: 16px;
+    }
+
+    .nh-service-box-info p {
+        font-size: 14px;
+    }
+
     .payment-method-row,
     .footer-widget-row {
         padding-bottom: 30px;
     }
 
     .nh-service-box-bg {
-        padding: 20px 15px;
+        padding: 15px;
     }
 
     .nh-service-box {
@@ -226,6 +250,18 @@
         max-width: 90%;
     }
 
+    .product-details-info-multiple-photo {
+        padding-bottom: 10px;
+    }
+
+    .product-short-description-area {
+        padding-bottom: 25px;
+    }
+
+    .breadcrumb {
+        padding-bottom: 25px;
+    }
+
     .similer-product-info h4 {
         font-size: 14px;
     }
@@ -241,7 +277,7 @@
     }
 
     .product-long-discription-tab .nav-tabs {
-        gap: 15px;
+        gap: 10px;
     }
 
     .product-long-discription-area {
@@ -344,7 +380,7 @@
         margin: 0 -5px !important;
     }
 
-    .flash-sale-content-area-grid .slick-slide > div {
+    .flash-sale-content-area-grid .slick-slide>div {
         padding: 0 5px !important;
     }
 
