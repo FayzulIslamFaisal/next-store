@@ -139,3 +139,13 @@ footer {
 .footer-widget-address-info p {
     max-width: 91%;
 }
+
+.payment-method-img {
+    position: relative;
+    width: 100%;
+    height: 58px;
+}
+
+.payment-method-img img {
+    object-fit: contain;
+}

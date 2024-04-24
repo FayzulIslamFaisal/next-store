@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function ProductCard({ item }) {
@@ -13,7 +14,7 @@ function ProductCard({ item }) {
                 </div>
                 <div className="flash-sale-content-info text-hover-effect">
                     <h4>
-                        <a href={item.path}>{item.title}</a>
+                        <Link href={item.path}>{item.title}</Link>
                     </h4>
                     <strong>৳ {item.price}</strong>
                     <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">

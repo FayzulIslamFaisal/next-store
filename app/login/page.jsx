@@ -9,27 +9,27 @@ const login = () => {
                         <h1 className='text-center text-capitalize'>Login to your account.</h1>
                         <div className="user-login-form">
                             <form>
-                                <div class="mb-3">
-                                    <label for="number" class="form-label"> Phone Number</label>
-                                    <input type="text" class="form-control" id="number" />
+                                <div className="mb-3">
+                                    <label htmlFor="number" className="form-label"> Phone Number</label>
+                                    <input type="text" className="form-control" id="number" />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" />
+                                <div className="mb-3">
+                                    <label htmlFor="password" className="form-label">Password</label>
+                                    <input type="password" className="form-control" id="password" />
                                 </div>
-                                <div class="mb-3 form-check d-flex align-items-center justify-content-between ">
+                                <div className="mb-3 form-check d-flex align-items-center justify-content-between ">
                                     <div className="inner-field">
-                                        <input type="checkbox" class="form-check-input" id="remember" />
-                                        <label class="form-check-label" for="remember">Remember Me</label>
+                                        <input type="checkbox" className="form-check-input" id="remember" />
+                                        <label className="form-check-label" htmlFor="remember">Remember Me</label>
                                     </div>
                                     <div className="inner-field">
                                         <Link href="#">Forgot Password ?</Link>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" className="btn btn-primary">Login</button>
                             </form>
                             <div className="user-social-login mt-3">
-                                <label class="form-label">Or Login With</label>
+                                <label className="form-label">Or Login With</label>
                                 <div className="mb-3 user-social-login-item d-flex align-items-center  justify-content-center ">
                                     <button>Facebook</button>
                                     <button>Google</button>

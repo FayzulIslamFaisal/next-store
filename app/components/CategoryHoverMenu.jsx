@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
@@ -9,13 +11,14 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
             >
                 <ul className="category-menu-area">
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/fashion-icon.svg"
                                         alt="fashion-icon"
                                     />
@@ -23,29 +26,31 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Fashion
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                         <ul className="sub-category-menu">
                             <li>
-                                <a href="#">Men's Fashion</a>
+                                <Link href="#">Men's Fashion</Link>
                             </li>
                             <li>
-                                <a href="#">Women's Fashion</a>
+                                <Link href="#">Women's Fashion</Link>
                             </li>
                         </ul>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/digital-products.svg"
                                         alt="digital-products"
                                     />
@@ -53,21 +58,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Digital Products
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/toiletries-icon.svg"
                                         alt="toiletries-icon"
                                     />
@@ -75,21 +82,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Toiletries
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/Cleaning-Supplies.svg"
                                         alt="Cleaning-Supplies"
                                     />
@@ -97,21 +106,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Cleaning Supplies
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/Food-icon.svg"
                                         alt="Food-icon"
                                     />
@@ -119,21 +130,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Food
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/Diapers.svg"
                                         alt="Diapers"
                                     />
@@ -141,21 +154,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Diapers
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/BabyCare.svg"
                                         alt="BabyCare"
                                     />
@@ -163,21 +178,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Baby Care
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/Stationery.svg"
                                         alt="Stationery"
                                     />
@@ -185,21 +202,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Stationery
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/HomeAppliances.svg"
                                         alt="HomeAppliances"
                                     />
@@ -207,21 +226,23 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Home Appliances
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-link">
-                        <a
+                        <Link
                             href="#"
                             className="link-item d-flex align-items-center justify-content-between "
                         >
                             <p className="d-flex align-items-center">
                                 <span>
-                                    <img
+                                    <Image
+                                        width={23} height={20}
                                         src="/images/Cosmetics.svg"
                                         alt="Cosmetics"
                                     />
@@ -229,12 +250,13 @@ function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
                                 Cosmetics
                             </p>
                             <small>
-                                <img
+                                <Image
+                                    width={32} height={32}
                                     src="/images/menu-arrow.svg"
                                     alt="arrow icon"
                                 />
                             </small>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
