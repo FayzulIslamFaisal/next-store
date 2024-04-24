@@ -17,7 +17,7 @@ function MainNav({
                     <div className="main-header-area d-flex">
                         <div className="logo">
                             <Link href="/" className=" d-inline-block">
-                                <Image width={0} height={43} sizes="100vw" src={`/images/logo.svg`} style={{ width: '100%' }} />
+                                <Image width={0} height={43} sizes="100vw" src={`/images/logo.svg`} style={{ width: '100%' }} alt="logo" />
                             </Link>
                         </div>
                         <div className="header-search-area d-flex align-items-center w-100">
@@ -118,7 +118,7 @@ function MainNav({
                     <div className="main-header-area d-flex">
                         <div className="logo">
                             <Link href="/" className=" d-inline-block">
-                                <Image width={0} height={43} sizes="100vw" src={`/images/logo.svg`} style={{ width: '100%' }} />
+                                <Image width={0} height={43} sizes="100vw" alt="logo" src={`/images/logo.svg`} style={{ width: '100%' }} />
                             </Link>
                         </div>
                         <div className="header-search-area observerable-header-search-area">
