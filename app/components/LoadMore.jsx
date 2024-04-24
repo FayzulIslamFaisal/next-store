@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function LoadMore({ onLoadMore }) {
@@ -5,13 +6,13 @@ function LoadMore({ onLoadMore }) {
         <div className="row load-more-btn-row">
             <div className="col-md-12">
                 <div className="load-more-btn-area text-center text-uppercase">
-                    <a
+                    <Link
                         href="#"
                         className="load-more-btn"
                         onClick={(e) => onLoadMore(e)}
                     >
                         Load more
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

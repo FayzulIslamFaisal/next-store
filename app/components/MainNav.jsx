@@ -16,8 +16,8 @@ function MainNav({
                 <div className="col-12">
                     <div className="main-header-area d-flex">
                         <div className="logo">
-                            <Link href="/">
-                                <img src={`/images/logo.svg`} alt="logo" />
+                            <Link href="/" className=" d-inline-block">
+                                <Image width={0} height={43} sizes="100vw" src={`/images/logo.svg`} style={{ width: '100%' }} />
                             </Link>
                         </div>
                         <div className="header-search-area d-flex align-items-center w-100">
@@ -117,8 +117,8 @@ function MainNav({
                 <div className="col-12">
                     <div className="main-header-area d-flex">
                         <div className="logo">
-                            <Link href="/">
-                                <img src={`/images/logo.svg`} alt="logo" />
+                            <Link href="/" className=" d-inline-block">
+                                <Image width={0} height={43} sizes="100vw" src={`/images/logo.svg`} style={{ width: '100%' }} />
                             </Link>
                         </div>
                         <div className="header-search-area observerable-header-search-area">
@@ -132,7 +132,7 @@ function MainNav({
                                         // setCategoryHoverMenu(false)
                                     }
                                 >
-                                    <a
+                                    <Link
                                         href="#"
                                         className="d-flex align-items-center text-white text-capitalize"
                                     >
@@ -144,7 +144,7 @@ function MainNav({
                                             width={10}
                                             height={7}
                                         />
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="header-search-holder d-flex align-items-centers">
                                     <div className="header-search-location">

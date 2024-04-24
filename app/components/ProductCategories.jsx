@@ -19,18 +19,18 @@ const ProductCategories = ({ categoryProductData }) => {
             {
                 breakpoint: 1500,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToShow: 6,
+                    slidesToScroll: 6,
                     arrows: true,
                     // nextArrow: <p>Next slide</p>,
                     // prevArrow: <p>Prev slide</p>,
                 }
             },
             {
-                breakpoint: 1024,
+                breakpoint: 1199,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
                     arrows: true,
                 }
             },

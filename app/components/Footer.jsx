@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CopyRight from "./CopyRight";
 import FooterAddress from "./FooterAddress";
 import FooterLogo from "./FooterLogo";
@@ -70,7 +71,7 @@ function Footer() {
                             <div className="col-md-4">
                                 <QuickLinks title="Be A Seller">
                                     <div className="applay-now-btn">
-                                        <a href="#">APPLY NOW</a>
+                                        <Link href="#">APPLY NOW</Link>
                                     </div>
                                 </QuickLinks>
                             </div>

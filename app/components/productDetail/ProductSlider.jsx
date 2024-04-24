@@ -31,7 +31,7 @@ function ProductSlider({ sliderItems }) {
     const [nav2, setNav2] = useState(null);
     let sliderRef1 = useRef(null);
     let sliderRef2 = useRef(null);
-    console.table("sliderItems", sliderItems);
+    // console.table("sliderItems", sliderItems);
     useEffect(() => {
         setNav1(sliderRef1);
         setNav2(sliderRef2);
