@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Service from "./Service";
 import SectionTitle from "./SectionTitle";
 import ProductCategories from "./ProductCategories";
@@ -6,7 +7,7 @@ import ProductCard from "./ProductCard";
 import AddToCartButton from "./AddToCartButton";
 import Like from "./Like";
 import LoadMore from "./LoadMore";
-import { useEffect, useState } from "react";
+import getBrandService from "../services/getBrandService";
 
 function Category() {
     const justForYouProductList = [
@@ -194,6 +195,7 @@ function Category() {
     const [offset, setOffset] = useState(12);
     const [showLoadMore, setLoadMore] = useState(true);
     const [jfyProducts, setJfyProducts] = useState(justForYouProductList);
+    const [categoryBrandData, setCategoryBrandData] = useState([]);
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -222,200 +224,228 @@ function Category() {
     ];
     const categoryProductData = [
         {
-            imageurl: "/images/meril.svg",
-            altText: "category image 1",
-            path: "#",
+            id: 1,
             title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/meril.svg",
-            altText: "category image 2",
-            path: "#",
-            title: "Washing Powder",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 3",
-            path: "#",
-            title: "Women",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 4",
-            path: "#",
-            title: "LED Strip Lighting",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 5",
-            path: "#",
-            title: "Wireless Earbud",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 6",
-            path: "#",
-            title: "Humidifiers",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 7",
-            path: "#",
-            title: "Modelling & Sculpting",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 8",
-            path: "#",
-            title: "Bedding Accessories",
-        },
-
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 9",
-            path: "#",
+            id: 2,
             title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/meril.svg",
-            altText: "category image 10",
-            path: "#",
-            title: "Washing Powder",
+            id: 3,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/meril.svg",
-            altText: "category image 11",
-            path: "#",
-            title: "Women",
+            id: 4,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/meril.svg",
-            altText: "category image 12",
-            path: "#",
-            title: "LED Strip Lighting",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 13",
-            path: "#",
-            title: "Wireless Earbud",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 14",
-            path: "#",
-            title: "Humidifiers",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 15",
-            path: "#",
-            title: "Modelling & Sculpting",
-        },
-        {
-            imageurl: "/images/meril.svg",
-            altText: "category image 16",
-            path: "#",
-            title: "Bedding Accessories",
-        },
-    ];
-    const categoryBrandData = [
-        {
-            imageurl: "/images/bengal.svg",
-            altText: "Brand image 1",
-            path: "#",
+            id: 5,
             title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/square.svg",
-            altText: "Brand image 2",
-            path: "#",
-            title: "Washing Powder",
-        },
-        {
-            imageurl: "/images/bd-food.svg",
-            altText: "Brand image 3",
-            path: "#",
-            title: "Women",
-        },
-        {
-            imageurl: "/images/bengal.svg",
-            altText: "Brand image 4",
-            path: "#",
-            title: "LED Strip Lighting",
-        },
-        {
-            imageurl: "/images/square.svg",
-            altText: "Brand image 5",
-            path: "#",
-            title: "Wireless Earbud",
-        },
-        {
-            imageurl: "/images/bd-food.svg",
-            altText: "Brand image 6",
-            path: "#",
-            title: "Humidifiers",
-        },
-        {
-            imageurl: "/images/bengal.svg",
-            altText: "Brand image 7",
-            path: "#",
-            title: "Modelling & Sculpting",
-        },
-        {
-            imageurl: "/images/square.svg",
-            altText: "Brand image 8",
-            path: "#",
-            title: "Bedding Accessories",
-        },
-
-        {
-            imageurl: "/images/bd-food.svg",
-            altText: "Brand image 9",
-            path: "#",
+            id: 6,
             title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/bengal.svg",
-            altText: "Brand image 10",
-            path: "#",
-            title: "Washing Powder",
+            id: 7,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/square.svg",
-            altText: "Brand image 11",
-            path: "#",
-            title: "Women",
+            id: 8,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/bd-food.svg",
-            altText: "Brand image 12",
-            path: "#",
-            title: "LED Strip Lighting",
+            id: 9,
+            title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/bengal.svg",
-            altText: "Brand image 13",
-            path: "#",
-            title: "Wireless Earbud",
+            id: 10,
+            title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/square.svg",
-            altText: "Brand image 14",
-            path: "#",
-            title: "Humidifiers",
+            id: 11,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/meril.svg",
-            altText: "Brand image 15",
-            path: "#",
-            title: "Modelling & Sculpting",
+            id: 12,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
         {
-            imageurl: "/images/meril.svg",
-            altText: "Brand image 16",
-            path: "#",
-            title: "Bedding Accessories",
+            id: 13,
+            title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
+        },
+        {
+            id: 14,
+            title: "Wardrobe Organisers",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
+        },
+        {
+            id: 15,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
+        },
+        {
+            id: 16,
+            title: "Meril",
+            description: "Wardrobe Organisers",
+            slug: "wardrobe-organisers",
+            logo: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            banner: "storage/media/brand/banner/istockphoto-1305947366-1024x1024.jpg",
+            pos_brand_id: null,
+            parent_id: 0,
+            is_top_brand: 0,
+            status: 1,
+            created_at: "2024-03-30T06:46:35.000000Z",
+            updated_at: "2024-03-30T06:46:35.000000Z",
         },
     ];
 
@@ -437,6 +467,14 @@ function Category() {
         fetchJfyProducts();
     }, [offset]);
 
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getBrandService();
+            setCategoryBrandData(data);
+        }
+        fetchData();
+    }, []);
+
     return (
         <section className="nh-categories-area">
             <div className="container">
@@ -445,9 +483,11 @@ function Category() {
 
                 <div className="nh-brands-area">
                     <SectionTitle title="Brands" path="#" />
-                    <ProductCategories
-                        categoryProductData={categoryBrandData}
-                    />
+                    {categoryBrandData && (
+                        <ProductCategories
+                            categoryProductData={categoryBrandData}
+                        />
+                    )}
                 </div>
 
                 <div className="nh-just-for-you">

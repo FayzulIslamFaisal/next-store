@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductCategoryItem from "./ProductCategoryItem";
 
 const ProductCategories = ({ categoryProductData }) => {
+    console.log("categoryProductData :=>>>>>>", categoryProductData);
     const settings = {
         dots: false,
         infinite: true,
@@ -24,7 +25,7 @@ const ProductCategories = ({ categoryProductData }) => {
                     arrows: true,
                     // nextArrow: <p>Next slide</p>,
                     // prevArrow: <p>Prev slide</p>,
-                }
+                },
             },
             {
                 breakpoint: 1024,
@@ -32,7 +33,7 @@ const ProductCategories = ({ categoryProductData }) => {
                     slidesToShow: 3,
                     slidesToScroll: 3,
                     arrows: true,
-                }
+                },
             },
             {
                 breakpoint: 767,
@@ -40,10 +41,9 @@ const ProductCategories = ({ categoryProductData }) => {
                     slidesToShow: 2,
                     slidesToScroll: 2,
                     arrows: true,
-                }
+                },
             },
-
-        ]
+        ],
     };
 
     return (
@@ -51,10 +51,10 @@ const ProductCategories = ({ categoryProductData }) => {
             <div className="col-md-12">
                 <div className="nh-categories-holder-s">
                     <Slider {...settings}>
-                        {categoryProductData.map((itme, index) => (
+                        {categoryProductData.map((item) => (
                             <ProductCategoryItem
-                                key={index}
-                                categoryItem={itme}
+                                key={item.id}
+                                categoryItem={item}
                             />
                         ))}
                     </Slider>
