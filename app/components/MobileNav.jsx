@@ -1,30 +1,39 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 const MobileNav = () => {
     const [popupSearch, setPopupSearch] = useState(false);
-    // const searchAreaRef = useRef(null);
+    const searchAreaRef = useRef(null);
 
     const toggleSearchField = () => {
         setPopupSearch(!popupSearch);
     };
 
-    // useEffect(() => {
-    //     const searchPopupClickOutsideHide = (event) => {
-    //         if (searchAreaRef.current && !searchAreaRef.current.contains(event.target)) {
-    //             setPopupSearch(false);
-    //         }
-    //     };
-    //     console.log('hide search');
-    //     if (typeof window !== 'undefined') {
-    //         window.addEventListener('click', searchPopupClickOutsideHide);
-    //         return () => {
-    //             window.removeEventListener('click', searchPopupClickOutsideHide);
-    //         };
-    //     }
-    // }, []);
+    useEffect(() => {
+        const searchPopupClickOutsideHide = (event) => {
+            if (
+                searchAreaRef.current &&
+                !searchAreaRef.current.contains(event.target)
+            ) {
+                setPopupSearch(false);
+            }
+        };
+        console.log("hide search");
+        if (typeof window !== "undefined") {
+            document.body.addEventListener(
+                "click",
+                searchPopupClickOutsideHide
+            );
+            return () => {
+                document.body.removeEventListener(
+                    "click",
+                    searchPopupClickOutsideHide
+                );
+            };
+        }
+    }, []);
 
     return (
         <div className="row mobile-nav-row-area">
@@ -68,7 +77,12 @@ const MobileNav = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={`mobile-popup-search-area ${popupSearch ? "active" : ""}`} >
+                    <div
+                        className={`mobile-popup-search-area ${
+                            popupSearch ? "active" : ""
+                        }`}
+                        ref={searchAreaRef}
+                    >
                         <form action="#">
                             <div className="mobile-popup-search-item">
                                 <input
