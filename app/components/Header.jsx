@@ -23,7 +23,7 @@ function Header() {
                 scrollPositionWidth = window.innerWidth;
             }
             scrollPosition > 5 ? setSticky(true) : setSticky(false);
-            scrollPositionWidth < 1199
+            scrollPositionWidth < 1200
                 ? setResponsive(true)
                 : setResponsive(false);
             if (scrollPosition > 450) {

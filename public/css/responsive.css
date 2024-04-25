@@ -40,6 +40,11 @@
 }
 
 @media (max-width: 1400px) {
+    .product-category-grid-area {
+        -ms-grid-columns: 1fr 20px 1fr 20px 1fr;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     .header-search-location button {
         font-size: 13px;
     }
@@ -228,6 +233,11 @@
 }
 
 @media (max-width: 991px) {
+    .product-category-grid-area {
+        -ms-grid-columns: 1fr 20px 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .product-details-quantity-area {
         gap: 15px;
     }
