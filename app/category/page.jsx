@@ -1,8 +1,109 @@
 import Image from "next/image"
 import Breadcrumb from "../components/productDetail/Breadcrumb"
 import Link from "next/link"
+import SectionTitle from "../components/SectionTitle"
+import ProductCategories from "../components/ProductCategories"
 
 const ProductCategory = () => {
+    const categoryProductData = [
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 1",
+            path: "#",
+            title: "Wardrobe Organisers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 2",
+            path: "#",
+            title: "Washing Powder",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 3",
+            path: "#",
+            title: "Women",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 4",
+            path: "#",
+            title: "LED Strip Lighting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 5",
+            path: "#",
+            title: "Wireless Earbud",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 6",
+            path: "#",
+            title: "Humidifiers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 7",
+            path: "#",
+            title: "Modelling & Sculpting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 8",
+            path: "#",
+            title: "Bedding Accessories",
+        },
+
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 9",
+            path: "#",
+            title: "Wardrobe Organisers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 10",
+            path: "#",
+            title: "Washing Powder",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 11",
+            path: "#",
+            title: "Women",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 12",
+            path: "#",
+            title: "LED Strip Lighting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 13",
+            path: "#",
+            title: "Wireless Earbud",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 14",
+            path: "#",
+            title: "Humidifiers",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 15",
+            path: "#",
+            title: "Modelling & Sculpting",
+        },
+        {
+            imageurl: "/images/meril.svg",
+            altText: "category image 16",
+            path: "#",
+            title: "Bedding Accessories",
+        },
+    ];
     return (
         <>
             <section className="product-category-wrapper">
@@ -743,17 +844,17 @@ const ProductCategory = () => {
                                                     </div>
                                                     <div className="product-category-pagination-col">
                                                         <nav aria-label="Page navigation example">
-                                                            <ul className="pagination">
+                                                            <ul className="pagination align-items-center">
                                                                 <li className="page-item">
                                                                     <Link className="page-link" href="#" aria-label="Previous">
                                                                         <span aria-hidden="true">&#60;</span>
                                                                     </Link>
                                                                 </li>
                                                                 <li className="page-item"><Link className="page-link" href="#">1</Link></li>
-                                                                <li className="page-item"><Link className="page-link" href="#">2</Link></li>
+                                                                <li className="page-item"><Link className="page-link active" href="#">2</Link></li>
                                                                 <li className="page-item"><Link className="page-link" href="#">3</Link></li>
                                                                 <li className="page-item"><Link className="page-link" href="#">4</Link></li>
-                                                                <li className="page-item"><Link className="page-link" href="#">...</Link></li>
+                                                                <li className="page-item"><Link className="page-link page-link-dotted" href="#">...</Link></li>
                                                                 <li className="page-item"><Link className="page-link" href="#">10</Link></li>
                                                                 <li className="page-item">
                                                                     <Link className="page-link" href="#" aria-label="Next">
@@ -766,7 +867,8 @@ const ProductCategory = () => {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <SectionTitle title="Featured Brands" />
+                                        <ProductCategories categoryProductData={categoryProductData}  countRows={1} sliderShowCount={6} slidesScrollCount={6} />
                                     </div>
                                 </main>
                             </div>

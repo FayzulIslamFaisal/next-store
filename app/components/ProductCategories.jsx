@@ -4,14 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCategoryItem from "./ProductCategoryItem";
 
-const ProductCategories = ({ categoryProductData }) => {
+const ProductCategories = ({ categoryProductData, countRows = 2, sliderShowCount = 8, slidesScrollCount = 8, isHome = true }) => {
     const settings = {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 8,
-        slidesToScroll: 8,
-        rows: 2,
+        slidesToShow: sliderShowCount,
+        slidesToScroll: slidesScrollCount,
+        rows: countRows,
         arrows: false,
         // nextArrow: <p>Next slide</p>,
         // prevArrow: <p>Prev slide</p>,

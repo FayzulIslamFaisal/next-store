@@ -98,6 +98,7 @@
 /****************** Start product-category-pagination-row  ****************/
 .product-category-pagination-row {
     padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .product-category-pagination-inner p {
@@ -119,6 +120,53 @@
     font-size: 16px;
     line-height: 26px;
     background: transparent;
+}
+
+.product-category-pagination-col .pagination {
+    gap: 8px;
+}
+
+.product-category-pagination-col .page-item .page-link {
+    padding: 0 8.5px;
+    line-height: 26px;
+    font-size: 16px;
+    color: var(--color-8F8F8F);
+    border: 1px solid var(--color-ACACAC);
+    border-radius: 4px;
+    transition: all .2s linear;
+}
+
+.product-category-pagination-col .page-item .page-link:hover {
+    background: var(--color-44BC9D);
+    color: var(--color-white);
+}
+
+.product-category-pagination-col .page-item .page-link.active {
+    background: var(--color-44BC9D);
+    color: var(--color-white);
+}
+
+.product-category-pagination-col .page-item .page-link.page-link-dotted {
+    border: none;
+    background: transparent;
+    margin-top: -6px;
+}
+
+.product-category-pagination-col .page-item .page-link.page-link-dotted:hover {
+    color: var(--color-8F8F8F);
+}
+
+.product-category-pagination-col .page-item .page-link:focus {
+    box-shadow: none;
+    background: var(--color-44BC9D);
+    border: 1px solid var(--color-ACACAC);
+    color: var(--color-white);
+}
+
+.product-category-pagination-col .page-item .page-link.page-link-dotted:focus {
+    background: transparent;
+    border: none;
+    color: var(--color-8F8F8F);
 }
 
 /****************** End product-category-pagination-row  *****************/
