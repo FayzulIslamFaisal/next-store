@@ -727,6 +727,46 @@ const ProductCategory = () => {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="row product-category-pagination-row">
+                                            <div className="col-md-12">
+                                                <div className="product-category-pagination-area d-flex  align-items-center justify-content-between">
+                                                    <div className="product-category-pagination-col d-flex align-items-center">
+                                                        <div className="product-category-pagination-inner"><p>Did you find what you were looking for?</p> </div>
+                                                        <div className="product-category-pagination-inner">
+                                                            <form>
+                                                                <div className="category-looking-form d-flex align-items-center">
+                                                                    <button>Yes</button>
+                                                                    <button>No</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div className="product-category-pagination-col">
+                                                        <nav aria-label="Page navigation example">
+                                                            <ul className="pagination">
+                                                                <li className="page-item">
+                                                                    <Link className="page-link" href="#" aria-label="Previous">
+                                                                        <span aria-hidden="true">&#60;</span>
+                                                                    </Link>
+                                                                </li>
+                                                                <li className="page-item"><Link className="page-link" href="#">1</Link></li>
+                                                                <li className="page-item"><Link className="page-link" href="#">2</Link></li>
+                                                                <li className="page-item"><Link className="page-link" href="#">3</Link></li>
+                                                                <li className="page-item"><Link className="page-link" href="#">4</Link></li>
+                                                                <li className="page-item"><Link className="page-link" href="#">...</Link></li>
+                                                                <li className="page-item"><Link className="page-link" href="#">10</Link></li>
+                                                                <li className="page-item">
+                                                                    <Link className="page-link" href="#" aria-label="Next">
+                                                                        <span aria-hidden="true">&#62;</span>
+                                                                    </Link>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </main>
                             </div>

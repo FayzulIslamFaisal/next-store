@@ -94,3 +94,27 @@
 }
 
 /************************ End product-category-right-Side  ****************/
+
+/****************** Start product-category-pagination-row  ****************/
+.product-category-pagination-row {
+    padding-top: 50px;
+}
+
+.product-category-pagination-inner p {
+    font-size: 16px;
+}
+
+.product-category-pagination-col {
+    gap: 15px;
+}
+
+.category-looking-form {
+    gap: 8px;
+}
+
+.category-looking-form button {
+    border: 1px solid var(--color-ACACAC);
+    border-radius: 4px;
+}
+
+/****************** End product-category-pagination-row  *****************/
