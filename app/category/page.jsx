@@ -1,8 +1,11 @@
+"use client"
+import { useState, useEffect } from 'react';
 import Image from "next/image"
 import Breadcrumb from "../components/productDetail/Breadcrumb"
 import Link from "next/link"
 import SectionTitle from "../components/SectionTitle"
 import ProductCategories from "../components/ProductCategories"
+import Service from "../components/Service"
 
 const ProductCategory = () => {
     const categoryProductData = [
@@ -104,6 +107,68 @@ const ProductCategory = () => {
             title: "Bedding Accessories",
         },
     ];
+    const serviceItems = [
+        {
+            imageurl: "/images/pickup.svg",
+            altText: "pickup image",
+            title: " Fast Delivery",
+            subTitle: "Free For All Type Order",
+        },
+        {
+            imageurl: "/images/gift-cart.svg",
+            altText: "gift cart",
+            title: " Best Quality",
+            subTitle: "Best Product Peices",
+        },
+        {
+            imageurl: "/images/gift-box.svg",
+            altText: "gift box",
+            title: " Exchange Offer",
+            subTitle: "One Day To Changes",
+        },
+        {
+            imageurl: "/images/headphone.svg",
+            altText: "headphone",
+            title: "  Help Center",
+            subTitle: "Support System 24/7",
+        },
+    ];
+
+    const [sliderOne, setSliderOne] = useState(0);
+    const [sliderTwo, setSliderTwo] = useState(1000);
+    const [sliderMaxValue, setSliderMaxValue] = useState(1000);
+    const [minGap, setMinGap] = useState(0);
+
+    useEffect(() => {
+        slideOne();
+        slideTwo();
+    }, []);
+
+    function slideOne() {
+        if (parseInt(sliderTwo) - parseInt(sliderOne) <= minGap) {
+            setSliderOne(parseInt(sliderTwo) - minGap);
+        }
+        fillColor();
+    }
+
+    function slideTwo() {
+        if (parseInt(sliderTwo) - parseInt(sliderOne) <= minGap) {
+            setSliderTwo(parseInt(sliderOne) + minGap);
+        }
+        fillColor();
+    }
+
+    function fillColor() {
+        const percent1 = (sliderOne / sliderMaxValue) * 100;
+        const percent2 = (sliderTwo / sliderMaxValue) * 100;
+        // Update slider track style
+        const sliderTrack = document.querySelector(".slider-track");
+        if (sliderTrack) {
+            sliderTrack.style.background = `linear-gradient(to right, var(--color-FC7024) ${percent1}% , var(--color-FC7024) ${percent1}% , var(--color-FC7024) ${percent2}%, var(--color-FC7024) ${percent2}%)`;
+        }
+    }
+
+
     return (
         <>
             <section className="product-category-wrapper">
@@ -114,7 +179,41 @@ const ProductCategory = () => {
                             <div className="product-category-details">
                                 <aside className="product-category-left-Side">
                                     <div className="category-left-Side-info">
-                                        <h1>Left Side Bar</h1>
+                                        <div className="category-left-section-title">
+                                            <h2>Sub Categories</h2>
+                                        </div>
+                                        <div className="product-sub-category-area sub-category-pb40">
+                                            <ul>
+                                                <li><Link href="#">Women's Shoes Accessories </Link></li>
+                                                <li><Link href="#">Bras</Link></li>
+                                                <li><Link href="#">Women's Socks & Tights</Link></li>
+                                                <li><Link href="#">Women's Hats & Caps</Link></li>
+                                                <li><Link href="#">Women's Hair Accessories</Link></li>
+                                                <li><Link href="#">Sarees</Link></li>
+                                                <li><Link href="#">Women Belts</Link></li>
+                                                <li><Link href="#">Panties</Link></li>
+                                                <li><Link href="#">Blouses & Shirts</Link></li>
+                                                <li><Link href="#">Sleep & Loungewear</Link></li>
+                                                <li><Link href="#">Women's Gloves</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="category-left-section-title">
+                                            <h2>Price Range</h2>
+                                        </div>
+                                        <div className="product-category-range-area sub-category-pb40">
+                                            <div className="product-category-range">
+                                                <div className="slider-track"></div>
+                                                <input type="range" min="0" max="1000" value={sliderOne} id="slider-1" onChange={slideOne} />
+                                                <input type="range" min="0" max="1000" value={sliderTwo} id="slider-2" onChange={slideTwo} />
+                                            </div>
+                                            <div className="product-category-rang-info d-flex align-items-center justify-content-between">
+                                                <div className="product-category-rang-value" id="range1">৳ {sliderOne}</div>
+                                                <div className="product-category-rang-value" id="range2">৳ {sliderTwo}</div>
+                                            </div>
+                                        </div>
+                                        <div className="category-left-section-title">
+                                            <h2>Brand</h2>
+                                        </div>
                                     </div>
                                 </aside>
                                 <main className="product-category-right-Side">
@@ -868,12 +967,13 @@ const ProductCategory = () => {
                                             </div>
                                         </div>
                                         <SectionTitle title="Featured Brands" />
-                                        <ProductCategories categoryProductData={categoryProductData}  countRows={1} sliderShowCount={6} slidesScrollCount={6} />
+                                        <ProductCategories categoryProductData={categoryProductData} isHome={false} />
                                     </div>
                                 </main>
                             </div>
                         </div>
                     </div>
+                    <Service serviceItems={serviceItems} />
                 </div>
             </section>
 
