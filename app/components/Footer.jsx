@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CopyRight from "./CopyRight";
 import FooterAddress from "./FooterAddress";
 import FooterLogo from "./FooterLogo";
@@ -16,7 +17,7 @@ function Footer() {
         { title: "Quiz", path: "#" },
     ];
     const myAccoutOptions = [
-        { title: "Login", path: "#" },
+        { title: "Login", path: "/login" },
         { title: "Be an Affiliate", path: "#" },
         { title: "Be a Merchant", path: "#" },
         { title: "Discount Partner", path: "#" },
@@ -70,7 +71,7 @@ function Footer() {
                             <div className="col-md-4">
                                 <QuickLinks title="Be A Seller">
                                     <div className="applay-now-btn">
-                                        <a href="#">APPLY NOW</a>
+                                        <Link href="#">APPLY NOW</Link>
                                     </div>
                                 </QuickLinks>
                             </div>

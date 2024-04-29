@@ -11,29 +11,29 @@ const registration = () => {
                         <div className="user-login-form">
                             <form>
                                 <div className="mb-3">
-                                    <label for="name" className="form-label"> Name <span>*</span> </label>
+                                    <label htmlFor="name" className="form-label"> Name <span>*</span> </label>
                                     <input type="text" className="form-control" id="name" placeholder="Enter Your Name" />
                                 </div>
                                 <div className="mb-3">
-                                    <label for="number" className="form-label"> Phone Number <span>*</span> </label>
+                                    <label htmlFor="number" className="form-label"> Phone Number <span>*</span> </label>
                                     <input type="text" className="form-control" id="number" placeholder="Enter Phone Number" />
                                 </div>
                                 <div className="mb-3">
-                                    <label for="email" className="form-label"> Email (Optional) </label>
+                                    <label htmlFor="email" className="form-label"> Email (Optional) </label>
                                     <input type="text" className="form-control" id="email" placeholder="Enter Email" />
                                 </div>
                                 <div className="mb-3">
-                                    <label for="password" className="form-label">Password  <span>*</span> </label>
+                                    <label htmlFor="password" className="form-label">Password  <span>*</span> </label>
                                     <input type="password" className="form-control" placeholder='Enter Password' id="password" />
                                 </div>
                                 <div className="mb-3 ">
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" name="gender" id="gender1" value="male" />
-                                        <label className="form-check-label" for="gender1">Male</label>
+                                        <label className="form-check-label" htmlFor="gender1">Male</label>
                                     </div>
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" name="gender" id="gender2" value="female" />
-                                        <label className="form-check-label" for="gender2">Female</label>
+                                        <label className="form-check-label" htmlFor="gender2">Female</label>
                                     </div>
                                 </div>
                                 <div className="mb-3">

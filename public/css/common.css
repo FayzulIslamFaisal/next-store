@@ -27,6 +27,12 @@
     --color-D3C5C5: #D3C5C5;
     --color-9f9f9f: #9f9f9f;
     --color-53c0a080: #53c0a080;
+    --color-949495: #949495;
+    --color-ACACAC: #ACACAC;
+    --color-8F8F8F: #8F8F8F;
+    --color-FFEEEE: #FFEEEE;
+    --color-646464: #646464;
+    --color-FC7024: #FC7024;
 }
 
 ul {
@@ -155,8 +161,9 @@ body {
     position: relative;
     height: 100%;
     background: var(--color-white);
-    padding: 20px;
-    min-height: 240px;
+    padding: 15px;
+    padding-bottom: 10px;
+    min-height: 220px;
 }
 
 .nh-categories-holder-s .slick-prev:before,
@@ -181,6 +188,11 @@ body {
     color: var(--color-414042);
     font-size: 16px;
     line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.nh-categories-info h4:last-child {
+    margin-bottom: 0;
 }
 
 .nh-categories-info h4 a {

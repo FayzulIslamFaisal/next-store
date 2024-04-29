@@ -1,6 +1,6 @@
 .product-details-section {
     padding: 50px 0;
-    padding-top: 20px;
+    padding-top: 0px;
 }
 
 .product-details-info-img {
@@ -22,7 +22,7 @@
     margin-right: -5px;
 }
 
-.product-details-info-multiple-photo .slick-list .slick-slide > div {
+.product-details-info-multiple-photo .slick-list .slick-slide>div {
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -72,6 +72,10 @@
 }
 
 /**********************Start product-details-breadcrumb-area **************************/
+.product-details-breadcrumb-area {
+    padding-top: 20px;
+}
+
 .breadcrumb {
     margin-bottom: 0;
     padding-bottom: 35px;
@@ -89,7 +93,7 @@
     color: var(--color-414042);
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     content: ">" !important;
     color: var(--color-41ac8f);
 }
@@ -208,6 +212,8 @@
     flex-shrink: 0;
 }
 
+/*Start custom radio and checkbox css */
+.product-details-variant-item input[type="checkbox"],
 .product-details-variant-item input[type="radio"] {
     position: relative;
     width: 100%;
@@ -234,17 +240,18 @@
     letter-spacing: -0.14px;
 }
 
-.product-details-variant-item input[type="radio"]:checked + label {
+.product-details-variant-item input[type="checkbox"]:checked+label,
+.product-details-variant-item input[type="radio"]:checked+label {
     background: var(--color-C5EEE3);
 }
 
-.product-details-quantity
-    .product-details-variant-item
-    input[type="radio"]:checked
-    + label {
+.product-details-quantity .product-details-variant-item input[type="checkbox"]:checked+label,
+.product-details-quantity .product-details-variant-item input[type="radio"]:checked+label {
     background: inherit;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
 }
+
+/*End custom radio and checkbox css */
 
 .product-details-quantity-area,
 .product-details-variant-area {
@@ -496,6 +503,19 @@
 /*************** Start similer-product-area *********************/
 .similer-product-area {
     padding-top: 30px;
+}
+
+.similer-product-area .nh-common-item {
+    gap: 10px !important;
+}
+
+.similer-product-area .nh-common-item h3 {
+    flex: 1;
+    flex-shrink: 0;
+}
+
+.similer-product-area .nh-common-title .common-border {
+    width: 90px;
 }
 
 .similer-product-title {

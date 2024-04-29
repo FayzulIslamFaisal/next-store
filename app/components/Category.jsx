@@ -479,15 +479,20 @@ function Category() {
         <section className="nh-categories-area">
             <div className="container">
                 <SectionTitle title="Categories" path="#" />
-                <ProductCategories categoryProductData={categoryProductData} />
+                <ProductCategories
+                    categoryProductData={categoryProductData}
+
+                />
 
                 <div className="nh-brands-area">
                     <SectionTitle title="Brands" path="#" />
+
                     {categoryBrandData && (
                         <ProductCategories
                             categoryProductData={categoryBrandData}
                         />
                     )}
+
                 </div>
 
                 <div className="nh-just-for-you">

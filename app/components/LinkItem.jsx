@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 
 function LinkItem({ title, path }) {
     return (
         <li>
-            <a href={path}>{title}</a>
+            <Link href={path}>{title}</Link>
         </li>
     );
 }

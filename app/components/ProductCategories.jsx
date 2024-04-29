@@ -4,15 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCategoryItem from "./ProductCategoryItem";
 
-const ProductCategories = ({ categoryProductData }) => {
-    console.log("categoryProductData :=>>>>>>", categoryProductData);
+const ProductCategories = ({ categoryProductData, isHome = true }) => {
     const settings = {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 8,
-        slidesToScroll: 8,
-        rows: 2,
+        slidesToShow: isHome ? 8 : 6,
+        slidesToScroll: isHome ? 8 : 6,
+        rows: isHome ? 2 : 1,
         arrows: false,
         // nextArrow: <p>Next slide</p>,
         // prevArrow: <p>Prev slide</p>,
@@ -20,18 +19,18 @@ const ProductCategories = ({ categoryProductData }) => {
             {
                 breakpoint: 1500,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToShow: isHome ? 6 : 3,
+                    slidesToScroll: isHome ? 6 : 3,
                     arrows: true,
                     // nextArrow: <p>Next slide</p>,
                     // prevArrow: <p>Prev slide</p>,
                 },
             },
             {
-                breakpoint: 1024,
+                breakpoint: 1199,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
                     arrows: true,
                 },
             },

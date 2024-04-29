@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 function Paywith({
@@ -9,7 +10,8 @@ function Paywith({
             <div className="payment-methods d-flex align-items-center">
                 <p>{title}</p>
                 <div className="payment-method-img">
-                    <img
+                    <Image
+                        fill
                         src={imaUrl}
                         className="img-fluid"
                         alt="payment-methods"

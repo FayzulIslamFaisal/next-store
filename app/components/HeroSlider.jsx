@@ -1,4 +1,6 @@
+import Link from "next/link";
 import MainSlider from "./MainSlider";
+import Image from "next/image";
 
 function HeroSlider() {
     const sliderOptionData = [
@@ -48,13 +50,14 @@ function HeroSlider() {
                                     <div className="category-menu-holder hero-slider-main-item">
                                         <ul className="category-menu-area">
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/fashion-icon.svg"
                                                                 alt="fashion-icon"
                                                             />
@@ -62,231 +65,250 @@ function HeroSlider() {
                                                         Fashion
                                                     </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                                 <ul className="sub-category-menu">
                                                     <li>
-                                                        <a href="#">
+                                                        <Link href="#">
                                                             Men's Fashion
-                                                        </a>
+                                                        </Link>
                                                     </li>
                                                     <li>
-                                                        <a href="#">
+                                                        <Link href="#">
                                                             Women's Fashion
-                                                        </a>
+                                                        </Link>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/digital-products.svg"
                                                                 alt="digital-products"
                                                             />
                                                         </span>
-                                                        Digital Products{" "}
-                                                    </p>{" "}
+                                                        Digital Products
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/toiletries-icon.svg"
                                                                 alt="toiletries-icon"
                                                             />
                                                         </span>
-                                                        Toiletries{" "}
-                                                    </p>{" "}
+                                                        Toiletries
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/Cleaning-Supplies.svg"
                                                                 alt="Cleaning-Supplies"
                                                             />
-                                                        </span>{" "}
-                                                        Cleaning Supplies{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Cleaning Supplies
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/Food-icon.svg"
                                                                 alt="Food-icon"
                                                             />
-                                                        </span>{" "}
-                                                        Food{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Food
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/Diapers.svg"
                                                                 alt="Diapers"
                                                             />
-                                                        </span>{" "}
-                                                        Diapers{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Diapers
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/BabyCare.svg"
                                                                 alt="BabyCare"
                                                             />
-                                                        </span>{" "}
-                                                        Baby Care{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Baby Care
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/Stationery.svg"
                                                                 alt="Stationery"
                                                             />
-                                                        </span>{" "}
-                                                        Stationery{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Stationery
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/HomeAppliances.svg"
                                                                 alt="HomeAppliances"
                                                             />
-                                                        </span>{" "}
-                                                        Home Appliances{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Home Appliances
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="menu-link">
-                                                <a
+                                                <Link
                                                     href="#"
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-                                                        {" "}
+
                                                         <span>
-                                                            <img
+                                                            <Image
+                                                                width={23} height={20}
                                                                 src="/images/Cosmetics.svg"
                                                                 alt="Cosmetics"
                                                             />
-                                                        </span>{" "}
-                                                        Cosmetics{" "}
-                                                    </p>{" "}
+                                                        </span>
+                                                        Cosmetics
+                                                    </p>
                                                     <small>
-                                                        <img
+                                                        <Image
+                                                            width={32} height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
                                                     </small>
-                                                </a>
+                                                </Link>
                                             </li>
                                         </ul>
                                     </div>

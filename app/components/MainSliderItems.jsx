@@ -3,7 +3,7 @@ import React from 'react'
 import ShopNowButton from './ShopNowButton';
 
 const MainSliderItems = ({ sliderItem }) => {
-    // console.log(sliderItem);
+
     const { imageurl, altText, title, subtitle, btnText, btnImage, btnAltText, path } = sliderItem;
     return (
         <div className="hero-slider-item" >
