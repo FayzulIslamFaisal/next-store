@@ -17,7 +17,7 @@ function Footer() {
         { title: "Quiz", path: "#" },
     ];
     const myAccoutOptions = [
-        { title: "Login", path: "/login" },
+        { title: "Login", path: "#" },
         { title: "Be an Affiliate", path: "#" },
         { title: "Be a Merchant", path: "#" },
         { title: "Discount Partner", path: "#" },

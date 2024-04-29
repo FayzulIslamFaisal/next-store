@@ -212,8 +212,6 @@
     flex-shrink: 0;
 }
 
-/*Start custom radio and checkbox css */
-.product-details-variant-item input[type="checkbox"],
 .product-details-variant-item input[type="radio"] {
     position: relative;
     width: 100%;
@@ -240,18 +238,14 @@
     letter-spacing: -0.14px;
 }
 
-.product-details-variant-item input[type="checkbox"]:checked+label,
 .product-details-variant-item input[type="radio"]:checked+label {
     background: var(--color-C5EEE3);
 }
 
-.product-details-quantity .product-details-variant-item input[type="checkbox"]:checked+label,
 .product-details-quantity .product-details-variant-item input[type="radio"]:checked+label {
     background: inherit;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
 }
-
-/*End custom radio and checkbox css */
 
 .product-details-quantity-area,
 .product-details-variant-area {
