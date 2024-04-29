@@ -40,6 +40,10 @@
     padding-bottom: 40px;
 }
 
+.sub-category-pb40:last-child {
+    padding-bottom: 0;
+}
+
 /*Start custom scrollbar css */
 .product-sub-category-area ul {
     height: 410px;
