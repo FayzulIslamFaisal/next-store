@@ -19,8 +19,8 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
             {
                 breakpoint: 1500,
                 settings: {
-                    slidesToShow: isHome ? 6 : 4,
-                    slidesToScroll: isHome ? 6 : 4,
+                    slidesToShow: isHome ? 6 : 3,
+                    slidesToScroll: isHome ? 6 : 3,
                     arrows: true,
                     // nextArrow: <p>Next slide</p>,
                     // prevArrow: <p>Prev slide</p>,

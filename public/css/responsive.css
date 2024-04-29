@@ -97,6 +97,23 @@
 }
 
 @media (max-width: 1199px) {
+    .product-category-details {
+        /* display: flex;
+        gap: 40px; */
+        flex-direction: column-reverse;
+    }
+
+    .product-category-right-Side,
+    .product-category-left-Side {
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+
+    .product-category-left-Side {
+        max-width: 50%;
+        flex-basis: 50%;
+    }
+
     .header-auth-area ul {
         gap: 10px;
     }
@@ -256,6 +273,11 @@
 }
 
 @media (max-width: 767px) {
+    .product-category-left-Side {
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+
     .product-details-info-multiple-photo {
         max-width: 90%;
     }

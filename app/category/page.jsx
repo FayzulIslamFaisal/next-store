@@ -214,6 +214,118 @@ const ProductCategory = () => {
                                         <div className="category-left-section-title">
                                             <h2>Brand</h2>
                                         </div>
+                                        <div className="product-brand-category-area sub-category-pb40">
+                                            <div className="product-brand-category-list">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox1">Women's Shoes Accessories</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox2">Bras</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox3">Women's Socks & Tights</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox4">Women's Hats & Caps</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox5" value="option4" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox5">Women's Hair Accessories</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox6">Sarees</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox7">Women Belts</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox8">Panties</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox9" value="option9" />
+                                                    <label className="form-check-label" htmlFor="inlineCheckbox9">Blouses & Shirts</label>
+                                                </div>
+                                            </div>
+                                            <div className="view-more-link-area">
+                                                <Link href="#"><span>+</span> View More</Link>
+                                            </div>
+                                        </div>
+                                        <div className="category-left-section-title">
+                                            <h2>Color</h2>
+                                        </div>
+                                        <div className="product-color-category-area sub-category-pb40">
+                                            <div className="product-details-inner-quantity d-flex align-items-center">
+                                                <div className="product-details-inner-color product-details-variant-item" style={{ background: '#D9D9D9' }}>
+                                                    <input readOnly type="checkbox" name="color" id="color-variant1" />
+                                                    <label htmlFor="color-variant1"></label>
+                                                </div>
+                                                <div className="product-details-inner-color product-details-variant-item" style={{ background: '#FF0000' }}>
+                                                    <input readOnly type="checkbox" name="color" id="color-variant2" />
+                                                    <label htmlFor="color-variant2"></label>
+                                                </div>
+                                                <div className="product-details-inner-color product-details-variant-item" style={{ background: '#321313' }}>
+                                                    <input readOnly type="checkbox" name="color" id="color-variant3" />
+                                                    <label htmlFor="color-variant3"></label>
+                                                </div>
+                                                <div className="product-details-inner-color product-details-variant-item" style={{ background: '#4200FF' }}>
+                                                    <input readOnly type="checkbox" name="color" id="color-variant4" />
+                                                    <label htmlFor="color-variant4"></label>
+                                                </div>
+                                                <div className="product-details-inner-color product-details-variant-item" style={{ background: '#A0CF1B' }}>
+                                                    <input readOnly type="checkbox" name="color" id="color-variant5" />
+                                                    <label htmlFor="color-variant5"></label>
+                                                </div>
+                                            </div>
+                                            <div className="view-more-link-area">
+                                                <Link href="#"><span>+</span> View More</Link>
+                                            </div>
+                                        </div>
+                                        <div className="category-left-section-title">
+                                            <h2>Size</h2>
+                                        </div>
+                                        <div className="product-brand-category-area sub-category-pb40">
+                                            <div className="product-brand-category-list">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox1" value="option1" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox1">37</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox2" value="option2" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox2">38</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox3" value="option3" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox3">39</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox4" value="option4" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox4">40</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox5" value="option4" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox5">41</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox6" value="option6" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox6">42</label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="sizeCheckbox7" value="option7" />
+                                                    <label className="form-check-label" htmlFor="sizeCheckbox7">43</label>
+                                                </div>
+
+                                            </div>
+                                            <div className="view-more-link-area">
+                                                <Link href="#"><span>+</span> View More</Link>
+                                            </div>
+                                        </div>
                                     </div>
                                 </aside>
                                 <main className="product-category-right-Side">
