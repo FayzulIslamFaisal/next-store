@@ -1,6 +1,6 @@
 
+
 import CategorySectionTitle from './CategorySectionTitle'
-import Link from 'next/link'
 import SubCategoryList from './SubCategoryList';
 import PriceRange from './PriceRange';
 import CategoryVariant from './CategoryVariant';

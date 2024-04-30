@@ -2,7 +2,6 @@
 import SubCategoryListItems from "./SubCategoryListItems"
 
 const SubCategoryList = ({ subCategoryData }) => {
-    console.log(subCategoryData);
     return (
         <div className="product-sub-category-area sub-category-pb40">
             <ul>
