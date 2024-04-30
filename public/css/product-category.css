@@ -81,84 +81,19 @@
 }
 
 /*Start custom input type rang css */
-.product-category-range {
-    position: relative;
-    width: 100%;
-}
-
-.product-category-range input[type="range"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 100%;
-    outline: none;
-    position: absolute;
-    top: 100%;
-    transform: translateY(-100%);
-    background-color: transparent;
-    pointer-events: none;
-}
-
-.product-category-range .slider-track {
-    width: 100%;
+.product-category-range-area .range-slider {
+    background: var(--color-FC7024);
     height: 5px;
-    position: absolute;
-    top: 100%;
-    transform: translateY(-100%);
-    border-radius: 5px;
+}
+
+.product-category-range-area .range-slider .range-slider__range {
     background: var(--color-FC7024);
 }
 
-.product-category-range input[type="range"]::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
-    height: 5px;
-}
-
-.product-category-range input[type="range"]::-moz-range-track {
-    -moz-appearance: none;
-    height: 5px;
-}
-
-.product-category-range input[type="range"]::-ms-track {
-    appearance: none;
-    height: 5px;
-}
-
-.product-category-range input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 14px;
+.product-category-range-area .range-slider .range-slider__thumb {
+    background: var(--color-FC7024);
     width: 14px;
-    background: var(--color-FC7024);
-    cursor: pointer;
-    margin-top: -5px;
-    pointer-events: auto;
-    border-radius: 50%;
-}
-
-.product-category-range input[type="range"]::-moz-range-thumb {
-    --webkit-appearance: none;
     height: 14px;
-    width: 14px;
-    cursor: pointer;
-    border-radius: 50%;
-    background: var(--color-FC7024);
-    pointer-events: auto;
-    border: none;
-}
-
-.product-category-range input[type="range"]::-ms-thumb {
-    appearance: none;
-    height: 14px;
-    width: 14px;
-    cursor: pointer;
-    border-radius: 50%;
-    background: var(--color-FC7024);
-    pointer-events: auto;
-}
-
-.product-category-range input[type="range"]:active::-webkit-slider-thumb {
-    background: var(--color-414042);
-    border: 1px solid var(--color-FC7024);
 }
 
 /*End custom input type rang css */

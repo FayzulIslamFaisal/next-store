@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 
-function AddToCartButton({ title = "", path = "#", buyNowBtn }) {
+function AddToCartButton({ title = "", path = "#", buyNowBtn, fullWidth }) {
     return (
         <div className="add-to-cart-btn">
             <Link
                 href={path}
-                className={`add-to-cart-link ${buyNowBtn}`}
+                className={`add-to-cart-link ${buyNowBtn} ${fullWidth}`}
                 onClick={(e) => {
                     e.preventDefault();
                     console.log("added to cart");
