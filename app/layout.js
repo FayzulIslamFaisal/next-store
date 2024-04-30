@@ -3,6 +3,7 @@ import Script from 'next/script';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./globals.css";
+import DistrictModal from "./components/DistrictModal";
 
 const lato = Lato({
   subsets: ['latin'],
@@ -54,6 +55,7 @@ export default function RootLayout({ children }) {
 
       <body>
         <Header />
+        <DistrictModal />
         {children}
         <Footer />
       </body>
