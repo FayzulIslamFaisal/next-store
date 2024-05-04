@@ -48,6 +48,7 @@ export default function RootLayout({ children }) {
       <link rel="stylesheet" href="/css/login.css" precedence="default" />
       <link rel="stylesheet" href="/css/product-details.css" precedence="default" />
       <link rel="stylesheet" href="/css/product-category.css" precedence="default" />
+      <link rel="stylesheet" href="/css/view-all.css" precedence="default" />
       <link rel="stylesheet" href="/css/common.css" precedence="default" />
       <link rel="stylesheet" href="/css/responsive.css" precedence="default" />
       {/* <Script strategy="afterInteractive" src="/js/jquery.min.js" /> */}

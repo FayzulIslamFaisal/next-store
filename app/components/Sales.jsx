@@ -129,7 +129,7 @@ function Sales({ bgcolor = "", isHome = true }) {
     return (
         <section className={`flash-sale-area ${bgcolor}`}>
             <div className="container">
-                <SectionTitle title="Recent view" path="#" />
+                <SectionTitle title="Flash Sale" />
                 <div className="row">
                     <div className="col-md-12">
                         <div className="flash-sale-content-area-grid">

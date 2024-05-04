@@ -1,20 +1,33 @@
-import Link from "next/link";
 import CategoryVariantItems from "./CategoryVariantItems";
 import ViewMoreLink from "./ViewMoreLink";
 
-const CategoryVariant = ({ variantData, mergeId }) => {
+const CategoryVariant = ({ variantData, mergeId, showFullList, setShowFullList }) => {
+
+
     return (
         <div className="product-brand-category-area sub-category-pb40">
             <div className="product-brand-category-list">
-                {variantData.map((brandItem) => (
-                    <CategoryVariantItems
-                        key={brandItem.id}
-                        brandItem={brandItem}
-                        mergeId={mergeId}
-                    />
-                ))}
+                {showFullList ? (
+                    variantData.map((brandItem) => (
+                        <CategoryVariantItems
+                            key={brandItem.id}
+                            brandItem={brandItem}
+                            mergeId={mergeId}
+                        />
+                    ))
+                ) : (
+                    variantData.slice(0, 3).map((brandItem) => (
+                        <CategoryVariantItems
+                            key={brandItem.id}
+                            brandItem={brandItem}
+                            mergeId={mergeId}
+                        />
+                    ))
+                )}
+                {!showFullList && (
+                    <ViewMoreLink setShowFullList={setShowFullList} />
+                )}
             </div>
-            <ViewMoreLink />
         </div>
     );
 };

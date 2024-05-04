@@ -40,6 +40,11 @@
 }
 
 @media (max-width: 1400px) {
+    .nh-view-all-product {
+        -ms-grid-columns: 1fr 0 1fr 0 1fr 0 1fr 0 1fr 0 1fr;
+        grid-template-columns: repeat(6, 1fr);
+    }
+
     .product-category-grid-area {
         -ms-grid-columns: 1fr 20px 1fr 20px 1fr;
         grid-template-columns: repeat(3, 1fr);
@@ -97,6 +102,11 @@
 }
 
 @media (max-width: 1199px) {
+    .nh-view-all-product {
+        -ms-grid-columns: 1fr 0 1fr 0 1fr 0 1fr 0 1fr;
+        grid-template-columns: repeat(5, 1fr);
+    }
+
     .sub-category-pb40 {
         padding-bottom: 30px;
     }
@@ -254,6 +264,11 @@
 }
 
 @media (max-width: 991px) {
+    .nh-view-all-product {
+        -ms-grid-columns: 1fr 0 1fr 0 1fr 0 1fr;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
     .category-left-section-title h2 {
         font-size: 20px;
     }
@@ -297,6 +312,15 @@
 }
 
 @media (max-width: 767px) {
+    .view-all-product-banner-area {
+        padding-bottom: 30px;
+    }
+
+    .nh-view-all-product {
+        -ms-grid-columns: 1fr 0 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .product-category-left-Side {
         max-width: 100%;
         flex-basis: 100%;
@@ -445,6 +469,12 @@
         line-height: 20px;
         margin-bottom: 10px;
     }
+
+    .payment-method-row,
+    .footer-widget-row {
+        padding-bottom: 0;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -466,5 +496,39 @@
         padding: 6px 8px;
         font-size: 12px;
         padding-bottom: 4px;
+    }
+
+    .product-details-variant-holder {
+        gap: 6px;
+    }
+
+    .category-shot-area p {
+        flex-shrink: 0;
+    }
+
+    .product-category-grid-area {
+        gap: 10px;
+    }
+
+    .product-category-image {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 450px) {
+    .product-details-variant-item {
+        padding: 6px 7px;
+        width: 77px;
+    }
+
+    .category-product-price {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 390px) {
+    .category-shot-option {
+        min-width: 100%;
     }
 }
