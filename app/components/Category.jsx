@@ -440,14 +440,14 @@ function Category() {
     return (
         <section className="nh-categories-area">
             <div className="container">
-                <SectionTitle title="Categories" path="#" />
+                <SectionTitle title="Categories" />
                 <ProductCategories
                     categoryProductData={categoryProductData}
 
                 />
 
                 <div className="nh-brands-area">
-                    <SectionTitle title="Brands" path="#" />
+                    <SectionTitle title="Brands" />
                     <ProductCategories
                         categoryProductData={categoryBrandData}
 
@@ -455,7 +455,7 @@ function Category() {
                 </div>
 
                 <div className="nh-just-for-you">
-                    <SectionTitle title="Just For You" path="#" />
+                    <SectionTitle title="Just For You" />
 
                     <div className="row just-for-random-product">
                         <div className="col-md-12">

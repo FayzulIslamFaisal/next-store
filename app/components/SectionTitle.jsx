@@ -3,8 +3,8 @@ import Link from "next/link";
 import useScreenSize from "../hooks/useScreenSize";
 
 function SectionTitle({
-    title,
-    path = "#",
+    title = "Flash Sale",
+    path = "/viewall",
     children,
     isSale = false,
     showViewAll = true,

@@ -1,12 +1,14 @@
 
-
+"use client"
 import CategorySectionTitle from './CategorySectionTitle'
 import SubCategoryList from './SubCategoryList';
 import PriceRange from './PriceRange';
 import CategoryVariant from './CategoryVariant';
 import CategoryColorVariant from './CategoryColorVariant';
+import { useState } from 'react';
 
 const CategoryLeftSide = () => {
+    const [showFullList, setShowFullList] = useState(false);
 
     const subCategoryData = [
         {
@@ -164,11 +166,11 @@ const CategoryLeftSide = () => {
                 <CategorySectionTitle title={`Price Range`} />
                 <PriceRange />
                 <CategorySectionTitle title={`Brand`} />
-                <CategoryVariant variantData={brandData} />
+                <CategoryVariant showFullList={false} setShowFullList={setShowFullList} variantData={brandData} />
                 <CategorySectionTitle title={`Color`} />
                 <CategoryColorVariant colorVariant={colorData} />
                 <CategorySectionTitle title={`Size`} />
-                <CategoryVariant variantData={sizedData} mergeId={1} />
+                <CategoryVariant showFullList={false} setShowFullList={setShowFullList} variantData={sizedData} mergeId={1} />
             </div>
         </aside>
     )
