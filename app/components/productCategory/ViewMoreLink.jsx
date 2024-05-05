@@ -1,15 +1,12 @@
-import Link from "next/link"
 
-const ViewMoreLink = ({ title = "View More", path = "#", setShowFullList }) => {
-    const handleShowFullList = () => {
-        setShowFullList(true);
-        alert('setShowFullList', setShowFullList);
-    };
+const ViewMoreLink = ({ title = "View More", handleViewMore }) => {
     return (
         <div className="view-more-link-area">
-            <Link href={path} onClick={handleShowFullList}><span>+</span> {title} </Link>
+            <button onClick={handleViewMore}>
+                <span>+</span> {title}
+            </button>
         </div>
-    )
-}
+    );
+};
 
-export default ViewMoreLink
+export default ViewMoreLink;

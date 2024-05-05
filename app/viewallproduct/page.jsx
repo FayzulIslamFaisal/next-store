@@ -1,6 +1,8 @@
-import Image from "next/image"
 import Pagination from "../components/productCategory/Pagination"
 import Service from "../components/Service";
+import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
+import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
+import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 
 const viewAllProduct = () => {
     const serviceItems = [
@@ -29,365 +31,142 @@ const viewAllProduct = () => {
             subTitle: "Support System 24/7",
         },
     ];
+    const viewProductData = [
+        {
+            id: 1,
+            imageUrl: "/images/flash-img1.jpg",
+            altText: "flash-img1",
+            title: "One Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 2,
+            imageUrl: "/images/flash-img2.jpg",
+            altText: "flash-img2",
+            title: "Two Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 3,
+            imageUrl: "/images/flash-img3.jpg",
+            altText: "flash-img3",
+            title: "Three Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 4,
+            imageUrl: "/images/flash-img4.jpg",
+            altText: "flash-img4",
+            title: "Four Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 5,
+            imageUrl: "/images/flash-img5.jpg",
+            altText: "flash-img5",
+            title: "Five Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 6,
+            imageUrl: "/images/flash-img6.jpg",
+            altText: "flash-img6",
+            title: "Six Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 7,
+            imageUrl: "/images/flash-img1.jpg",
+            altText: "flash-img7",
+            title: "Seven Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 8,
+            imageUrl: "/images/flash-img2.jpg",
+            altText: "flash-img8",
+            title: "Eight Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 9,
+            imageUrl: "/images/flash-img3.jpg",
+            altText: "flash-img9",
+            title: "Nine Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 10,
+            imageUrl: "/images/flash-img4.jpg",
+            altText: "flash-img10",
+            title: "Ten Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 11,
+            imageUrl: "/images/flash-img5.jpg",
+            altText: "flash-img11",
+            title: "Eleven Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 12,
+            imageUrl: "/images/flash-img6.jpg",
+            altText: "flash-img12",
+            title: "Twelve Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 13,
+            imageUrl: "/images/flash-img1.jpg",
+            altText: "flash-img13",
+            title: "Thirteen Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 14,
+            imageUrl: "/images/flash-img2.jpg",
+            altText: "flash-img14",
+            title: "Fourteen Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 15,
+            imageUrl: "/images/flash-img3.jpg",
+            altText: "flash-img15",
+            title: "Fifteen Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+        {
+            id: 16,
+            imageUrl: "/images/flash-img4.jpg",
+            altText: "flash-img16",
+            title: "Sixteen Lorem Ipsum is simply dummy tex",
+            path: "#",
+            price: 4580,
+        },
+
+    ]
     return (
         <div className="container view-all-product-container">
-            <div className="row view-all-product-banner-area">
-                <div className="col-md-12">
-                    <div className="view-all-product-banner">
-                        <Image src="/images/viewproduct.jpg" className=" img-fluid" sizes="100vw" fill={true} alt="banner image" />
-                    </div>
-                </div>
-            </div>
-            <div className="row view-all-product-title">
-                <div className="col-md-12 ">
-                    <div className="view-all-product-title-box d-flex align-items-center justify-content-center">
-                        <h2>All Product</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div className="row just-for-random-product view-all-product-area">
-                <div className="col-md-12">
-                    <div className="flash-sale-content-area">
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flash-sale-content-item">
-                            <div className="flash-sale-content-bg nh-hover-box-shadow">
-                                <div className="flash-sale-content-img image-hover-effect">
-                                    <Image
-                                        src="/images/flash-img2.jpg"
-                                        fill={true}
-                                        className="img-fluid"
-                                        alt="flash-img2"
-                                    />
-                                </div>
-                                <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
-                                        Lorem ipsum dolor sit amet consectetur.
-                                    </h4>
-                                    <strong>৳ 500</strong>
-                                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                                        <div class="add-to-cart-btn">
-                                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                                        </div>
-                                        <div class="add-to-cart-icon">
-                                            <a href="#">
-                                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ViewAllBanner />
+            <ViewAllCategoryTitle title={`Flash Sale`} />
+            <ViewAllProduct viewProductData={viewProductData} />
 
 
             <div className="row view-all-product-pagination-area">

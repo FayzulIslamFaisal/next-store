@@ -19,7 +19,7 @@ const ProductDeliveryDetail = () => {
                         <p>Dhaka, Dhaka North, Banani Road No. 12 - 19</p>
                     </div>
                     <div className="product-delivery-address-inner">
-                        <Link href="#" className="custom-text-link">CHANGE</Link>
+                        <Link href="#" className="custom-text-link">Change</Link>
                     </div>
                 </div>
                 <div className="product-free-delivery-area">
@@ -38,7 +38,7 @@ const ProductDeliveryDetail = () => {
                             {/* <p>12 Apr - 19 Apr</p> */}
                         </div>
                         <div className="product-free-delivery-info ">
-                            <h6 className="custom-text-link">FREE</h6>
+                            <h6 className="custom-text-link">Free</h6>
                         </div>
                     </div>
                     <div className="product-free-delivery-end-time">

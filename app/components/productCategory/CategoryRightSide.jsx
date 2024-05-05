@@ -661,7 +661,9 @@ const CategoryRightSide = () => {
                     </div>
                     <ShotBy />
                 </div>
-                <CategoryProductArchive productArvhiveList={listCateProduct} />
+                <CategoryProductArchive
+                    productArvhiveList={listCateProduct}
+                />
                 <div className="row product-category-pagination-row">
                     <div className="col-md-12">
                         <div className="product-category-pagination-area d-flex flex-wrap  align-items-center justify-content-between">
@@ -671,7 +673,10 @@ const CategoryRightSide = () => {
                     </div>
                 </div>
                 <SectionTitle title={`Featured Brands`} />
-                <ProductCategories categoryProductData={featuredBrandtData} isHome={false} />
+                <ProductCategories
+                    categoryProductData={featuredBrandtData}
+                    isHome={false}
+                />
             </div>
         </main>
     )
