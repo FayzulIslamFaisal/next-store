@@ -129,7 +129,9 @@ function Sales({ bgcolor = "", isHome = true }) {
     return (
         <section className={`flash-sale-area ${bgcolor}`}>
             <div className="container">
-                <SectionTitle title="Flash Sale" />
+                <SectionTitle title={isHome ? `Flash Sale` : `Recent View`}>
+                    {isHome && <FlipClock endsAt={`2024-06-01 12:00`} />}
+                </SectionTitle>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="flash-sale-content-area-grid">
