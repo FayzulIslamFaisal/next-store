@@ -12,8 +12,7 @@ const CategoryProductArchiveItems = ({ productItem }) => {
                 <div className="product-category-image">
                     <div className="flash-sale-content-img image-hover-effect">
                         <Image
-                            fill
-                            sizes="100vw"
+                            fill={true}
                             src={imageUrl}
                             className="img-fluid"
                             alt={alttext}

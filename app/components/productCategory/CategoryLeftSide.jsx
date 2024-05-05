@@ -1,14 +1,11 @@
 
-"use client"
 import CategorySectionTitle from './CategorySectionTitle'
 import SubCategoryList from './SubCategoryList';
 import PriceRange from './PriceRange';
 import CategoryVariant from './CategoryVariant';
 import CategoryColorVariant from './CategoryColorVariant';
-import { useState } from 'react';
 
 const CategoryLeftSide = () => {
-    const [showFullList, setShowFullList] = useState(false);
 
     const subCategoryData = [
         {
@@ -150,12 +147,20 @@ const CategoryLeftSide = () => {
         },
         {
             id: 4,
-            bgColor: "#4200FF",
+            bgColor: "#E90D8B",
         },
         {
             id: 5,
-            bgColor: "#A0CF1B",
-        }
+            bgColor: "#EDE634",
+        },
+        {
+            id: 6,
+            bgColor: "#44BC9D",
+        },
+        {
+            id: 7,
+            bgColor: "#321313",
+        },
     ];
 
     return (
@@ -166,11 +171,11 @@ const CategoryLeftSide = () => {
                 <CategorySectionTitle title={`Price Range`} />
                 <PriceRange />
                 <CategorySectionTitle title={`Brand`} />
-                <CategoryVariant showFullList={false} setShowFullList={setShowFullList} variantData={brandData} />
+                <CategoryVariant variantData={brandData} />
                 <CategorySectionTitle title={`Color`} />
                 <CategoryColorVariant colorVariant={colorData} />
                 <CategorySectionTitle title={`Size`} />
-                <CategoryVariant showFullList={false} setShowFullList={setShowFullList} variantData={sizedData} mergeId={1} />
+                <CategoryVariant variantData={sizedData} mergeId={1} countItem={false} />
             </div>
         </aside>
     )
