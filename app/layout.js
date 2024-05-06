@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./globals.css";
 import DistrictModal from "./components/DistrictModal";
+import AuthProvider from "./auth/Provider";
 
 const lato = Lato({
   subsets: ['latin'],
@@ -55,10 +56,12 @@ export default function RootLayout({ children }) {
       <Script strategy="afterInteractive" src="/js/bootstrap.bundle.min.js" />
 
       <body>
-        <Header />
-        <DistrictModal />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <DistrictModal />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

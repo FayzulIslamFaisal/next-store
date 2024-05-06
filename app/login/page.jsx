@@ -32,7 +32,9 @@ const login = () => {
                                 <label className="form-label">Or Login With</label>
                                 <div className="mb-3 user-social-login-item d-flex align-items-center  justify-content-center ">
                                     <button>Facebook</button>
-                                    <button>Google</button>
+                                    <Link href="/api/auth/signin">
+                                        <button>Google</button>
+                                    </Link>
                                 </div>
                                 <p className='text-center'>New to Nagadhat? <Link href="/registration">Create an account</Link></p>
                             </div>
