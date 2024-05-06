@@ -4,6 +4,7 @@ import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllCategories from "../components/viewAllProduct/ViewAllCategories";
+import Sales from "../components/Sales";
 
 const viewAllProduct = () => {
 
@@ -160,6 +161,7 @@ const viewAllProduct = () => {
                     <Pagination />
                 </div>
             </div>
+            <Sales isHome={false} bgcolor="bg-white" removePx={`removepadding-x`} />
             <Service serviceItems={serviceItems} />
         </div>
     )
