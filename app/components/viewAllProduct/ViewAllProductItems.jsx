@@ -1,5 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
+import AddToCartButton from "../AddToCartButton";
+import Like from "../Like";
 
 const ViewAllProductItems = ({ items }) => {
     const { imageUrl, altText, title, path, price } = items;
@@ -20,13 +22,9 @@ const ViewAllProductItems = ({ items }) => {
                     </h4>
                     <strong>৳ {price}</strong>
                     <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                        <div class="add-to-cart-btn">
-                            <a class="add-to-cart-link" href="#">ADD TO CART</a>
-                        </div>
+                        <AddToCartButton />
                         <div class="add-to-cart-icon">
-                            <a href="#">
-                                <Image alt="add to cart icon" width="28" height="28" src="/images/add-to-cart.svg" />
-                            </a>
+                            <Like />
                         </div>
                     </div>
                 </div>
