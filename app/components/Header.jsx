@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import MiniNav from "./MiniNav";
 import MainNav from "./MainNav";
 import HeroSlider from "./HeroSlider";
@@ -50,6 +51,8 @@ function Header() {
         setCategoryHoverMenu,
     };
 
+    const { status, data: session } = useSession();
+
     return (
         <>
             <header className={`${isSticky ? "header-sticky" : ""}`}>
@@ -57,7 +60,7 @@ function Header() {
                     <div className="container header-container">
                         {!isObserverMenuVisible && !isResponsive && <MiniNav />}
                         {!isResponsive ? (
-                            <MainNav {...scrollOption} />
+                            <MainNav {...scrollOption} authStatus={status} />
                         ) : (
                             <MobileNav />
                         )}

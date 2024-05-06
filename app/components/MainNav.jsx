@@ -6,18 +6,27 @@ function MainNav({
     isObserverMenuVisible,
     isCategoryHoverMenu,
     setCategoryHoverMenu,
+    authStatus,
 }) {
     return (
         <>
             <div
-                className={`row main-header-section ${!isObserverMenuVisible ? "" : "d-none"
-                    }`}
+                className={`row main-header-section ${
+                    !isObserverMenuVisible ? "" : "d-none"
+                }`}
             >
                 <div className="col-12">
                     <div className="main-header-area d-flex">
                         <div className="logo">
                             <Link href="/" className=" d-inline-block">
-                                <Image width={0} height={43} sizes="100vw" src={`/images/logo.svg`} style={{ width: '100%' }} alt="logo" />
+                                <Image
+                                    width={0}
+                                    height={43}
+                                    sizes="100vw"
+                                    src={`/images/logo.svg`}
+                                    style={{ width: "100%" }}
+                                    alt="logo"
+                                />
                             </Link>
                         </div>
                         <div className="header-search-area d-flex align-items-center w-100">
@@ -64,18 +73,33 @@ function MainNav({
                         <div className="header-auth-area d-flex justify-content-end">
                             <ul className=" d-flex align-items-center ">
                                 <li>
-                                    <Link
-                                        href="/login"
-                                        className=" text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src={`/images/login-icon.svg`}
-                                            alt="login-icon"
-                                            width={13}
-                                            height={19}
-                                        />
-                                        Login
-                                    </Link>
+                                    {authStatus === "authenticated" ? (
+                                        <Link
+                                            href="/api/auth/signout"
+                                            className=" text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src={`/images/login-icon.svg`}
+                                                alt="login-icon"
+                                                width={13}
+                                                height={19}
+                                            />
+                                            Logout
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            href="/login"
+                                            className=" text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src={`/images/login-icon.svg`}
+                                                alt="login-icon"
+                                                width={13}
+                                                height={19}
+                                            />
+                                            Login
+                                        </Link>
+                                    )}
                                 </li>
                                 <li>
                                     <Link
@@ -113,17 +137,29 @@ function MainNav({
                 </div>
             </div>
 
-            <div className={`row observerable-header-section ${isObserverMenuVisible ? "" : "d-none"}`} >
+            <div
+                className={`row observerable-header-section ${
+                    isObserverMenuVisible ? "" : "d-none"
+                }`}
+            >
                 <div className="col-12">
                     <div className="main-header-area d-flex">
                         <div className="logo">
                             <Link href="/" className=" d-inline-block">
-                                <Image width={0} height={43} sizes="100vw" alt="logo" src={`/images/logo.svg`} style={{ width: '100%' }} />
+                                <Image
+                                    width={0}
+                                    height={43}
+                                    sizes="100vw"
+                                    alt="logo"
+                                    src={`/images/logo.svg`}
+                                    style={{ width: "100%" }}
+                                />
                             </Link>
                         </div>
                         <div className="header-search-area observerable-header-search-area">
                             <div className="header-search-inner-area d-flex align-items-center">
-                                <div className="observerable-categories-item position-relative"
+                                <div
+                                    className="observerable-categories-item position-relative"
                                     onMouseEnter={() =>
                                         setCategoryHoverMenu(true)
                                     }
