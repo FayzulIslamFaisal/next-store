@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductCategoryItem = ({ categoryItem }) => {
-    const { imageurl, altText, path, title } = categoryItem;
+    let imageurl = `${process.env.NEXT_PUBLIC_ROOT_URL}/${categoryItem.logo}`;
+    const altText = categoryItem?.title ? categoryItem?.title : "";
+    const { slug: path, title } = categoryItem;
 
     return (
         <div className="nh-categories-item">
