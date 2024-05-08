@@ -24,7 +24,7 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                     arrows: true,
                     // nextArrow: <p>Next slide</p>,
                     // prevArrow: <p>Prev slide</p>,
-                }
+                },
             },
             {
                 breakpoint: 1199,
@@ -32,7 +32,7 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                     slidesToShow: 4,
                     slidesToScroll: 4,
                     arrows: true,
-                }
+                },
             },
             {
                 breakpoint: 767,
@@ -40,10 +40,9 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                     slidesToShow: 2,
                     slidesToScroll: 2,
                     arrows: true,
-                }
+                },
             },
-
-        ]
+        ],
     };
 
     return (
@@ -51,9 +50,9 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
             <div className="col-md-12">
                 <div className="nh-categories-holder-s">
                     <Slider {...settings}>
-                        {categoryProductData.map((itme, index) => (
+                        {categoryProductData.map((itme) => (
                             <ProductCategoryItem
-                                key={index}
+                                key={itme.id}
                                 categoryItem={itme}
                             />
                         ))}
