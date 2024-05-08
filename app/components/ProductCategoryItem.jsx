@@ -20,7 +20,7 @@ const ProductCategoryItem = ({ categoryItem }) => {
                 </div>
                 <div className="nh-categories-info text-hover-effect text-capitalize text-center">
                     <h4>
-                        <Link href={path}>{title}</Link>
+                        <Link href={path ?? ""}>{title}</Link>
                     </h4>
                 </div>
             </div>

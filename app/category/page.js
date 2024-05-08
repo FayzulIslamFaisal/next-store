@@ -1,11 +1,9 @@
-
-import Breadcrumb from "../components/productDetail/Breadcrumb"
-import Service from "../components/Service"
-import CategoryLeftSide from '../components/productCategory/CategoryLeftSide';
-import CategoryRightSide from '../components/productCategory/CategoryRightSide';
+import Breadcrumb from "../components/productDetail/Breadcrumb";
+import Service from "../components/Service";
+import CategoryLeftSide from "../components/productCategory/CategoryLeftSide";
+import CategoryRightSide from "../components/productCategory/CategoryRightSide";
 
 const ProductCategory = () => {
-
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -49,10 +47,8 @@ const ProductCategory = () => {
                     <Service serviceItems={serviceItems} />
                 </div>
             </section>
-
         </>
+    );
+};
 
-    )
-}
-
-export default ProductCategory
+export default ProductCategory;
