@@ -1,43 +1,11 @@
 import Link from "next/link";
 import MainSlider from "./MainSlider";
 import Image from "next/image";
+import { getHomeSlider } from "../services/getHomeSlider";
 
-function HeroSlider() {
-    const sliderOptionData = [
-        {
-            id: 1,
-            imageurl: "/images/slider.svg",
-            altText: "slider image 1",
-            title: " Women one Accessories",
-            subtitle: "upto 50% sale",
-            btnText: "Shop Now",
-            btnImage: "/images/shop-arrow.svg",
-            path: "#",
-            btnAltText: "arrow image 1",
-        },
-        {
-            id: 2,
-            imageurl: "/images/slider.svg",
-            altText: "slider image 2",
-            title: " Women one Accessories",
-            subtitle: "upto 50% sale",
-            btnText: "Shop Now",
-            btnImage: "/images/shop-arrow.svg",
-            path: "#",
-            btnAltText: "arrow image 2",
-        },
-        {
-            id: 3,
-            imageurl: "/images/slider.svg",
-            altText: "slider image 3",
-            title: " Women one Accessories",
-            subtitle: "upto 50% sale",
-            btnText: "Shop Now",
-            btnImage: "/images/shop-arrow.svg",
-            path: "#",
-            btnAltText: "arrow image 3",
-        },
-    ];
+async function HeroSlider() {
+    const data = await getHomeSlider();
+    const { sliders: sliderOptionData } = data.results;
 
     return (
         <div className="hero-slider-main-section">
@@ -57,7 +25,8 @@ function HeroSlider() {
                                                     <p className="d-flex align-items-center">
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/fashion-icon.svg"
                                                                 alt="fashion-icon"
                                                             />
@@ -66,7 +35,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -91,10 +61,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/digital-products.svg"
                                                                 alt="digital-products"
                                                             />
@@ -103,7 +73,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -116,10 +87,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/toiletries-icon.svg"
                                                                 alt="toiletries-icon"
                                                             />
@@ -128,7 +99,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -141,10 +113,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/Cleaning-Supplies.svg"
                                                                 alt="Cleaning-Supplies"
                                                             />
@@ -153,7 +125,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -166,10 +139,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/Food-icon.svg"
                                                                 alt="Food-icon"
                                                             />
@@ -178,7 +151,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -191,10 +165,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/Diapers.svg"
                                                                 alt="Diapers"
                                                             />
@@ -203,7 +177,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -216,10 +191,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/BabyCare.svg"
                                                                 alt="BabyCare"
                                                             />
@@ -228,7 +203,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -241,10 +217,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/Stationery.svg"
                                                                 alt="Stationery"
                                                             />
@@ -253,7 +229,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -266,10 +243,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/HomeAppliances.svg"
                                                                 alt="HomeAppliances"
                                                             />
@@ -278,7 +255,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />
@@ -291,10 +269,10 @@ function HeroSlider() {
                                                     className="link-item d-flex align-items-center justify-content-between "
                                                 >
                                                     <p className="d-flex align-items-center">
-
                                                         <span>
                                                             <Image
-                                                                width={23} height={20}
+                                                                width={23}
+                                                                height={20}
                                                                 src="/images/Cosmetics.svg"
                                                                 alt="Cosmetics"
                                                             />
@@ -303,7 +281,8 @@ function HeroSlider() {
                                                     </p>
                                                     <small>
                                                         <Image
-                                                            width={32} height={32}
+                                                            width={32}
+                                                            height={32}
                                                             src="/images/menu-arrow.svg"
                                                             alt="arrow icon"
                                                         />

@@ -1,7 +1,7 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-const ShopNowButton = ({ path, btnText, btnImage, btnAltText }) => {
+const ShopNowButton = ({ path, btnText, btnAltText }) => {
     return (
         <div className="hero-slider-btn-area">
             <Link
@@ -11,14 +11,14 @@ const ShopNowButton = ({ path, btnText, btnImage, btnAltText }) => {
                 <span>{btnText}</span>
                 <small>
                     <Image
-                        src={btnImage}
+                        src={`/images/shop-arrow.svg`}
                         alt={btnAltText}
                         fill={true}
                     />
                 </small>
             </Link>
         </div>
-    )
-}
+    );
+};
 
-export default ShopNowButton
+export default ShopNowButton;
