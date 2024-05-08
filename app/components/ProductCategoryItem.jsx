@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductCategoryItem = ({ categoryItem }) => {
-    let imageurl = `${process.env.NEXT_PUBLIC_ROOT_URL}/${categoryItem.logo}`;
+    let imageurl = `https://v3.nagadhat.com/${categoryItem.logo}`;
     const altText = categoryItem?.title ? categoryItem?.title : "";
     const { slug: path, title } = categoryItem;
 

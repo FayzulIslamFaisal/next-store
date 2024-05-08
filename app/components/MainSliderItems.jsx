@@ -4,7 +4,7 @@ import ShopNowButton from "./ShopNowButton";
 
 const MainSliderItems = ({ sliderItem }) => {
     let imageurl = sliderItem.banner_image
-        ? `${process.env.NEXT_PUBLIC_ROOT_URL}/${
+        ? `https://v3.nagadhat.com/${
               sliderItem.banner_image.split("public/")[1]
           }`
         : "";
