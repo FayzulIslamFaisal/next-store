@@ -4,9 +4,8 @@ import ShopNowButton from "./ShopNowButton";
 
 const MainSliderItems = ({ sliderItem }) => {
     let imageurl = sliderItem.banner_image
-        ? `https://v3.nagadhat.com/${
-              sliderItem.banner_image.split("public/")[1]
-          }`
+        ? `https://v3.nagadhat.com/${sliderItem.banner_image.split("public/")[1]
+        }`
         : "";
 
     const {
@@ -24,9 +23,7 @@ const MainSliderItems = ({ sliderItem }) => {
                     src={imageurl}
                     className="img-fluid"
                     alt={altText}
-                    width={0}
-                    height={510}
-                    style={{ width: "100%", height: "100%" }}
+                    fill={true}
                 />
             </div>
             <div className="hero-slider-content">

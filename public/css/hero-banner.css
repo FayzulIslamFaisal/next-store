@@ -148,11 +148,13 @@
 }
 
 .hero-slider-photo img {
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .hero-slider-photo {
     height: 500px;
+    width: 100%;
+    position: relative;
 }
 
 .hero-slider-content h1 {
