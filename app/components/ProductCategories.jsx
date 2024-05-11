@@ -13,8 +13,6 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
         slidesToScroll: isHome ? 8 : 6,
         rows: isHome ? 2 : 1,
         arrows: false,
-        // nextArrow: <p>Next slide</p>,
-        // prevArrow: <p>Prev slide</p>,
         responsive: [
             {
                 breakpoint: 1500,
@@ -22,8 +20,6 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                     slidesToShow: isHome ? 6 : 3,
                     slidesToScroll: isHome ? 6 : 3,
                     arrows: true,
-                    // nextArrow: <p>Next slide</p>,
-                    // prevArrow: <p>Prev slide</p>,
                 },
             },
             {
