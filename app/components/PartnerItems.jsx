@@ -7,7 +7,7 @@ const PartnerItems = ({ optionData }) => {
     return (
         <div className="col-lg-3 col-md-6 col-sm-6 col-6">
             <div className="nagadhat-partner">
-                <Link href={path}>
+                <Link href={path} target='_blank'>
                     <Image
                         className="img-fluid"
                         src={imageUrl}
