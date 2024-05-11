@@ -27,16 +27,15 @@ const MainSliderItems = ({ sliderItem }) => {
                 />
             </div>
             <div className="hero-slider-content">
-                <h1>{title ? title : ""}</h1>
-                <h2>{subtitle ? subtitle : ""}</h2>
-                {
-                    btnText ? (<ShopNowButton
+                {title && <h1>{title}</h1>}
+                {subtitle && <h2>{subtitle}</h2>}
+                {btnText && (
+                    <ShopNowButton
                         path={path}
                         btnText={btnText}
                         btnAltText={btnAltText}
-                    />) : ""
-                }
-
+                    />
+                )}
             </div>
         </div>
     );
