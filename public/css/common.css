@@ -197,6 +197,7 @@ body {
 
 .nh-categories-info h4 a {
     color: var(--color-414042);
+    text-decoration: none !important;
 }
 
 .image-hover-effect {
