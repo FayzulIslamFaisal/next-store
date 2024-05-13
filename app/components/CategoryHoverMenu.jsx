@@ -1,16 +1,27 @@
-
+"use client";
+import { useEffect, useState } from "react";
 import { getCategoryMenu } from "../services/getCategoryMenu";
 import CategoryMainMenu from "./CategoryMainMenu";
 
-async function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
-    const categoryMenuOption = await getCategoryMenu();
+function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
+    const [categoryMenuOption, setCategoryMenuOption] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getCategoryMenu();
+            setCategoryMenuOption(data);
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className="container">
             <div
                 className={`observer-hover-menu ${isActive ? "active" : ""}`}
                 onMouseLeave={() => setCategoryHoverMenu(false)}
             >
-                <CategoryMainMenu categoryMenu={categoryMenuOption} />
+                {categoryMenuOption && (
+                    <CategoryMainMenu categoryMenu={categoryMenuOption} />
+                )}
             </div>
         </div>
     );

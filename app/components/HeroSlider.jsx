@@ -1,15 +1,23 @@
+"use client";
 import MainSlider from "./MainSlider";
-import { getHomeSlider } from "../services/getHomeSlider";
 import CategoryMainMenu from "./CategoryMainMenu";
 import { getCategoryMenu } from "../services/getCategoryMenu";
-import { Suspense } from 'react';
+import { getHomeSlider } from "../services/getHomeSlider";
+import { Suspense, useEffect, useState } from "react";
 
-async function HeroSlider() {
+function HeroSlider() {
+    const [sliderOptionData, setSliderOptionData] = useState([]);
+    const [categoryMenuOption, setCategoryMenuOption] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const categoryItem = await getCategoryMenu();
+            setCategoryMenuOption(categoryItem);
 
-    const categoryMenuOption = getCategoryMenu();
-    const sliderData = await getHomeSlider();
-    const { sliders: sliderOptionData } = sliderData?.results;
-
+            const sliderData = await getHomeSlider();
+            setSliderOptionData(sliderData.results.sliders);
+        }
+        fetchData();
+    }, []);
 
     return (
         <div className="hero-slider-main-section">
@@ -20,13 +28,19 @@ async function HeroSlider() {
                             <div className="col-md-12">
                                 <div className="hero-slider-main-box ">
                                     <div className="category-menu-holder hero-slider-main-item">
-                                        <Suspense fallback="<h1>Loding Category Menu...</h1>">
-                                            <CategoryMainMenu categoryMenu={categoryMenuOption} />
-                                        </Suspense>
+                                        {categoryMenuOption && (
+                                            <CategoryMainMenu
+                                                categoryMenu={
+                                                    categoryMenuOption
+                                                }
+                                            />
+                                        )}
                                     </div>
-                                    <MainSlider
-                                        sliderOptionData={sliderOptionData}
-                                    />
+                                    {sliderOptionData && (
+                                        <MainSlider
+                                            sliderOptionData={sliderOptionData}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         </div>
