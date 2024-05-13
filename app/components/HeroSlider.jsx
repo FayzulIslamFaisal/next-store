@@ -2,8 +2,9 @@
 import MainSlider from "./MainSlider";
 import CategoryMainMenu from "./CategoryMainMenu";
 import { getCategoryMenu } from "../services/getCategoryMenu";
+import { filterBySliderMenuView } from "../utils";
 import { getHomeSlider } from "../services/getHomeSlider";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function HeroSlider() {
     const [sliderOptionData, setSliderOptionData] = useState([]);
@@ -11,7 +12,7 @@ function HeroSlider() {
     useEffect(() => {
         async function fetchData() {
             const categoryItem = await getCategoryMenu();
-            setCategoryMenuOption(categoryItem);
+            setCategoryMenuOption(filterBySliderMenuView(categoryItem));
 
             const sliderData = await getHomeSlider();
             setSliderOptionData(sliderData.results.sliders);
