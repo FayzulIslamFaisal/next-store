@@ -8,10 +8,9 @@ const CategoryMainMenuList = ({ menuList }) => {
     const onCateLeftMenu = menuList && menuList?.on_slider_menu_view;
     const categoryStatus = menuList && menuList?.status;
 
-
     return (
-
-        onCateLeftMenu === 1 && categoryStatus === 1 && (
+        onCateLeftMenu === 1 &&
+        categoryStatus === 1 && (
             <li className="menu-link">
                 <Link
                     href="#"
@@ -28,33 +27,30 @@ const CategoryMainMenuList = ({ menuList }) => {
                         </span>
                         {menuList.title ? menuList.title : ""}
                     </p>
-                    <small>
-                        <Image
-                            width={32}
-                            height={32}
-                            src="/images/menu-arrow.svg"
-                            alt="arrow icon"
-                        />
-                    </small>
+                    {categorySubMenuItem && categorySubMenuItem.length > 1 && (
+                        <small>
+                            <Image
+                                width={32}
+                                height={32}
+                                src="/images/menu-arrow.svg"
+                                alt="arrow icon"
+                            />
+                        </small>
+                    )}
                 </Link>
-                {
-                    categorySubMenuItem && (
-                        <ul className="sub-category-menu">
-                            {
-                                categorySubMenuItem.map((subMenuItem) => (
-                                    <CategorySubMenu
-                                        key={subMenuItem.id}
-                                        subMenuItem={subMenuItem}
-                                    />
-                                ))
-                            }
-                        </ul>
-                    )
-                }
+                {categorySubMenuItem && categorySubMenuItem.length > 0 && (
+                    <ul className="sub-category-menu">
+                        {categorySubMenuItem.map((subMenuItem) => (
+                            <CategorySubMenu
+                                key={subMenuItem.id}
+                                subMenuItem={subMenuItem}
+                            />
+                        ))}
+                    </ul>
+                )}
             </li>
         )
     );
 };
 
-
-export default CategoryMainMenuList
+export default CategoryMainMenuList;
