@@ -1,9 +1,12 @@
 
+import { title } from "process";
 import CategoryMainMenuList from "./CategoryMainMenuList";
 
 const CategoryMainMenu = async ({ categoryMenu }) => {
     const categorytMenuList = await categoryMenu;
     const menuItems = await categorytMenuList?.results || [];
+    // console.log(menuTile)
+
     return (
         <>
             <ul className="category-menu-area">

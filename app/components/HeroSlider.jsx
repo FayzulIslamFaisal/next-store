@@ -7,9 +7,9 @@ import { Suspense } from 'react';
 async function HeroSlider() {
 
     const categoryMenuOption = getCategoryMenu();
-    const sliderData = getHomeSlider();
-    const sliderOption = await sliderData;
-    const { sliders: sliderOptionData } = sliderOption.results;
+    const sliderData = await getHomeSlider();
+    const { sliders: sliderOptionData } = sliderData?.results;
+
 
     return (
         <div className="hero-slider-main-section">
