@@ -4,7 +4,7 @@ import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllCategories from "../components/viewAllProduct/ViewAllCategories";
 import Sales from "../components/Sales";
-import { getCategoryMenu } from "../services/getCategoryMenu";
+import { getHomeCategory } from "../services/getHomeCategory";
 import { getHomeBrand } from "../services/getHomeBrand";
 
 const viewAllProduct = async ({ searchParams }) => {
@@ -155,7 +155,7 @@ const viewAllProduct = async ({ searchParams }) => {
     if (searchParams) {
         switch (searchParams.type) {
             case "category":
-                viewCategoryData = await getCategoryMenu();
+                viewCategoryData = await getHomeCategory();
                 if (viewCategoryData.banner_image) {
                     bannerUrl = `https://v3.nagadhat.com/${viewCategoryData.banner_image}`;
                 }
