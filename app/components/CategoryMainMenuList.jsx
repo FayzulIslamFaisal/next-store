@@ -27,7 +27,7 @@ const CategoryMainMenuList = ({ menuList }) => {
                         </span>
                         {menuList.title ? menuList.title : ""}
                     </p>
-                    {categorySubMenuItem && categorySubMenuItem.length > 1 && (
+                    {categorySubMenuItem && categorySubMenuItem.length > 0 && (
                         <small>
                             <Image
                                 width={32}
