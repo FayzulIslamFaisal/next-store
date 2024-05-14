@@ -8,6 +8,7 @@ function SectionTitle({
     children,
     isSale = false,
     showViewAll = true,
+    target = "",
 }) {
     const { width } = useScreenSize();
     const MAX_SCREEN_SIZE = 490;
@@ -15,8 +16,9 @@ function SectionTitle({
         <div className="row nh-common-title-area">
             <div className="col-md-12">
                 <div
-                    className={`nh-common-title d-flex align-items-center justify-content-between ${isSale && width < MAX_SCREEN_SIZE ? "flex-column" : ""
-                        }`}
+                    className={`nh-common-title d-flex align-items-center justify-content-between ${
+                        isSale && width < MAX_SCREEN_SIZE ? "flex-column" : ""
+                    }`}
                 >
                     <div className="nh-common-item d-flex align-items-center">
                         <h3>{title}</h3>
@@ -25,7 +27,18 @@ function SectionTitle({
                     {children}
                     {showViewAll && (
                         <div className="nh-common-item">
-                            <Link href={path}>View All</Link>
+                            {target ? (
+                                <Link
+                                    href={{
+                                        pathname: path,
+                                        query: { type: target },
+                                    }}
+                                >
+                                    View All
+                                </Link>
+                            ) : (
+                                <Link href={path}>View All</Link>
+                            )}
                         </div>
                     )}
                 </div>

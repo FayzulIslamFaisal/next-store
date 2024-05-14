@@ -1,8 +1,12 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
 const ViewAllCategoryItems = ({ items }) => {
-    const { imageUrl, altText, title, path } = items;
+    let imageUrl = "/images/flash-img1.jpg";
+    const { title: altText, title, slug: path, logo } = items;
+    if (logo) {
+        imageUrl = `https://v3.nagadhat.com/${logo}`;
+    }
     return (
         <div className="nh-categories-item">
             <div className="nh-categories-item-bg nh-hover-box-shadow">
@@ -21,7 +25,7 @@ const ViewAllCategoryItems = ({ items }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ViewAllCategoryItems
+export default ViewAllCategoryItems;
