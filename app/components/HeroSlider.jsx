@@ -12,7 +12,8 @@ function HeroSlider() {
     useEffect(() => {
         async function fetchData() {
             const categoryItem = await getCategoryMenu();
-            setCategoryMenuOption(filterBySliderMenuView(categoryItem));
+            const filteredList = filterBySliderMenuView(categoryItem);
+            setCategoryMenuOption(filteredList.slice(0, 10));
 
             const sliderData = await getHomeSlider();
             setSliderOptionData(sliderData.results.sliders);
