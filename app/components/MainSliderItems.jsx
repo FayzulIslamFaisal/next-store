@@ -3,10 +3,6 @@ import React from "react";
 import ShopNowButton from "./ShopNowButton";
 
 const MainSliderItems = ({ sliderItem }) => {
-    // let imageurl = sliderItem.banner_image
-    //     ? `https://v3.nagadhat.com/${sliderItem.banner_image.split("public/")[1]
-    //     }`
-    //     : "";
     let imageurl = `https://v3.nagadhat.com/${sliderItem.banner_image}`;
     const {
         title: altText,

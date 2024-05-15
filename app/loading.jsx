@@ -3,9 +3,24 @@ import React from 'react'
 const loading = () => {
     return (
         <div className="container py-5 ">
-            <div className="row">
+            <div className="row justify-content-center">
                 <div className="col-md-12">
-                    <h1>Loding.....</h1>
+                    <div className="nh-loading-content vh-100 d-flex justify-content-center align-items-center ">
+                        <div class="lds-spinner">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

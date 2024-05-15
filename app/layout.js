@@ -37,6 +37,7 @@ export default function RootLayout({ children }) {
       <link rel="stylesheet" href="/css/slick.css" precedence="default" />
       <link rel="stylesheet" href="/css/slick-theme.css" precedence="default" />
       <link rel="stylesheet" href="/css/brand.css" precedence="default" />
+      <link rel="stylesheet" href="/css/animatloading.css" precedence="default" />
       <link rel="stylesheet" href="/css/category.css" precedence="default" />
       <link rel="stylesheet" href="/css/flash-sale.css" precedence="default" />
       <link rel="stylesheet" href="/css/footer.css" precedence="default" />

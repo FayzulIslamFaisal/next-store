@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-const ViewAllBanner = ({ imageUrl = "/images/viewproduct.jpg" }) => {
+const ViewAllBanner = ({ imageUrl = "" }) => {
     return (
         <div className="row view-all-product-banner-area">
             <div className="col-md-12">
