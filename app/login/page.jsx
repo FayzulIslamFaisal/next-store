@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SigninBtn from "../components/SigninBtn";
 
 const login = () => {
     return (
@@ -68,12 +69,8 @@ const login = () => {
                                     Or Login With
                                 </label>
                                 <div className="mb-3 user-social-login-item d-flex align-items-center  justify-content-center ">
-                                    <Link href="/api/auth/signin/facebook">
-                                        <button>Facebook</button>
-                                    </Link>
-                                    <Link href="/api/auth/signin/google">
-                                        <button>Google</button>
-                                    </Link>
+                                    <SigninBtn provider="facebook" />
+                                    <SigninBtn provider="google" />
                                 </div>
                                 <p className="text-center">
                                     New to Nagadhat?{" "}

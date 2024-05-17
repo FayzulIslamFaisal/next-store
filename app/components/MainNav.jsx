@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import SignoutBtn from "./SignoutBtn";
 
 function MainNav({
     isObserverMenuVisible,
@@ -74,18 +75,7 @@ function MainNav({
                             <ul className=" d-flex align-items-center ">
                                 <li>
                                     {authStatus === "authenticated" ? (
-                                        <Link
-                                            href="/api/auth/signout"
-                                            className=" text-white text-capitalize d-flex align-items-center"
-                                        >
-                                            <Image
-                                                src={`/images/login-icon.svg`}
-                                                alt="login-icon"
-                                                width={13}
-                                                height={19}
-                                            />
-                                            Logout
-                                        </Link>
+                                        <SignoutBtn />
                                     ) : (
                                         <Link
                                             href="/login"

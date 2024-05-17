@@ -13,6 +13,11 @@ export const authOptions = {
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET
         })
     ],
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+            return baseUrl
+        }
+    }
 };
 
 const handler = NextAuth(authOptions);
