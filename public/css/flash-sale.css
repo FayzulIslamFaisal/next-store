@@ -18,15 +18,22 @@
     padding: 20px;
     border-radius: 10px;
     border: 1px solid var(--color-D8D8D8);
+    min-height: 375px;
 }
 
 .flash-sale-content-img {
     margin-bottom: 15px;
 }
 
-.flash-sale-content-img img {
+.flash-sale-content-area-grid .flash-sale-content-img {
+    position: relative;
     height: 150px;
-    object-fit: scale-down;
+    width: 100%;
+}
+
+.flash-sale-content-area-grid .flash-sale-content-img img,
+.flash-sale-content-img img {
+    object-fit: cover;
     margin: 0 auto;
     display: block;
 }
@@ -37,6 +44,10 @@
     font-weight: 700;
     margin-bottom: 10px;
     letter-spacing: -0.14px;
+}
+
+.flash-sale-content-info h4 a {
+    text-decoration: none !important;
 }
 
 .removepadding-x .container {
