@@ -149,7 +149,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
           <div className="col-md-12">
             <div className="flash-sale-content-area-grid">
               <Slider {...settings}>
-                {flashSaleProductList.map((product) => (
+                {flashSaleProductList?.map((product) => (
                   <ProductCard key={product.id} item={product} />
                 ))}
               </Slider>

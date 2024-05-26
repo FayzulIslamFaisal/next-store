@@ -16,7 +16,9 @@ function ProductCard({ item }) {
         <div className="flash-sale-content-info text-hover-effect">
           <div className="">
             <h4>
-              <Link href={slug ?? ""}>{title}</Link>
+              <Link href={`/${slug}`} target="_blank">
+                {title}
+              </Link>
             </h4>
             <strong>৳ {price}</strong>
           </div>

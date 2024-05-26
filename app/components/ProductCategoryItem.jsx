@@ -8,7 +8,7 @@ const ProductCategoryItem = ({ categoryItem }) => {
   const { slug: path, title } = categoryItem;
 
   // Function to truncate title
-  const truncateTitle = (title, maxLength) => {
+  const truncateTitle = (title, maxLength = 24) => {
     if (title.length > maxLength) {
       return title.slice(0, maxLength) + "...";
     }
@@ -28,7 +28,7 @@ const ProductCategoryItem = ({ categoryItem }) => {
         </div>
         <div className="nh-categories-info text-hover-effect text-capitalize text-center">
           <h4>
-            <Link href={path ?? ""}>{truncateTitle(title, 24)}</Link>
+            <Link href={path ?? ""}>{truncateTitle(title)}</Link>
           </h4>
         </div>
       </div>
