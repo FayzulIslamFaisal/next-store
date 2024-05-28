@@ -6,6 +6,7 @@ import ProductRightSide from "../components/productDetail/ProductRightSide";
 
 const ProductSinglePage = ({ params }) => {
   const { slug } = params;
+
   const serviceItems = [
     {
       imageurl: "/images/pickup.svg",
