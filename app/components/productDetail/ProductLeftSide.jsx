@@ -14,7 +14,10 @@ const ProductLeftSide = () => {
           property="og:image"
           content="https://nagadhat.com.bd/storage/media/project_images/1674733711_Discount-Partners-Web-Slider.jpg"
         />
-        <meta property="og:url" content="https://nagadhat.com.bd/" />
+        <meta
+          property="og:url"
+          content="https://next-store-self-five.vercel.app/"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Nagadhat" />
         <meta name="twitter:card" content="summary_large_image" />
