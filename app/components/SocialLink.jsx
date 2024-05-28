@@ -3,12 +3,12 @@ const socialLinkItem = [
   {
     image: "/images/facbook.svg",
     alt: "Facebook",
-    path: "https://www.facebook.com/sharer/sharer.php?u=https://nagadhat.com.bd/&title=Welcome%20to%20the%20Product%20Page&description=Check%20out%20this%20product&picture=https://nagadhat.com.bd/storage/media/project_images/1674733711_Discount-Partners-Web-Slider.jpg",
+    path: "https://www.facebook.com/sharer/sharer.php?u=https://next-store-self-five.vercel.app/&title=Welcome%20to%20the%20Product%20Page&description=Check%20out%20this%20product&picture=https://nagadhat.com.bd/storage/media/project_images/1674733711_Discount-Partners-Web-Slider.jpg",
   },
   {
     image: "/images/twitter.svg",
     alt: "Twitter",
-    path: "https://twitter.com/intent/tweet?url=https://nagadhat.com.bd/&text=Welcome%20to%20the%20Product%20Page",
+    path: "https://twitter.com/intent/tweet?url=https://next-store-self-five.vercel.app/&text=Welcome%20to%20the%20Product%20Page",
   },
   {
     image: "/images/linkedin.svg",
