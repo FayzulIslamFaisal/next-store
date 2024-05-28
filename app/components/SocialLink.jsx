@@ -8,12 +8,12 @@ const socialLinkItem = [
   {
     image: "/images/twitter.svg",
     alt: "Twitter",
-    path: "https://twitter.com/intent/tweet?url=https://nagadhat.com.bd/&text=Welcome%20to%20the%20Product%20Page",
+    path: "https://twitter.com/intent/tweet?url=https://next-store-self-five.vercel.app/purple-jute-cotton-notebook-22363&text=Welcome%20to%20the%20Product%20Page",
   },
   {
     image: "/images/linkedin.svg",
     alt: "LinkedIn",
-    path: "https://www.linkedin.com/shareArticle?mini=true&url=https://nagadhat.com.bd/&title=Welcome%20to%20the%20Product%20Page&summary=Check%20out%20this%20product&source=LinkedIn",
+    path: "https://www.linkedin.com/shareArticle?mini=true&url=https://next-store-self-five.vercel.app/purple-jute-cotton-notebook-22363&title=Welcome%20to%20the%20Product%20Page&summary=Check%20out%20this%20product&source=LinkedIn",
   },
   {
     image: "/images/youtube.svg",
