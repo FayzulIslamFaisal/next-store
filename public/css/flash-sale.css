@@ -25,12 +25,14 @@
     margin-bottom: 15px;
 }
 
+.nh-just-for-you .flash-sale-content-img,
 .flash-sale-content-area-grid .flash-sale-content-img {
     position: relative;
     height: 150px;
     width: 100%;
 }
 
+.nh-just-for-you .flash-sale-content-img img,
 .flash-sale-content-area-grid .flash-sale-content-img img,
 .flash-sale-content-img img {
     object-fit: cover;
