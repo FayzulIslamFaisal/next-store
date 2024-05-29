@@ -1,36 +1,17 @@
+"use client";
 import Head from "next/head";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
 import Breadcrumb from "../components/productDetail/Breadcrumb";
 import ProductLeftSide from "../components/productDetail/ProductLeftSide";
 import ProductRightSide from "../components/productDetail/ProductRightSide";
+import { useEffect, useState } from "react";
+import { getProductDetails } from "../services/getProductDetails";
+import { metadata } from "../utils";
 
-export const metadata = {
-  openGraph: {
-    title: "Next.js",
-    description: "The React Framework for the Web",
-    url: "https://nextjs.org",
-    siteName: "Next.js",
-    images: [
-      {
-        url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg", // Must be an absolute URL
-        width: 800,
-        height: 600,
-      },
-      {
-        url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg", // Must be an absolute URL
-        width: 1800,
-        height: 1600,
-        alt: "My custom alt",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-};
 const ProductSinglePage = ({ params }) => {
   const { slug } = params;
-
+  const [productInfo, setProductInfo] = useState({});
   const serviceItems = [
     {
       imageurl: "/images/pickup.svg",
@@ -57,6 +38,15 @@ const ProductSinglePage = ({ params }) => {
       subTitle: "Support System 24/7",
     },
   ];
+  console.log(productInfo);
+
+  useEffect(() => {
+    async function fetchData() {
+      const flashSale = await getProductDetails();
+      setProductInfo(flashSale?.results);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -65,7 +55,7 @@ const ProductSinglePage = ({ params }) => {
         <div className="container">
           <Breadcrumb />
           <div className="row product-details-info">
-            <ProductLeftSide />
+            <ProductLeftSide productInfo={productInfo} />
             <ProductRightSide />
           </div>
           <Sales bgcolor="bg-white" isHome={false} />
