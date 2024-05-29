@@ -15,7 +15,7 @@ function JustForYou() {
             try {
                 const justForYoutList = await getJustForYouProduct();
                 const justForYouProductList =
-                    justForYoutList?.results?.["for you products"] || [];
+                    justForYoutList?.results?.["for_you_products"] || [];
                 const initialProducts = justForYouProductList.slice(0, offset);
 
                 setJfyProducts(initialProducts);
