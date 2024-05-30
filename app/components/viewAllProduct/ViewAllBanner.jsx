@@ -5,7 +5,7 @@ const ViewAllBanner = ({ imageUrl = "" }) => {
         <div className="row view-all-product-banner-area">
             <div className="col-md-12">
                 <div className="view-all-product-banner">
-                    <Image src={imageUrl} className=" img-fluid" sizes="100vw" fill={true} alt="banner image" />
+                    <Image src={imageUrl} className=" img-fluid" fill={true} alt="banner image" />
                 </div>
             </div>
         </div>
