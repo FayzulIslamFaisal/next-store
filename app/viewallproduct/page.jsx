@@ -1,4 +1,4 @@
-import Pagination from "../components/productCategory/Pagination"
+import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
@@ -6,7 +6,7 @@ import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTi
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 
-const viewAllProduct = async({searchParams}) => {
+const viewAllProduct = async ({ searchParams }) => {
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
@@ -14,9 +14,14 @@ const viewAllProduct = async({searchParams}) => {
         switch (searchParams.type) {
             case "justForYou":
                 const justForYouProductData = await getJustForYouProduct();
-                viewProductData = justForYouProductData?.results?.for_you_products;
-                if (viewProductData.product_thumbnail) {
-                    bannerUrl = `https://v3.nagadhat.com/${viewProductData.product_thumbnail}`;
+                viewProductData =
+                    justForYouProductData?.results?.for_you_products;
+
+                if (
+                    viewProductData.length >= 1 &&
+                    viewProductData[0].product_thumbnail
+                ) {
+                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
                 }
                 sectionTitle = "Just For You";
                 break;
@@ -50,24 +55,26 @@ const viewAllProduct = async({searchParams}) => {
             subTitle: "Support System 24/7",
         },
     ];
-   
 
     return (
         <div className="container view-all-product-container">
-            <ViewAllBanner  imageUrl={bannerUrl}/>
+            <ViewAllBanner imageUrl={bannerUrl} />
             <ViewAllCategoryTitle title={sectionTitle} />
             <ViewAllProduct viewProductData={viewProductData} />
-
 
             <div className="row view-all-product-pagination-area">
                 <div className="col-md-12 text-center">
                     <Pagination />
                 </div>
             </div>
-            <Sales isHome={false} bgcolor="bg-white" removePx={`removepadding-x`} />
+            <Sales
+                isHome={false}
+                bgcolor="bg-white"
+                removePx={`removepadding-x`}
+            />
             <Service serviceItems={serviceItems} />
         </div>
-    )
-}
+    );
+};
 
-export default viewAllProduct
+export default viewAllProduct;
