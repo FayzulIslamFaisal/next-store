@@ -34,121 +34,7 @@ const viewAllProduct = async ({ searchParams }) => {
             subTitle: "Support System 24/7",
         },
     ];
-    // const viewCategoryData = [
-    //     {
-    //         id: 1,
-    //         imageUrl: "/images/flash-img1.jpg",
-    //         altText: "flash-img1",
-    //         title: "One Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 2,
-    //         imageUrl: "/images/flash-img2.jpg",
-    //         altText: "flash-img2",
-    //         title: "Two Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 3,
-    //         imageUrl: "/images/flash-img3.jpg",
-    //         altText: "flash-img3",
-    //         title: "Three Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 4,
-    //         imageUrl: "/images/flash-img4.jpg",
-    //         altText: "flash-img4",
-    //         title: "Four Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 5,
-    //         imageUrl: "/images/flash-img5.jpg",
-    //         altText: "flash-img5",
-    //         title: "Five Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 6,
-    //         imageUrl: "/images/flash-img6.jpg",
-    //         altText: "flash-img6",
-    //         title: "Six Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 7,
-    //         imageUrl: "/images/flash-img1.jpg",
-    //         altText: "flash-img7",
-    //         title: "Seven Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 8,
-    //         imageUrl: "/images/flash-img2.jpg",
-    //         altText: "flash-img8",
-    //         title: "Eight Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 9,
-    //         imageUrl: "/images/flash-img3.jpg",
-    //         altText: "flash-img9",
-    //         title: "Nine Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 10,
-    //         imageUrl: "/images/flash-img4.jpg",
-    //         altText: "flash-img10",
-    //         title: "Ten Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 11,
-    //         imageUrl: "/images/flash-img5.jpg",
-    //         altText: "flash-img11",
-    //         title: "Eleven Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 12,
-    //         imageUrl: "/images/flash-img6.jpg",
-    //         altText: "flash-img12",
-    //         title: "Twelve Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 13,
-    //         imageUrl: "/images/flash-img1.jpg",
-    //         altText: "flash-img13",
-    //         title: "Thirteen Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 14,
-    //         imageUrl: "/images/flash-img2.jpg",
-    //         altText: "flash-img14",
-    //         title: "Fourteen Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 15,
-    //         imageUrl: "/images/flash-img3.jpg",
-    //         altText: "flash-img15",
-    //         title: "Fifteen Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    //     {
-    //         id: 16,
-    //         imageUrl: "/images/flash-img4.jpg",
-    //         altText: "flash-img16",
-    //         title: "Sixteen Lorem Ipsum is simply dummy tex",
-    //         path: "#",
-    //     },
-    // ];
-
+  
     let viewCategoryData = [];
     let sectionTitle = "View all";
     let bannerUrl = "/images/fashion.jpg";
@@ -156,16 +42,23 @@ const viewAllProduct = async ({ searchParams }) => {
         switch (searchParams.type) {
             case "category":
                 viewCategoryData = await getHomeCategory();
-                if (viewCategoryData.banner_image) {
-                    bannerUrl = `https://v3.nagadhat.com/${viewCategoryData.banner_image}`;
+                
+                if (
+                  viewCategoryData.length >= 1 &&
+                  viewCategoryData[1].banner_image
+                ) {
+                  bannerUrl = `https://v3.nagadhat.com/${viewCategoryData[1].banner_image}`;
                 }
                 sectionTitle = "Categories";
                 break;
             case "brand":
                 const data = await getHomeBrand();
                 viewCategoryData = data.results.brands;
-                if (viewCategoryData.banner) {
-                    bannerUrl = `https://v3.nagadhat.com/${viewCategoryData.banner}`;
+                if (
+                  viewCategoryData.length >= 1 &&
+                  viewCategoryData[1].banner
+                ) {
+                  bannerUrl = `https://v3.nagadhat.com/${viewCategoryData[1].banner}`;
                 }
                 sectionTitle = "Brands";
                 break;
