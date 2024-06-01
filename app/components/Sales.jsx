@@ -142,7 +142,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
   return (
     <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
       <div className="container">
-        <SectionTitle title={isHome ? `Flash Sale` : `Recent View`}>
+        <SectionTitle title={isHome ? `Flash Sale` : `Recent View`} target="flashSale" path="/viewall">
           {isHome && <FlipClock endsAt={`2024-06-01 12:00`} />}
         </SectionTitle>
         <div className="row">

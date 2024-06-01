@@ -19,7 +19,7 @@ const ViewAllProductItems = ({ items }) => {
                 </div>
                 <div className="flash-sale-content-info text-hover-effect">
                     <h4>
-                        <Link href={path ?? ""}>{title}</Link>
+                        <Link href={path ?? "#"}>{title ? title : "Product Title"}</Link>
                     </h4>
                     <strong>৳ {price}</strong>
                     <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
