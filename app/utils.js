@@ -72,6 +72,6 @@ export const metadata = {
 };
 
 // check the name is existing this array
-export const existingAttributeIndex = (arr, name) => {
-  arr.findIndex((item) => item.name === name);
+export const existingIndex = (arr, name) => {
+  return arr?.findIndex((item) => item.name === name);
 };

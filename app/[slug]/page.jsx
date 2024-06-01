@@ -38,7 +38,6 @@ const ProductSinglePage = ({ params }) => {
       subTitle: "Support System 24/7",
     },
   ];
-  console.log(productInfo);
 
   useEffect(() => {
     async function fetchData() {
