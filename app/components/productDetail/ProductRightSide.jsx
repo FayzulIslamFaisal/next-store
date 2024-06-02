@@ -48,6 +48,7 @@ const ProductRightSide = ({ productInfo }) => {
     <div className="col-xl-3">
       <div className="product-sidebar">
         <ProductDeliveryDetail productInfo={productInfo} />
+
         <SimilerProduct productData={similerProductData} />
       </div>
     </div>

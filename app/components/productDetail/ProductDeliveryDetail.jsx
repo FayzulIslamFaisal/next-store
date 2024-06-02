@@ -140,27 +140,32 @@ const ProductDeliveryDetail = ({ productInfo }) => {
               </h5>
             </div>
           </div>
-          <div className="product-details-sold-area bg-white">
-            <div className="product-details-sold-top d-flex align-items-center justify-content-between">
-              <div className="product-details-sold-item">
-                <h5>Sold By</h5>{" "}
-              </div>
-              <div className="product-details-sold-item d-flex align-items-center">
-                <div className="product-details-sold-img sidebar-common-img-size">
-                  <Image
-                    className="img-fluid"
-                    src="/images/chat-img.svg"
-                    alt="cart image"
-                    fill={true}
-                  />
-                </div>
-                <Link href="#" className="custom-text-link">
-                  Chat
-                </Link>
-              </div>
+        </div>
+      </div>
+      <div className="product-details-delivery-bg mt-3">
+        <div className="product-details-sold-area bg-white">
+          <div className="product-details-sold-top d-flex align-items-center justify-content-between">
+            <div className="product-details-sold-item">
+              <h5>Sold By</h5>{" "}
             </div>
-            <p>Imran Fashion House</p>
-            <div className="product-details-sold-table">
+            <div className="product-details-sold-item d-flex align-items-center">
+              <div className="product-details-sold-img sidebar-common-img-size">
+                <Image
+                  className="img-fluid"
+                  src="/images/chat-img.svg"
+                  alt="cart image"
+                  fill={true}
+                />
+              </div>
+              <Link href="#" className="custom-text-link">
+                Chat
+              </Link>
+            </div>
+          </div>
+          <p>Imran Fashion House</p>
+
+          {/* this design possibility to need to future  */}
+          {/* <div className="product-details-sold-table">
               <div className="table-responsive">
                 <table className="table table-bordered">
                   <thead>
@@ -184,8 +189,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
               <Link href="#" className="custom-text-link">
                 Visit Store
               </Link>
-            </div>
-          </div>
+            </div> */}
         </div>
       </div>
     </div>
