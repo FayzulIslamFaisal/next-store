@@ -10,7 +10,6 @@ import { getProductDetails } from "@/app/services/getProductDetails";
 import { productDetailsPageMetaDataHandler } from "@/app/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { api_base_url } from "@/app/config";
-
 const ProductSinglePage = ({ params }) => {
   const { slug } = params;
   const [productInfo, setProductInfo] = useState({});

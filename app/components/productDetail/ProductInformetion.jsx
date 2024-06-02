@@ -444,16 +444,6 @@ const ProductInformetion = ({ productInfo }) => {
           <div
             dangerouslySetInnerHTML={{ __html: productInfo?.short_description }}
           />
-          {/* <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            non eirmod tempor invidunt ut labore et dolore magna
-          </p>
-          <ul>
-            <li>Consetetur sadip</li>
-            <li>Scing elitrsed </li>
-            <li>Daam nonumy</li>
-            <li>Tempor invidunt</li>
-          </ul> */}
         </div>
 
         <div className="product-info-rtk-content">

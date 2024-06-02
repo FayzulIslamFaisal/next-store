@@ -1,4 +1,5 @@
 import Image from "next/image";
+import CustomButton from "../CustomButton";
 
 const ProductLongDescription = ({ productInfo }) => {
   return (
@@ -11,46 +12,46 @@ const ProductLongDescription = ({ productInfo }) => {
               id="nav-tab"
               role="tablist"
             >
-              <button
+              <CustomButton
                 className="nav-link active"
                 id="nav-specification-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-specification"
+                dataBsToggle="tab"
+                dataBsTarget="#nav-specification"
                 type="button"
                 role="tab"
               >
                 Specification
-              </button>
-              <button
+              </CustomButton>
+              <CustomButton
                 className="nav-link"
                 id="nav-details-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-details"
+                dataBsToggle="tab"
+                dataBsTarget="#nav-details"
                 type="button"
                 role="tab"
               >
                 Details
-              </button>
-              <button
+              </CustomButton>
+              <CustomButton
                 className="nav-link"
                 id="nav-qa-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-qa"
+                dataBsToggle="tab"
+                dataBsTarget="#nav-qa"
                 type="button"
                 role="tab"
               >
                 Q & A
-              </button>
-              <button
+              </CustomButton>
+              <CustomButton
                 className="nav-link"
                 id="nav-reviews-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-reviews"
+                dataBsToggle="tab"
+                dataBsTarget="#nav-reviews"
                 type="button"
                 role="tab"
               >
                 Reviews <span>(240)</span>{" "}
-              </button>
+              </CustomButton>
             </div>
           </nav>
           <div className="tab-content " id="nav-tabContent">
@@ -71,79 +72,6 @@ const ProductLongDescription = ({ productInfo }) => {
                   }}
                 />
               </div>
-              {/*   <div className="tab-panel-info-details">
-                <h6>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt.
-                </h6>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
-                  ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                  nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua.{" "}
-                </p>
-                <p>
-                  At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-                  dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At
-                  vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-                  dolor sit amet.
-                </p>
-              </div>
-              <div className="tab-panel-info-image-area">
-                <div className="tab-panel-info-image-col">
-                  <Image
-                    src={`/images/black-friday.jpg`}
-                    fill={true}
-                    alt="black friday"
-                  />
-                </div>
-                <div className="tab-panel-info-image-col">
-                  <Image
-                    src={`/images/fashion.jpg`}
-                    fill={true}
-                    alt="fashion"
-                  />
-                </div>
-              </div>
-              <div className="tab-panel-info-details">
-                <h6>
-                  {" "}
-                  Accusam et justo duo dolores et ea rebum. Stet clita kasd.
-                </h6>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
-                  ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                  nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua.{" "}
-                </p>
-                <h6>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt.
-                </h6>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
-                  ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                  nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                  justo duo dolores et ea rebum. Stet clita kasd.
-                </p>
-              </div> */}
             </div>
             {/* End tab-panel-item */}
 
