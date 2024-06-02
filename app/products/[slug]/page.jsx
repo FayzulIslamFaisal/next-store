@@ -7,7 +7,7 @@ import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import ProductLeftSide from "@/app/components/productDetail/ProductLeftSide";
 import ProductRightSide from "@/app/components/productDetail/ProductRightSide";
 import { getProductDetails } from "@/app/services/getProductDetails";
-import { metadata } from "@/app/utils";
+import { productDetailsPageMetaDataHandler } from "@/app/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { api_base_url } from "@/app/config";
 
@@ -55,11 +55,11 @@ const ProductSinglePage = ({ params }) => {
   return (
     <>
       <section className="product-details-section">
-        <Head>{metadata}</Head>
+        <Head>{productDetailsPageMetaDataHandler(productInfo)}</Head>
         <div className="container">
           <Breadcrumb />
           <div className="row product-details-info">
-            <ProductLeftSide productInfo={productInfo} />
+            <ProductLeftSide productInfo={productInfo} path_name={pathName} />
             <ProductRightSide productInfo={productInfo} />
           </div>
           <Sales bgcolor="bg-white" isHome={false} />

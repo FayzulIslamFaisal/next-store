@@ -47,28 +47,31 @@ export const filterBySliderMenuView = (arr) => {
 };
 
 //define meta data for product details page
-export const metadata = {
-  openGraph: {
-    title: "Next.js",
-    description: "The React Framework for the Web",
-    url: "https://nextjs.org",
-    siteName: "Next.js",
-    images: [
-      {
-        url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg", // Must be an absolute URL
-        width: 800,
-        height: 600,
-      },
-      {
-        url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg", // Must be an absolute URL
-        width: 1800,
-        height: 1600,
-        alt: "My custom alt",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
+export const productDetailsPageMetaDataHandler = (productInfo) => {
+  console.log(`https://v3.nagadhat.com/${productInfo?.product_thumbnail}`);
+  return {
+    openGraph: {
+      title: productInfo?.product_name,
+      description: productInfo?.Short_description,
+      url: "https://nagadhat.com.bd/",
+      siteName: "nagadhat.com.bd",
+      images: [
+        {
+          url: `https://v3.nagadhat.com/${productInfo?.product_thumbnail}`, // Must be an absolute URL
+          width: 800,
+          height: 600,
+        },
+        {
+          url: `https://v3.nagadhat.com/${productInfo?.product_thumbnail}`, // Must be an absolute URL
+          width: 1800,
+          height: 1600,
+          alt: "My custom alt",
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
 };
 
 // check the name is existing this array

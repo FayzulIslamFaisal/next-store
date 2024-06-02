@@ -148,19 +148,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
             <div className="product-details-sold-item">
               <h5>Sold By</h5>{" "}
             </div>
-            <div className="product-details-sold-item d-flex align-items-center">
-              <div className="product-details-sold-img sidebar-common-img-size">
-                <Image
-                  className="img-fluid"
-                  src="/images/chat-img.svg"
-                  alt="cart image"
-                  fill={true}
-                />
-              </div>
-              <Link href="#" className="custom-text-link">
-                Chat
-              </Link>
-            </div>
           </div>
           <p>Imran Fashion House</p>
 

@@ -431,9 +431,14 @@ const ProductInformetion = ({ productInfo }) => {
           <strong>
             {" "}
             <span>৳</span>{" "}
-            {productInfo?.price?.original?.results?.discounted_price}
+            {productInfo?.price?.original?.results?.discounted_price !== 0
+              ? productInfo?.price?.original?.results?.discounted_price
+              : productInfo?.price?.original?.results?.regular_price}
           </strong>
-          <del>৳ {productInfo?.price?.original?.results?.regular_price}</del>
+          <del>
+            {productInfo?.price?.original?.results?.discounted_price > 0 &&
+              `৳ ${productInfo?.price?.original?.results?.regular_price}`}
+          </del>
         </div>
         <div className="product-short-description-area">
           <div
