@@ -285,7 +285,8 @@
   gap: 11px;
 }
 
-.product-details-variant p {
+.product-details-variant p,
+.variantName {
   font-size: 16px;
   letter-spacing: -0.14px;
   font-weight: 700;
@@ -307,7 +308,7 @@
 }
 
 .product-details-quantity:last-child {
-  justify-content: center;
+  justify-content: start;
 }
 
 .product-details-quantity p {

@@ -12,6 +12,7 @@ const ProductInformetion = ({ productInfo }) => {
   const [decorateVariation, setDecorateVariation] = useState([]);
   const [variantProductInfo, setVariantProductInfo] = useState({});
   const [variationsInfo, setVariationsInfo] = useState([]);
+
   useEffect(() => {
     updateProductInitialVariations();
   }, [productInfo]);
@@ -497,13 +498,13 @@ const ProductInformetion = ({ productInfo }) => {
               </div>
             </div>
             <div className="product-details-variant-area">
-              <div className="product-details-variant d-flex align-items-center">
+              <div className="d-flex align-items-center">
                 {productAllVariants?.map((item, index) => (
                   <div key={index}>
                     {item?.name === "variation_color" && (
                       <>
                         <div className="product-details-variant-holder d-flex align-items-center">
-                          <p>Color</p>
+                          <p className="variantName">Color</p>
                           {item?.variants?.map((variant, inx) =>
                             variant.selectAble ? (
                               <div
@@ -550,6 +551,7 @@ const ProductInformetion = ({ productInfo }) => {
                 </div>
               </div>
             </div>
+
             <div className="product-details-add-cart-area d-flex align-items-center">
               <div className="product-details-add-cart">
                 <AddToCartButton
