@@ -1,8 +1,8 @@
-import {filterByStatus} from '../utils';
+import {filterByStatus, apiBaseUrl} from '../utils';
 
 export const getHomeCategory = async () => {
     try {
-        const response = await fetch(`https://v3.nagadhat.com/api/all-category`, { next: { revalidate: 10 } });
+        const response = await fetch(`${apiBaseUrl}/all-category`, { next: { revalidate: 10 } });
         const data = await response.json();
         return filterByStatus(data.results.category);
     } catch (error) {

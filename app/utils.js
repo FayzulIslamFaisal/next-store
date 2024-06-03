@@ -45,3 +45,6 @@ export const filterBySliderMenuView = (arr) => {
         }
     });
 }
+
+export const apiBaseUrl = 'https://v3.nagadhat.com/api';
+
