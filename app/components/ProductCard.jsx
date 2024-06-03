@@ -6,7 +6,13 @@ import Like from "./Like";
 
 function ProductCard({ item }) {
   const image = `https://v3.nagadhat.com/${item.product_thumbnail}`;
-  const { product_name: title, slug, mrp_price: price } = item;
+  const {
+    product_name: title,
+    slug,
+    mrp_price: price,
+    id: product_id,
+    outlet_id,
+  } = item;
   return (
     <div className="flash-sale-content-item">
       <div className="flash-sale-content-bg nh-hover-box-shadow d-flex flex-column justify-content-between">
@@ -16,7 +22,10 @@ function ProductCard({ item }) {
         <div className="flash-sale-content-info text-hover-effect">
           <div className="">
             <h4>
-              <Link href={`/${slug}`} target="_blank">
+              <Link
+                href={`/products/get-product-details?outlet_id=${outlet_id}&product_id=${product_id}`}
+                target="_blank"
+              >
                 {title}
               </Link>
             </h4>
