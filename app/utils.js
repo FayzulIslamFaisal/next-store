@@ -78,3 +78,5 @@ export const productDetailsPageMetaDataHandler = (productInfo) => {
 export const existingIndex = (arr, name) => {
   return arr?.findIndex((item) => item.name === name);
 };
+
+export const apiBaseUrl = 'https://v3.nagadhat.com/api';

@@ -8,82 +8,88 @@ import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 
 const viewAllProduct = async ({ searchParams }) => {
-  let viewProductData = [];
-  let sectionTitle = "View All Product";
-  let bannerUrl = "/images/fashion.jpg";
-  if (searchParams) {
-    switch (searchParams.type) {
-      case "justForYou":
-        const justForYouProductData = await getJustForYouProduct();
-        viewProductData = justForYouProductData?.results?.for_you_products;
+    let viewProductData = [];
+    let sectionTitle = "View All Product";
+    let bannerUrl = "/images/fashion.jpg";
+    if (searchParams) {
+        switch (searchParams.type) {
+            case "justForYou":
+                const justForYouProductData = await getJustForYouProduct();
+                viewProductData =
+                    justForYouProductData?.results?.for_you_products;
 
-        if (
-          viewProductData.length >= 1 &&
-          viewProductData[0].product_thumbnail
-        ) {
-          bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
+                if (
+                    viewProductData.length >= 1 &&
+                    viewProductData[0].product_thumbnail
+                ) {
+                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
+                }
+                sectionTitle = "Just For You";
+                break;
+
+            case "flashSale":
+                const flashSaleProduct = await getFlashSaleProduct();
+                viewProductData = flashSaleProduct?.results;
+                console.log("viewProductData :=>>>> ", viewProductData);
+
+                if (
+                    viewProductData.length >= 1 &&
+                    viewProductData[0].product_thumbnail
+                ) {
+                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
+                }
+                sectionTitle = "Flash Sale";
+                break;
+            default:
+                break;
         }
-        sectionTitle = "Just For You";
-        break;
-
-      case "flashSale":
-        const flashSaleProduct = await getFlashSaleProduct();
-        viewProductData = flashSaleProduct?.results;
-
-        if (
-          viewProductData.length >= 1 &&
-          viewProductData[0].product_thumbnail
-        ) {
-          bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
-        }
-        sectionTitle = "Flash Sale";
-        break;
-      default:
-        break;
     }
-  }
-  const serviceItems = [
-    {
-      imageurl: "/images/pickup.svg",
-      altText: "pickup image",
-      title: " Fast Delivery",
-      subTitle: "Free For All Type Order",
-    },
-    {
-      imageurl: "/images/gift-cart.svg",
-      altText: "gift cart",
-      title: " Best Quality",
-      subTitle: "Best Product Peices",
-    },
-    {
-      imageurl: "/images/gift-box.svg",
-      altText: "gift box",
-      title: " Exchange Offer",
-      subTitle: "One Day To Changes",
-    },
-    {
-      imageurl: "/images/headphone.svg",
-      altText: "headphone",
-      title: "  Help Center",
-      subTitle: "Support System 24/7",
-    },
-  ];
+    const serviceItems = [
+        {
+            imageurl: "/images/pickup.svg",
+            altText: "pickup image",
+            title: " Fast Delivery",
+            subTitle: "Free For All Type Order",
+        },
+        {
+            imageurl: "/images/gift-cart.svg",
+            altText: "gift cart",
+            title: " Best Quality",
+            subTitle: "Best Product Peices",
+        },
+        {
+            imageurl: "/images/gift-box.svg",
+            altText: "gift box",
+            title: " Exchange Offer",
+            subTitle: "One Day To Changes",
+        },
+        {
+            imageurl: "/images/headphone.svg",
+            altText: "headphone",
+            title: "  Help Center",
+            subTitle: "Support System 24/7",
+        },
+    ];
 
-  return (
-    <div className="container view-all-product-container">
-      <ViewAllBanner imageUrl={bannerUrl} />
-      <ViewAllCategoryTitle title={sectionTitle} />
-      <ViewAllProduct viewProductData={viewProductData} />
+    return (
+        <div className="container view-all-product-container">
+            <ViewAllBanner imageUrl={bannerUrl} />
+            <ViewAllCategoryTitle title={sectionTitle} />
+            <ViewAllProduct viewProductData={viewProductData} />
 
-      <div className="row view-all-product-pagination-area">
-        <div className="col-md-12 text-center">
-          <Pagination />
+            <div className="row view-all-product-pagination-area">
+                <div className="col-md-12 text-center">
+                    <Pagination />
+                </div>
+            </div>
+            <Sales
+                isHome={false}
+                bgcolor="bg-white"
+                removePx={`removepadding-x`}
+            />
+            <Service serviceItems={serviceItems} />
         </div>
-      </div>
-      <Sales isHome={false} bgcolor="bg-white" removePx={`removepadding-x`} />
-      <Service serviceItems={serviceItems} />
-    </div>
-  );
+    );
 };
 
 export default viewAllProduct;
