@@ -1,10 +1,256 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import { useState, useEffect, useRef } from "react";
+import Select, { components } from "react-select";
+import { RotatingLines, TailSpin } from "react-loader-spinner";
+import { IoSearchOutline } from "react-icons/io5";
+import DeliveryAddress from "./DeliveryAddress";
 const ProductDeliveryDetail = ({ productInfo }) => {
+  const [locationPopUp, setLocationPopUp] = useState(false);
+  const district = [
+    {
+      id: 1,
+      name: "Chattagram",
+      bn_name: "চট্টগ্রাম",
+      url: "www.chittagongdiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 2,
+      name: "Rajshahi",
+      bn_name: "রাজশাহী",
+      url: "www.rajshahidiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 3,
+      name: "Khulna",
+      bn_name: "খুলনা",
+      url: "www.khulnadiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 4,
+      name: "Barisal",
+      bn_name: "বরিশাল",
+      url: "www.barisaldiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 5,
+      name: "Sylhet",
+      bn_name: "সিলেট",
+      url: "www.sylhetdiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 6,
+      name: "Dhaka",
+      bn_name: "ঢাকা",
+      url: "www.dhakadiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 7,
+      name: "Rangpur",
+      bn_name: "রংপুর",
+      url: "www.rangpurdiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+    {
+      id: 8,
+      name: "Mymensingh",
+      bn_name: "ময়মনসিংহ",
+      url: "www.mymensinghdiv.gov.bd",
+      created_at: null,
+      updated_at: null,
+    },
+  ];
+
+  const [options, setOptions] = useState([]);
+  const [selectedValues, setSelectedValues] = useState({
+    country: null,
+    division: null,
+    district: null,
+  });
+  const [step, setStep] = useState("country");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(
+    typeof window !== "undefined"
+      ? localStorage.getItem("shippingLocation") ||
+          productInfo?.shipping_address
+      : productInfo?.shipping_address
+  );
+  const [shippingAddress, setShippingAddress] = useState(null);
+  const selectRef = useRef(null);
+
+  useEffect(() => {
+    if (step === "country") {
+      fetchCountries();
+    } else if (step === "division" && selectedValues.country) {
+      fetchDivisions(selectedValues.country.value);
+    } else if (step === "district" && selectedValues.division) {
+      fetchDistricts(selectedValues.division.id);
+    }
+  }, [step, selectedValues]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const fetchCountries = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("https://v3.nagadhat.com/api/get-divisions"); // Replace with your API endpoint
+      const data = await response.json();
+
+      setOptions(
+        data?.results?.divisions.map((country) => ({
+          value: country.id,
+          label: country.name,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDivisions = async (countryId) => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://v3.nagadhat.com/api/get-districts/${countryId}`
+      ); // Replace with your API endpoint
+      const data = await response.json();
+      setOptions(
+        data?.results?.districts?.map((division) => ({
+          value: division.id,
+          label: division.name,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching divisions:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDistricts = async (divisionId) => {
+    setLoading(true);
+    try {
+      const data = district;
+      setOptions(
+        data.map((district) => ({
+          value: district.id,
+          label: district.name,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (selectedOption) => {
+    if (step === "country") {
+      setSelectedValues({
+        country: selectedOption,
+        division: null,
+        district: null,
+      });
+      setStep("division");
+    } else if (step === "division") {
+      setSelectedValues((prev) => ({
+        ...prev,
+        division: selectedOption,
+        district: null,
+      }));
+      setStep("district");
+    } else if (step === "district") {
+      setSelectedValues((prev) => ({ ...prev, district: selectedOption }));
+      setShowDropdown(false);
+    }
+  };
+  const handleStartSelect = () => {
+    setShowDropdown(true);
+    setStep("country");
+    setSelectedValues({ country: null, division: null, district: null });
+  };
+
+  const DropdownIndicator = (props) => (
+    <components.DropdownIndicator {...props}>
+      <IoSearchOutline label="Emoji" />
+    </components.DropdownIndicator>
+  );
+  const NoOptionsMessage = (props) => (
+    <components.NoOptionsMessage {...props}>
+      {loading ? (
+        <div className="locationLoader">
+          <RotatingLines
+            visible={true}
+            height="50"
+            width="50"
+            color="red"
+            strokeColor="#aea8ab"
+            strokeWidth="5"
+            animationDuration="0.75"
+            ariaLabel="rotating-lines-loading"
+            wrapperStyle={{}}
+            menuIsOpen={true}
+            wrapperClass=""
+          />
+        </div>
+      ) : (
+        "No options"
+      )}
+    </components.NoOptionsMessage>
+  );
+
+  useEffect(() => {
+    selectedValues.country && selectedValues.division && selectedValues.district
+      ? setSelectedLocation(
+          `${selectedValues.country.label}, ${selectedValues.division.label} - ${selectedValues.district.label}`
+        )
+      : setSelectedLocation(productInfo?.shipping_address);
+  }, [selectedValues]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedAddress = localStorage.getItem("shippingLocation");
+      setShippingAddress(savedAddress);
+    }
+  }, []);
+
+  // Update localStorage whenever selectedLocation changes
+  useEffect(() => {
+    if (selectedLocation) {
+      localStorage.setItem("shippingLocation", selectedLocation);
+      setShippingAddress(selectedLocation); // Sync shippingAddress state with selectedLocation
+    }
+  }, [selectedLocation]);
+
   return (
     <div className="product-details-delivery-area">
-      <div className="product-details-delivery-bg ">
+      <div className="product-details-delivery-bg position-relative">
         <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
           <h2>shipping address</h2>
           <div className="product-delivery-top-img">
@@ -26,17 +272,64 @@ const ProductDeliveryDetail = ({ productInfo }) => {
                 fill={true}
               />
             </div>
-            <p>
-              {productInfo?.hipping_address
-                ? productInfo?.hipping_address
-                : "Dhaka, Dhaka North, Banani Road No. 12 - 19"}
-            </p>
+            <p>{shippingAddress ? shippingAddress : "No Address Available"}</p>
           </div>
           <div className="product-delivery-address-inner">
-            <Link href="#" className="custom-text-link">
+            <Link
+              href="#"
+              className="custom-text-link"
+              onClick={handleStartSelect}
+            >
               Change
             </Link>
           </div>
+        </div>
+        <div ref={selectRef} className="shippingAddressShowsOption">
+          {
+            <div>
+              {showDropdown && (
+                <div className="drop-down">
+                  <label htmlFor="location">
+                    {selectedValues.country ? (
+                      <p>
+                        {selectedValues.country
+                          ? selectedValues.country.label
+                          : ""}
+                        {selectedValues.division
+                          ? ` > ${selectedValues.division.label}`
+                          : ""}
+                        {selectedValues.district
+                          ? ` > <>
+                          ${selectedValues.district.label}
+                         
+                          </>`
+                          : ""}
+                      </p>
+                    ) : (
+                      "Select Location"
+                    )}
+                  </label>
+                  <Select
+                    id="location"
+                    className="bg-light"
+                    options={loading ? [] : options}
+                    value={selectedValues[step]}
+                    onChange={handleChange}
+                    placeholder={`Select ${
+                      step.charAt(0).toUpperCase() + step.slice(1)
+                    }`}
+                    isClearable
+                    isSearchable={false}
+                    menuIsOpen={true}
+                    components={{
+                      DropdownIndicator,
+                      NoOptionsMessage,
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          }
         </div>
         <div className="product-free-delivery-area">
           <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
@@ -100,7 +393,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
             </div>
             <div className="product-free-delivery-status">
               <h5>
-                {productInfo.cash_on_delivery == "on"
+                {productInfo?.cash_on_delivery == "on"
                   ? "Available"
                   : "Unavailable"}
               </h5>

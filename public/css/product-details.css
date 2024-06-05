@@ -728,3 +728,51 @@
 }
 
 /****************End product-long-discription-area ****************/
+.shippingAddressShowsOption {
+  position: absolute;
+  width: 100%;
+  top: 50px;
+  left: 0;
+  z-index: 1;
+}
+.drop-down {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 380px;
+}
+.drop-down p {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+.css-1nmdiq5-menu {
+  margin-top: 0 !important;
+  padding-top: 8px !important;
+  height: 300px !important;
+}
+.css-1nmdiq5-menu .locationLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
+.addQuestionButton {
+  border: 1px solid var(--color-44BC9D);
+  border-radius: 8px;
+  color: var(--color-44BC9D);
+  padding: 14px !important;
+}
+
+.text-primary-color {
+  color: var(--color-44BC9D);
+}
+
+.bg-primary-color {
+  background-color: var(--color-44BC9D);
+}

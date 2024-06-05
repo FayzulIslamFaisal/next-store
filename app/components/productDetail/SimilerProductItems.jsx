@@ -1,21 +1,23 @@
-import Image from 'next/image'
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 const SimilerProductItems = ({ productItem }) => {
-    const { imageUrl, title, price, path, altText } = productItem;
+  const { product_name } = productItem;
 
-    return (
-        <>
-            <div className="similer-product-box-item d-flex ">
-                <div className="similer-product-img">
-                    <Image src={imageUrl} fill={true} className="img-fluid" alt={altText} />
-                </div>
-                <div className="similer-product-info">
-                    <h4><Link href={path}>{title}</Link> </h4>
-                    <strong> <span>৳</span> {price} </strong>
-                </div>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="similer-product-box-item d-flex ">
+        <div className="similer-product-img">
+          {/* <Image src={} fill={true} className="img-fluid" alt={} /> */}
+        </div>
+        <div className="similer-product-info">
+          <h4>
+            <Link href={""}>{product_name}</Link>{" "}
+          </h4>
+          <strong> {/* <span>৳</span> {price}{" "} */}</strong>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default SimilerProductItems
+export default SimilerProductItems;

@@ -108,7 +108,7 @@ const ProductInformetion = ({ productInfo }) => {
     setSelectedVariants(getAvailableVariants());
   }, [productAllVariants]);
 
-  console.log(selectedVariants);
+  // console.log(selectedVariants);
 
   // return not selected variant name
   const findNotSelectedVariants = () => {
@@ -221,9 +221,9 @@ const ProductInformetion = ({ productInfo }) => {
       Object.keys(selectedVariant)
     );
     const arr = [];
-    console.log("selectedVariants", selectedVariants);
-    console.log("selectedVariantKeys", selectedVariantKeys);
-    console.log("decorateVariation", decorateVariation);
+    // console.log("selectedVariants", selectedVariants);
+    // console.log("selectedVariantKeys", selectedVariantKeys);
+    // console.log("decorateVariation", decorateVariation);
     selectedVariantKeys.map((selectedKey) => {
       selectedVariants?.map((selectedVariantObject) => {
         decorateVariation.map((availableVariant, index) => {
@@ -253,9 +253,9 @@ const ProductInformetion = ({ productInfo }) => {
       if (selectedVariants.length == 1) {
         updateVariantNameSelectAbility(selectedVariantKeys[0], true);
         arr.map((enableVariant) => {
-          console.log("enableVariant", enableVariant);
+          // console.log("enableVariant", enableVariant);
           const enableVariantKey = Object.keys(enableVariant);
-          console.log("enableVariantKey", enableVariantKey);
+          // console.log("enableVariantKey", enableVariantKey);
           enableVariantKey.map((enableVariantName) => {
             updateVariantSelectAbility(
               enableVariantName,
@@ -266,7 +266,6 @@ const ProductInformetion = ({ productInfo }) => {
         });
       }
       if (selectedVariants.length > 1) {
-        console.log("**************");
         selectedVariantKeys?.map((selectedKey) => {
           selectedVariants?.map((selectedVariantObject, index) => {
             if (index == 0) {
@@ -279,7 +278,7 @@ const ProductInformetion = ({ productInfo }) => {
                 outPutValue,
                 decorateVariation
               );
-              console.log("size", size);
+              // console.log("size", size);
               if (size.matched.length) {
                 size?.matched.map((enableVariantItem) => {
                   updateVariantSelectAbility(
@@ -345,7 +344,7 @@ const ProductInformetion = ({ productInfo }) => {
     availableVariantTrue();
   }, [selectedVariants]);
 
-  console.log(decorateVariation);
+  // console.log(decorateVariation);
   return (
     <div className="col-md-6">
       <div className="product-details-content">

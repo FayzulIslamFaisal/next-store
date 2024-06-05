@@ -15,6 +15,7 @@ const ProductSinglePage = ({ params }) => {
   const [productInfo, setProductInfo] = useState({});
   const searchParams = useSearchParams();
   const pathName = searchParams.toString();
+  // const [metaData, setMetaData] = useState({});
 
   const serviceItems = [
     {
@@ -51,10 +52,65 @@ const ProductSinglePage = ({ params }) => {
     fetchData();
   }, []);
 
+  // const metadataSocialMedia = () => {
+  //   return {
+  //     openGraph: {
+  //       title: productInfo?.product_name,
+  //       description: productInfo?.Short_description,
+  //       url: "https://nagadhat.com.bd/",
+  //       siteName: "nagadhat.com.bd",
+  //       images: [
+  //         {
+  //           url: `https://v3.nagadhat.com/${productInfo?.product_thumbnail}`, // Must be an absolute URL
+  //           width: 800,
+  //           height: 600,
+  //         },
+  //         {
+  //           url: `https://v3.nagadhat.com/${productInfo?.product_thumbnail}`, // Must be an absolute URL
+  //           width: 1800,
+  //           height: 1600,
+  //           alt: "My custom alt",
+  //         },
+  //       ],
+  //       locale: "en_US",
+  //       type: "website",
+  //     },
+  //   };
+  // };
+
+  const metadata = {
+    openGraph: {
+      title: "Next.js",
+      description: "The React Framework for the Web",
+      url: "https://nextjs.org",
+      siteName: "Next.js",
+      images: [
+        {
+          url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg", // Must be an absolute URL
+          width: 800,
+          height: 600,
+        },
+        {
+          url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg", // Must be an absolute URL
+          width: 1800,
+          height: 1600,
+          alt: "My custom alt",
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
+
+  /*  useEffect(() => {
+    const updateMetaData = metadataSocialMedia();
+    setMetaData(updateMetaData);
+  }, [productInfo]); */
+
   return (
     <>
       <section className="product-details-section">
-        <Head>{productDetailsPageMetaDataHandler(productInfo)}</Head>
+        <Head>{metadata}</Head>
         <div className="container">
           <Breadcrumb />
           <div className="row product-details-info">

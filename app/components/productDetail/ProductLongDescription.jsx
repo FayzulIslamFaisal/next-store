@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CustomButton from "../CustomButton";
+import ProductQuestions from "./ProductDiscussion";
 
 const ProductLongDescription = ({ productInfo }) => {
   return (
@@ -87,16 +88,7 @@ const ProductLongDescription = ({ productInfo }) => {
 
             {/* Start tab-panel-item */}
             <div className="tab-pane fade" id="nav-qa" role="tabpanel">
-              <p>
-                <strong>
-                  This is some placeholder content the Contact tab's associated
-                  content.
-                </strong>
-                Clicking another tab will toggle the visibility of this one for
-                the next. The tab JavaScript swaps classes to control the
-                content visibility and styling. You can use it with tabs, pills,
-                and any other <code>.nav</code>-powered navigation.
-              </p>
+              <ProductQuestions></ProductQuestions>
             </div>
             {/* End tab-panel-item */}
 
