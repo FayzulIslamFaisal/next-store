@@ -422,7 +422,7 @@ const ProductInformetion = ({ productInfo }) => {
               />
             </div>
             <div className="product-Sold">
-              <p>1000 Viewed</p>
+              <p>{productInfo?.number_of_viewed} Viewed</p>
             </div>
           </div>
         </div>
