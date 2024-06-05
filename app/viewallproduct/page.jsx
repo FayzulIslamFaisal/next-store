@@ -30,13 +30,11 @@ const viewAllProduct = async ({ searchParams }) => {
             case "flashSale":
                 const flashSaleProduct = await getFlashSaleProduct();
                 viewProductData = flashSaleProduct?.results;
-                console.log("viewProductData :=>>>> ", viewProductData);
-
                 if (
                     viewProductData.length >= 1 &&
-                    viewProductData[0].product_thumbnail
+                    viewProductData[1].product_thumbnail
                 ) {
-                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
+                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[1].product_thumbnail}`;
                 }
                 sectionTitle = "Flash Sale";
                 break;
@@ -74,7 +72,7 @@ const viewAllProduct = async ({ searchParams }) => {
     return (
         <div className="container view-all-product-container">
             <ViewAllBanner imageUrl={bannerUrl} />
-            <ViewAllCategoryTitle title={sectionTitle} />
+            <ViewAllCategoryTitle title={sectionTitle} isFlashSaleTimer={true} />
             <ViewAllProduct viewProductData={viewProductData} />
 
             <div className="row view-all-product-pagination-area">
