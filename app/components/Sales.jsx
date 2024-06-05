@@ -22,88 +22,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
     fetchData();
   }, []);
 
-  // const flashSaleProductList = [
-  //     {
-  //         id: 1,
-  //         image: "/images/flash-img1.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 2,
-  //         image: "/images/flash-img2.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 3,
-  //         image: "/images/flash-img3.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 4,
-  //         image: "/images/flash-img4.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 5,
-  //         image: "/images/flash-img3.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 6,
-  //         image: "/images/flash-img5.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 7,
-  //         image: "/images/flash-img6.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  //     {
-  //         id: 8,
-  //         image: "/images/flash-img3.jpg",
-  //         altText: "flash sale image",
-  //         path: "#",
-  //         title: "Maggi Masala 620gm (8Pcs) Free 2 pcs (Nestle)",
-  //         price: 685.0,
-  //         addToCart: <AddToCartButton />,
-  //         like: <Like />,
-  //     },
-  // ];
+ 
   const settings = {
     centerPadding: "60px",
     dots: false,
@@ -142,8 +61,8 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
   return (
     <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
       <div className="container">
-        <SectionTitle title={isHome ? `Flash Sale` : `Recent View`} target="flashSale" path="/viewall">
-          {isHome && <FlipClock endsAt={`2024-06-01 12:00`} />}
+        <SectionTitle isSale={true} title={isHome ? `Flash Sale` : `Recent View`} target="flashSale" path="/viewallproduct">
+          {isHome && <FlipClock endsAt={`2024-06-25 12:00`} />}
         </SectionTitle>
         <div className="row">
           <div className="col-md-12">
