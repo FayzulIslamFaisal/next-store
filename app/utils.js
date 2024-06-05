@@ -78,3 +78,22 @@ export const productDetailsPageMetaDataHandler = (productInfo) => {
 export const existingIndex = (arr, name) => {
   return arr?.findIndex((item) => item.name === name);
 };
+
+//* Shortens a string to a specified length.
+export function shortenString(str, length) {
+  if (typeof str !== "string" || typeof length !== "number") {
+    console.log(
+      "Invalid input: First argument must be a string and second argument must be a number."
+    );
+  }
+
+  if (length <= 0) {
+    return "";
+  }
+
+  if (str.length <= length) {
+    return str;
+  }
+
+  return str.slice(0, length) + "...";
+}

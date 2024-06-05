@@ -49,7 +49,7 @@ const ProductRightSide = ({ productInfo }) => {
       <div className="product-sidebar">
         <ProductDeliveryDetail productInfo={productInfo} />
 
-        <SimilerProduct productData={productInfo.similarProduct} />
+        <SimilerProduct productData={productInfo?.similarProduct} />
       </div>
     </div>
   );
