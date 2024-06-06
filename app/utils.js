@@ -97,3 +97,5 @@ export function shortenString(str, length) {
 
   return str.slice(0, length) + "...";
 }
+
+// This function set recent view product

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CustomButton from "../CustomButton";
 import ProductQuestions from "./ProductDiscussion";
+import ProductReview from "./ProductReview";
 
 const ProductLongDescription = ({ productInfo }) => {
   return (
@@ -99,16 +100,7 @@ const ProductLongDescription = ({ productInfo }) => {
               role="tabpanel"
               aria-labelledby="nav-reviews-tab"
             >
-              <p>
-                <strong>
-                  This is some placeholder content the Contact tab's associated
-                  content.
-                </strong>
-                Clicking another tab will toggle the visibility of this one for
-                the next. The tab JavaScript swaps classes to control the
-                content visibility and styling. You can use it with tabs, pills,
-                and any other <code>.nav</code>-powered navigation.
-              </p>
+              <ProductReview></ProductReview>
             </div>
             {/* End tab-panel-item */}
           </div>

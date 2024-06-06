@@ -50,7 +50,7 @@ const ProductSinglePage = ({ params }) => {
       setProductInfo(flashSale?.results);
     }
     fetchData();
-  }, []);
+  }, [pathName]);
 
   // const metadataSocialMedia = () => {
   //   return {
