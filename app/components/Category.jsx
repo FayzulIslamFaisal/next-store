@@ -1,4 +1,4 @@
-import { getHomeCategory } from "../services/getHomeCategory";
+import { getHomeCategoryList } from "../services/getHomeCategoryList";
 import { filterByHomePageTopMenu } from "../utils";
 import { getHomeBrand } from "../services/getHomeBrand";
 import Service from "./Service";
@@ -34,7 +34,7 @@ async function Category() {
         },
     ];
 
-    const categoryData = await getHomeCategory();
+    const categoryData = await getHomeCategoryList();
     const brandData = await getHomeBrand();
 
     const categoryProductData = filterByHomePageTopMenu(categoryData);

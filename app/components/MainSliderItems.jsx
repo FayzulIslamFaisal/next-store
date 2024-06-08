@@ -18,7 +18,7 @@ const MainSliderItems = ({ sliderItem }) => {
                 <Image
                     src={imageurl}
                     className="img-fluid"
-                    alt={altText}
+                    alt={altText || "Image"}
                     fill={true}
                 />
             </div>
