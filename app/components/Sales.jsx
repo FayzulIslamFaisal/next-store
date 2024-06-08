@@ -10,9 +10,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
+import getAllSettings from "../services/getAllSettings";
 
 function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
   const [flashSaleProductList, setFlashSaleProductList] = useState([]);
+  const [hasFlashSaleSettings, setHasFlashSaleSettings] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,7 +24,35 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
     fetchData();
   }, []);
 
- 
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchSettingData() {
+      const settingData = await getAllSettings();
+      if (!ignore) {
+        const settingAllData = settingData?.results;
+        const flashSaleProduct = settingAllData
+          ?.filter(
+            (settingItem) =>
+              settingItem.type === "Flash Sale" && settingItem.status === 1
+          )
+          .map((settingItem) =>
+            settingItem.type.split(" ").join("_").toLowerCase()
+          );
+
+        if (flashSaleProduct.length > 0) {
+          setHasFlashSaleSettings(true);
+        } else {
+          setHasFlashSaleSettings(false);
+        }
+      }
+    }
+    fetchSettingData();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   const settings = {
     centerPadding: "60px",
     dots: false,
@@ -59,24 +89,31 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
     ],
   };
   return (
-    <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
-      <div className="container">
-        <SectionTitle isSale={true} title={isHome ? `Flash Sale` : `Recent View`} target="flashSale" path="/viewallproduct">
-          {isHome && <FlipClock endsAt={`2024-06-25 12:00`} />}
-        </SectionTitle>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="flash-sale-content-area-grid">
-              <Slider {...settings}>
-                {flashSaleProductList?.map((product) => (
-                  <ProductCard key={product.id} item={product} />
-                ))}
-              </Slider>
+    hasFlashSaleSettings && (
+      <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
+        <div className="container">
+          <SectionTitle
+            isSale={true}
+            title={isHome ? `Flash Sale` : `Recent View`}
+            target="flashSale"
+            path="/viewallproduct"
+          >
+            {isHome && <FlipClock endsAt={`2024-06-25 12:00`} />}
+          </SectionTitle>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="flash-sale-content-area-grid">
+                <Slider {...settings}>
+                  {flashSaleProductList?.map((product) => (
+                    <ProductCard key={product.id} item={product} />
+                  ))}
+                </Slider>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 }
 
