@@ -70,12 +70,12 @@ function MainNav({
                     </div>
                   </form>
                 </div>
-                <div class="product-search-modal-area d-none">
-                  <div class="product-search-modal-content">
-                    <div class="search-modal-title">
+                <div className="product-search-modal-area d-none">
+                  <div className="product-search-modal-content">
+                    <div className="search-modal-title">
                       <h4>category suggestions</h4>
                     </div>
-                    <div class="search-modal-info">
+                    <div className="search-modal-info">
                       <ul>
                         <li>
                           <Link href="#">Food & Beverage</Link>
@@ -91,14 +91,14 @@ function MainNav({
                         </li>
                       </ul>
                     </div>
-                    <div class="search-modal-title">
+                    <div className="search-modal-title">
                       <h4>products</h4>
                     </div>
-                    <div class="search-modal-info">
-                      <ul class="similer-search-product-list">
+                    <div className="search-modal-info">
+                      <ul className="similer-search-product-list">
                         <li>
                           <Link href="#">
-                            <div class="search-modal-info-inner d-flex align-content-center gap-4">
+                            <div className="search-modal-info-inner d-flex align-content-center gap-4">
                               <div className="search-modal-info-img">
                                 <Image
                                   fill
@@ -106,7 +106,7 @@ function MainNav({
                                   alt="BabyCare"
                                 />
                               </div>
-                              <div class="search-modal-info-details">
+                              <div className="search-modal-info-details">
                                 <p>Satge 1 baby Food</p>
                                 <strong>৳ 730</strong>
                               </div>
@@ -115,15 +115,15 @@ function MainNav({
                         </li>
                         <li>
                           <Link href="#">
-                            <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                              <div class="search-modal-info-img">
+                            <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                              <div className="search-modal-info-img">
                                 <Image
                                   fill
                                   src="/images/DanishFoodsCondensed Milk 397.g.png"
                                   alt="BabyCare"
                                 />
                               </div>
-                              <div class="search-modal-info-details">
+                              <div className="search-modal-info-details">
                                 <p>Satge 1 baby Food</p>
                                 <strong>৳ 730</strong>
                               </div>
@@ -132,15 +132,15 @@ function MainNav({
                         </li>
                         <li>
                           <Link href="#">
-                            <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                              <div class="search-modal-info-img">
+                            <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                              <div className="search-modal-info-img">
                                 <Image
                                   fill
                                   src="/images/Dan foodMarble cake 300 gm.jpeg"
                                   alt="BabyCare"
                                 />
                               </div>
-                              <div class="search-modal-info-details">
+                              <div className="search-modal-info-details">
                                 <p>Satge 1 baby Food</p>
                                 <strong>৳ 730</strong>
                               </div>
@@ -149,15 +149,15 @@ function MainNav({
                         </li>
                         <li>
                           <Link href="#">
-                            <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                              <div class="search-modal-info-img">
+                            <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                              <div className="search-modal-info-img">
                                 <Image
                                   fill
                                   src="/images/DanfoodVanila Muffin.jpg"
                                   alt="BabyCare"
                                 />
                               </div>
-                              <div class="search-modal-info-details">
+                              <div className="search-modal-info-details">
                                 <p>Satge 1 baby Food</p>
                                 <strong>৳ 730</strong>
                               </div>
@@ -166,15 +166,15 @@ function MainNav({
                         </li>
                         <li>
                           <Link href="#">
-                            <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                              <div class="search-modal-info-img">
+                            <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                              <div className="search-modal-info-img">
                                 <Image
                                   fill
                                   src="/images/dan-cake-chocolate-muffin-30g-24-pieces_550.jpeg"
                                   alt="BabyCare"
                                 />
                               </div>
-                              <div class="search-modal-info-details">
+                              <div className="search-modal-info-details">
                                 <p>Satge 1 baby Food</p>
                                 <strong>৳ 730</strong>
                               </div>
@@ -325,12 +325,12 @@ function MainNav({
                         </div>
                       </form>
                     </div>
-                    <div class="product-search-modal-area d-none">
-                      <div class="product-search-modal-content">
-                        <div class="search-modal-title">
+                    <div className="product-search-modal-area d-none">
+                      <div className="product-search-modal-content">
+                        <div className="search-modal-title">
                           <h4>category suggestions</h4>
                         </div>
-                        <div class="search-modal-info">
+                        <div className="search-modal-info">
                           <ul>
                             <li>
                               <Link href="#">Food & Beverage</Link>
@@ -346,14 +346,14 @@ function MainNav({
                             </li>
                           </ul>
                         </div>
-                        <div class="search-modal-title">
+                        <div className="search-modal-title">
                           <h4>products</h4>
                         </div>
-                        <div class="search-modal-info">
-                          <ul class="similer-search-product-list">
+                        <div className="search-modal-info">
+                          <ul className="similer-search-product-list">
                             <li>
                               <Link href="#">
-                                <div class="search-modal-info-inner d-flex align-content-center gap-4">
+                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
                                   <div className="search-modal-info-img">
                                     <Image
                                       fill
@@ -361,7 +361,7 @@ function MainNav({
                                       alt="BabyCare"
                                     />
                                   </div>
-                                  <div class="search-modal-info-details">
+                                  <div className="search-modal-info-details">
                                     <p>Satge 1 baby Food</p>
                                     <strong>৳ 730</strong>
                                   </div>
@@ -370,15 +370,15 @@ function MainNav({
                             </li>
                             <li>
                               <Link href="#">
-                                <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                                  <div class="search-modal-info-img">
+                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                                  <div className="search-modal-info-img">
                                     <Image
                                       fill
                                       src="/images/DanishFoodsCondensed Milk 397.g.png"
                                       alt="BabyCare"
                                     />
                                   </div>
-                                  <div class="search-modal-info-details">
+                                  <div className="search-modal-info-details">
                                     <p>Satge 1 baby Food</p>
                                     <strong>৳ 730</strong>
                                   </div>
@@ -387,15 +387,15 @@ function MainNav({
                             </li>
                             <li>
                               <Link href="#">
-                                <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                                  <div class="search-modal-info-img">
+                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                                  <div className="search-modal-info-img">
                                     <Image
                                       fill
                                       src="/images/Dan foodMarble cake 300 gm.jpeg"
                                       alt="BabyCare"
                                     />
                                   </div>
-                                  <div class="search-modal-info-details">
+                                  <div className="search-modal-info-details">
                                     <p>Satge 1 baby Food</p>
                                     <strong>৳ 730</strong>
                                   </div>
@@ -404,15 +404,15 @@ function MainNav({
                             </li>
                             <li>
                               <Link href="#">
-                                <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                                  <div class="search-modal-info-img">
+                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                                  <div className="search-modal-info-img">
                                     <Image
                                       fill
                                       src="/images/DanfoodVanila Muffin.jpg"
                                       alt="BabyCare"
                                     />
                                   </div>
-                                  <div class="search-modal-info-details">
+                                  <div className="search-modal-info-details">
                                     <p>Satge 1 baby Food</p>
                                     <strong>৳ 730</strong>
                                   </div>
@@ -421,15 +421,15 @@ function MainNav({
                             </li>
                             <li>
                               <Link href="#">
-                                <div class="search-modal-info-inner d-flex align-content-center gap-4">
-                                  <div class="search-modal-info-img">
+                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
+                                  <div className="search-modal-info-img">
                                     <Image
                                       fill
                                       src="/images/dan-cake-chocolate-muffin-30g-24-pieces_550.jpeg"
                                       alt="BabyCare"
                                     />
                                   </div>
-                                  <div class="search-modal-info-details">
+                                  <div className="search-modal-info-details">
                                     <p>Satge 1 baby Food</p>
                                     <strong>৳ 730</strong>
                                   </div>

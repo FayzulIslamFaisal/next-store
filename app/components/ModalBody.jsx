@@ -2,7 +2,6 @@
 import { useState } from "react";
 import DivisionList from "./DivisionList";
 import DistrictList from "./DistrictList";
-import OutletList from "./OutletList";
 
 const ModalBody = () => {
     const [divisionId, setDivisionId] = useState("");
@@ -14,13 +13,10 @@ const ModalBody = () => {
     const handleDistrictChange = (e) => {
         setDistrictId(e.target.value);
     };
-    const handleOutletChange = (e) => {
-        setOutletId(e.target.value);
-    };
 
-    if (divisionId && districtId && outletId) {
+    if (divisionId && districtId) {
         let currentUrl = window.location.origin;
-        window.location.href = `${currentUrl}/?divisionId=${divisionId}&districtId=${districtId}&outletId=${outletId}`;
+        window.location.href = `${currentUrl}/?divisionId=${divisionId}&districtId=${districtId}`;
     }
 
     return (
@@ -32,13 +28,6 @@ const ModalBody = () => {
                 <DistrictList
                     onDistrictChange={handleDistrictChange}
                     divisionId={divisionId}
-                />
-            )}
-
-            {divisionId && districtId && !outletId && (
-                <OutletList
-                    onOutletChange={handleOutletChange}
-                    districtId={districtId}
                 />
             )}
 

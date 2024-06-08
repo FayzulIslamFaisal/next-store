@@ -1,21 +1,30 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import SectionTitle from "./SectionTitle";
 import LoadMore from "./LoadMore";
 import ProductCard from "./ProductCard";
-import { getJustForYouProduct } from "../services/getJustForYouProduct";
+import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
 
 function JustForYou() {
     const [jfyProducts, setJfyProducts] = useState([]);
     const [offset, setOffset] = useState(12);
     const [showLoadMore, setShowLoadMore] = useState(true);
+    const searchParams = useSearchParams();
+    let districtId = searchParams.get("districtId");
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const justForYoutList = await getJustForYouProduct();
-                const justForYouProductList =
-                    justForYoutList?.results?.["for_you_products"] || [];
+                if (!districtId) {
+                    districtId = 47;
+                }
+                const justForYoutList = await getHomeFlashAndJfyProduct(
+                    districtId
+                );
+                let justForYouListProduct =
+                    justForYoutList?.results?.just_for_you?.for_you_products;
+                const justForYouProductList = justForYouListProduct || [];
                 const initialProducts = justForYouProductList.slice(0, offset);
 
                 setJfyProducts(initialProducts);
@@ -37,7 +46,11 @@ function JustForYou() {
 
     return (
         <div className="nh-just-for-you">
-            <SectionTitle title="Just For You" target="justForYou" path="/viewallproduct" />
+            <SectionTitle
+                title="Just For You"
+                target="justForYou"
+                path="/viewallproduct"
+            />
 
             <div className="row just-for-random-product">
                 <div className="col-md-12">
