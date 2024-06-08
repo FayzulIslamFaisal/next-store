@@ -55,8 +55,11 @@ function JustForYou() {
             <div className="row just-for-random-product">
                 <div className="col-md-12">
                     <div className="flash-sale-content-area">
-                        {jfyProducts.map((product) => (
-                            <ProductCard key={product.id} item={product} />
+                        {jfyProducts.map((product, index) => (
+                            <ProductCard
+                                key={`${product.id}-${product.slug}-${index}`}
+                                item={product}
+                            />
                         ))}
                     </div>
                 </div>
