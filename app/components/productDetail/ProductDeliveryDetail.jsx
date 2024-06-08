@@ -428,8 +428,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
                 data-bs-target="#exampleModal50"
                 data-bs-whatever="@getbootstrap"
               >
-                {/* {productInfo?.warranty !== null
-                  ? productInfo?.warranty */}
                 Warranty
               </h5>
               <div

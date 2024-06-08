@@ -2,9 +2,23 @@
 
 import Image from "next/image";
 import AddToCartButton from "../AddToCartButton";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { existingIndex } from "@/app/utils";
-
+const initialState = {
+  count: 1,
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1 };
+    case "DECREMENT":
+      if (state.count !== 1) {
+        return { count: state.count - 1 };
+      }
+    default:
+      return state;
+  }
+};
 const ProductInformetion = ({ productInfo }) => {
   const [productAllVariants, setProductAllVariants] = useState([]);
   const [selectedVariants, setSelectedVariants] = useState([]);
@@ -12,7 +26,8 @@ const ProductInformetion = ({ productInfo }) => {
   const [decorateVariation, setDecorateVariation] = useState([]);
   const [variantProductInfo, setVariantProductInfo] = useState({});
   const [variationsInfo, setVariationsInfo] = useState([]);
-
+  const [productIncrease, setProductIncrease] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     updateProductInitialVariations();
   }, [productInfo]);
@@ -539,9 +554,23 @@ const ProductInformetion = ({ productInfo }) => {
                   <p>Quantity:</p>
                 </div>
                 <div className="product-details-inner-quantity product-details-inner-qty d-flex align-items-center">
-                  <button>-</button>
-                  <input readOnly type="text" value="1" />
-                  <button>+</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      dispatch({ type: "DECREMENT" });
+                    }}
+                  >
+                    -
+                  </button>
+                  <input readOnly type="text" value={state.count} />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      dispatch({ type: "INCREMENT" });
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             </div>
