@@ -66,6 +66,7 @@ header {
 
 .header-search-area {
     flex: 2;
+    position: relative;
 }
 
 .logo {
@@ -264,9 +265,13 @@ header {
 .header-search-inner-area {
     gap: 25px;
 }
+.header-search-inner-area .header-search-holder {
+    position: relative;
+}
 
 .header-search-holder {
     flex: 2;
+    
 }
 
 .observerable-categories-item a {
