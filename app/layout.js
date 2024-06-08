@@ -70,6 +70,10 @@ export default function RootLayout({ children }) {
         precedence="default"
       />
       <link rel="stylesheet" href="/css/view-all.css" precedence="default" />
+      <link rel="stylesheet" href="/css/cart-page.css" precedence="default" />
+      <link rel="stylesheet" href="/css/shipping-details.css" precedence="default" />
+      <link rel="stylesheet" href="/css/search-modal.css" precedence="default" />
+      <link rel="stylesheet" href="/css/order-confirm.css" precedence="default" />
       <link rel="stylesheet" href="/css/common.css" precedence="default" />
       <link rel="stylesheet" href="/css/responsive.css" precedence="default" />
       <link rel="stylesheet" href="/css/collapse.css" precedence="default" />

@@ -18,6 +18,7 @@ const ProductCategoryItem = ({ categoryItem }) => {
   return (
     <div className="nh-categories-item">
       <div className="nh-categories-item-bg nh-hover-box-shadow">
+      <Link href={path ?? "#"}>
         <div className="nh-categories-img image-hover-effect">
           <Image
             src={imageurl}
@@ -28,9 +29,11 @@ const ProductCategoryItem = ({ categoryItem }) => {
         </div>
         <div className="nh-categories-info text-hover-effect text-capitalize text-center">
           <h4>
-            <Link href={path ?? ""}>{truncateTitle(title)}</Link>
+            {truncateTitle(title)}
           </h4>
         </div>
+        </Link>
+
       </div>
     </div>
   );

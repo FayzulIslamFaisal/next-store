@@ -99,6 +99,10 @@
     .hero-slider-content {
         width: 50%;
     }
+    .observerable-header-section .logo {
+
+        flex: .68;
+    }
 }
 
 .main-header-mobile1199 {
@@ -493,7 +497,9 @@
     .hero-slider-btn-area {
         padding-top: 20px;
     }
-
+    .view-all-product-title-box.justify-content-between::before {
+        max-width: 200px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -547,6 +553,18 @@
 
     .category-product-price {
         flex-direction: column;
+    }
+    .view-all-product-title-box.justify-content-between {
+       flex-direction: column;
+    }
+    .view-all-product-title-box.justify-content-between h2 {
+        margin-bottom: 20px;
+    }
+    .view-all-product-title-box.justify-content-between::before {
+        margin: 0 auto;
+        max-width: 300px;
+        top: 20%;
+        transform: translateY(-20%);
     }
 }
 

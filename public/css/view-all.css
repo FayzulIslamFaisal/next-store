@@ -66,6 +66,9 @@
     max-width: 300px;
     z-index: -1;
 }
+.view-all-product-title-box.justify-content-between::before {
+    margin: inherit;
+}
 
 .view-all-product-area {
     padding-bottom: 50px;
