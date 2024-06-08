@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <HeroSlider />
       <Partner />
-      <Sales />
+      <Sales isHome={true} />
       <Category />
     </>
   );

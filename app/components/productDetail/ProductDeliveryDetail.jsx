@@ -73,7 +73,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
       updated_at: null,
     },
   ];
-
   const [options, setOptions] = useState([]);
   const [selectedValues, setSelectedValues] = useState({
     country: null,
@@ -91,7 +90,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
   );
   const [shippingAddress, setShippingAddress] = useState(null);
   const selectRef = useRef(null);
-
   useEffect(() => {
     if (step === "country") {
       fetchCountries();
@@ -101,7 +99,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
       fetchDistricts(selectedValues.division.id);
     }
   }, [step, selectedValues]);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (selectRef.current && !selectRef.current.contains(event.target)) {
@@ -119,7 +116,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
       setLoading(true);
       const response = await fetch("https://v3.nagadhat.com/api/get-divisions"); // Replace with your API endpoint
       const data = await response.json();
-
       setOptions(
         data?.results?.divisions.map((country) => ({
           value: country.id,
@@ -426,11 +422,59 @@ const ProductDeliveryDetail = ({ productInfo }) => {
                   fill={true}
                 />
               </div>
-              <h5>
-                {productInfo?.warranty !== null
-                  ? productInfo?.warranty
-                  : " Warranty not available"}
+              <h5
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal50"
+                data-bs-whatever="@getbootstrap"
+              >
+                {/* {productInfo?.warranty !== null
+                  ? productInfo?.warranty */}
+                Warranty
               </h5>
+              <div
+                className="modal fade"
+                id="exampleModal50"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h1 className="modal-title fs-5" id="exampleModalLabel">
+                        Product Warranty
+                      </h1>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      <form>
+                        <div className="mb-3">
+                          <label for="message-text" className="col-form-label">
+                            {productInfo?.warranty !== null
+                              ? productInfo?.warranty
+                              : "No Warranty Available"}
+                          </label>
+                        </div>
+                      </form>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        data-bs-dismiss="modal"
+                        className="bg-primary-color text-light py-2 px-2 border-0 rounded-2"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -443,33 +487,6 @@ const ProductDeliveryDetail = ({ productInfo }) => {
             </div>
           </div>
           <p>Imran Fashion House</p>
-
-          {/* this design possibility to need to future  */}
-          {/* <div className="product-details-sold-table">
-              <div className="table-responsive">
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Positive Seller Ratings</th>
-                      <th>Ship on Time</th>
-                      <th>Chat Response Rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>85%</td>
-                      <td>66%</td>
-                      <td className="table-td-text">Not enough data</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="product-sold-visit text-center">
-              <Link href="#" className="custom-text-link">
-                Visit Store
-              </Link>
-            </div> */}
         </div>
       </div>
     </div>

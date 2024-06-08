@@ -7,7 +7,7 @@ import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import ProductLeftSide from "@/app/components/productDetail/ProductLeftSide";
 import ProductRightSide from "@/app/components/productDetail/ProductRightSide";
 import { getProductDetails } from "@/app/services/getProductDetails";
-import { productDetailsPageMetaDataHandler } from "@/app/utils";
+import { productDetailsPageMetaDataHandler, storeProduct } from "@/app/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { api_base_url } from "@/app/config";
 const ProductSinglePage = ({ params }) => {
@@ -16,7 +16,7 @@ const ProductSinglePage = ({ params }) => {
   const searchParams = useSearchParams();
   const pathName = searchParams.toString();
   // const [metaData, setMetaData] = useState({});
-
+  const [recentViewProduct, setRecentViewProduct] = useState([]);
   const serviceItems = [
     {
       imageurl: "/images/pickup.svg",
@@ -47,7 +47,24 @@ const ProductSinglePage = ({ params }) => {
   useEffect(() => {
     async function fetchData() {
       const flashSale = await getProductDetails(pathName);
-      setProductInfo(flashSale?.results);
+      if (flashSale?.results) {
+        console.log(flashSale.results);
+        const productDetails = flashSale.results;
+        const { id, product_name, price, product_thumbnail, outlet_id } =
+          productDetails;
+        const recentViewProductInformation = {
+          id: id,
+          product_name,
+          mrp_price:
+            price?.original?.results?.discounted_price !== 0
+              ? price?.original?.results?.discounted_price
+              : price?.original?.results?.regular_price,
+          outlet_id: outlet_id,
+          product_thumbnail: product_thumbnail,
+        };
+        storeProduct(recentViewProductInformation);
+        setProductInfo(productDetails);
+      }
     }
     fetchData();
   }, [pathName]);
@@ -102,10 +119,13 @@ const ProductSinglePage = ({ params }) => {
     },
   };
 
-  /*  useEffect(() => {
-    const updateMetaData = metadataSocialMedia();
-    setMetaData(updateMetaData);
-  }, [productInfo]); */
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedProducts =
+        JSON.parse(localStorage.getItem("recentlyViewProducts")) || [];
+      setRecentViewProduct(storedProducts);
+    }
+  }, [pathName]);
 
   return (
     <>
@@ -117,7 +137,14 @@ const ProductSinglePage = ({ params }) => {
             <ProductLeftSide productInfo={productInfo} path_name={pathName} />
             <ProductRightSide productInfo={productInfo} />
           </div>
-          <Sales bgcolor="bg-white" isHome={false} />
+          <Sales
+            isHome={false}
+            bgcolor="bg-white"
+            removePx={`removepadding-x`}
+            isRecentView={true}
+            recentViewProductList={recentViewProduct}
+          />
+
           <Service serviceItems={serviceItems} />
         </div>
       </section>

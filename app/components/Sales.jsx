@@ -11,9 +11,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 
-function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
+function Sales({
+  bgcolor = "",
+  isHome = true,
+  removePx = "",
+  isRecentView,
+  recentViewProductList,
+}) {
   const [flashSaleProductList, setFlashSaleProductList] = useState([]);
-
+  const [fetchProduct, setFetchProduct] = useState([]);
   useEffect(() => {
     async function fetchData() {
       const flashSale = await getFlashSaleProduct();
@@ -107,7 +113,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
   const settings = {
     centerPadding: "60px",
     dots: false,
-    infinite: true,
+    infinite: isHome ? true : false,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
@@ -149,9 +155,13 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
           <div className="col-md-12">
             <div className="flash-sale-content-area-grid">
               <Slider {...settings}>
-                {flashSaleProductList?.map((product) => (
-                  <ProductCard key={product.id} item={product} />
-                ))}
+                {isHome && !isRecentView
+                  ? flashSaleProductList?.map((product) => (
+                      <ProductCard key={product.id} item={product} />
+                    ))
+                  : recentViewProductList?.map((product) => (
+                      <ProductCard key={product.id} item={product} />
+                    ))}
               </Slider>
             </div>
           </div>

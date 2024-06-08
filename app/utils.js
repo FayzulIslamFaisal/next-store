@@ -99,3 +99,34 @@ export function shortenString(str, length) {
 }
 
 // This function set recent view product
+
+export function storeProduct(product) {
+  if (typeof localStorage === "undefined") {
+    return; // Local storage not available
+  }
+
+  let storedProducts =
+    JSON.parse(localStorage.getItem("recentlyViewProducts")) || [];
+  console.log(storedProducts);
+  // Check if product already exists (by id)
+  const existingProductIndex = storedProducts.findIndex(
+    (p) => p.id === product.id && p.outlet_id === product.outlet_id
+  );
+
+  if (existingProductIndex === -1) {
+    // If product is unique, add it to the end of the array
+    storedProducts = [product, ...storedProducts];
+    // Limit array size to 10
+    if (storedProducts.length > 10) {
+      storedProducts.pop(); // Remove the last element (oldest)
+    }
+  } else {
+    // If product exists, remove it from the array
+    storedProducts.splice(existingProductIndex, 1);
+    // Add the updated product to the beginning of the array
+    storedProducts = [product, ...storedProducts];
+  }
+
+  // Update localStorage with the modified array
+  localStorage.setItem("recentlyViewProducts", JSON.stringify(storedProducts));
+}

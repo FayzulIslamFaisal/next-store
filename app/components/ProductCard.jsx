@@ -13,6 +13,7 @@ function ProductCard({ item }) {
     id: product_id,
     outlet_id,
   } = item;
+  console.log(item);
   return (
     <div className="flash-sale-content-item">
       <div className="flash-sale-content-bg nh-hover-box-shadow d-flex flex-column justify-content-between">
