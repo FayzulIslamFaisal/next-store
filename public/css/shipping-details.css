@@ -1,0 +1,76 @@
+.shipping-section-area {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.shipping-section-area input:focus {
+    box-shadow: none;
+    border: 1px solid var(--color-D8D8D8);
+}
+
+.shipping-section-area textarea:focus {
+    box-shadow: none;
+    border: 1px solid var(--color-D8D8D8);
+}
+
+/* Left Side css */
+.shipping-top-holder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shipping-section-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.shaipping-from-area {
+    padding-top: 32px;
+}
+.shaipping-from-area .textarea-resize {
+    resize: none;
+}
+.shaipping-from-area .district-list:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+/* order-info-area style */
+.order-info-area {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    padding: 24px 18px;
+    border: 1px solid var(--color-D8D8D8);
+    border-radius: 12px;
+}
+
+.shipping-section-subtitle h3{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.total-order-price {
+    font-size: 20px;
+    color: var(--color-1A9D78);
+    font-weight: 600;
+}
+
+.shipping-checkbox {
+    appearance: none;
+    border: 1px solid var(--color-D8D8D8);
+    cursor: pointer;
+    position: relative;
+}
+
+.shipping-checkbox:checked {
+    background-color: var(--color-1A9D78);
+    border: none;
+}
+.shopping-price-area p strong {
+    background: var(--color-44BC9D);
+    padding: 2px 6px;
+    color: var(--color-white);
+}

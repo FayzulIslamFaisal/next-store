@@ -79,6 +79,7 @@ export const existingIndex = (arr, name) => {
   return arr?.findIndex((item) => item.name === name);
 };
 
+
 //* Shortens a string to a specified length.
 export function shortenString(str, length) {
   if (typeof str !== "string" || typeof length !== "number") {
@@ -130,3 +131,6 @@ export function storeProduct(product) {
   // Update localStorage with the modified array
   localStorage.setItem("recentlyViewProducts", JSON.stringify(storedProducts));
 }
+
+export const apiBaseUrl = 'https://v3.nagadhat.com/api';
+
