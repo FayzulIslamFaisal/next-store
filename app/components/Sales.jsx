@@ -1,15 +1,13 @@
 "use client";
-
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import FlipClock from "./FlipClock";
 import SectionTitle from "./SectionTitle";
 import ProductCard from "./ProductCard";
-// import AddToCartButton from "./AddToCartButton";
-// import Like from "./Like";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
+import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
 
 function Sales({
   bgcolor = "",
@@ -19,16 +17,20 @@ function Sales({
   recentViewProductList,
 }) {
   const [flashSaleProductList, setFlashSaleProductList] = useState([]);
-  const [fetchProduct, setFetchProduct] = useState([]);
+  const searchParams = useSearchParams();
+  let districtId = searchParams.get("districtId");
   useEffect(() => {
     async function fetchData() {
-      const flashSale = await getFlashSaleProduct();
-      setFlashSaleProductList(flashSale?.results);
+      if (!districtId) {
+        districtId = 47;
+      }
+      const flashSale = await getHomeFlashAndJfyProduct(districtId);
+      let flashProduct = flashSale?.results?.flash_sales_product;
+      setFlashSaleProductList(flashProduct);
     }
     fetchData();
   }, []);
 
- 
   const settings = {
     centerPadding: "60px",
     dots: false,
@@ -64,10 +66,16 @@ function Sales({
       },
     ],
   };
+
   return (
     <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
       <div className="container">
-        <SectionTitle isSale={true} title={isHome ? `Flash Sale` : `Recent View`} target="flashSale" path="/viewallproduct">
+        <SectionTitle
+          isSale={true}
+          title={isHome ? `Flash Sale` : `Recent View`}
+          target="flashSale"
+          path="/viewallproduct"
+        >
           {isHome && <FlipClock endsAt={`2024-06-25 12:00`} />}
         </SectionTitle>
         <div className="row">
