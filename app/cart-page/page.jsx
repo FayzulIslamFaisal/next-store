@@ -68,7 +68,7 @@ const CartPage = () => {
                               >
                                 <Image
                                   fill
-                                  src="/images/-icon.png"
+                                  src="/images/minusIcon.png"
                                   alt="black-friday"
                                 />
                               </button>
@@ -85,9 +85,288 @@ const CartPage = () => {
                               defaultValue="1"
                               readOnly
                             />
+                            <div className="quantity-decrease-bg">
+                              <button
+                                className="btn quantity-decrease"
+                                type="button"
+                              >
+                                <Image
+                                  fill
+                                  src="/images/+icon.png"
+                                  alt="black-friday"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-cart-remov-btn-bg">
+                            <button className="product-cart-remov-btn">
+                              <Image
+                                fill
+                                src="/images/trash-bin.png"
+                                alt="delete"
+                              />
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-cart-like-btn-bg">
+                            <button className="product-cart-like-btn">
+                              <Image
+                                fill
+                                src="/images/heart.png"
+                                alt="heart image"
+                              />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            className="cart-checkbox"
+                            type="checkbox"
+                            name="product-item"
+                          />
+                        </td>
+                        <td>
+                          <div className="product-cart-product-img">
+                            <Image
+                              fill
+                              src="/images/DanfoodVanila Muffin.jpg"
+                              alt="black-friday"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <h2 className="product-cart-text">
+                            LED Monitor With High Quality In The World
+                          </h2>
+                          <strong className="product-cart-price">
+                            ৳20,000
+                          </strong>
+                        </td>
+
+                        <td>
+                          <div
+                            className="btn-group quantity-area"
+                            role="group"
+                            aria-label="Basic example"
+                          >
                             <div className="quantity-increase-bg">
                               <button
+                                type="button"
                                 className="btn quantity-increase"
+                              >
+                                <Image
+                                  fill
+                                  src="/images/minusIcon.png"
+                                  alt="black-friday"
+                                />
+                              </button>
+                            </div>
+
+                            <input
+                              className="quantity-fild"
+                              min="1"
+                              max="5"
+                              step="1"
+                              autoComplete="off"
+                              type="text"
+                              height="100%"
+                              defaultValue="1"
+                              readOnly
+                            />
+                            <div className="quantity-decrease-bg">
+                              <button
+                                className="btn quantity-decrease"
+                                type="button"
+                              >
+                                <Image
+                                  fill
+                                  src="/images/+icon.png"
+                                  alt="black-friday"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-cart-remov-btn-bg">
+                            <button className="product-cart-remov-btn">
+                              <Image
+                                fill
+                                src="/images/trash-bin.png"
+                                alt="delete"
+                              />
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-cart-like-btn-bg">
+                            <button className="product-cart-like-btn">
+                              <Image
+                                fill
+                                src="/images/heart.png"
+                                alt="heart image"
+                              />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            className="cart-checkbox"
+                            type="checkbox"
+                            name="product-item"
+                          />
+                        </td>
+                        <td>
+                          <div className="product-cart-product-img">
+                            <Image
+                              fill
+                              src="/images/Dan foodMarble cake 300 gm.jpeg"
+                              alt="black-friday"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <h2 className="product-cart-text">
+                            LED Monitor With High Quality In The World
+                          </h2>
+                          <strong className="product-cart-price">
+                            ৳20,000
+                          </strong>
+                        </td>
+
+                        <td>
+                          <div
+                            className="btn-group quantity-area"
+                            role="group"
+                            aria-label="Basic example"
+                          >
+                            <div className="quantity-increase-bg">
+                              <button
+                                type="button"
+                                className="btn quantity-increase"
+                              >
+                                <Image
+                                  fill
+                                  src="/images/minusIcon.png"
+                                  alt="black-friday"
+                                />
+                              </button>
+                            </div>
+
+                            <input
+                              className="quantity-fild"
+                              min="1"
+                              max="5"
+                              step="1"
+                              autoComplete="off"
+                              type="text"
+                              height="100%"
+                              defaultValue="1"
+                              readOnly
+                            />
+                            <div className="quantity-decrease-bg">
+                              <button
+                                className="btn quantity-decrease"
+                                type="button"
+                              >
+                                <Image
+                                  fill
+                                  src="/images/+icon.png"
+                                  alt="black-friday"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-cart-remov-btn-bg">
+                            <button className="product-cart-remov-btn">
+                              <Image
+                                fill
+                                src="/images/trash-bin.png"
+                                alt="delete"
+                              />
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-cart-like-btn-bg">
+                            <button className="product-cart-like-btn">
+                              <Image
+                                fill
+                                src="/images/heart.png"
+                                alt="heart image"
+                              />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            className="cart-checkbox"
+                            type="checkbox"
+                            name="product-item"
+                          />
+                        </td>
+                        <td>
+                          <div className="product-cart-product-img">
+                            <Image
+                              fill
+                              src="/images/dan-cake-chocolate-muffin-30g-24-pieces_550.jpeg"
+                              alt="black-friday"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <h2 className="product-cart-text">
+                            LED Monitor With High Quality In The World
+                          </h2>
+                          <strong className="product-cart-price">
+                            ৳20,000
+                          </strong>
+                        </td>
+
+                        <td>
+                          <div
+                            className="btn-group quantity-area"
+                            role="group"
+                            aria-label="Basic example"
+                          >
+                            <div className="quantity-increase-bg">
+                              <button
+                                type="button"
+                                className="btn quantity-increase"
+                              >
+                                <Image
+                                  fill
+                                  src="/images/minusIcon.png"
+                                  alt="black-friday"
+                                />
+                              </button>
+                            </div>
+
+                            <input
+                              className="quantity-fild"
+                              min="1"
+                              max="5"
+                              step="1"
+                              autoComplete="off"
+                              type="text"
+                              height="100%"
+                              defaultValue="1"
+                              readOnly
+                            />
+                            <div className="quantity-decrease-bg">
+                              <button
+                                className="btn quantity-decrease"
                                 type="button"
                               >
                                 <Image
@@ -123,135 +402,7 @@ const CartPage = () => {
                         </td>
                       </tr>
 
-                      {/* <tr>
-                        <td>
-                          <input
-                            className="cart-checkbox"
-                            type="checkbox"
-                            name="product-item"
-                          />
-                        </td>
-                        <td>
-                          <div className="product-cart-product-img">
-                            <Image fill src="/images/dan-cake-chocolate-muffin-30g-24-pieces_550.jpeg" alt="black-friday" />
-                          </div>
-                        </td>
-                        <td>
-                          <h2 className="product-cart-text">
-                            LED Monitor With High Quality In The World
-                          </h2>
-                          <strong className="product-cart-price">৳20,000</strong>
-                        </td>
-
-                        <td>
-                          <div
-                            className="btn-group quantity-area"
-                            role="group"
-                            aria-label="Basic example"
-                          >
-                            <button type="button" className="btn quantity-increase">
-                              <Image fill src="/images/-icon.png" alt="black-friday" />
-                            </button>
-                            <input
-                              className="quantity-fild"
-                              min="1"
-                              max="5"
-                              step="1"
-                              autoComplete="off"
-                              type="text"
-                              height="100%"
-                              defaultValue="1"
-                              readOnly
-                            />
-                            <button className="btn quantity-increase" type="button">
-                              <Image fill src="/images/+icon.png" alt="black-friday" />
-                            </button>
-                          </div>
-                        </td>
-                        <td>
-                          <button className="product-cart-remov-btn">
-                            <Image
-                            fill
-                              src="/images/trash-bin.png"
-                              alt="delete"
-                            />
-                          </button>
-                        </td>
-                        <td>
-                          <button className="product-cart-like-btn">
-                            <Image
-                            fill
-                              src="/images/heart.png"
-                              alt="heart image"
-                            />
-                          </button>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>
-                          <input
-                            className="cart-checkbox"
-                            type="checkbox"
-                            name="product-item"
-                          />
-                        </td>
-                        <td>
-                          <div className="product-cart-product-img">
-                            <Image fill src="/images/flash-img4.jpg" alt="black-friday" />
-                          </div>
-                        </td>
-                        <td>
-                          <h2 className="product-cart-text">
-                            LED Monitor With High Quality In The World
-                          </h2>
-                          <strong className="product-cart-price">৳20,000</strong>
-                        </td>
-
-                        <td>
-                          <div
-                            className="btn-group quantity-area"
-                            role="group"
-                            aria-label="Basic example"
-                          >
-                            <button type="button" className="btn quantity-increase">
-                              <Image fill src="/images/-icon.png" alt="black-friday" />
-                            </button>
-                            <input
-                              className="quantity-fild"
-                              min="1"
-                              max="5"
-                              step="1"
-                              autoComplete="off"
-                              type="text"
-                              height="100%"
-                              defaultValue="1"
-                              readOnly
-                            />
-                            <button className="btn quantity-increase" type="button">
-                              <Image fill src="/images/+icon.png" alt="black-friday" />
-                            </button>
-                          </div>
-                        </td>
-                        <td>
-                          <button className="product-cart-remov-btn">
-                            <Image
-                            fill
-                              src="/images/trash-bin.png"
-                              alt="delete"
-                            />
-                          </button>
-                        </td>
-                        <td>
-                          <button className="product-cart-like-btn">
-                            <Image
-                            fill
-                              src="/images/heart.png"
-                              alt="heart image"
-                            />
-                          </button>
-                        </td>
-                      </tr> */}
+                      
                     </tbody>
                   </table>
                 </div>
