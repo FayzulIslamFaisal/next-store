@@ -5,81 +5,18 @@ import Select, { components } from "react-select";
 import { RotatingLines, TailSpin } from "react-loader-spinner";
 import { IoSearchOutline } from "react-icons/io5";
 import DeliveryAddress from "./DeliveryAddress";
+import { useSearchParams } from "next/navigation";
 const ProductDeliveryDetail = ({ productInfo }) => {
   const [locationPopUp, setLocationPopUp] = useState(false);
-  const district = [
-    {
-      id: 1,
-      name: "Chattagram",
-      bn_name: "চট্টগ্রাম",
-      url: "www.chittagongdiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 2,
-      name: "Rajshahi",
-      bn_name: "রাজশাহী",
-      url: "www.rajshahidiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 3,
-      name: "Khulna",
-      bn_name: "খুলনা",
-      url: "www.khulnadiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 4,
-      name: "Barisal",
-      bn_name: "বরিশাল",
-      url: "www.barisaldiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 5,
-      name: "Sylhet",
-      bn_name: "সিলেট",
-      url: "www.sylhetdiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 6,
-      name: "Dhaka",
-      bn_name: "ঢাকা",
-      url: "www.dhakadiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 7,
-      name: "Rangpur",
-      bn_name: "রংপুর",
-      url: "www.rangpurdiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-    {
-      id: 8,
-      name: "Mymensingh",
-      bn_name: "ময়মনসিংহ",
-      url: "www.mymensinghdiv.gov.bd",
-      created_at: null,
-      updated_at: null,
-    },
-  ];
   const [options, setOptions] = useState([]);
+  const searchParams = useSearchParams();
+  const pathName = searchParams.toString();
   const [selectedValues, setSelectedValues] = useState({
-    country: null,
     division: null,
     district: null,
+    upazilla: null,
   });
-  const [step, setStep] = useState("country");
+  const [step, setStep] = useState("division");
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(
@@ -91,12 +28,15 @@ const ProductDeliveryDetail = ({ productInfo }) => {
   const [shippingAddress, setShippingAddress] = useState(null);
   const selectRef = useRef(null);
   useEffect(() => {
-    if (step === "country") {
-      fetchCountries();
-    } else if (step === "division" && selectedValues.country) {
-      fetchDivisions(selectedValues.country.value);
+    if (step === "division") {
+      fetchDivisions();
     } else if (step === "district" && selectedValues.division) {
-      fetchDistricts(selectedValues.division.id);
+      fetchDistricts(selectedValues.division.value);
+    } else if (step === "upazilla" && selectedValues.district) {
+      fetchUpazilla(
+        selectedValues.division.value,
+        selectedValues.district.value
+      );
     }
   }, [step, selectedValues]);
   useEffect(() => {
@@ -111,15 +51,15 @@ const ProductDeliveryDetail = ({ productInfo }) => {
     };
   }, []);
 
-  const fetchCountries = async () => {
+  const fetchDivisions = async () => {
     try {
       setLoading(true);
-      const response = await fetch("https://v3.nagadhat.com/api/get-divisions"); // Replace with your API endpoint
+      const response = await fetch("https://bdapis.com/api/v1.2/divisions"); // Replace with your API endpoint
       const data = await response.json();
       setOptions(
-        data?.results?.divisions.map((country) => ({
-          value: country.id,
-          label: country.name,
+        data?.data?.map((division) => ({
+          value: division?.division,
+          label: division?.division,
         }))
       );
     } catch (error) {
@@ -129,35 +69,45 @@ const ProductDeliveryDetail = ({ productInfo }) => {
     }
   };
 
-  const fetchDivisions = async (countryId) => {
+  const fetchDistricts = async (divisionName) => {
+    const lowercaseResponse = divisionName.toLowerCase();
     setLoading(true);
     try {
       const response = await fetch(
-        `https://v3.nagadhat.com/api/get-districts/${countryId}`
+        `https://bdapis.com/api/v1.2/division/${lowercaseResponse}`
       ); // Replace with your API endpoint
       const data = await response.json();
+      console.log("g", data?.data[0].district);
+
       setOptions(
-        data?.results?.districts?.map((division) => ({
-          value: division.id,
-          label: division.name,
+        data?.data?.map((district) => ({
+          value: district?.district,
+          label: district?.district,
         }))
       );
     } catch (error) {
-      console.error("Error fetching divisions:", error);
+      console.error("Error fetching district:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchDistricts = async (divisionId) => {
+  const fetchUpazilla = async (districtName, matchValue) => {
     setLoading(true);
     try {
-      const data = district;
+      const lowercaseResponse = districtName.toLowerCase();
+      const response = await fetch(
+        `https://bdapis.com/api/v1.2/division/${lowercaseResponse}`
+      ); // Replace with your API endpoint
+      const data = await response.json();
+
       setOptions(
-        data.map((district) => ({
-          value: district.id,
-          label: district.name,
-        }))
+        data.data
+          .find((up) => up.district === matchValue)
+          ?.upazilla?.map((upazilla) => ({
+            value: upazilla,
+            label: upazilla,
+          }))
       );
     } catch (error) {
       console.error("Error fetching districts:", error);
@@ -167,29 +117,29 @@ const ProductDeliveryDetail = ({ productInfo }) => {
   };
 
   const handleChange = (selectedOption) => {
-    if (step === "country") {
+    if (step === "division") {
       setSelectedValues({
-        country: selectedOption,
-        division: null,
-        district: null,
-      });
-      setStep("division");
-    } else if (step === "division") {
-      setSelectedValues((prev) => ({
-        ...prev,
         division: selectedOption,
         district: null,
-      }));
+        upazilla: null,
+      });
       setStep("district");
     } else if (step === "district") {
-      setSelectedValues((prev) => ({ ...prev, district: selectedOption }));
+      setSelectedValues((prev) => ({
+        ...prev,
+        district: selectedOption,
+        upazilla: null,
+      }));
+      setStep("upazilla");
+    } else if (step === "upazilla") {
+      setSelectedValues((prev) => ({ ...prev, upazilla: selectedOption }));
       setShowDropdown(false);
     }
   };
   const handleStartSelect = () => {
     setShowDropdown(true);
-    setStep("country");
-    setSelectedValues({ country: null, division: null, district: null });
+    setStep("division");
+    setSelectedValues({ division: null, district: null, upazilla: null });
   };
 
   const DropdownIndicator = (props) => (
@@ -197,6 +147,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
       <IoSearchOutline label="Emoji" />
     </components.DropdownIndicator>
   );
+
   const NoOptionsMessage = (props) => (
     <components.NoOptionsMessage {...props}>
       {loading ? (
@@ -222,9 +173,11 @@ const ProductDeliveryDetail = ({ productInfo }) => {
   );
 
   useEffect(() => {
-    selectedValues.country && selectedValues.division && selectedValues.district
+    selectedValues.division &&
+    selectedValues.district &&
+    selectedValues.upazilla
       ? setSelectedLocation(
-          `${selectedValues.country.label}, ${selectedValues.division.label} - ${selectedValues.district.label}`
+          `${selectedValues.division.label}, ${selectedValues.district.label}, ${selectedValues.upazilla.label}`
         )
       : setSelectedLocation(productInfo?.shipping_address);
   }, [selectedValues]);
@@ -234,7 +187,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
       const savedAddress = localStorage.getItem("shippingLocation");
       setShippingAddress(savedAddress);
     }
-  }, []);
+  }, [pathName]);
 
   // Update localStorage whenever selectedLocation changes
   useEffect(() => {
@@ -286,17 +239,17 @@ const ProductDeliveryDetail = ({ productInfo }) => {
               {showDropdown && (
                 <div className="drop-down">
                   <label htmlFor="location">
-                    {selectedValues.country ? (
+                    {selectedValues.division ? (
                       <p>
-                        {selectedValues.country
-                          ? selectedValues.country.label
-                          : ""}
                         {selectedValues.division
-                          ? ` > ${selectedValues.division.label}`
+                          ? selectedValues.division.label
                           : ""}
                         {selectedValues.district
+                          ? ` > ${selectedValues.district.label}`
+                          : ""}
+                        {selectedValues.upazilla
                           ? ` > <>
-                          ${selectedValues.district.label}
+                          ${selectedValues.upazilla.label}
                          
                           </>`
                           : ""}
@@ -327,6 +280,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
             </div>
           }
         </div>
+
         <div className="product-free-delivery-area">
           <div className="product-delivery-top-title d-flex align-items-center justify-content-between">
             <h2>delivery charge</h2>
@@ -353,7 +307,15 @@ const ProductDeliveryDetail = ({ productInfo }) => {
               {/* <p>12 Apr - 19 Apr</p> */}
             </div>
             <div className="product-free-delivery-info ">
-              <h6 className="custom-text-link">Free</h6>
+              <h6 className="custom-text-link">
+                {shippingAddress && shippingAddress.split(",")[0] === "Dhaka"
+                  ? productInfo?.inside_dhaka === "0.00"
+                    ? "Free"
+                    : productInfo?.inside_dhaka
+                  : productInfo?.outside_dhaka === "0.00"
+                  ? "130"
+                  : productInfo?.outside_dhaka}
+              </h6>
             </div>
           </div>
           <div className="product-free-delivery-end-time">
