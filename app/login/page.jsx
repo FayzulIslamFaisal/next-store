@@ -24,7 +24,6 @@ const login = () => {
         });
     };
 
-    console.log("formData :=>>>>>>> ", formData);
     return (
         <div className="container">
             <div className="row justify-content-center user-login-section">
