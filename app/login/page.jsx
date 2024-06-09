@@ -1,7 +1,29 @@
+"use client";
 import Link from "next/link";
 import SigninBtn from "../components/SigninBtn";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const login = () => {
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const result = await signIn("credentials", {
+            username: formData.username,
+            password: formData.password,
+            redirect: true,
+            callbackUrl: "/",
+        });
+    };
+
     return (
         <div className="container">
             <div className="row justify-content-center user-login-section">
@@ -17,13 +39,15 @@ const login = () => {
                                         htmlFor="number"
                                         className="form-label"
                                     >
-                                        {" "}
                                         Phone Number
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         id="number"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -37,6 +61,9 @@ const login = () => {
                                         type="password"
                                         className="form-control"
                                         id="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-3 form-check d-flex align-items-center justify-content-between ">
@@ -60,6 +87,7 @@ const login = () => {
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    onClick={handleLogin}
                                 >
                                     Login
                                 </button>
