@@ -1,5 +1,5 @@
 
-const careerPage = () => {
+const CareerPage = () => {
     return (
         <div className="container">
             <div className="row">
@@ -11,4 +11,4 @@ const careerPage = () => {
     )
 }
 
-export default careerPage
+export default CareerPage

@@ -4,7 +4,7 @@ import SigninBtn from "../components/SigninBtn";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 
-const login = () => {
+const Login = () => {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -115,4 +115,4 @@ const login = () => {
     );
 };
 
-export default login;
+export default Login;

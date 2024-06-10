@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 
-const thankYouPage = () => {
+const ThankYouPage = () => {
   return (
     <section className="order-confirm-section-area">
         <div className="custom-container">
@@ -127,4 +127,4 @@ const thankYouPage = () => {
   )
 }
 
-export default thankYouPage
+export default ThankYouPage

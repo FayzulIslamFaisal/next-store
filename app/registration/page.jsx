@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const registration = () => {
+const Registration = () => {
     return (
         <div className='container'>
             <div className="row justify-content-center user-login-section">
@@ -58,4 +58,4 @@ const registration = () => {
     )
 }
 
-export default registration
+export default Registration
