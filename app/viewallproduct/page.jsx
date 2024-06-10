@@ -7,7 +7,7 @@ import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 
-const ViewAllProduct = async ({ searchParams }) => {
+const ViewAllProductPage = async ({ searchParams }) => {
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
@@ -90,4 +90,4 @@ const ViewAllProduct = async ({ searchParams }) => {
     );
 };
 
-export default ViewAllProduct;
+export default ViewAllProductPage;
