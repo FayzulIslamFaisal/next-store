@@ -199,9 +199,8 @@ function MainNav({
                                     onMouseEnter={() =>
                                         setCategoryHoverMenu(true)
                                     }
-                                    onMouseLeave={
-                                        () => console.log("...")
-                                        // setCategoryHoverMenu(false)
+                                    onMouseLeave={() =>
+                                        setCategoryHoverMenu(false)
                                     }
                                 >
                                     <Link
@@ -218,7 +217,7 @@ function MainNav({
                                         />
                                     </Link>
                                 </div>
-                                <div className="header-search-holder d-flex align-items-centers">
+                                <div className="header-search-holder d-flex align-items-center">
                                     <div className="header-search-location">
                                         <button
                                             type="button"
@@ -272,18 +271,22 @@ function MainNav({
                         <div className="header-auth-area d-flex justify-content-end">
                             <ul className="d-flex align-items-center">
                                 <li>
-                                    <Link
-                                        href="/login"
-                                        className="text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src="/images/login-icon.svg"
-                                            alt="login-icon"
-                                            width={13}
-                                            height={19}
-                                        />
-                                        Login
-                                    </Link>
+                                    {authStatus === "authenticated" ? (
+                                        <SignoutBtn />
+                                    ) : (
+                                        <Link
+                                            href="/login"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src="/images/login-icon.svg"
+                                                alt="login-icon"
+                                                width={13}
+                                                height={19}
+                                            />
+                                            Login
+                                        </Link>
+                                    )}
                                 </li>
                                 <li>
                                     <Link
