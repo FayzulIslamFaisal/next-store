@@ -111,16 +111,9 @@ function MainNav({
                                     </div>
                                 </form>
                             </div>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#">
-                            <div className="search-modal-info-inner d-flex align-content-center gap-4">
-                              <div className="search-modal-info-img">
-                                <Image
-                                  fill
-                                  src="/images/dan-cake-chocolate-muffin-30g-24-pieces_550.jpeg"
-                                  alt="BabyCare"
+                            {search && isSearchProductAvailable() && (
+                                <ProductSearchResult
+                                    searchProduct={searchProduct}
                                 />
                             )}
                         </div>
@@ -199,50 +192,32 @@ function MainNav({
                                 />
                             </Link>
                         </div>
-                      </form>
-                    </div>
-                    <div className="product-search-modal-area d-none">
-                      <div className="product-search-modal-content">
-                        <div className="search-modal-title">
-                          <h4>category suggestions</h4>
-                        </div>
-                        <div className="search-modal-info">
-                          <ul>
-                            <li>
-                              <Link href="#">Food & Beverage</Link>
-                            </li>
-                            <li>
-                              <Link href="#">Baby Food</Link>
-                            </li>
-                            <li>
-                              <Link href="#">Food & Beverage</Link>
-                            </li>
-                            <li>
-                              <Link href="#">Daily Foods</Link>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="search-modal-title">
-                          <h4>products</h4>
-                        </div>
-                        <div className="search-modal-info">
-                          <ul className="similer-search-product-list">
-                            <li>
-                              <Link href="#">
-                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
-                                  <div className="search-modal-info-img">
-                                    <Image
-                                      fill
-                                      src="/images/primaSatgebabyFood.jpg"
-                                      alt="BabyCare"
-                                    />
-                                  </div>
-                                  <div className="search-modal-info-details">
-                                    <p>Satge 1 baby Food</p>
-                                    <strong>৳ 730</strong>
-                                  </div>
+                        <div className="header-search-area observerable-header-search-area">
+                            <div className="header-search-inner-area d-flex align-items-center">
+                                <div
+                                    className="observerable-categories-item position-relative"
+                                    onMouseEnter={() =>
+                                        setCategoryHoverMenu(true)
+                                    }
+                                    onMouseLeave={() =>
+                                        setCategoryHoverMenu(false)
+                                    }
+                                >
+                                    <Link
+                                        href="#"
+                                        className="d-flex align-items-center text-white text-capitalize"
+                                    >
+                                        <span>Categories</span>
+                                        <Image
+                                            className="categories-arrow-img"
+                                            src="/images/Categories-arrow.svg"
+                                            alt="arrow"
+                                            width={10}
+                                            height={7}
+                                        />
+                                    </Link>
                                 </div>
-                                <div className="header-search-holder d-flex align-items-centers">
+                                <div className="header-search-holder d-flex align-items-center">
                                     <div className="header-search-location">
                                         <button
                                             type="button"
@@ -296,18 +271,22 @@ function MainNav({
                         <div className="header-auth-area d-flex justify-content-end">
                             <ul className="d-flex align-items-center">
                                 <li>
-                                    <Link
-                                        href="/login"
-                                        className="text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src="/images/login-icon.svg"
-                                            alt="login-icon"
-                                            width={13}
-                                            height={19}
-                                        />
-                                        Login
-                                    </Link>
+                                    {authStatus === "authenticated" ? (
+                                        <SignoutBtn />
+                                    ) : (
+                                        <Link
+                                            href="/login"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src="/images/login-icon.svg"
+                                                alt="login-icon"
+                                                width={13}
+                                                height={19}
+                                            />
+                                            Login
+                                        </Link>
+                                    )}
                                 </li>
                                 <li>
                                     <Link
