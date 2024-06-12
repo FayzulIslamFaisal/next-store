@@ -1,5 +1,5 @@
 
-const partnerPage = () => {
+const PartnerPage = () => {
     return (
 
         <div className="container">
@@ -12,4 +12,4 @@ const partnerPage = () => {
     )
 }
 
-export default partnerPage
+export default PartnerPage

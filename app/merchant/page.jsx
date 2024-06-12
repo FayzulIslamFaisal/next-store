@@ -1,5 +1,5 @@
 
-const merchantPage = () => {
+const MerchantPage = () => {
     return (
         <div className="container">
             <div className="row">
@@ -11,4 +11,4 @@ const merchantPage = () => {
     )
 }
 
-export default merchantPage
+export default MerchantPage

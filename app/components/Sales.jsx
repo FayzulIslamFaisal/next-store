@@ -1,11 +1,9 @@
 "use client";
-
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import FlipClock from "./FlipClock";
 import SectionTitle from "./SectionTitle";
 import ProductCard from "./ProductCard";
-// import AddToCartButton from "./AddToCartButton";
-// import Like from "./Like";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

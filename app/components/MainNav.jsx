@@ -1,7 +1,12 @@
 "use client";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SignoutBtn from "./SignoutBtn";
+import { getHomeSearchProduct } from "../services/getHomeSearchProduct";
+import ProductSearchResult from "./ProductSearchResult";
+import ProductSearchResultMobile from "./ProductSearchResultMobile";
 
 function MainNav({
     isObserverMenuVisible,
@@ -9,6 +14,41 @@ function MainNav({
     setCategoryHoverMenu,
     authStatus,
 }) {
+    const [search, setSearch] = useState("");
+    const [searchProduct, setSearchProduct] = useState([]);
+    const searchParams = useSearchParams();
+    let districtId = searchParams.get("districtId");
+    const handleSerchChange = (e) => {
+        setSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        const fetchSearchProduct = async () => {
+            if (!search || search.length < 3) {
+                setSearchProduct([]);
+                return;
+            }
+
+            if (!districtId) {
+                districtId = 47;
+            }
+            const productData = await getHomeSearchProduct(districtId, search);
+            if (productData?.results) {
+                const allSearchProducts = [
+                    ...productData?.results?.flash_sales_product,
+                    ...productData?.results?.just_for_you?.for_you_products,
+                ];
+
+                setSearchProduct(allSearchProducts);
+            }
+        };
+        fetchSearchProduct();
+    }, [search]);
+
+    let isSearchProductAvailable = () => {
+        return searchProduct.length === 0 ? false : true;
+    };
+
     return (
       <>
         <div
@@ -135,9 +175,12 @@ function MainNav({
                             <div className="search-modal-info-inner d-flex align-content-center gap-4">
                               <div className="search-modal-info-img">
                                 <Image
-                                  fill
-                                  src="/images/Dan foodMarble cake 300 gm.jpeg"
-                                  alt="BabyCare"
+                                    width={0}
+                                    height={43}
+                                    sizes="100vw"
+                                    src={`/images/logo.svg`}
+                                    style={{ width: "100%" }}
+                                    alt="logo"
                                 />
                               </div>
                               <div className="search-modal-info-details">
@@ -183,65 +226,8 @@ function MainNav({
                         </li>
                       </ul>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div className="header-auth-area d-flex justify-content-end">
-                <ul className=" d-flex align-items-center ">
-                  <li>
-                    {authStatus === "authenticated" ? (
-                      <SignoutBtn />
-                    ) : (
-                      <Link
-                        href="/login"
-                        className=" text-white text-capitalize d-flex align-items-center"
-                      >
-                        <Image
-                          src={`/images/login-icon.svg`}
-                          alt="login-icon"
-                          width={13}
-                          height={19}
-                        />
-                        Login
-                      </Link>
-                    )}
-                  </li>
-                  <li>
-                    <Link
-                      href="/registration"
-                      className=" text-white text-capitalize d-flex align-items-center"
-                    >
-                      <Image
-                        src="/images/register-icon.svg"
-                        alt="register-icon"
-                        width={14}
-                        height={17}
-                      />
-                      Register
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="#"
-                      className=" text-white text-capitalize d-flex align-items-center"
-                    >
-                      <span className="bg-white d-flex align-items-center">
-                        <Image
-                          src="/images/cart-icon.svg"
-                          alt="cart-icon"
-                          width={17}
-                          height={15}
-                        />
-                      </span>
-                      Cart
-                    </Link>
-                  </li>
-                </ul>
-              </div>
             </div>
-          </div>
-        </div>
-
         <div
           className={`row observerable-header-section ${
             isObserverMenuVisible ? "" : "d-none"
@@ -433,68 +419,62 @@ function MainNav({
                                     <p>Satge 1 baby Food</p>
                                     <strong>৳ 730</strong>
                                   </div>
+
                                 </div>
-                              </Link>
-                            </li>
-                          </ul>
+                            </div>
                         </div>
-                      </div>
+                        <div className="header-auth-area d-flex justify-content-end">
+                            <ul className=" d-flex align-items-center ">
+                                <li>
+                                    <Link
+                                        href="/login"
+                                        className=" text-white text-capitalize d-flex align-items-center"
+                                    >
+                                        <Image
+                                            src={`/images/login-icon.svg`}
+                                            alt="login-icon"
+                                            width={13}
+                                            height={19}
+                                        />
+                                        Login
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/registration"
+                                        className=" text-white text-capitalize d-flex align-items-center"
+                                    >
+                                        <Image
+                                            src="/images/register-icon.svg"
+                                            alt="register-icon"
+                                            width={14}
+                                            height={17}
+                                        />
+                                        Register
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className=" text-white text-capitalize d-flex align-items-center"
+                                    >
+                                        <span className="bg-white d-flex align-items-center">
+                                            <Image
+                                                src="/images/cart-icon.svg"
+                                                alt="cart-icon"
+                                                width={17}
+                                                height={15}
+                                            />
+                                        </span>
+                                        Cart
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div className="header-auth-area d-flex justify-content-end">
-                <ul className=" d-flex align-items-center ">
-                  <li>
-                    <Link
-                      href="/login"
-                      className=" text-white text-capitalize d-flex align-items-center"
-                    >
-                      <Image
-                        src={`/images/login-icon.svg`}
-                        alt="login-icon"
-                        width={13}
-                        height={19}
-                      />
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/registration"
-                      className=" text-white text-capitalize d-flex align-items-center"
-                    >
-                      <Image
-                        src="/images/register-icon.svg"
-                        alt="register-icon"
-                        width={14}
-                        height={17}
-                      />
-                      Register
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="#"
-                      className=" text-white text-capitalize d-flex align-items-center"
-                    >
-                      <span className="bg-white d-flex align-items-center">
-                        <Image
-                          src="/images/cart-icon.svg"
-                          alt="cart-icon"
-                          width={17}
-                          height={15}
-                        />
-                      </span>
-                      Cart
-                    </Link>
-                  </li>
-                </ul>
-              </div>
             </div>
-          </div>
-        </div>
-      </>
+        </>
     );
 }
 

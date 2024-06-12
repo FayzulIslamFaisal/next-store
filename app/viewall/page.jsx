@@ -7,7 +7,7 @@ import Sales from "../components/Sales";
 import { getHomeCategory } from "../services/getHomeCategory";
 import { getHomeBrand } from "../services/getHomeBrand";
 
-const viewAllProduct = async ({ searchParams }) => {
+const ViewAllPage = async ({ searchParams }) => {
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -87,4 +87,4 @@ const viewAllProduct = async ({ searchParams }) => {
     );
 };
 
-export default viewAllProduct;
+export default ViewAllPage;
