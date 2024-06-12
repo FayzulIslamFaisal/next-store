@@ -1,6 +1,9 @@
 import { api_base_url } from "../config";
 
 export const getProductDetails = async (pathName) => {
+  if (!pathName) {
+    return null;
+  }
   try {
     console.log("aaabb", `${api_base_url}/get-product-details?${pathName}`);
     const response = await fetch(
