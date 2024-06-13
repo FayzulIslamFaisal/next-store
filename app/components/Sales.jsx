@@ -30,7 +30,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
       const settingData = await getFlashSlaeShowOnHomePage();
       if (!ignore) {
         const settingAllData = settingData?.results;
-        if (settingAllData.show_on_home == 1) {
+        if (settingAllData?.show_on_home == 1) {
           setHasFlashSaleSettings(true);
         } else {
           console.error("settingAllData is not an array", settingAllData);
