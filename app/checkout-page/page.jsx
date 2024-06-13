@@ -35,7 +35,7 @@ const CheckoutPage = () => {
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="district" className="form-label">District <span className="text-danger fw-bold">*</span></label>
                                 <select className="form-select district-list" name="district" id="district">
-                                    <option selected>District</option>
+                                    <option defaultValue="District">District</option>
                                     <option value="Barisal">Barisal</option>
                                     <option value="Chittagong">Chittagong</option>
                                     <option value="Dhaka">Dhaka</option>
@@ -43,7 +43,13 @@ const CheckoutPage = () => {
                             </div>
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="city" className="form-label">City</label>
-                                <input type="text" className="form-control" name="city" id="city"/>
+
+                                <select className="form-select district-list" name="city" id="city">
+                                    <option defaultValue="City">City</option>
+                                    <option value="Barisal">Barisal</option>
+                                    <option value="Chittagong">Chittagong</option>
+                                    <option value="Dhaka">Dhaka</option>
+                                  </select>
                             </div>
                             <div className="col-md-12 pb-3">
                                 <label htmlFor="address" className="form-label">Address</label>
@@ -72,14 +78,14 @@ const CheckoutPage = () => {
                                     <h3>Shopping Summary</h3>
                                 </div>
                                 <div className="d-flex gap-2 flex-column border-bottom pb-3">
-                                    <div className="d-flex gap-3 justify-content-between shopping-price-area">
+                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                         <div className="d-flex gap-3 ">
                                             <strong>1x</strong>
                                             <p>LED Monitor With High Quality In The World</p>
                                         </div>
                                         <strong>৳35,000</strong>
                                     </div>
-                                    <div className="d-flex gap-3 justify-content-between shopping-price-area">
+                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                         <div className="d-flex gap-3">
                                             <strong>1x</strong>
                                             <p>Magic Pen for iPad</p>
@@ -88,23 +94,23 @@ const CheckoutPage = () => {
                                     </div>
                                 </div>
                                 <div className="d-flex gap-2 flex-column border-bottom pb-3">
-                                    <div className="d-flex gap-3 justify-content-between shopping-price-area">
+                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                         <p>Subtotal</p>
                                         <strong>৳1,952.66</strong>
                                     </div>
-                                    <div className="d-flex gap-3 justify-content-between shopping-price-area">
+                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                         <p>Shipping <strong> (Free)</strong></p>
                                         <div className="d-flex gap-2 align-items-center">
                                             <strong>৳0</strong>
                                         </div>
                                     </div>
-                                    <div className="d-flex gap-3 justify-content-between shopping-price-area">
+                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                         <p>discount</p>
                                         <strong>৳66.00</strong>
                                     </div>
                                 </div>
                                 <div className="d-flex gap-2 flex-column border-bottom pb-3">
-                                    <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area">
+                                    <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
                                         <strong>Total</strong>
                                         <p className="total-order-price">৳1,952.66</p>
                                     </div>
@@ -113,19 +119,19 @@ const CheckoutPage = () => {
                                     <h3>Payment</h3>
                                 </div>
                                 <div>
-                                    <div className="form-check">
+                                    <div className="form-check pb-2">
                                         <input className="form-check-input shipping-checkbox" type="checkbox" id="bank-transfer"/>
                                         <label className="form-check-label" htmlFor="bank-transfer">
                                             Card Payment
                                         </label>
                                     </div>
-                                    <div className="form-check">
+                                    <div className="form-check pb-2">
                                         <input className="form-check-input shipping-checkbox" type="checkbox"  id="paypol"/>
                                         <label className="form-check-label" htmlFor="paypol">
                                             Bkash
                                         </label>
                                     </div>
-                                    <div className="form-check">
+                                    <div className="form-check pb-2">
                                         <input className="form-check-input shipping-checkbox" type="checkbox"  id="cash-on-delivery"/>
                                         <label className="form-check-label" htmlFor="cash-on-delivery">
                                             Cash On Delivery

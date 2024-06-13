@@ -18,7 +18,7 @@ function MainNav({
     const [searchProduct, setSearchProduct] = useState([]);
     const searchParams = useSearchParams();
     let districtId = searchParams.get("districtId");
-    const handleSerchChange = (e) => {
+    const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
 
@@ -35,18 +35,18 @@ function MainNav({
             const productData = await getHomeSearchProduct(districtId, search);
             if (productData?.results) {
                 const allSearchProducts = [
-                    ...productData?.results?.flash_sales_product,
-                    ...productData?.results?.just_for_you?.for_you_products,
+                    ...productData.results.flash_sales_product,
+                    ...productData.results.just_for_you.for_you_products,
                 ];
 
                 setSearchProduct(allSearchProducts);
             }
         };
         fetchSearchProduct();
-    }, [search]);
+    }, [search, districtId]);
 
-    let isSearchProductAvailable = () => {
-        return searchProduct.length === 0 ? false : true;
+    const isSearchProductAvailable = () => {
+        return searchProduct.length !== 0;
     };
 
     return (
@@ -59,12 +59,12 @@ function MainNav({
                 <div className="col-12">
                     <div className="main-header-area d-flex">
                         <div className="logo">
-                            <Link href="/" className=" d-inline-block">
+                            <Link href="/" className="d-inline-block">
                                 <Image
                                     width={0}
                                     height={43}
                                     sizes="100vw"
-                                    src={`/images/logo.svg`}
+                                    src="/images/logo.svg"
                                     style={{ width: "100%" }}
                                     alt="logo"
                                 />
@@ -79,7 +79,7 @@ function MainNav({
                                     data-bs-target="#district-Modal"
                                 >
                                     <Image
-                                        src={`/images/store-location.svg`}
+                                        src="/images/store-location.svg"
                                         alt="store-location"
                                         width={17}
                                         height={15}
@@ -89,20 +89,20 @@ function MainNav({
                             </div>
                             <div className="header-search-field">
                                 <form action="#">
-                                    <div className="input-group align-items-center ">
+                                    <div className="input-group align-items-center">
                                         <input
                                             type="text"
                                             className="form-control"
-                                            name="serach"
+                                            name="search"
                                             placeholder="Search in Nagad Hat..."
-                                            onChange={handleSerchChange}
+                                            onChange={handleSearchChange}
                                         />
                                         <button
-                                            className="search-icon-btn d-flex align-items-center justify-content-center "
+                                            className="search-icon-btn d-flex align-items-center justify-content-center"
                                             type="button"
                                         >
                                             <Image
-                                                src={`/images/search-icon.svg`}
+                                                src="/images/search-icon.svg"
                                                 alt="search-icon"
                                                 width={18}
                                                 height={18}
@@ -118,17 +118,17 @@ function MainNav({
                             )}
                         </div>
                         <div className="header-auth-area d-flex justify-content-end">
-                            <ul className=" d-flex align-items-center ">
+                            <ul className="d-flex align-items-center">
                                 <li>
                                     {authStatus === "authenticated" ? (
                                         <SignoutBtn />
                                     ) : (
                                         <Link
                                             href="/login"
-                                            className=" text-white text-capitalize d-flex align-items-center"
+                                            className="text-white text-capitalize d-flex align-items-center"
                                         >
                                             <Image
-                                                src={`/images/login-icon.svg`}
+                                                src="/images/login-icon.svg"
                                                 alt="login-icon"
                                                 width={13}
                                                 height={19}
@@ -140,7 +140,7 @@ function MainNav({
                                 <li>
                                     <Link
                                         href="/registration"
-                                        className=" text-white text-capitalize d-flex align-items-center"
+                                        className="text-white text-capitalize d-flex align-items-center"
                                     >
                                         <Image
                                             src="/images/register-icon.svg"
@@ -154,7 +154,7 @@ function MainNav({
                                 <li>
                                     <Link
                                         href="#"
-                                        className=" text-white text-capitalize d-flex align-items-center"
+                                        className="text-white text-capitalize d-flex align-items-center"
                                     >
                                         <span className="bg-white d-flex align-items-center">
                                             <Image
@@ -181,13 +181,13 @@ function MainNav({
                 <div className="col-12">
                     <div className="main-header-area d-flex">
                         <div className="logo">
-                            <Link href="/" className=" d-inline-block">
+                            <Link href="/" className="d-inline-block">
                                 <Image
                                     width={0}
                                     height={43}
                                     sizes="100vw"
                                     alt="logo"
-                                    src={`/images/logo.svg`}
+                                    src="/images/logo.svg"
                                     style={{ width: "100%" }}
                                 />
                             </Link>
@@ -199,9 +199,8 @@ function MainNav({
                                     onMouseEnter={() =>
                                         setCategoryHoverMenu(true)
                                     }
-                                    onMouseLeave={
-                                        () => console.log("...")
-                                        // setCategoryHoverMenu(false)
+                                    onMouseLeave={() =>
+                                        setCategoryHoverMenu(false)
                                     }
                                 >
                                     <Link
@@ -218,7 +217,7 @@ function MainNav({
                                         />
                                     </Link>
                                 </div>
-                                <div className="header-search-holder d-flex align-items-centers">
+                                <div className="header-search-holder d-flex align-items-center">
                                     <div className="header-search-location">
                                         <button
                                             type="button"
@@ -227,7 +226,7 @@ function MainNav({
                                             data-bs-target="#district-Modal"
                                         >
                                             <Image
-                                                src={`/images/store-location.svg`}
+                                                src="/images/store-location.svg"
                                                 alt="store-location"
                                                 width={17}
                                                 height={15}
@@ -237,20 +236,22 @@ function MainNav({
                                     </div>
                                     <div className="header-search-field">
                                         <form action="#">
-                                            <div className="input-group align-items-center ">
+                                            <div className="input-group align-items-center">
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    name="serach"
+                                                    name="search"
                                                     placeholder="Search in Nagad Hat..."
-                                                    onChange={handleSerchChange}
+                                                    onChange={
+                                                        handleSearchChange
+                                                    }
                                                 />
                                                 <button
-                                                    className="search-icon-btn d-flex align-items-center justify-content-center "
+                                                    className="search-icon-btn d-flex align-items-center justify-content-center"
                                                     type="button"
                                                 >
                                                     <Image
-                                                        src={`/images/search-icon.svg`}
+                                                        src="/images/search-icon.svg"
                                                         alt="search-icon"
                                                         width={18}
                                                         height={18}
@@ -268,25 +269,29 @@ function MainNav({
                             </div>
                         </div>
                         <div className="header-auth-area d-flex justify-content-end">
-                            <ul className=" d-flex align-items-center ">
+                            <ul className="d-flex align-items-center">
                                 <li>
-                                    <Link
-                                        href="/login"
-                                        className=" text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src={`/images/login-icon.svg`}
-                                            alt="login-icon"
-                                            width={13}
-                                            height={19}
-                                        />
-                                        Login
-                                    </Link>
+                                    {authStatus === "authenticated" ? (
+                                        <SignoutBtn />
+                                    ) : (
+                                        <Link
+                                            href="/login"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src="/images/login-icon.svg"
+                                                alt="login-icon"
+                                                width={13}
+                                                height={19}
+                                            />
+                                            Login
+                                        </Link>
+                                    )}
                                 </li>
                                 <li>
                                     <Link
                                         href="/registration"
-                                        className=" text-white text-capitalize d-flex align-items-center"
+                                        className="text-white text-capitalize d-flex align-items-center"
                                     >
                                         <Image
                                             src="/images/register-icon.svg"
@@ -300,7 +305,7 @@ function MainNav({
                                 <li>
                                     <Link
                                         href="#"
-                                        className=" text-white text-capitalize d-flex align-items-center"
+                                        className="text-white text-capitalize d-flex align-items-center"
                                     >
                                         <span className="bg-white d-flex align-items-center">
                                             <Image

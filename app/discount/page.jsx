@@ -1,6 +1,6 @@
-import React from 'react'
 
-const discountPage = () => {
+
+const DiscountPage = () => {
     return (
         <div className="container">
             <div className="row">
@@ -12,4 +12,4 @@ const discountPage = () => {
     )
 }
 
-export default discountPage
+export default DiscountPage

@@ -7,6 +7,8 @@ import ProductCard from "./ProductCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
+import getAllSettings from "../services/getAllSettings";
 import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
 
 function Sales({
@@ -17,6 +19,7 @@ function Sales({
   recentViewProductList,
 }) {
   const [flashSaleProductList, setFlashSaleProductList] = useState([]);
+  const [hasFlashSaleSettings, setHasFlashSaleSettings] = useState(false);
   const searchParams = useSearchParams();
   let districtId = searchParams.get("districtId");
   useEffect(() => {
@@ -30,7 +33,42 @@ function Sales({
     }
     fetchData();
   }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const flashSale = await getFlashSaleProduct();
+      setFlashSaleProductList(flashSale?.results);
+    }
+    fetchData();
+  }, []);
 
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchSettingData() {
+      const settingData = await getAllSettings();
+      if (!ignore) {
+        const settingAllData = settingData?.results;
+        const flashSaleProduct = settingAllData
+          ?.filter(
+            (settingItem) =>
+              settingItem.type === "Flash Sale" && settingItem.status === 1
+          )
+          .map((settingItem) =>
+            settingItem.type.split(" ").join("_").toLowerCase()
+          );
+
+        if (flashSaleProduct.length > 0) {
+          setHasFlashSaleSettings(true);
+        } else {
+          setHasFlashSaleSettings(false);
+        }
+      }
+    }
+    fetchSettingData();
+    return () => {
+      ignore = true;
+    };
+  }, []);
   const settings = {
     centerPadding: "60px",
     dots: false,
