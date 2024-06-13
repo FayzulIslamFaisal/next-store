@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-import getFlashSlaeShowOnHomePage from "../services/getFlashSlaeShowOnHomePage";
+import {getFlashSlaeShowOnHomePage} from "../services/getFlashSlaeShowOnHomePage";
 
 
 function Sales({ bgcolor = "", isHome = true, removePx = "" }) {

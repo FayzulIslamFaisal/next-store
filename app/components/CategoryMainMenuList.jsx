@@ -13,7 +13,7 @@ const CategoryMainMenuList = ({ menuList }) => {
         categoryStatus === 1 && (
             <li className="menu-link">
                 <Link
-                    href="#"
+                    href={`/category/${menuList.slug}`}
                     className="link-item d-flex align-items-center justify-content-between"
                 >
                     <p className="d-flex align-items-center">

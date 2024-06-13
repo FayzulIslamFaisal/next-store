@@ -1,7 +1,7 @@
 
 import { apiBaseUrl } from "../utils";
 
-const getFlashSlaeShowOnHomePage = async () => {
+export const  getFlashSlaeShowOnHomePage = async () => {
   try {
     const response = await fetch(`${apiBaseUrl}/get-flash-sale-info`, {
       next: { revalidate: 1 }}
@@ -12,5 +12,3 @@ const getFlashSlaeShowOnHomePage = async () => {
     console.info(error);
   }
 };
-
-export default getFlashSlaeShowOnHomePage;

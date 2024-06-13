@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const CartPage = () => {
   return (
@@ -446,9 +447,9 @@ const CartPage = () => {
                   <button className="add-to-cart-link border border-0 w-100">
                     CHECKOUT
                   </button>
-                  <a className="shopping-back-btn" href="#">
+                  <Link href="#" className="shopping-back-btn" >
                     Back to Shopping
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

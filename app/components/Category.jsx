@@ -39,7 +39,6 @@ async function Category() {
 
     const categoryProductData = filterByHomePageTopMenu(categoryData);
     const categoryBrandData = brandData?.results?.brands;
-
     return (
         <section className="nh-categories-area">
             <div className="container">
