@@ -48,7 +48,6 @@ export const filterBySliderMenuView = (arr) => {
 
 //define meta data for product details page
 export const productDetailsPageMetaDataHandler = (productInfo) => {
-  console.log(`https://v3.nagadhat.com/${productInfo?.product_thumbnail}`);
   return {
     openGraph: {
       title: productInfo?.product_name,
@@ -79,7 +78,6 @@ export const existingIndex = (arr, name) => {
   return arr?.findIndex((item) => item.name === name);
 };
 
-
 //* Shortens a string to a specified length.
 export function shortenString(str, length) {
   if (typeof str !== "string" || typeof length !== "number") {
@@ -108,7 +106,6 @@ export function storeProduct(product) {
 
   let storedProducts =
     JSON.parse(localStorage.getItem("recentlyViewProducts")) || [];
-  console.log(storedProducts);
   // Check if product already exists (by id)
   const existingProductIndex = storedProducts.findIndex(
     (p) => p.id === product.id && p.outlet_id === product.outlet_id
@@ -132,5 +129,4 @@ export function storeProduct(product) {
   localStorage.setItem("recentlyViewProducts", JSON.stringify(storedProducts));
 }
 
-export const apiBaseUrl = 'https://v3.nagadhat.com/api';
-
+export const apiBaseUrl = "https://v3.nagadhat.com/api";

@@ -6,6 +6,10 @@ import { RotatingLines, TailSpin } from "react-loader-spinner";
 import { IoSearchOutline } from "react-icons/io5";
 import DeliveryAddress from "./DeliveryAddress";
 import { useSearchParams } from "next/navigation";
+import { fetchShippingDivisions } from "@/app/services/getShippingDivision";
+import { fetchShippingDistricts } from "@/app/services/getShippingDistricts";
+import { fetchShippingUpazilla } from "@/app/services/getShippingUpazilla";
+
 const ProductDeliveryDetail = ({ productInfo }) => {
   const [locationPopUp, setLocationPopUp] = useState(false);
   const [options, setOptions] = useState([]);
@@ -54,63 +58,51 @@ const ProductDeliveryDetail = ({ productInfo }) => {
   const fetchDivisions = async () => {
     try {
       setLoading(true);
-      const response = await fetch("https://bdapis.com/api/v1.2/divisions"); // Replace with your API endpoint
-      const data = await response.json();
+      const data = await fetchShippingDivisions();
       setOptions(
-        data?.data?.map((division) => ({
+        data?.data.map((division) => ({
           value: division?.division,
           label: division?.division,
         }))
       );
     } catch (error) {
-      console.error("Error fetching countries:", error);
+      console.error("Error fetching divisions:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const fetchDistricts = async (divisionName) => {
-    const lowercaseResponse = divisionName.toLowerCase();
-    setLoading(true);
     try {
-      const response = await fetch(
-        `https://bdapis.com/api/v1.2/division/${lowercaseResponse}`
-      ); // Replace with your API endpoint
-      const data = await response.json();
-      console.log("g", data?.data[0].district);
-
+      setLoading(true);
+      const data = await fetchShippingDistricts(divisionName);
+      console.log("g", data);
       setOptions(
-        data?.data?.map((district) => ({
+        data?.map((district) => ({
           value: district?.district,
           label: district?.district,
         }))
       );
     } catch (error) {
-      console.error("Error fetching district:", error);
+      console.error("Error fetching districts:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const fetchUpazilla = async (districtName, matchValue) => {
-    setLoading(true);
     try {
-      const lowercaseResponse = districtName.toLowerCase();
-      const response = await fetch(
-        `https://bdapis.com/api/v1.2/division/${lowercaseResponse}`
-      ); // Replace with your API endpoint
-      const data = await response.json();
+      setLoading(true);
+      const data = await fetchShippingUpazilla(districtName, matchValue);
 
       setOptions(
-        data.data
-          .find((up) => up.district === matchValue)
-          ?.upazilla?.map((upazilla) => ({
-            value: upazilla,
-            label: upazilla,
-          }))
+        data?.map((upazilla) => ({
+          value: upazilla,
+          label: upazilla,
+        }))
       );
     } catch (error) {
-      console.error("Error fetching districts:", error);
+      console.error("Error fetching upazilla:", error);
     } finally {
       setLoading(false);
     }
