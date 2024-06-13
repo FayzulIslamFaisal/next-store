@@ -9,7 +9,6 @@ export const fetchShippingDistricts = async (divisionName) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("I am calling", data.data.district);
     return data.data;
   } catch (error) {
     console.error("Error fetching districts:", error);

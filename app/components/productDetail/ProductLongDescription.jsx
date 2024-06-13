@@ -89,7 +89,7 @@ const ProductLongDescription = ({ productInfo }) => {
 
             {/* Start tab-panel-item */}
             <div className="tab-pane fade" id="nav-qa" role="tabpanel">
-              <ProductQuestions></ProductQuestions>
+              <ProductQuestions productInfo={productInfo}></ProductQuestions>
             </div>
             {/* End tab-panel-item */}
 

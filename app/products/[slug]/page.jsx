@@ -132,7 +132,7 @@ const ProductSinglePage = ({ params }) => {
       <section className="product-details-section">
         <Head>{metadata}</Head>
         <div className="container">
-          <Breadcrumb />
+          <Breadcrumb category={productInfo?.category} />
           <div className="row product-details-info">
             <ProductLeftSide productInfo={productInfo} path_name={pathName} />
             <ProductRightSide productInfo={productInfo} />

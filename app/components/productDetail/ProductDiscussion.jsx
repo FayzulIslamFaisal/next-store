@@ -1,5 +1,5 @@
 // components/ProductQuestions.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddToPhotos } from "react-icons/md";
 import { RiMessage2Line } from "react-icons/ri";
 import { GrFormClose } from "react-icons/gr";
@@ -7,8 +7,9 @@ import Collapse from "../Collapse";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import QuestionCard from "../QuestionCard";
+import { getQuestionAndAns } from "@/app/services/getQuestionAndAns";
 
-const ProductQuestions = () => {
+const ProductQuestions = ({ productInfo }) => {
   const [userQuestion, setUserQuestion] = useState("");
   const [questionResponse, setQuestionResponse] = useState("");
 
@@ -48,6 +49,16 @@ const ProductQuestions = () => {
       console.error("Error:", err);
     }
   };
+  productInfo;
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      const questions = await getQuestionAndAns();
+      const filterQuestion = questions?.results.filter(
+        (question) => question.product_id === productInfo.id
+      );
+    };
+    fetchQuestion();
+  }, [productInfo]);
 
   return (
     <div>
