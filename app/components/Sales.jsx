@@ -8,7 +8,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-import getAllSettings from "../services/getAllSettings";
+import getFlashSlaeShowOnHomePage from "../services/getFlashSlaeShowOnHomePage";
+
 
 function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
   const [flashSaleProductList, setFlashSaleProductList] = useState([]);
@@ -24,23 +25,15 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
 
   useEffect(() => {
     let ignore = false;
-
+  
     async function fetchSettingData() {
-      const settingData = await getAllSettings();
+      const settingData = await getFlashSlaeShowOnHomePage();
       if (!ignore) {
         const settingAllData = settingData?.results;
-        const flashSaleProduct = settingAllData
-          ?.filter(
-            (settingItem) =>
-              settingItem.type === "Flash Sale" && settingItem.status === 1
-          )
-          .map((settingItem) =>
-            settingItem.type.split(" ").join("_").toLowerCase()
-          );
-
-        if (flashSaleProduct.length > 0) {
+        if (settingAllData.show_on_home == 1) {
           setHasFlashSaleSettings(true);
         } else {
+          console.error("settingAllData is not an array", settingAllData);
           setHasFlashSaleSettings(false);
         }
       }
@@ -50,6 +43,8 @@ function Sales({ bgcolor = "", isHome = true, removePx = "" }) {
       ignore = true;
     };
   }, []);
+  
+
 
   const settings = {
     centerPadding: "60px",
