@@ -38,6 +38,9 @@ export const authOptions = {
         async redirect({ url, baseUrl }) {
             return baseUrl
         }
+    },
+    pages: {
+      newUser: '/new-user'
     }
 };
 
