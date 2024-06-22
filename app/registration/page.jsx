@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -44,8 +45,8 @@ const Registration = () => {
                             <div className="user-social-login mt-3">
                                 <label className="form-label">Or Sign Up With</label>
                                 <div className="mb-3 user-social-login-item d-flex align-items-center  justify-content-center ">
-                                    <button>Facebook</button>
-                                    <button>Google</button>
+                                    {/* <button>Sign in with Facebook</button> */}
+                                    <button> <Image width={25} height={25} alt="google-img" src="/images/google-img.png" ></Image> Sign in with Google</button>
                                 </div>
                                 <p className="form-label"><Link href="/"> Back to home</Link></p>
                                 <p className='text-center'>Existing User ? <Link href="/login">Login here</Link></p>

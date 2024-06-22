@@ -16,7 +16,7 @@ function HeroSlider() {
             setCategoryMenuOption(filteredList.slice(0, 10));
 
             const sliderData = await getHomeSlider();
-            setSliderOptionData(sliderData.results.sliders);
+            setSliderOptionData(sliderData?.results?.sliders);
         }
         fetchData();
     }, []);

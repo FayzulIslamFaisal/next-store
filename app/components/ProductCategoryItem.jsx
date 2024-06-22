@@ -20,25 +20,27 @@ const ProductCategoryItem = ({ categoryItem }) => {
         path = "#";
     }
 
-    return (
-        <div className="nh-categories-item">
-            <div className="nh-categories-item-bg nh-hover-box-shadow">
-                <Link href={path}>
-                    <div className="nh-categories-img image-hover-effect">
-                        <Image
-                            src={imageurl}
-                            className="img-fluid"
-                            alt={altText}
-                            fill={true}
-                        />
-                    </div>
-                    <div className="nh-categories-info text-hover-effect text-capitalize text-center">
-                        <h4>{truncateTitle(title)}</h4>
-                    </div>
-                </Link>
-            </div>
+  return (
+    <div className="nh-categories-item">
+      <div className="nh-categories-item-bg nh-hover-box-shadow">
+      <Link href={`category/${path}`}>
+        <div className="nh-categories-img image-hover-effect">
+          <Image
+            src={imageurl}
+            className="img-fluid"
+            alt={altText}
+            fill={true}
+          />
         </div>
-    );
+        <div className="nh-categories-info text-hover-effect text-capitalize text-center">
+          <h4>
+            {truncateTitle(title)}
+          </h4>
+        </div>
+        </Link>
+      </div>
+    </div>
+  );
 };
 
 export default ProductCategoryItem;

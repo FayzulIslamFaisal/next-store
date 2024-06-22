@@ -40,7 +40,6 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
             },
         ],
     };
-
     return (
         <div className="row nh-categories-row">
             <div className="col-md-12">

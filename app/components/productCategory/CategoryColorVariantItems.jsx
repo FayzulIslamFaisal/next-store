@@ -1,6 +1,6 @@
 
 const CategoryColorVariantItems = ({ colorItem }) => {
-    const { id, bgColor } = colorItem;
+    const { id, value:bgColor } = colorItem;
     return (
         <div className="product-details-inner-color product-details-variant-item" style={{ background: `${bgColor}` }}>
             <input readOnly type="checkbox" name="color" id={`color-variant_${id}`} />
