@@ -46,9 +46,12 @@
 
 /*Start custom scrollbar css */
 .product-sub-category-area ul {
-    height: 410px;
-    overflow-y: scroll;
+    height: auto;
+    overflow-y: auto;
     overflow-x: hidden;
+}
+.product-sub-category-area.sub-category-fixed-height ul {
+    height: 410px;
 }
 
 .product-sub-category-area ul::-webkit-scrollbar {
@@ -126,8 +129,9 @@
 }
 
 .product-brand-category-area .form-check-input {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
+    border-color: var(--color-414042);
 }
 
 .product-brand-category-area .form-check-input:focus {

@@ -1,6 +1,6 @@
 "use client";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Sales from "@/app/components/Sales";
 import Service from "@/app/components/Service";
 import Breadcrumb from "@/app/components/productDetail/Breadcrumb";

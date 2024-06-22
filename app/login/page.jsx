@@ -97,7 +97,7 @@ const Login = () => {
                                     Or Login With
                                 </label>
                                 <div className="mb-3 user-social-login-item d-flex align-items-center  justify-content-center ">
-                                    <SigninBtn provider="facebook" />
+                                    {/* <SigninBtn provider="facebook" /> */}
                                     <SigninBtn provider="google" />
                                 </div>
                                 <p className="text-center">
