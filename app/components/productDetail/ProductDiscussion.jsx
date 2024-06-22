@@ -11,7 +11,7 @@ import { getQuestionAndAns } from "@/app/services/getQuestionAndAns";
 
 const ProductQuestions = ({ productInfo }) => {
   const [userQuestion, setUserQuestion] = useState("");
-  const [questionResponse, setQuestionResponse] = useState("");
+  const [questionResponse, setQuestionResponse] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const ProductQuestions = ({ productInfo }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          product_id: 1,
+          product_id: productInfo.id,
           user_id: 1,
           question: userQuestion,
         }),
@@ -49,13 +49,12 @@ const ProductQuestions = ({ productInfo }) => {
       console.error("Error:", err);
     }
   };
-  productInfo;
+
   useEffect(() => {
     const fetchQuestion = async () => {
-      const questions = await getQuestionAndAns();
-      const filterQuestion = questions?.results.filter(
-        (question) => question.product_id === productInfo.id
-      );
+      const questions = await getQuestionAndAns(productInfo?.id);
+      console.log("questions", questions);
+      setQuestionResponse(questions?.results);
     };
     fetchQuestion();
   }, [productInfo]);
@@ -64,7 +63,9 @@ const ProductQuestions = ({ productInfo }) => {
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <div className="w-50">
-          <h4 className="font-weight-bold">Questions (0)</h4>
+          <h4 className="font-weight-bold">
+            Questions ({questionResponse?.length})
+          </h4>
         </div>
         <label
           type="button"
@@ -135,26 +136,43 @@ const ProductQuestions = ({ productInfo }) => {
       </div>
       <div>
         <p className="mt-5 text-secondary">
-          Have a question about this product? Get specific details about this
-          product from an expert.
+          Login or Register to ask questions to seller
         </p>
       </div>
-      <div>
-        <div className="d-flex justify-content-center align-items-center mt-5">
-          <p className="d-flex justify-content-center align-items-center display-4 rounded-circle p-5 bg-light w-25 h-25 text-primary-color">
-            <RiMessage2Line />
+
+      {questionResponse?.length ? (
+        questionResponse?.map((info, index) => (
+          <div className="questionAnsContainer">
+            <div className="mt-5">
+              <QuestionCard
+                message={info?.question}
+                author={info?.user_id}
+                date={info?.created_at}
+              ></QuestionCard>
+            </div>
+            <div className="mt-2">
+              <QuestionCard
+                question={false}
+                message={info?.answer?.answer}
+                author={info?.answer?.user?.user_name}
+                date={info?.answer?.created_at}
+              ></QuestionCard>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div>
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <p className="d-flex justify-content-center align-items-center display-4 rounded-circle p-5 bg-light w-25 h-25 text-primary-color">
+              <RiMessage2Line />
+            </p>
+          </div>
+          <p className="mt-3 text-center ml-1 text-muted">
+            There are no questions asked yet. Be the first one to ask a
+            question.
           </p>
         </div>
-        <p className="mt-3 text-center ml-1 text-muted">
-          There are no questions asked yet. Be the first one to ask a question.
-        </p>
-      </div>
-      <div className="mt-5">
-        <QuestionCard></QuestionCard>
-      </div>
-      <div className="mt-5">
-        <QuestionCard question={false}></QuestionCard>
-      </div>
+      )}
     </div>
   );
 };

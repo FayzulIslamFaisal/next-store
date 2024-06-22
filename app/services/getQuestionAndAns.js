@@ -1,9 +1,9 @@
 // apiUtils.js
 import { apiBaseUrl } from "../utils";
 
-export const getQuestionAndAns = async () => {
+export const getQuestionAndAns = async (productId) => {
   try {
-    const response = await fetch(`${apiBaseUrl}/questions`, {
+    const response = await fetch(`${apiBaseUrl}/questions/${productId}`, {
       next: { revalidate: 1 },
     });
 
