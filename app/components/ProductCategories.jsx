@@ -40,12 +40,13 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
             },
         ],
     };
+
     return (
         <div className="row nh-categories-row">
             <div className="col-md-12">
                 <div className="nh-categories-holder-s">
                     <Slider {...settings}>
-                        {categoryProductData.map((itme) => (
+                        {categoryProductData?.map((itme) => (
                             <ProductCategoryItem
                                 key={itme.id}
                                 categoryItem={itme}

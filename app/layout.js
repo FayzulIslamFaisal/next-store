@@ -1,5 +1,5 @@
-import { Lato, Open_Sans, Philosopher } from 'next/font/google';
-import Script from 'next/script';
+import { Lato, Open_Sans, Philosopher } from "next/font/google";
+import Script from "next/script";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./globals.css";
@@ -8,23 +8,23 @@ import AuthProvider from "./auth/Provider";
 import { Suspense } from 'react';
 
 const lato = Lato({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--lato',
-  weight: ['100', '300', '400', '700', '900']
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--lato",
+  weight: ["100", "300", "400", "700", "900"],
 });
 const open_sans = Open_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--open-sans',
-  weight: ['300', '400', '500', '600', '700', '800']
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--open-sans",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 const philosopher = Philosopher({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--philosopher',
-  weight: ['400', '700']
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--philosopher",
+  weight: ["400", "700"],
+});
 
 export const metadata = {
   title: "Nagadhat",
@@ -33,12 +33,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${lato.variable} ${open_sans.variable} ${philosopher.variable}`}>
-      <link rel="stylesheet" href="/css/bootstrap.min.css" precedence="default" />
+    <html
+      lang="en"
+      className={`${lato.variable} ${open_sans.variable} ${philosopher.variable}`}
+    >
+      <link
+        rel="stylesheet"
+        href="/css/bootstrap.min.css"
+        precedence="default"
+      />
       <link rel="stylesheet" href="/css/slick.css" precedence="default" />
       <link rel="stylesheet" href="/css/slick-theme.css" precedence="default" />
       <link rel="stylesheet" href="/css/brand.css" precedence="default" />
-      <link rel="stylesheet" href="/css/animatloading.css" precedence="default" />
+      <link
+        rel="stylesheet"
+        href="/css/animatloading.css"
+        precedence="default"
+      />
       <link rel="stylesheet" href="/css/category.css" precedence="default" />
       <link rel="stylesheet" href="/css/flash-sale.css" precedence="default" />
       <link rel="stylesheet" href="/css/footer.css" precedence="default" />
@@ -49,13 +60,39 @@ export default function RootLayout({ children }) {
       <link rel="stylesheet" href="/css/service.css" precedence="default" />
       <link rel="stylesheet" href="/css/home.css" precedence="default" />
       <link rel="stylesheet" href="/css/login.css" precedence="default" />
-      <link rel="stylesheet" href="/css/product-details.css" precedence="default" />
-      <link rel="stylesheet" href="/css/product-category.css" precedence="default" />
+      <link
+        rel="stylesheet"
+        href="/css/product-details.css"
+        precedence="default"
+      />
+      <link
+        rel="stylesheet"
+        href="/css/product-category.css"
+        precedence="default"
+      />
       <link rel="stylesheet" href="/css/view-all.css" precedence="default" />
       <link rel="stylesheet" href="/css/cart-page.css" precedence="default" />
-      <link rel="stylesheet" href="/css/shipping-details.css" precedence="default" />
-      <link rel="stylesheet" href="/css/search-modal.css" precedence="default" />
-      <link rel="stylesheet" href="/css/order-confirm.css" precedence="default" />
+      <link
+        rel="stylesheet"
+        href="/css/shipping-details.css"
+        precedence="default"
+      />
+      <link
+        rel="stylesheet"
+        href="/css/search-modal.css"
+        precedence="default"
+      />
+      <link
+        rel="stylesheet"
+        href="/css/order-confirm.css"
+        precedence="default"
+      />
+      <link rel="stylesheet" href="/css/collapse.css" precedence="default" />
+      <link
+        rel="stylesheet"
+        href="/css/questionCard.css"
+        precedence="default"
+      />
       <link rel="stylesheet" href="/css/common.css" precedence="default" />
       <link rel="stylesheet" href="/css/responsive.css" precedence="default" />
       {/* <Script strategy="afterInteractive" src="/js/jquery.min.js" /> */}
