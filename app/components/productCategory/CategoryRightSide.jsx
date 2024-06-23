@@ -120,23 +120,23 @@ const CategoryRightSide = ({ categoryByProduct }) => {
           <CategoryProductArchive productArvhiveList={categoryByProduct} />
         ) : (
           <h1 className=" text-center text-capitalize pt-5">
-            Category Product Data No Found!!!
+            Category Product Data Not Found!!!
           </h1>
         )}
 
         <div className="row product-category-pagination-row">
           <div className="col-md-12">
-            <div className="product-category-pagination-area d-flex flex-wrap  align-items-center justify-content-between">
-              <FindLooking />
+            <div className="product-category-pagination-area d-flex flex-wrap  align-items-center justify-content-center">
+              {/* <FindLooking /> */}
               <Pagination />
             </div>
           </div>
         </div>
-        <SectionTitle title={`Featured Brands`} />
+        {/* <SectionTitle title={`Featured Brands`} />
         <ProductCategories
           categoryProductData={featuredBrandtData}
           isHome={false}
-        />
+        /> */}
       </div>
     </main>
   );
