@@ -2,6 +2,7 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";
 import { HiOutlineStar } from "react-icons/hi2";
+import { NagadhatPublicUrl } from "@/app/utils";
 
 const ReviewCard = () => {
   return (
@@ -15,7 +16,7 @@ const ReviewCard = () => {
             width={60}
             height={60}
             style={{ borderRadius: "10px" }}
-            src="https://v3.nagadhat.com/storage/media/product/thumbnail/1715425492_663f50d450495_1661428304_4.jpg"
+            src={`${NagadhatPublicUrl}/storage/media/product/thumbnail/1715425492_663f50d450495_1661428304_4.jpg`}
             alt="fashion-icon"
           />
         </div>
@@ -59,7 +60,7 @@ const ReviewCard = () => {
             width={200}
             height={150}
             style={{ borderRadius: "10px" }}
-            src="https://v3.nagadhat.com/storage/media/product/thumbnail/1715425492_663f50d450495_1661428304_4.jpg"
+            src={`${NagadhatPublicUrl}/storage/media/product/thumbnail/1715425492_663f50d450495_1661428304_4.jpg`}
             alt="fashion-icon"
           />
         </div>

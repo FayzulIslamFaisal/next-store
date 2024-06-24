@@ -2,10 +2,11 @@ import Image from "next/image"
 import Link from "next/link"
 import AddToCartButton from "../AddToCartButton";
 import Like from "../Like";
+import { NagadhatPublicUrl } from "@/app/utils";
 
 const ViewAllProductItems = ({ items }) => {
     const {product_name:title, mrp_price:price, path } = items;
-    let imageUrl = `https://v3.nagadhat.com/${items.product_thumbnail}`;
+    let imageUrl = `${NagadhatPublicUrl}/${items.product_thumbnail}`;
     return (
         <div className="flash-sale-content-item">
             <div className="flash-sale-content-bg nh-hover-box-shadow d-flex flex-column justify-content-between">

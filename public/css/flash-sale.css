@@ -93,3 +93,7 @@ section.flash-sale-area.removepadding-x {
     align-items: flex-start !important;
     gap: 10px;
 }
+.product-details-section .flash-sale-content-area-grid .slick-track {
+    width: 100% !important;
+    transform: translate3d(0px, 0px, 0px) !important;
+}

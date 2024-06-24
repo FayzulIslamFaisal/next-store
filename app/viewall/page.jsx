@@ -6,6 +6,7 @@ import ViewAllCategories from "../components/viewAllProduct/ViewAllCategories";
 import Sales from "../components/Sales";
 import { getHomeCategory } from "../services/getHomeCategory";
 import { getHomeBrand } from "../services/getHomeBrand";
+import { NagadhatPublicUrl } from "../utils";
 
 const ViewAllPage = async ({ searchParams }) => {
     const serviceItems = [
@@ -47,7 +48,7 @@ const ViewAllPage = async ({ searchParams }) => {
                   viewCategoryData.length >= 1 &&
                   viewCategoryData[1].banner_image
                 ) {
-                  bannerUrl = `https://v3.nagadhat.com/${viewCategoryData[1].banner_image}`;
+                  bannerUrl = `${NagadhatPublicUrl}/${viewCategoryData[1].banner_image}`;
                 }
                 sectionTitle = "Categories";
                 break;
@@ -58,7 +59,7 @@ const ViewAllPage = async ({ searchParams }) => {
                   viewCategoryData.length >= 1 &&
                   viewCategoryData[1].banner
                 ) {
-                  bannerUrl = `https://v3.nagadhat.com/${viewCategoryData[1].banner}`;
+                  bannerUrl = `${NagadhatPublicUrl}/${viewCategoryData[1].banner}`;
                 }
                 sectionTitle = "Brands";
                 break;

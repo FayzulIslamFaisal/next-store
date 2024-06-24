@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import CategorySubMenu from "./CategorySubMenu";
+import { NagadhatPublicUrl } from "../utils";
 
 const CategoryMainMenuList = ({ menuList }) => {
-    const catImage = `https://v3.nagadhat.com/${menuList.logo}`;
+    const catImage = `${NagadhatPublicUrl}/${menuList.logo}`;
     const categorySubMenuItem = menuList && menuList?.child_categories;
     const onCateLeftMenu = menuList && menuList?.on_slider_menu_view;
     const categoryStatus = menuList && menuList?.status;

@@ -1,6 +1,8 @@
+import { apiBaseUrl } from "../utils";
+
 export const getDivisions = async () => {
   try {
-    const response = await fetch(`https://v3.nagadhat.com/api/get-divisions`, {
+    const response = await fetch(`${apiBaseUrl}/get-divisions`, {
       next: { revalidate: 1 },
     });
     return await response.json();
