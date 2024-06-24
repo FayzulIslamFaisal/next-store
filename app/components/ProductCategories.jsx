@@ -19,7 +19,7 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                 settings: {
                     slidesToShow: isHome ? 6 : 3,
                     slidesToScroll: isHome ? 6 : 3,
-                    arrows: true,
+                    arrows: false,
                 },
             },
             {
