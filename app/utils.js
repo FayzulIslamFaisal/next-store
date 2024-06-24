@@ -136,5 +136,14 @@ export function storeProduct(product) {
     );
 }
 
+export function recentViewProductList() {
+    if (typeof localStorage === "undefined") {
+        return; // Local storage not available
+    }
+    const product =
+        JSON.parse(localStorage.getItem("recentlyViewProducts")) || [];
+    return product;
+}
+
 export const apiBaseUrl = "https://v3.nagadhat.com/api";
 export const NagadhatPublicUrl = "https://v3.nagadhat.com";
