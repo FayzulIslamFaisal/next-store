@@ -52,7 +52,7 @@ const ProductRightSide = ({ productInfo }) => {
         <div className="col-xl-3">
             <div className="product-sidebar">
                 <ProductDeliveryDetail productInfo={productInfo} />
-                {productInfo?.similarProduct.length > 0 && (
+                {productInfo?.similarProduct?.length > 0 && (
                     <SimilerProduct productData={productInfo?.similarProduct} />
                 )}
             </div>
