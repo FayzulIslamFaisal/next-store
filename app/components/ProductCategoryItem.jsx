@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { NagadhatPublicUrl } from "../utils";
 
 const ProductCategoryItem = ({ categoryItem }) => {
-    let imageurl = `https://v3.nagadhat.com/${categoryItem.logo}`;
+    let imageurl = `${NagadhatPublicUrl}/${categoryItem.logo}`;
     const altText = categoryItem?.title ? categoryItem?.title : "";
     const { slug, title } = categoryItem;
     let path = slug;

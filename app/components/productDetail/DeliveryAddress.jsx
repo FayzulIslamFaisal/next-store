@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Select, { components } from "react-select";
 import { TailSpin } from "react-loader-spinner";
+import { apiBaseUrl } from "@/app/utils";
 
 const LocationSelect = () => {
   const district = [
@@ -93,7 +94,7 @@ const LocationSelect = () => {
   const fetchCountries = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://v3.nagadhat.com/api/get-divisions"); // Replace with your API endpoint
+      const response = await fetch(`${apiBaseUrl}/get-divisions`); // Replace with your API endpoint
       const data = await response.json();
 
       setOptions(
@@ -113,7 +114,7 @@ const LocationSelect = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://v3.nagadhat.com/api/get-districts/${countryId}`
+        `${apiBaseUrl}/get-districts/${countryId}`
       ); // Replace with your API endpoint
       const data = await response.json();
       setOptions(

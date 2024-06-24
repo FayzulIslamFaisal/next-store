@@ -3,9 +3,10 @@ import Link from "next/link";
 import React from "react";
 import AddToCartButton from "./AddToCartButton";
 import Like from "./Like";
+import { NagadhatPublicUrl } from "../utils";
 
 function ProductCard({ item }) {
-  const image = `https://v3.nagadhat.com/${item.product_thumbnail}`;
+  const image = `${NagadhatPublicUrl}/${item.product_thumbnail}`;
   const {
     product_name: title,
     slug,

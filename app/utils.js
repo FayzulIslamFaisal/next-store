@@ -60,12 +60,12 @@ export const productDetailsPageMetaDataHandler = (productInfo) => {
             siteName: "nagadhat.com.bd",
             images: [
                 {
-                    url: `https://v3.nagadhat.com/${productInfo?.product_thumbnail}`, // Must be an absolute URL
+                    url: `${NagadhatPublicUrl}/${productInfo?.product_thumbnail}`, // Must be an absolute URL
                     width: 800,
                     height: 600,
                 },
                 {
-                    url: `https://v3.nagadhat.com/${productInfo?.product_thumbnail}`, // Must be an absolute URL
+                    url: `${NagadhatPublicUrl}/${productInfo?.product_thumbnail}`, // Must be an absolute URL
                     width: 1800,
                     height: 1600,
                     alt: "My custom alt",
