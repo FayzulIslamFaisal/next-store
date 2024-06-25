@@ -52,6 +52,8 @@ function Header() {
     };
 
     const { status, data: session } = useSession();
+    console.log("state: =>>>>", status);
+    console.log("session: =>>>>", session);
 
     return (
         <>

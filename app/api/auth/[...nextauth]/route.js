@@ -22,9 +22,10 @@ export const authOptions = {
             },
             async authorize(credentials, req) {
               const user = await getLoginToken({
-                username: credentials?.username,
+                phone: credentials?.username,
                 password: credentials?.password
               });
+              console.log("user =>><<<<<>>>>", user);
               if (user) {
                 return user
               } else {
