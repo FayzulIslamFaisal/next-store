@@ -5,7 +5,7 @@ const ProductSearchResultMobile = ({ searchProduct }) => {
     return (
         <div className="product-search-modal-area">
             <div className="product-search-modal-content">
-                <div className="search-modal-title d-none">
+                {/* <div className="search-modal-title d-none">
                     <h4>category suggestions</h4>
                 </div>
                 <div className="search-modal-info d-none">
@@ -23,7 +23,7 @@ const ProductSearchResultMobile = ({ searchProduct }) => {
                             <Link href="#">Daily Foods</Link>
                         </li>
                     </ul>
-                </div>
+                </div> */}
                 <div className="search-modal-title">
                     <h4>products</h4>
                 </div>
@@ -52,76 +52,7 @@ const ProductSearchResultMobile = ({ searchProduct }) => {
                                         </div>
                                     </Link>
                                 </li>
-                            ))}
-
-                        <li>
-                            <Link href="#">
-                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
-                                    <div className="search-modal-info-img">
-                                        <Image
-                                            fill
-                                            src="/images/DanishFoodsCondensed Milk 397.g.png"
-                                            alt="BabyCare"
-                                        />
-                                    </div>
-                                    <div className="search-modal-info-details">
-                                        <p>Satge 1 baby Food</p>
-                                        <strong>৳ 730</strong>
-                                    </div>
-                                </div>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="#">
-                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
-                                    <div className="search-modal-info-img">
-                                        <Image
-                                            fill
-                                            src="/images/Dan foodMarble cake 300 gm.jpeg"
-                                            alt="BabyCare"
-                                        />
-                                    </div>
-                                    <div className="search-modal-info-details">
-                                        <p>Satge 1 baby Food</p>
-                                        <strong>৳ 730</strong>
-                                    </div>
-                                </div>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="#">
-                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
-                                    <div className="search-modal-info-img">
-                                        <Image
-                                            fill
-                                            src="/images/DanfoodVanila Muffin.jpg"
-                                            alt="BabyCare"
-                                        />
-                                    </div>
-                                    <div className="search-modal-info-details">
-                                        <p>Satge 1 baby Food</p>
-                                        <strong>৳ 730</strong>
-                                    </div>
-                                </div>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="#">
-                                <div className="search-modal-info-inner d-flex align-content-center gap-4">
-                                    <div className="search-modal-info-img">
-                                        <Image
-                                            fill
-                                            src="/images/dan-cake-chocolate-muffin-30g-24-pieces_550.jpeg"
-                                            alt="BabyCare"
-                                        />
-                                    </div>
-                                    <div className="search-modal-info-details">
-                                        <p>Satge 1 baby Food</p>
-                                        <strong>৳ 730</strong>
-                                    </div>
-                                </div>
-                            </Link>
-                        </li>
+                        ))}
                     </ul>
                 </div>
             </div>
