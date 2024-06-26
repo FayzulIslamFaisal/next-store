@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NagadhatPublicUrl } from "../utils";
+import { NagadhatPublicUrl, truncateTitle } from "../utils";
 
 const ProductCategoryItem = ({ categoryItem }) => {
     let imageurl = `${NagadhatPublicUrl}/${categoryItem.logo}`;
@@ -9,13 +9,7 @@ const ProductCategoryItem = ({ categoryItem }) => {
     const { slug, title } = categoryItem;
     let path = slug;
 
-    // Function to truncate title
-    const truncateTitle = (title, maxLength = 24) => {
-        if (title.length > maxLength) {
-            return title.slice(0, maxLength) + "...";
-        }
-        return title;
-    };
+ 
 
     if (!path) {
         path = "#";
