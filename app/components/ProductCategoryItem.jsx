@@ -29,7 +29,7 @@ const ProductCategoryItem = ({ categoryItem }) => {
         </div>
         <div className="nh-categories-info text-hover-effect text-capitalize text-center">
           <h4>
-            {truncateTitle(title)}
+            {truncateTitle(title, 20)}
           </h4>
         </div>
         </Link>
