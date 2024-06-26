@@ -1,10 +1,9 @@
 import { getHomeCategoryList } from "../services/getHomeCategoryList";
-import { filterByHomePageTopMenu } from "../utils";
-import { getHomeBrand } from "../services/getHomeBrand";
 import Service from "./Service";
 import SectionTitle from "./SectionTitle";
 import ProductCategories from "./ProductCategories";
 import JustForYou from "./JustForYou";
+import { getHomePageBodyBrand } from "../services/getHomePageBodyBrand";
 
 async function Category() {
     const serviceItems = [
@@ -35,9 +34,8 @@ async function Category() {
     ];
 
     const categoryData = await getHomeCategoryList();
-    const brandData = await getHomeBrand();
-
-    const categoryProductData = filterByHomePageTopMenu(categoryData);
+    const brandData = await getHomePageBodyBrand();
+    const categoryProductData = categoryData;
     const categoryBrandData = brandData?.results?.brands;
     return (
         <section className="nh-categories-area">
