@@ -3,10 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 const SimilerProductItems = ({ productItem }) => {
     const { product_name, id, outlet_id } = productItem;
-    console.log(
-        "path",
-        `${NagadhatPublicUrl}/${productItem?.product_thumbnail}`
-    );
+
     return (
         <>
             <div className="similer-product-box-item d-flex ">

@@ -56,7 +56,7 @@ const ProductQuestions = ({ productInfo }) => {
     useEffect(() => {
         const fetchQuestion = async () => {
             const questions = await getQuestionAndAns(productInfo?.id);
-            console.log("questions", questions);
+
             setQuestionResponse(questions?.results);
         };
         fetchQuestion();

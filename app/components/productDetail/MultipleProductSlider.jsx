@@ -1,13 +1,19 @@
+import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 const MultipleProductSlider = ({ multipleImage }) => {
-  const { imageUrl, altText } = multipleImage;
-  return (
-    <>
-      <div className="product-multiple-photo-item">
-        <Image className="img-fluid" src={imageUrl} fill={true} alt={altText} />
-      </div>
-    </>
-  );
+    const { path, altText } = multipleImage;
+    return (
+        <>
+            <div className="product-multiple-photo-item">
+                <Image
+                    className="img-fluid"
+                    src={`${NagadhatPublicUrl}/${path}`}
+                    fill={true}
+                    alt=" product gallery Image "
+                />
+            </div>
+        </>
+    );
 };
 
 export default MultipleProductSlider;
