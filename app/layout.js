@@ -6,6 +6,7 @@ import "./globals.css";
 import DistrictModal from "./components/DistrictModal";
 import AuthProvider from "./auth/Provider";
 import { Suspense } from 'react';
+import { CategoryDetailProvider } from "./context/CategoryDetailContext";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -102,10 +103,12 @@ export default function RootLayout({ children }) {
       <body>
         <Suspense>
           <AuthProvider>
-            <Header />
-            <DistrictModal />
-            {children}
-            <Footer />
+            <CategoryDetailProvider>
+              <Header />
+              <DistrictModal />
+              {children}
+              <Footer />
+            </CategoryDetailProvider>
           </AuthProvider>
         </Suspense>
       </body>
