@@ -13,6 +13,13 @@ export const filterByStatus = (arr) => {
         }
     });
 };
+   // Function to truncate title
+export const truncateTitle = (title, maxLength = 24) => {
+    if (title.length > maxLength) {
+        return title.slice(0, maxLength) + "...";
+    }
+    return title;
+};
 
 export const filterByHomePageTopMenu = (arr) => {
     if (!Array.isArray(arr) || arr.length < 1) {

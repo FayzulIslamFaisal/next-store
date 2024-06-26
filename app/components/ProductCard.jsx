@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import AddToCartButton from "./AddToCartButton";
 import Like from "./Like";
-import { NagadhatPublicUrl } from "../utils";
+import { NagadhatPublicUrl, truncateTitle } from "../utils";
 
 function ProductCard({ item }) {
   const image = `${NagadhatPublicUrl}/${item.product_thumbnail}`;
@@ -26,7 +26,7 @@ function ProductCard({ item }) {
           </div>
           <div className="flash-sale-content-info text-hover-effect">
             <div className="">
-              <h4>{title}</h4>
+              <h4>{truncateTitle(title,40)}</h4>
               <strong>৳ {price}</strong>
             </div>
             <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">

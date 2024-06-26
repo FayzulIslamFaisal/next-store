@@ -110,7 +110,7 @@ function Sales({
                     target="flashSale"
                     path="/viewallproduct"
                 >
-                    {isHome && <FlipClock endsAt={`2024-06-25 12:00`} />}
+                    {isHome && <FlipClock endsAt={`2024-06-30 12:00`} />}
                 </SectionTitle>
                 <div className="row">
                     <div className="col-md-12">
