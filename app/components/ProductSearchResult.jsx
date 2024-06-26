@@ -5,7 +5,7 @@ const ProductSearchResult = ({ searchProduct }) => {
     return (
         <div className="product-search-modal-area">
             <div className="product-search-modal-content">
-                <div className="search-modal-title d-none">
+                {/* <div className="search-modal-title d-none">
                     <h4>category suggestions</h4>
                 </div>
                 <div className="search-modal-info d-none">
@@ -23,7 +23,7 @@ const ProductSearchResult = ({ searchProduct }) => {
                             <Link href="#">Daily Foods</Link>
                         </li>
                     </ul>
-                </div>
+                </div> */}
                 <div className="search-modal-title">
                     <h4>products</h4>
                 </div>
