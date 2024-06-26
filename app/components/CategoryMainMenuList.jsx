@@ -6,12 +6,8 @@ import { NagadhatPublicUrl } from "../utils";
 const CategoryMainMenuList = ({ menuList }) => {
     const catImage = `${NagadhatPublicUrl}/${menuList.logo}`;
     const categorySubMenuItem = menuList && menuList?.child_categories;
-    const onCateLeftMenu = menuList && menuList?.on_slider_menu_view;
-    const categoryStatus = menuList && menuList?.status;
 
     return (
-        onCateLeftMenu === 1 &&
-        categoryStatus === 1 && (
             <li className="menu-link">
                 <Link
                     href={`/category/${menuList.slug}`}
@@ -50,7 +46,7 @@ const CategoryMainMenuList = ({ menuList }) => {
                     </ul>
                 )}
             </li>
-        )
+        // )
     );
 };
 

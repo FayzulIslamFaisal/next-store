@@ -2,7 +2,6 @@
 import MainSlider from "./MainSlider";
 import CategoryMainMenu from "./CategoryMainMenu";
 import { getCategoryMenu } from "../services/getCategoryMenu";
-import { filterBySliderMenuView } from "../utils";
 import { getHomeSlider } from "../services/getHomeSlider";
 import { useEffect, useState } from "react";
 
@@ -12,15 +11,12 @@ function HeroSlider() {
     useEffect(() => {
         async function fetchData() {
             const categoryItem = await getCategoryMenu();
-            const filteredList = filterBySliderMenuView(categoryItem);
-            setCategoryMenuOption(filteredList.slice(0, 10));
-
+            setCategoryMenuOption(categoryItem);
             const sliderData = await getHomeSlider();
             setSliderOptionData(sliderData?.results?.sliders);
         }
         fetchData();
     }, []);
-
     return (
         <div className="hero-slider-main-section">
             <div className="container">
