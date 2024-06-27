@@ -7,6 +7,7 @@ import MainNav from "./MainNav";
 import HeroSlider from "./HeroSlider";
 import CategoryHoverMenu from "./CategoryHoverMenu";
 import MobileNav from "./MobileNav";
+import { storeUserAgent } from "../utils";
 
 function Header() {
     const path = useParams();
@@ -52,6 +53,9 @@ function Header() {
     };
 
     const { status, data: session } = useSession();
+    useEffect(() => {
+        storeUserAgent();
+    }, []);
 
     return (
         <>

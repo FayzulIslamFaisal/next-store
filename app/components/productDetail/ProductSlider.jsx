@@ -18,7 +18,12 @@ function ProductSlider({ sliderItems, productGallery }) {
 
     return (
         <div className="slider-container">
-            <Slider arrows={false} asNavFor={nav2} ref={sliderRef1}>
+            <Slider
+                arrows={false}
+                asNavFor={nav2}
+                ref={sliderRef1}
+                infinite={productGallery?.length > 1 ? true : false}
+            >
                 {productGallery?.map((sliderItem) => (
                     <div
                         className="product-details-info-photo"
@@ -42,6 +47,7 @@ function ProductSlider({ sliderItems, productGallery }) {
                     slidesToShow={4}
                     swipeToSlide={true}
                     focusOnSelect={true}
+                    infinite={productGallery?.length > 1 ? true : false}
                     responsive={[
                         {
                             breakpoint: 767,

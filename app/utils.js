@@ -154,3 +154,19 @@ export function recentViewProductList() {
 
 export const apiBaseUrl = "https://v3.nagadhat.com/api";
 export const NagadhatPublicUrl = "https://v3.nagadhat.com";
+
+// storeUserAgent function captures the user agent using navigator.userAgent and stores it in local storage.
+export function storeUserAgent() {
+    if (typeof window !== "undefined") {
+        const userAgent = navigator.userAgent;
+        localStorage.setItem("userAgent", userAgent);
+    }
+}
+
+//getUserAgent function retrieves the user agent from local storage.
+export function getUserAgent() {
+    if (typeof window !== "undefined") {
+        return localStorage.getItem("userAgent");
+    }
+    return null;
+}
