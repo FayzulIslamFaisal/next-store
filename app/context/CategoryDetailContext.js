@@ -1,36 +1,56 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
-import { useCategoryDetailProductContext } from "./categoryDetailProductContext";
+import { useCategoryDetailProductContext } from "./CategoryDetailProductContext";
 
-const CategoryDetailContext = createContext();
-export const useCategoryDetailContext = () => useContext(CategoryDetailContext);
+const CategoryDetailContext = createContext(
+    {
+        category_filter_products: [],
+        category_all_products: [],
+        filters_option: {
+            color: "red",
+            Size: "xl",
+            Brand: "",
+            order: "asc",
+            maxPrice: 0,
+            price: 0,
+            minPrice: 0,
+        },
+    }
+);
 
-const initialState = {
-    category_filter_products: [],
-    category_all_products: [],
-    category_sorting_value: "asc",
-    category_filters: {
-        color: "red",
-    },
-};
-
-export const CategoryDetailProvider = ({ children }) => {
+const CategoryDetailProvider = ({ children }) => {
     const { products } = useCategoryDetailProductContext();
-    const [filterOption, setFilterOption] = useState(initialState);
+    const [filterOption, setFilterOption] = useState({
+        category_filter_products: [],
+        category_all_products: [],
+        filters_option: {
+            color: "red",
+            Size: "xl",
+            Brand: "",
+            order: "asc",
+            maxPrice: 0,
+            price: 0,
+            minPrice: 0,
+        },
+    });
 
     useEffect(() => {
-        // Update the category_all_products with the products from useCategoryDetailProductContext
         setFilterOption((prevState) => ({
             ...prevState,
-            category_all_products: products,
+            category_all_products: products || [],
         }));
     }, [products]);
 
     return (
-        <CategoryDetailContext.Provider
-            value={{ ...filterOption, setFilterOption }}
-        >
+        <CategoryDetailContext.Provider value={{ ...filterOption, setFilterOption }}>
             {children}
         </CategoryDetailContext.Provider>
     );
+}
+
+// Custom hook
+const useCategoryDetailContext = () => {
+    return useContext(CategoryDetailContext);
 };
+
+export { CategoryDetailContext, useCategoryDetailContext, CategoryDetailProvider };
