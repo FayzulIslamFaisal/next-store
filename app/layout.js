@@ -88,6 +88,7 @@ export default function RootLayout({ children }) {
         precedence="default"
       />
       <link rel="stylesheet" href="/css/collapse.css" precedence="default" />
+      <link rel="stylesheet" href="/css/new-shipping.css" precedence="default" />
       <link
         rel="stylesheet"
         href="/css/questionCard.css"

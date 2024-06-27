@@ -1,3 +1,4 @@
+import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -5,7 +6,7 @@ const ViewAllCategoryItems = ({ items }) => {
     let imageUrl = "/images/flash-img1.jpg";
     const { title, slug: path, logo } = items;
     if (logo) {
-        imageUrl = `https://v3.nagadhat.com/${logo}`;
+        imageUrl = `${NagadhatPublicUrl}/${logo}`;
     }
     return (
         <div className="nh-categories-item">

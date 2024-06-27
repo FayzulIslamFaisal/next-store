@@ -1,4 +1,5 @@
 import { api_base_url } from "../config";
+import { apiBaseUrl } from "../utils";
 
 export const getProductDetails = async (pathName) => {
   if (!pathName) {
@@ -6,7 +7,7 @@ export const getProductDetails = async (pathName) => {
   }
   try {
     const response = await fetch(
-      `https://v3.nagadhat.com/api/get-product-details?${pathName}`,
+      `${apiBaseUrl}/get-product-details?${pathName}`,
       {
         next: { revalidate: 1 },
       }

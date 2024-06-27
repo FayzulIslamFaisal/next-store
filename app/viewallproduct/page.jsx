@@ -6,6 +6,7 @@ import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTi
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
+import { NagadhatPublicUrl } from "../utils";
 
 const ViewAllProductPage = async ({ searchParams }) => {
     let viewProductData = [];
@@ -22,7 +23,7 @@ const ViewAllProductPage = async ({ searchParams }) => {
                     viewProductData.length >= 1 &&
                     viewProductData[0].product_thumbnail
                 ) {
-                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[0].product_thumbnail}`;
+                    bannerUrl = `${NagadhatPublicUrl}/${viewProductData[0].product_thumbnail}`;
                 }
                 sectionTitle = "Just For You";
                 break;
@@ -34,7 +35,7 @@ const ViewAllProductPage = async ({ searchParams }) => {
                     viewProductData.length >= 1 &&
                     viewProductData[1].product_thumbnail
                 ) {
-                    bannerUrl = `https://v3.nagadhat.com/${viewProductData[1].product_thumbnail}`;
+                    bannerUrl = `${NagadhatPublicUrl}/${viewProductData[1].product_thumbnail}`;
                 }
                 sectionTitle = "Flash Sale";
                 break;

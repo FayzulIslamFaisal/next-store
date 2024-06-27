@@ -125,8 +125,6 @@ header {
     line-height: 36px;
     background: transparent;
     padding: 0 18px;
-    text-align: right;
-    direction: ltr;
 }
 
 .header-search-field .form-control:focus {

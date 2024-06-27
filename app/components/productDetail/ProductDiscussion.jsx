@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import QuestionCard from "../QuestionCard";
 import { getQuestionAndAns } from "@/app/services/getQuestionAndAns";
+import { apiBaseUrl } from "@/app/utils";
 
 const ProductQuestions = ({ productInfo }) => {
     const [userQuestion, setUserQuestion] = useState("");
@@ -17,7 +18,7 @@ const ProductQuestions = ({ productInfo }) => {
         e.preventDefault();
         try {
             const res = await fetch(
-                "https://v3.nagadhat.com/api/question/create",
+                `${apiBaseUrl}/question/create`,
                 {
                     method: "POST",
                     headers: {
