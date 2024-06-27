@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const ProductLeftSide = ({ productInfo, path_name }) => {
     const [productGallery, setProductGallery] = useState([]);
-    console.log("productGallery", productGallery);
+
     return (
         <>
             <div className=" col-xl-9">

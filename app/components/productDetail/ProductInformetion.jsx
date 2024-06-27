@@ -3,7 +3,7 @@
 import Image from "next/image";
 import AddToCartButton from "../AddToCartButton";
 import { useEffect, useReducer, useState } from "react";
-import { existingIndex } from "@/app/utils";
+import { existingIndex, getUserAgent } from "@/app/utils";
 const initialState = {
     count: 1,
 };
@@ -28,10 +28,15 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
     const [variationsInfo, setVariationsInfo] = useState([]);
     const [productIncrease, setProductIncrease] = useState([]);
     const [state, dispatch] = useReducer(reducer, initialState);
-
+    const [productPrice, setProductPrice] = useState({
+        prices: "",
+        discountPrice: "",
+    });
     // console.log("gallery", productInfo);
     useEffect(() => {
         updateProductInitialVariations();
+
+        defaultVariation();
     }, [productInfo]);
 
     //// This function finds a variant and updates the productAllVariants with the selected and selectable variants.
@@ -104,18 +109,41 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         setProductAllVariants(updatedProductAllVariants);
     };
 
-    useEffect(() => {
-        defaultVariation();
-    }, [productInfo]);
-
+    //this function load a default variant when the loaded
     function defaultVariation() {
-        if (productInfo?.variations > 0) {
+        if (productInfo?.variations?.length > 0) {
             const defaultProduct = productInfo?.variations?.find(
                 (product) => product?.variations_default === 1
             );
-            // setProductGallery("defaultProduct", defaultProduct);
+            setProductPrice({
+                ...productPrice,
+                prices:
+                    defaultProduct?.discount_amount > 0
+                        ? defaultProduct?.mrp_price -
+                          defaultProduct?.discount_amount
+                        : defaultProduct?.mrp_price,
+                discountPrice:
+                    defaultProduct?.discount_amount > 0
+                        ? defaultProduct?.mrp_price
+                        : "",
+            });
+
+            setProductGallery(defaultProduct?.gallery);
         } else {
             console.log("productInfo?.gallery");
+            setProductPrice({
+                ...productPrice,
+                prices:
+                    productInfo?.price?.original?.results?.discounted_price !==
+                    0
+                        ? productInfo?.price?.original?.results
+                              ?.discounted_price
+                        : productInfo?.price?.original?.results?.regular_price,
+                discountPrice:
+                    productInfo?.price?.original?.results?.discounted_price >
+                        0 &&
+                    productInfo?.price?.original?.results?.regular_price,
+            });
             setProductGallery(productInfo?.gallery);
         }
     }
@@ -143,6 +171,17 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             );
             return updatedProductAllVariants;
         });
+
+        if (name === "variation_color") {
+            const multiGallery = [];
+            productInfo?.variations?.map((variation) => {
+                if (variation?.variation_color?.title == variantValue) {
+                    multiGallery.push(variation.gallery);
+                }
+            });
+
+            setProductGallery(multiGallery[0]);
+        }
     };
 
     // this function return the sleeted variant
@@ -285,10 +324,9 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         const selectedVariantKeys = selectedVariants.flatMap(
             (selectedVariant) => Object.keys(selectedVariant)
         );
+
         const arr = [];
-        // console.log("selectedVariants", selectedVariants);
-        // console.log("selectedVariantKeys", selectedVariantKeys);
-        // console.log("decorateVariation", decorateVariation);
+
         selectedVariantKeys.map((selectedKey) => {
             selectedVariants?.map((selectedVariantObject) => {
                 decorateVariation.map((availableVariant, index) => {
@@ -384,18 +422,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         }
                     });
                 });
-
-                /*  const enableVariants = filterBySelected(arr, selectedVariants);
-        const difference = getDifference(selectedVariants, enableVariants);
-        // setMatchOtherVariant(difference);
-        const selectedVariantInfo = filterBySelected(
-          variationsInfo,
-          selectedVariants
-        );
-
-        if (selectedVariantInfo) {
-          setVariantProductInfo(selectedVariantInfo[0]);
-        } */
             }
         } else {
             productAllVariants.forEach((allVariantItem) => {
@@ -411,6 +437,49 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         availableVariantTrue();
     }, [selectedVariants]);
 
+    const selectedVariantKeys = selectedVariants.flatMap((selectedVariant) =>
+        Object.keys(selectedVariant)
+    );
+
+    useEffect(() => {
+        console.log(selectedVariantKeys);
+        if (!selectedVariantKeys.includes("variation_color")) {
+            defaultVariation();
+        }
+    }, [!selectedVariantKeys.includes("variation_color")]);
+
+    useEffect(() => {
+        if (selectedVariants?.length == 2) {
+            if (
+                selectedVariantKeys.includes("variation_color") &&
+                selectedVariantKeys.includes("variation_size")
+            ) {
+                productInfo?.variations?.map((variation) => {
+                    if (
+                        variation?.variation_size?.title ==
+                            selectedVariants[0].variation_size &&
+                        variation?.variation_color?.title ==
+                            selectedVariants[1].variation_color
+                    ) {
+                        setProductPrice({
+                            ...productPrice,
+                            prices:
+                                variation?.discount_amount > 0
+                                    ? variation?.mrp_price -
+                                      variation?.discount_amount
+                                    : variation?.mrp_price,
+                            discountPrice:
+                                variation?.discount_amount > 0
+                                    ? variation?.mrp_price
+                                    : "",
+                        });
+                    }
+                });
+            }
+        }
+    }, [selectedVariants]);
+    const userAgent = getUserAgent();
+    console.log("userAgent", userAgent);
     return (
         <div className="col-md-6">
             <div className="product-details-content">
@@ -496,17 +565,11 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                     <strong>
                         {" "}
                         <span>৳</span>{" "}
-                        {productInfo?.price?.original?.results
-                            ?.discounted_price !== 0
-                            ? productInfo?.price?.original?.results
-                                  ?.discounted_price
-                            : productInfo?.price?.original?.results
-                                  ?.regular_price}
+                        {productPrice?.prices && productPrice?.prices}
                     </strong>
                     <del>
-                        {productInfo?.price?.original?.results
-                            ?.discounted_price > 0 &&
-                            `৳ ${productInfo?.price?.original?.results?.regular_price}`}
+                        {productPrice?.discountPrice &&
+                            `৳ ${productPrice?.discountPrice}`}
                     </del>
                 </div>
                 <div className="product-short-description-area">
