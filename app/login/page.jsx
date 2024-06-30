@@ -3,6 +3,8 @@ import Link from "next/link";
 import SigninBtn from "../components/SigninBtn";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from 'next/navigation'
+import Swal from "sweetalert2";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -10,17 +12,47 @@ const Login = () => {
         password: "",
     });
 
+    const router = useRouter();
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        if (!formData.username || !formData.password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Phone number and password are required!'
+            });
+            return;
+        }
+
         const result = await signIn("credentials", {
             username: formData.username,
             password: formData.password,
-            redirect: true,
-            callbackUrl: "/",
+            redirect: false
+        });
+
+        // console.log('=>>> response in login time', result);
+
+        if (result.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Login failed',
+                text: 'Invalid Credentials'
+            });
+            return;
+        }
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Successfully signed in!'
+        }).then(() => {
+            router.push("/");
         });
     };
 
@@ -46,6 +78,7 @@ const Login = () => {
                                         className="form-control"
                                         id="number"
                                         name="username"
+                                        required
                                         value={formData.username}
                                         onChange={handleChange}
                                     />
@@ -62,6 +95,7 @@ const Login = () => {
                                         className="form-control"
                                         id="password"
                                         name="password"
+                                        required
                                         value={formData.password}
                                         onChange={handleChange}
                                     />
