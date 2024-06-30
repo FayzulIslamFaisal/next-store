@@ -19,24 +19,12 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 viewProductData =
                     justForYouProductData?.results?.for_you_products;
 
-                if (
-                    viewProductData.length >= 1 &&
-                    viewProductData[0].product_thumbnail
-                ) {
-                    bannerUrl = `${NagadhatPublicUrl}/${viewProductData[0].product_thumbnail}`;
-                }
                 sectionTitle = "Just For You";
                 break;
 
             case "flashSale":
                 const flashSaleProduct = await getFlashSaleProduct();
                 viewProductData = flashSaleProduct?.results;
-                if (
-                    viewProductData.length >= 1 &&
-                    viewProductData[1].product_thumbnail
-                ) {
-                    bannerUrl = `${NagadhatPublicUrl}/${viewProductData[1].product_thumbnail}`;
-                }
                 sectionTitle = "Flash Sale";
                 break;
             default:
@@ -70,10 +58,15 @@ const ViewAllProductPage = async ({ searchParams }) => {
         },
     ];
 
+    console.log("viewProductData:=>>>>", viewProductData);
+
     return (
         <div className="container view-all-product-container">
             <ViewAllBanner imageUrl={bannerUrl} />
-            <ViewAllCategoryTitle title={sectionTitle} isFlashSaleTimer={true} />
+            <ViewAllCategoryTitle
+                title={sectionTitle}
+                isFlashSaleTimer={true}
+            />
             <ViewAllProduct viewProductData={viewProductData} />
 
             <div className="row view-all-product-pagination-area">
