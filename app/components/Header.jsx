@@ -53,6 +53,9 @@ function Header() {
     };
 
     const { status, data: session } = useSession();
+    useEffect(() => {
+        storeUserAgent();
+    }, []);
 
     // console.log('=>>> get login status', status);
     // console.log('=>>> get login session', session);

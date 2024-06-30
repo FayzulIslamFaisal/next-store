@@ -1,3 +1,4 @@
+
 import Service from "@/app/components/Service";
 import CategoryLeftSide from "@/app/components/productCategory/CategoryLeftSide";
 import CategoryRightSide from "@/app/components/productCategory/CategoryRightSide";
@@ -5,8 +6,10 @@ import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import {getCategorydetailBySlug} from "@/app/services/getCategorydetailBySlug";
 
 const DynamicCategoryPage = async ({ params }) => {
+
   const { slug } = params;
-  const categoryBySlugData = await getCategorydetailBySlug(slug);
+  const option = {};
+  const categoryBySlugData = await getCategorydetailBySlug(slug, option);
   const categoryByResult = categoryBySlugData?.results;
   const categoryByProduct = categoryByResult?.products?.data;
   const categoryByBrand = categoryByResult?.brands;
@@ -56,6 +59,7 @@ const DynamicCategoryPage = async ({ params }) => {
                 subCategoryTitle={subCategoryTitle}
                 categoryByMinPrice={categoryByMinPrice}
                 categoryByMaxPrice={categoryByMaxPrice}
+
               />
               <CategoryRightSide categoryByProduct={categoryByProduct} />
             </div>

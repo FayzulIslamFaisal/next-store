@@ -34,13 +34,6 @@ function Sales({
         }
         fetchData();
     }, []);
-    useEffect(() => {
-        async function fetchData() {
-            const flashSale = await getFlashSaleProduct();
-            setFlashSaleProductList(flashSale?.results);
-        }
-        fetchData();
-    }, []);
 
     useEffect(() => {
         let ignore = false;
