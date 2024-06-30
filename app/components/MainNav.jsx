@@ -37,14 +37,13 @@ function MainNav({
             if (!districtId) {
                 districtId = 47;
             }
-            const productData = await getHomeSearchProduct(districtId, search);
-            if (productData?.results) {
-                const allSearchProducts = [
-                    ...productData.results.flash_sales_product,
-                    ...productData.results.just_for_you.for_you_products,
-                ];
 
-                setSearchProduct(allSearchProducts);
+            const productData = await getHomeSearchProduct(districtId, search);
+            const searchResults =
+                productData?.results?.search_result?.original?.results;
+
+            if (searchResults) {
+                setSearchProduct(searchResults);
             }
         };
         fetchSearchProduct();
