@@ -117,7 +117,7 @@ function Sales({
                         <div className="flash-sale-content-area-grid">
                             <Slider {...settings}>
                                 {isHome && !isRecentView
-                                    ? flashSaleProductList?.map((product) => (
+                                    ? flashSaleProductList.length > 0 && flashSaleProductList?.map((product) => (
                                           <ProductCard
                                               key={product.id}
                                               item={product}
