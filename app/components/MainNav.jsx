@@ -7,6 +7,8 @@ import SignoutBtn from "./SignoutBtn";
 import { getHomeSearchProduct } from "../services/getHomeSearchProduct";
 import ProductSearchResult from "./ProductSearchResult";
 import ProductSearchResultMobile from "./ProductSearchResultMobile";
+import { getDivision } from "../services/getDivision";
+import { getDistrictByDivisionId } from "../services/getDistrict";
 
 function MainNav({
     isObserverMenuVisible,
@@ -15,8 +17,11 @@ function MainNav({
     authStatus,
 }) {
     const [search, setSearch] = useState("");
+    const [divisionName, setDivisionName] = useState("Dhaka City");
+    const [districtName, setDistrictName] = useState("Dhaka");
     const [searchProduct, setSearchProduct] = useState([]);
     const searchParams = useSearchParams();
+    let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
@@ -48,6 +53,28 @@ function MainNav({
     const isSearchProductAvailable = () => {
         return searchProduct.length !== 0;
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const divisionResult = await getDivision(divisionId);
+            const districtResult = await getDistrictByDivisionId(divisionId);
+            if (divisionResult && divisionResult.length > 0) {
+                let selectedDivision = divisionResult.find(
+                    (item) => item.id == divisionId
+                );
+                setDivisionName(selectedDivision.name);
+            }
+
+            if (districtResult && districtResult.length > 0) {
+                let selectedDistrict = districtResult.find(
+                    (item) => item.id == districtId
+                );
+                setDistrictName(selectedDistrict.name);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -84,7 +111,7 @@ function MainNav({
                                         width={17}
                                         height={15}
                                     />
-                                    Dhaka City, Dhaka
+                                    {`${divisionName}, ${districtName}`}
                                 </button>
                             </div>
                             <div className="header-search-field">
@@ -231,7 +258,7 @@ function MainNav({
                                                 width={17}
                                                 height={15}
                                             />
-                                            Dhaka City, Dhaka
+                                            {`${divisionName}, ${districtName}`}
                                         </button>
                                     </div>
                                     <div className="header-search-field">
