@@ -93,7 +93,7 @@ function MainNav({
       }, []);
 
     return (
-        <>
+        <div ref={searchResultRef}>
             <div
                 className={`row main-header-section ${
                     !isObserverMenuVisible ? "" : "d-none"
@@ -366,7 +366,7 @@ function MainNav({
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
