@@ -1,5 +1,5 @@
 "use client";
-import Pagination from "../components/productCategory/Pagination";
+// import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
@@ -7,8 +7,8 @@ import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTi
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-import { NagadhatPublicUrl } from "../utils";
-import { useSearchParams } from "next/navigation";
+// import { NagadhatPublicUrl } from "../utils";
+// import { useSearchParams } from "next/navigation";
 
 const ViewAllProductPage = async ({ searchParams }) => {
     // const getsearchParams = useSearchParams();

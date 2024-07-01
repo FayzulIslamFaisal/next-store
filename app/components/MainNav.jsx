@@ -49,6 +49,7 @@ function MainNav({
         };
         fetchSearchProduct();
     }, [search, districtId]);
+    console.log("searchResults.......>>>",searchProduct);
 
     const isSearchProductAvailable = () => {
         return searchProduct.length !== 0;
@@ -83,7 +84,7 @@ function MainNav({
                 searchResultRef.current &&
                 !searchResultRef.current.contains(event.target)
             ) {
-                setSearch("");
+                setSearchProduct([]);
             }
         };
 
