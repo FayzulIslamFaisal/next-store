@@ -1,9 +1,9 @@
 import {apiBaseUrl} from '../utils';
 
-export const getFlashSaleProduct = async () => {
+export const getFlashSaleProduct = async (outletID) => {
   try {
     const response = await fetch(
-      `${apiBaseUrl}/get-flash-sale-products/3`,
+      `${apiBaseUrl}/get-flash-sale-products/${outletID}`,
       { next: { revalidate: 1 } }
     );
     return await response.json();
