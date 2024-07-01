@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SignoutBtn from "./SignoutBtn";
@@ -23,6 +23,7 @@ function MainNav({
     const searchParams = useSearchParams();
     let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
+    const searchResultRef = useRef(null);
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
@@ -68,11 +69,28 @@ function MainNav({
                 let selectedDistrict = districtResult.find(
                     (item) => item.id == districtId
                 );
-                setDistrictName(selectedDistrict.name);
+                setDistrictName(selectedDistrict?.name);
             }
         };
 
         fetchData();
+    }, []);
+
+// function Click Outside Search Modal hide
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                searchResultRef.current &&
+                !searchResultRef.current.contains(event.target)
+            ) {
+                setSearch("");
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
     }, []);
 
     return (
