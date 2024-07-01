@@ -16,6 +16,7 @@ const ProductLeftSide = ({ productInfo, path_name }) => {
                         path_name={path_name}
                         productGallery={productGallery}
                     />
+
                     <ProductInformetion
                         productInfo={productInfo}
                         setProductGallery={setProductGallery}

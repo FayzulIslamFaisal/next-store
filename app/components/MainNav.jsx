@@ -153,7 +153,7 @@ function MainNav({
                                 </li>
                                 <li>
                                     <Link
-                                        href="#"
+                                        href="/cart-page"
                                         className="text-white text-capitalize d-flex align-items-center"
                                     >
                                         <span className="bg-white d-flex align-items-center">

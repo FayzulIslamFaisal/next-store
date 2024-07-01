@@ -32,15 +32,15 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         prices: "",
         discountPrice: "",
     });
-    // console.log("gallery", productInfo);
+    const [productVariationsError, setProductVariationError] = useState("");
     useEffect(() => {
         updateProductInitialVariations();
 
         defaultVariation();
     }, [productInfo]);
+    console.log("productAllVariants", productAllVariants);
 
     //// This function finds a variant and updates the productAllVariants with the selected and selectable variants.
-
     const updateProductInitialVariations = () => {
         const variants = productInfo?.variations;
         const updatedProductAllVariants = [];
@@ -80,10 +80,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                             {
                                 value: attribute.value,
                                 selectAble: true,
-                                selected:
-                                    variant?.variations_default == 1
-                                        ? true
-                                        : false,
+                                selected: false,
                             },
                         ],
                     });
@@ -100,7 +97,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         ]?.variants?.push({
                             value: attribute.value,
                             selectAble: true,
-                            selected: true,
+                            selected: false,
                         });
                     }
                 }
@@ -127,10 +124,9 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         ? defaultProduct?.mrp_price
                         : "",
             });
-
             setProductGallery(defaultProduct?.gallery);
         } else {
-            console.log("productInfo?.gallery");
+            // console.log("productInfo?.gallery");
             setProductPrice({
                 ...productPrice,
                 prices:
@@ -198,11 +194,9 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
 
     useEffect(() => {
         setSelectedVariants(getAvailableVariants());
-        console.log(selectedVariants);
+        // console.log(selectedVariants);
     }, [productAllVariants, productInfo]);
-
     // console.log(selectedVariants);
-
     // return not selected variant name
     const findNotSelectedVariants = () => {
         const selectedVariantKeys = selectedVariants.flatMap(
@@ -263,6 +257,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             });
         });
     }
+
     const getColorBySize = (
         size,
         checkVariantName,
@@ -315,6 +310,11 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                 variation_weight: item.variation_weight
                     ? item.variation_weight.title
                     : null,
+                price:
+                    item?.discount_amount > 0
+                        ? item?.mrp_price - item?.discount_amount
+                        : item?.mrp_price,
+                discountPrice: item?.discount_amount > 0 ? item?.mrp_price : "",
             })
         );
         setDecorateVariation(decorateProductVariation);
@@ -324,9 +324,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         const selectedVariantKeys = selectedVariants.flatMap(
             (selectedVariant) => Object.keys(selectedVariant)
         );
-
         const arr = [];
-
         selectedVariantKeys.map((selectedKey) => {
             selectedVariants?.map((selectedVariantObject) => {
                 decorateVariation.map((availableVariant, index) => {
@@ -337,6 +335,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                             !arr.includes(availableVariant)
                         ) {
                             arr.push(decorateVariation[index]);
+                            console.log("decorateVariation", decorateVariation);
                         }
                     }
                     if (selectedVariants.length > 1) {
@@ -351,7 +350,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                 });
             });
         });
-
         if (arr.length > 0) {
             if (selectedVariants.length == 1) {
                 updateVariantNameSelectAbility(selectedVariantKeys[0], true);
@@ -411,7 +409,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                     true
                                 );
                             });
-
                             color?.unmatched.map((enableVariantItem) => {
                                 updateVariantSelectAbility(
                                     outPutValue,
@@ -442,44 +439,56 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
     );
 
     useEffect(() => {
-        console.log(selectedVariantKeys);
+        // console.log(selectedVariantKeys);
         if (!selectedVariantKeys.includes("variation_color")) {
             defaultVariation();
         }
     }, [!selectedVariantKeys.includes("variation_color")]);
 
-    useEffect(() => {
-        if (selectedVariants?.length == 2) {
-            if (
-                selectedVariantKeys.includes("variation_color") &&
-                selectedVariantKeys.includes("variation_size")
-            ) {
-                productInfo?.variations?.map((variation) => {
-                    if (
-                        variation?.variation_size?.title ==
-                            selectedVariants[0].variation_size &&
-                        variation?.variation_color?.title ==
-                            selectedVariants[1].variation_color
-                    ) {
-                        setProductPrice({
-                            ...productPrice,
-                            prices:
-                                variation?.discount_amount > 0
-                                    ? variation?.mrp_price -
-                                      variation?.discount_amount
-                                    : variation?.mrp_price,
-                            discountPrice:
-                                variation?.discount_amount > 0
-                                    ? variation?.mrp_price
-                                    : "",
-                        });
+    // selectedVariant objects with those in the decorateVariation objects. The function will count the matches and return the object with the maximum matches.
+    function findBestMatch(selectedVariant, decorateVariation) {
+        let bestMatch = null;
+        let maxMatches = 0;
+
+        decorateVariation?.forEach((decorateItem) => {
+            let matches = 0;
+
+            selectedVariant?.forEach((selectedItem) => {
+                for (let key in selectedItem) {
+                    if (selectedItem[key] === decorateItem[key]) {
+                        matches++;
                     }
-                });
+                }
+            });
+
+            if (matches > maxMatches) {
+                maxMatches = matches;
+                bestMatch = decorateItem;
             }
+        });
+
+        return bestMatch;
+    }
+
+    useEffect(() => {
+        const bestMatch = findBestMatch(selectedVariants, decorateVariation);
+        console.log(bestMatch);
+        if (selectedVariants.length > 0) {
+            setProductPrice({
+                ...productPrice,
+                prices: bestMatch?.price,
+                discountPrice: bestMatch?.discountPrice,
+            });
+        } else {
+            defaultVariation();
         }
     }, [selectedVariants]);
+    // user pc information
+
     const userAgent = getUserAgent();
-    console.log("userAgent", userAgent);
+    console.log("decorateVariation", decorateVariation);
+    console.log("selectedVariantKey", selectedVariants);
+
     return (
         <div className="col-md-6">
             <div className="product-details-content">
@@ -583,6 +592,55 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                 <div className="product-info-rtk-content">
                     <form>
                         <div className="product-details-variant-area">
+                            <div className="d-flex align-items-center">
+                                {productAllVariants?.map((item, index) => (
+                                    <div key={index}>
+                                        {item?.name === "variation_color" && (
+                                            <>
+                                                <div className="product-details-variant-holder d-flex align-items-center">
+                                                    <p className="variantName">
+                                                        Color
+                                                    </p>
+                                                    {item?.variants?.map(
+                                                        (variant, inx) =>
+                                                            variant.selectAble ? (
+                                                                <div
+                                                                    className="product-details-inner-color product-details-variant-item"
+                                                                    onClick={() =>
+                                                                        handleVariations(
+                                                                            variant.value,
+                                                                            item.name
+                                                                        )
+                                                                    }
+                                                                    style={{
+                                                                        border: variant.selected
+                                                                            ? "3px solid #44bc9d "
+                                                                            : "",
+                                                                        background:
+                                                                            variant?.value.toLowerCase(),
+                                                                    }}
+                                                                ></div>
+                                                            ) : (
+                                                                <div
+                                                                    className="product-details-inner-color product-details-variant-item"
+                                                                    style={{
+                                                                        border: "2px solid #7B7B7B",
+                                                                        background:
+                                                                            variant?.value.toLowerCase(),
+                                                                        cursor: "not-allowed",
+                                                                        opacity: 0.3,
+                                                                    }}
+                                                                ></div>
+                                                            )
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="product-details-variant-area">
                             <div className="product-details-variant d-flex align-items-center">
                                 {productAllVariants?.map((item, index) => (
                                     <div key={index}>
@@ -638,56 +696,13 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                 ))}
                             </div>
                         </div>
-                        <div className="product-details-variant-area">
-                            <div className="d-flex align-items-center">
-                                {productAllVariants?.map((item, index) => (
-                                    <div key={index}>
-                                        {item?.name === "variation_color" && (
-                                            <>
-                                                <div className="product-details-variant-holder d-flex align-items-center">
-                                                    <p className="variantName">
-                                                        Color
-                                                    </p>
-                                                    {item?.variants?.map(
-                                                        (variant, inx) =>
-                                                            variant.selectAble ? (
-                                                                <div
-                                                                    className="product-details-inner-color product-details-variant-item"
-                                                                    onClick={() =>
-                                                                        handleVariations(
-                                                                            variant.value,
-                                                                            item.name
-                                                                        )
-                                                                    }
-                                                                    style={{
-                                                                        border: variant.selected
-                                                                            ? "3px solid #44bc9d "
-                                                                            : "",
-                                                                        background:
-                                                                            variant?.value.toLowerCase(),
-                                                                    }}
-                                                                ></div>
-                                                            ) : (
-                                                                <div
-                                                                    className="product-details-inner-color product-details-variant-item"
-                                                                    style={{
-                                                                        border: "2px solid #7B7B7B",
-                                                                        background:
-                                                                            variant?.value.toLowerCase(),
-                                                                        cursor: "not-allowed",
-                                                                        opacity: 0.3,
-                                                                    }}
-                                                                ></div>
-                                                            )
-                                                    )}
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
+                        <div>
+                            <p style={{ color: "red", marginBottom: "10px" }}>
+                                {productVariationsError
+                                    ? productVariationsError
+                                    : ""}
+                            </p>
                         </div>
-
                         <div className="product-details-quantity-area d-flex align-items-center justify-content-between">
                             <div className="product-details-quantity d-flex align-items-center">
                                 <div className="product-details-inner-quantity d-flex align-items-center">
@@ -718,7 +733,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                 </div>
                             </div>
                         </div>
-
                         <div className="product-details-add-cart-area d-flex align-items-center">
                             <div className="product-details-add-cart">
                                 <AddToCartButton
@@ -727,7 +741,17 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                 />
                             </div>
                             <div className="product-details-add-cart">
-                                <AddToCartButton buyNowBtn="product-details-action-btn" />
+                                <AddToCartButton
+                                    buyNowBtn="product-details-action-btn"
+                                    productInfo={productInfo}
+                                    selectedVariantKeys={selectedVariantKeys}
+                                    setProductVariationError={
+                                        setProductVariationError
+                                    }
+                                    productPrice={productPrice}
+                                    selectedVariants={selectedVariants}
+                                    quantity={state.count}
+                                />
                             </div>
                         </div>
                     </form>
