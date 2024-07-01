@@ -61,7 +61,7 @@ function MainNav({
                 let selectedDivision = divisionResult.find(
                     (item) => item.id == divisionId
                 );
-                setDivisionName(selectedDivision.name);
+                setDivisionName(selectedDivision?.name);
             }
 
             if (districtResult && districtResult.length > 0) {
