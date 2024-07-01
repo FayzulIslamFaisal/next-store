@@ -5,11 +5,12 @@ import Like from "../Like";
 import { NagadhatPublicUrl } from "@/app/utils";
 
 const ViewAllProductItems = ({ items }) => {
-    const {product_name:title, mrp_price:price, path } = items;
+    const {product_name:title, mrp_price:price, slug:path } = items;
     let imageUrl = `${NagadhatPublicUrl}/${items.product_thumbnail}`;
     return (
         <div className="flash-sale-content-item">
             <div className="flash-sale-content-bg nh-hover-box-shadow d-flex flex-column justify-content-between">
+            <Link href={`category/${path}`}>
                 <div className="flash-sale-content-img image-hover-effect">
                     <Image
                         src={imageUrl}
@@ -20,7 +21,7 @@ const ViewAllProductItems = ({ items }) => {
                 </div>
                 <div className="flash-sale-content-info text-hover-effect">
                     <h4>
-                        <Link href={path ?? "#"}>{title ? title : "Product Title"}</Link>
+                        {title ? title : "Product Title"}
                     </h4>
                     <strong>৳ {price}</strong>
                     <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
@@ -30,6 +31,7 @@ const ViewAllProductItems = ({ items }) => {
                         </div>
                     </div>
                 </div>
+                </Link>
             </div>
         </div>
     )

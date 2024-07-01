@@ -1,3 +1,4 @@
+"use client";
 import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
@@ -7,15 +8,19 @@ import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 import { NagadhatPublicUrl } from "../utils";
+import { useSearchParams } from "next/navigation";
 
 const ViewAllProductPage = async ({ searchParams }) => {
+    // const getsearchParams = useSearchParams();
+    // let outletID = getsearchParams.get("outletID");
+    let outletID = 3;
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
     if (searchParams) {
         switch (searchParams.type) {
             case "justForYou":
-                const justForYouProductData = await getJustForYouProduct();
+                const justForYouProductData = await getJustForYouProduct(outletID);
                 viewProductData =
                     justForYouProductData?.results?.for_you_products;
 
@@ -23,7 +28,7 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 break;
 
             case "flashSale":
-                const flashSaleProduct = await getFlashSaleProduct();
+                const flashSaleProduct = await getFlashSaleProduct(outletID);
                 viewProductData = flashSaleProduct?.results;
                 sectionTitle = "Flash Sale";
                 break;
@@ -58,7 +63,6 @@ const ViewAllProductPage = async ({ searchParams }) => {
         },
     ];
 
-    console.log("viewProductData:=>>>>", viewProductData);
 
     return (
         <div className="container view-all-product-container">
@@ -68,12 +72,12 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 isFlashSaleTimer={true}
             />
             <ViewAllProduct viewProductData={viewProductData} />
-
-            <div className="row view-all-product-pagination-area">
+            {/* Pagination code */}
+            {/* <div className="row view-all-product-pagination-area">
                 <div className="col-md-12 text-center">
                     <Pagination />
                 </div>
-            </div>
+            </div> */}
             <Sales
                 isHome={false}
                 bgcolor="bg-white"
