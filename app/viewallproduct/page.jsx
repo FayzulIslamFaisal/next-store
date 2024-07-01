@@ -13,14 +13,14 @@ import { useSearchParams } from "next/navigation";
 const ViewAllProductPage = async ({ searchParams }) => {
     // const getsearchParams = useSearchParams();
     // let outletID = getsearchParams.get("outletID");
-    let outletID = 3;
+    // let outletID = 3;
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
     if (searchParams) {
         switch (searchParams.type) {
             case "justForYou":
-                const justForYouProductData = await getJustForYouProduct(outletID);
+                const justForYouProductData = await getJustForYouProduct();
                 viewProductData =
                     justForYouProductData?.results?.for_you_products;
 
@@ -28,7 +28,7 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 break;
 
             case "flashSale":
-                const flashSaleProduct = await getFlashSaleProduct(outletID);
+                const flashSaleProduct = await getFlashSaleProduct();
                 viewProductData = flashSaleProduct?.results;
                 sectionTitle = "Flash Sale";
                 break;
