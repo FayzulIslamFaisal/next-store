@@ -49,8 +49,7 @@ function MainNav({
         };
         fetchSearchProduct();
     }, [search, districtId]);
-    console.log("searchResults.......>>>",searchProduct);
-
+  
     const isSearchProductAvailable = () => {
         return searchProduct.length !== 0;
     };
@@ -80,19 +79,16 @@ function MainNav({
 // function Click Outside Search Modal hide
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (
-                searchResultRef.current &&
-                !searchResultRef.current.contains(event.target)
-            ) {
-                setSearchProduct([]);
-            }
+          if (searchResultRef.current && !searchResultRef.current.contains(event.target)) {
+            setSearchProduct([]);
+            setSearch("");
+          }
         };
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+          document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+      }, []);
 
     return (
         <>
