@@ -23,7 +23,6 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 const justForYouProductData = await getJustForYouProduct();
                 viewProductData =
                     justForYouProductData?.results?.for_you_products;
-
                 sectionTitle = "Just For You";
                 break;
 

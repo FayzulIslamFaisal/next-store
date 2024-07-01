@@ -1,4 +1,4 @@
-import Pagination from "../components/productCategory/Pagination";
+// import Pagination from "../components/productCategory/Pagination";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";

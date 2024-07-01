@@ -13,17 +13,17 @@ const ViewAllProductItems = ({ items }) => {
             <Link href={`category/${path}`}>
                 <div className="flash-sale-content-img image-hover-effect">
                     <Image
-                        src={imageUrl}
+                        src={imageUrl ? imageUrl : null}
                         fill={true}
                         className="img-fluid"
-                        alt={title}
+                        alt={title ? title : "Product Title"}
                     />
                 </div>
                 <div className="flash-sale-content-info text-hover-effect">
                     <h4>
                         {title ? title : "Product Title"}
                     </h4>
-                    <strong>৳ {price}</strong>
+                    <strong>৳ {price ? price : 0}</strong>
                     <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
                         <AddToCartButton />
                         <div className="add-to-cart-icon">
