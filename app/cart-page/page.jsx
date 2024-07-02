@@ -3,12 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NagadhatPublicUrl, addToCartProductList } from "../utils";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const [promo, setPromo] = useState(false);
     const [total, setTotal] = useState("");
     const [cartProduct, setCartProduct] = useState([]);
+    const pathName = usePathname();
+    const { status, data: session } = useSession();
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -16,6 +20,7 @@ const CartPage = () => {
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
+
     const handleDelete = (index) => {
         const updatedItemsInCard = checkedProductCard.filter(
             (item, i) => i !== index
@@ -32,31 +37,8 @@ const CartPage = () => {
         updateLocalStorage(updatedItemsInCard);
     };
 
-    /* const handleChange = (e) => {
-        const { name, checked } = e.target;
-        if (name === "allSelect") {
-            let tempCard = checkedProductCard.map((checkCard) => {
-                return { ...checkCard, isChecked: checked };
-            });
-            setCheckedProductCard(tempCard);
-            setSelected(tempCard);
-            updateLocalStorage(tempCard);
-        } else {
-            let tempCard = checkedProductCard.map((checkCard) =>
-                checkCard.productId === name
-                    ? { ...checkCard, isChecked: checked }
-                    : checkCard
-            );
-            setCheckedProductCard(tempCard);
-            setSelected(tempCard);
-            updateLocalStorage(tempCard);
-        }
-    }; */
-
     const handleChange = (e) => {
         const { name, checked } = e.target;
-        console.log("name", name);
-
         if (name === "allSelect") {
             let tempCard = checkedProductCard.map((checkCard) => {
                 return { ...checkCard, isChecked: checked };
@@ -97,16 +79,17 @@ const CartPage = () => {
         });
         setCheckedProductCard(updatedUsers);
         updateLocalStorage(updatedUsers);
-        console.log(totalPrice);
     };
 
     useEffect(() => {
         if (typeof window !== "undefined") {
             const cartProduct = addToCartProductList();
-            console.log("cartProduct", cartProduct);
             setCheckedProductCard(cartProduct);
         }
     }, []);
+
+    console.log("=>>> get login status", status);
+    console.log("=>>> get login session", session);
 
     return (
         <section className="cart-section-area">
@@ -411,11 +394,14 @@ const CartPage = () => {
                                             ৳{totalPrice}
                                         </strong>
                                     </div>
-                                    <button className="add-to-cart-link border border-0 w-100">
-                                        CHECKOUT
-                                    </button>
                                     <Link
-                                        href="#"
+                                        href={"/shipping-page"}
+                                        className="add-to-cart-link border border-0 w-100"
+                                    >
+                                        CHECKOUT
+                                    </Link>
+                                    <Link
+                                        href="/"
                                         className="shopping-back-btn"
                                     >
                                         Back to Shopping

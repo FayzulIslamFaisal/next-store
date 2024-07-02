@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addToCartInLocalStorage } from "../utils";
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
@@ -11,7 +11,6 @@ function findMissingProperties(decorateVariation, selectedVariantKey) {
         "variation_weight",
     ];
     const missingProperties = [];
-
     decorateVariation.forEach((variant) => {
         variantKeys.forEach((key) => {
             if (variant[key] !== null && !selectedVariantKey.includes(key)) {
@@ -21,7 +20,6 @@ function findMissingProperties(decorateVariation, selectedVariantKey) {
             }
         });
     });
-
     return missingProperties;
 }
 
@@ -76,7 +74,6 @@ function AddToCartButton({
                         addToCartInLocalStorage(addToCartInfo);
                     }
                 } else {
-                    console.log("it's single product");
                     const addToCartInfo = {
                         id: productInfo?.id,
                         product_name: productInfo?.product_name,

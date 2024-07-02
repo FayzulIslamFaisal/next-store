@@ -38,7 +38,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
 
         defaultVariation();
     }, [productInfo]);
-    console.log("productAllVariants", productAllVariants);
 
     //// This function finds a variant and updates the productAllVariants with the selected and selectable variants.
     const updateProductInitialVariations = () => {
@@ -335,7 +334,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                             !arr.includes(availableVariant)
                         ) {
                             arr.push(decorateVariation[index]);
-                            console.log("decorateVariation", decorateVariation);
                         }
                     }
                     if (selectedVariants.length > 1) {
@@ -472,7 +470,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
 
     useEffect(() => {
         const bestMatch = findBestMatch(selectedVariants, decorateVariation);
-        console.log(bestMatch);
+        // console.log(bestMatch);
         if (selectedVariants.length > 0) {
             setProductPrice({
                 ...productPrice,
@@ -483,9 +481,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             defaultVariation();
         }
     }, [selectedVariants]);
-
-    console.log("decorateVariation", decorateVariation);
-    console.log("selectedVariantKey", selectedVariants);
 
     return (
         <div className="col-md-6">

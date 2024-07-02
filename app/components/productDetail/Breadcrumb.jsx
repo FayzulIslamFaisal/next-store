@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 
 const Breadcrumb = ({ category }) => {
-    console.log("category", category);
     const buildCategoryPath = (category) => {
         const path = [];
         let currentCategory = category;
