@@ -57,6 +57,13 @@ function Header() {
         storeUserAgent();
     }, []);
 
+    // console.log('=>>> get login status', status);
+    // console.log('=>>> get login session', session);
+
+    useEffect(() => {
+        storeUserAgent();
+    }, []);
+
     return (
         <>
             <header className={`${isSticky ? "header-sticky" : ""}`}>

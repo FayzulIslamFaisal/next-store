@@ -34,7 +34,7 @@ const ProductSearchResult = ({ searchProduct }) => {
                                 <li
                                     key={`${product?.product_name}-${product?.slug}-${index}`}
                                 >
-                                    <Link href={product?.slug}>
+                                    <Link href={`/products/get-product-details?outlet_id=${product?.outlet_id}&product_id=${product?.product_id}`}>
                                         <div className="search-modal-info-inner d-flex align-content-center gap-4">
                                             <div className="search-modal-info-img">
                                                 <Image

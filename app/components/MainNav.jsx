@@ -1,12 +1,14 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SignoutBtn from "./SignoutBtn";
 import { getHomeSearchProduct } from "../services/getHomeSearchProduct";
 import ProductSearchResult from "./ProductSearchResult";
 import ProductSearchResultMobile from "./ProductSearchResultMobile";
+import { getDivision } from "../services/getDivision";
+import { getDistrictByDivisionId } from "../services/getDistrict";
 
 function MainNav({
     isObserverMenuVisible,
@@ -15,9 +17,13 @@ function MainNav({
     authStatus,
 }) {
     const [search, setSearch] = useState("");
+    const [divisionName, setDivisionName] = useState("Dhaka City");
+    const [districtName, setDistrictName] = useState("Dhaka");
     const [searchProduct, setSearchProduct] = useState([]);
     const searchParams = useSearchParams();
+    let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
+    const searchResultRef = useRef(null);
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
@@ -32,25 +38,62 @@ function MainNav({
             if (!districtId) {
                 districtId = 47;
             }
-            const productData = await getHomeSearchProduct(districtId, search);
-            if (productData?.results) {
-                const allSearchProducts = [
-                    ...productData.results.flash_sales_product,
-                    ...productData.results.just_for_you.for_you_products,
-                ];
 
-                setSearchProduct(allSearchProducts);
+            const productData = await getHomeSearchProduct(districtId, search);
+            const searchResults =
+                productData?.results?.search_result?.original?.results;
+
+            if (searchResults) {
+                setSearchProduct(searchResults);
             }
         };
         fetchSearchProduct();
     }, [search, districtId]);
-
+  
     const isSearchProductAvailable = () => {
         return searchProduct.length !== 0;
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const divisionResult = await getDivision(divisionId);
+            const districtResult = await getDistrictByDivisionId(divisionId);
+            if (divisionResult && divisionResult.length > 0) {
+                let selectedDivision = divisionResult.find(
+                    (item) => item.id == divisionId
+                );
+                setDivisionName(selectedDivision?.name);
+            }
+
+            if (districtResult && districtResult.length > 0) {
+                let selectedDistrict = districtResult.find(
+                    (item) => item.id == districtId
+                );
+                setDistrictName(selectedDistrict?.name);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+// function Click Outside Search Modal hide
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (searchResultRef.current && !searchResultRef.current.contains(event.target)) {
+            setSearchProduct([]);
+            setSearch("");
+          }
+        };
+        if (typeof window !== "undefined") {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, []);
+
     return (
-        <>
+        <div ref={searchResultRef}>
             <div
                 className={`row main-header-section ${
                     !isObserverMenuVisible ? "" : "d-none"
@@ -84,7 +127,7 @@ function MainNav({
                                         width={17}
                                         height={15}
                                     />
-                                    Dhaka City, Dhaka
+                                    {`${divisionName}, ${districtName}`}
                                 </button>
                             </div>
                             <div className="header-search-field">
@@ -231,7 +274,7 @@ function MainNav({
                                                 width={17}
                                                 height={15}
                                             />
-                                            Dhaka City, Dhaka
+                                            {`${divisionName}, ${districtName}`}
                                         </button>
                                     </div>
                                     <div className="header-search-field">
@@ -323,7 +366,7 @@ function MainNav({
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

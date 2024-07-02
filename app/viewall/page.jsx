@@ -1,4 +1,4 @@
-import Pagination from "../components/productCategory/Pagination";
+// import Pagination from "../components/productCategory/Pagination";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
@@ -73,11 +73,11 @@ const ViewAllPage = async ({ searchParams }) => {
             <ViewAllBanner imageUrl={bannerUrl} />
             <ViewAllCategoryTitle title={sectionTitle} />
             <ViewAllCategories viewCategoryData={viewCategoryData} />
-            <div className="row view-all-product-pagination-area">
+            {/* <div className="row view-all-product-pagination-area">
                 <div className="col-md-12 text-center">
                     <Pagination />
                 </div>
-            </div>
+            </div> */}
             <Sales
                 isHome={false}
                 bgcolor="bg-white"

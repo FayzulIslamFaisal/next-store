@@ -1,4 +1,5 @@
-import Pagination from "../components/productCategory/Pagination";
+"use client";
+// import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
@@ -6,9 +7,13 @@ import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTi
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-import { NagadhatPublicUrl } from "../utils";
+// import { NagadhatPublicUrl } from "../utils";
+// import { useSearchParams } from "next/navigation";
 
 const ViewAllProductPage = async ({ searchParams }) => {
+    // const getsearchParams = useSearchParams();
+    // let outletID = getsearchParams.get("outletID");
+    // let outletID = 3;
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
@@ -18,25 +23,12 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 const justForYouProductData = await getJustForYouProduct();
                 viewProductData =
                     justForYouProductData?.results?.for_you_products;
-
-                if (
-                    viewProductData.length >= 1 &&
-                    viewProductData[0].product_thumbnail
-                ) {
-                    bannerUrl = `${NagadhatPublicUrl}/${viewProductData[0].product_thumbnail}`;
-                }
                 sectionTitle = "Just For You";
                 break;
 
             case "flashSale":
                 const flashSaleProduct = await getFlashSaleProduct();
                 viewProductData = flashSaleProduct?.results;
-                if (
-                    viewProductData.length >= 1 &&
-                    viewProductData[1].product_thumbnail
-                ) {
-                    bannerUrl = `${NagadhatPublicUrl}/${viewProductData[1].product_thumbnail}`;
-                }
                 sectionTitle = "Flash Sale";
                 break;
             default:
@@ -70,17 +62,21 @@ const ViewAllProductPage = async ({ searchParams }) => {
         },
     ];
 
+
     return (
         <div className="container view-all-product-container">
             <ViewAllBanner imageUrl={bannerUrl} />
-            <ViewAllCategoryTitle title={sectionTitle} isFlashSaleTimer={true} />
+            <ViewAllCategoryTitle
+                title={sectionTitle}
+                isFlashSaleTimer={true}
+            />
             <ViewAllProduct viewProductData={viewProductData} />
-
-            <div className="row view-all-product-pagination-area">
+            {/* Pagination code */}
+            {/* <div className="row view-all-product-pagination-area">
                 <div className="col-md-12 text-center">
                     <Pagination />
                 </div>
-            </div>
+            </div> */}
             <Sales
                 isHome={false}
                 bgcolor="bg-white"
