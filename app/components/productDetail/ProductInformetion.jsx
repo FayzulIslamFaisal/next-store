@@ -483,9 +483,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             defaultVariation();
         }
     }, [selectedVariants]);
-    // user pc information
 
-    const userAgent = getUserAgent();
     console.log("decorateVariation", decorateVariation);
     console.log("selectedVariantKey", selectedVariants);
 
@@ -749,6 +747,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                         setProductVariationError
                                     }
                                     productPrice={productPrice}
+                                    decorateVariation={decorateVariation}
                                     selectedVariants={selectedVariants}
                                     quantity={state.count}
                                 />

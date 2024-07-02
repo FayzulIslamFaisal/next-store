@@ -3,44 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NagadhatPublicUrl, addToCartProductList } from "../utils";
-const userData = [
-    {
-        id: 1,
-        product_thumbnail: "/images/primaSatgebabyFood.jpg",
-        productName: "LED Monitor With High Quality In The World",
-        productId: "SKU12314124127",
-        price: 20000,
-        quantity: 1,
-        isLiked: false,
-    },
-    {
-        id: 2,
-        product_thumbnail: "/images/primaSatgebabyFood.jpg",
-        productName: "LED Monitor With High Quality In The World",
-        productId: "SKU12314124125",
-        price: 20000,
-        quantity: 1,
-        isLiked: false,
-    },
-    {
-        id: 3,
-        product_thumbnail: "/images/primaSatgebabyFood.jpg",
-        productName: "LED Monitor With High Quality In The World",
-        productId: "SKU12314124126",
-        price: 20000,
-        quantity: 1,
-        sLiked: false,
-    },
-    {
-        id: 4,
-        product_thumbnail: "/images/primaSatgebabyFood.jpg",
-        productName: "LED Monitor With High Quality In The World",
-        productId: "SKU12314124124",
-        price: 20000,
-        quantity: 1,
-        isLiked: false,
-    },
-];
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -50,17 +12,51 @@ const CartPage = () => {
     let price;
     let totalPrice = 0;
     let discountPrice;
-    useEffect(() => {
-        setCheckedProductCard(userData);
-    }, []);
+
+    const updateLocalStorage = (items) => {
+        localStorage.setItem("addToCart", JSON.stringify(items));
+    };
     const handleDelete = (index) => {
         const updatedItemsInCard = checkedProductCard.filter(
             (item, i) => i !== index
         );
         setCheckedProductCard(updatedItemsInCard);
+        updateLocalStorage(updatedItemsInCard);
     };
+
+    const handleSelectedItemDelete = () => {
+        const updatedItemsInCard = checkedProductCard.filter(
+            (item) => !item.isChecked
+        );
+        setCheckedProductCard(updatedItemsInCard);
+        updateLocalStorage(updatedItemsInCard);
+    };
+
+    /* const handleChange = (e) => {
+        const { name, checked } = e.target;
+        if (name === "allSelect") {
+            let tempCard = checkedProductCard.map((checkCard) => {
+                return { ...checkCard, isChecked: checked };
+            });
+            setCheckedProductCard(tempCard);
+            setSelected(tempCard);
+            updateLocalStorage(tempCard);
+        } else {
+            let tempCard = checkedProductCard.map((checkCard) =>
+                checkCard.productId === name
+                    ? { ...checkCard, isChecked: checked }
+                    : checkCard
+            );
+            setCheckedProductCard(tempCard);
+            setSelected(tempCard);
+            updateLocalStorage(tempCard);
+        }
+    }; */
+
     const handleChange = (e) => {
         const { name, checked } = e.target;
+        console.log("name", name);
+
         if (name === "allSelect") {
             let tempCard = checkedProductCard.map((checkCard) => {
                 return { ...checkCard, isChecked: checked };
@@ -69,7 +65,7 @@ const CartPage = () => {
             setSelected(tempCard);
         } else {
             let tempCard = checkedProductCard.map((checkCard) =>
-                checkCard.productId === name
+                checkCard?.id.toString() === name
                     ? { ...checkCard, isChecked: checked }
                     : checkCard
             );
@@ -78,6 +74,7 @@ const CartPage = () => {
             setSelected(tempCard);
         }
     };
+
     const handleDecrement = (id) => {
         const updatedUsers = checkedProductCard.map((checkCard) => {
             if (checkCard.id === id) {
@@ -88,7 +85,9 @@ const CartPage = () => {
             return checkCard;
         });
         setCheckedProductCard(updatedUsers);
+        updateLocalStorage(updatedUsers);
     };
+
     const handleIncrement = (id) => {
         const updatedUsers = checkedProductCard.map((checkCard) => {
             if (checkCard.id === id) {
@@ -97,6 +96,8 @@ const CartPage = () => {
             return checkCard;
         });
         setCheckedProductCard(updatedUsers);
+        updateLocalStorage(updatedUsers);
+        console.log(totalPrice);
     };
 
     useEffect(() => {
@@ -135,7 +136,11 @@ const CartPage = () => {
                                         </label>
                                     </div>
                                     <div className="cart-top-remove-btn">
-                                        <button>REMOVE</button>
+                                        <button
+                                            onClick={handleSelectedItemDelete}
+                                        >
+                                            REMOVE
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -160,9 +165,7 @@ const CartPage = () => {
                                                                 <input
                                                                     className="cart-checkbox"
                                                                     type="checkbox"
-                                                                    name={
-                                                                        item.productId
-                                                                    }
+                                                                    name={`${item?.id}`}
                                                                     checked={
                                                                         item?.isChecked ||
                                                                         false
@@ -203,6 +206,74 @@ const CartPage = () => {
                                                                         discountPrice
                                                                     }
                                                                 </del>
+                                                                <strong>
+                                                                    {item?.selectedVariants &&
+                                                                        item?.selectedVariants.map(
+                                                                            (
+                                                                                variant,
+                                                                                inx
+                                                                            ) => {
+                                                                                const [
+                                                                                    key,
+                                                                                    value,
+                                                                                ] =
+                                                                                    Object.entries(
+                                                                                        variant
+                                                                                    )[0]; // Get the key-value pair from the variant object
+
+                                                                                // Check if the key is 'variation_color'
+                                                                                if (
+                                                                                    key ===
+                                                                                    "variation_color"
+                                                                                ) {
+                                                                                    return (
+                                                                                        <span
+                                                                                            key={
+                                                                                                inx
+                                                                                            }
+                                                                                            className="product-details-inner-color product-details-variant-item"
+                                                                                            style={{
+                                                                                                border: "3px solid #44bc9d",
+                                                                                                width: "30px !important",
+                                                                                                height: "30px !important",
+                                                                                                background:
+                                                                                                    value.toLowerCase(),
+                                                                                                cursor: "pointer",
+                                                                                                marginLeft:
+                                                                                                    "10px",
+                                                                                                marginRight:
+                                                                                                    "10px",
+                                                                                            }}
+                                                                                        ></span>
+                                                                                    );
+                                                                                }
+
+                                                                                // Default rendering for other variants
+                                                                                return (
+                                                                                    <span
+                                                                                        key={
+                                                                                            inx
+                                                                                        }
+                                                                                        className="product-details-variant-item variantAttributeActive"
+                                                                                        style={{
+                                                                                            border: "2px solid #7B7B7B",
+                                                                                            cursor: "pointer",
+                                                                                            marginLeft:
+                                                                                                "10px",
+                                                                                            marginRight:
+                                                                                                "10px",
+                                                                                        }}
+                                                                                    >
+                                                                                        <label>
+                                                                                            {
+                                                                                                value
+                                                                                            }
+                                                                                        </label>
+                                                                                    </span>
+                                                                                );
+                                                                            }
+                                                                        )}
+                                                                </strong>
                                                             </td>
 
                                                             <td>
@@ -279,7 +350,7 @@ const CartPage = () => {
                                                                     </button>
                                                                 </div>
                                                             </td>
-                                                            <td>
+                                                            {/* <td>
                                                                 <div className="product-cart-like-btn-bg">
                                                                     <button className="product-cart-like-btn">
                                                                         <Image
@@ -289,7 +360,7 @@ const CartPage = () => {
                                                                         />
                                                                     </button>
                                                                 </div>
-                                                            </td>
+                                                            </td> */}
                                                         </tr>
                                                     );
                                                 }
@@ -336,7 +407,9 @@ const CartPage = () => {
                                     </h3>
                                     <div className="d-flex gap-3 align-items-center justify-content-between shopping-price-area">
                                         <p className="">Total</p>
-                                        <strong className="">৳35,000</strong>
+                                        <strong className="">
+                                            ৳{totalPrice}
+                                        </strong>
                                     </div>
                                     <button className="add-to-cart-link border border-0 w-100">
                                         CHECKOUT
