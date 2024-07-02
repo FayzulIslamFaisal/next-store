@@ -12,6 +12,7 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
     }
     const categoryBySlugData = await getCategorydetailBySlug(slug, option);
     const categoryByResult = categoryBySlugData?.results;
+    const categoryTitle = categoryByResult?.category
     const categoryByProduct = categoryByResult?.products?.data;
     const categoryByBrand = categoryByResult?.brands;
     const categoryByColor = categoryByResult?.colors;
@@ -46,6 +47,7 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
             subTitle: "Support System 24/7",
         },
     ];
+
     return (
         <section className="product-category-wrapper">
             <div className="container">
@@ -64,6 +66,8 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
                             />
                             <CategoryRightSide
                                 categoryByProduct={categoryByProduct}
+                                categoryByResult={categoryByResult}
+                                categoryTitle={categoryTitle}
                             />
                         </div>
                     </div>
