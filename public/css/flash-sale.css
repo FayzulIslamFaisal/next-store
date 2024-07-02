@@ -18,9 +18,14 @@
     padding: 20px;
     border-radius: 10px;
     border: 1px solid var(--color-D8D8D8);
-    min-height: 375px;
+    min-height: 345px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-
+.product-discount-price {
+    color: var(--color-9f9f9f) !important;
+}
 .flash-sale-content-img {
     margin-bottom: 15px;
 }
@@ -65,7 +70,7 @@ section.flash-sale-area.removepadding-x {
     font-family: var(--open-sans);
     color: var(--color-1A9D78);
     font-weight: 700;
-    font-size: 22px;
+    font-size: 16px;
 }
 
 .add-to-cart-holder {

@@ -1,4 +1,4 @@
-"use client";
+
 // import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
@@ -8,12 +8,9 @@ import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 // import { NagadhatPublicUrl } from "../utils";
-// import { useSearchParams } from "next/navigation";
 
 const ViewAllProductPage = async ({ searchParams }) => {
-    // const getsearchParams = useSearchParams();
-    // let outletID = getsearchParams.get("outletID");
-    // let outletID = 3;
+
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
