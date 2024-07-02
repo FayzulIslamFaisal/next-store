@@ -52,7 +52,7 @@ const Login = () => {
             title: 'Success',
             text: 'Successfully signed in!'
         }).then(() => {
-            router.push("/");
+            router.push("/dashboard");
         });
     };
 
