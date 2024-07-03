@@ -57,14 +57,9 @@ function Header() {
         storeUserAgent();
     }, []);
 
-<<<<<<< HEAD
     // console.log('=>>> get login status', status);
     // console.log('=>>> get login session', session);
     // console.log('=>>> get login token', session?.accessToken);
-=======
-    console.log("=>>> get login status", status);
-    console.log("=>>> get login session", session);
->>>>>>> d98afcd51efd6bdcfd8719dd599ef850e1159abd
 
     useEffect(() => {
         storeUserAgent();
