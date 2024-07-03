@@ -1,3 +1,11 @@
+// For Live
+export const apiBaseUrl = "https://v3.nagadhat.com/api";
+export const NagadhatPublicUrl = "https://v3.nagadhat.com";
+
+// For Localhost
+// export const apiBaseUrl = "http://nagadhat-v3.test/api";
+// export const NagadhatPublicUrl = "http://nagadhat-v3.test";
+
 export const filterByStatus = (arr) => {
     if (!Array.isArray(arr) || arr.length < 1) {
         return [];
@@ -186,9 +194,6 @@ export function addToCartProductList() {
     return product;
 }
 
-export const apiBaseUrl = "https://v3.nagadhat.com/api";
-export const NagadhatPublicUrl = "https://v3.nagadhat.com";
-
 // storeUserAgent function captures the user agent using navigator.userAgent and stores it in local storage.
 export function storeUserAgent() {
     if (typeof window !== "undefined") {
@@ -203,4 +208,29 @@ export function getUserAgent() {
         return localStorage.getItem("userAgent");
     }
     return null;
+}
+
+// utils.js
+
+export function resendOTP() {
+    const otpResatTime = 10;
+
+    const element = document.getElementById("resend-otp");
+    if (!element) {
+        console.error("Element with ID 'resend-otp' not found");
+        return;
+    }
+
+    let countdownTime = otpResatTime;
+    const otpInterval = setInterval(function () {
+        countdownTime -= 1;
+        element.innerHTML = `${countdownTime} s`;
+    }, 1000);
+
+    const myTimeout = setTimeout(myGreeting, otpResatTime * 1000);
+    function myGreeting() {
+        element.innerHTML = "";
+        document.getElementById("resend-otp-btn").classList.remove("d-none");
+        clearInterval(otpInterval);
+    }
 }
