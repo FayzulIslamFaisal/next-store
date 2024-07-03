@@ -1,40 +1,11 @@
-"use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 
-const ProductSearchResultMobile = ({ searchProduct, setSearchProduct, setSearch  }) => {
-    const searchResultRef = useRef(null);
-    const router = useRouter();
-     // Function to handle click outside the modal
-     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (
-                searchResultRef.current &&
-                !searchResultRef.current.contains(event.target)
-            ) {
-                setSearchProduct([]);
-                setSearch("");
-            }
-        };
-        if (typeof window !== "undefined") {
-            document.addEventListener("mousedown", handleClickOutside);
-        }
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [setSearchProduct, setSearch]);
-
-    const handleProductClick = (product) => {
-        setSearchProduct([]);
-        setSearch("");
-        router.push(`/products/get-product-details?outlet_id=${product?.outlet_id}&product_id=${product?.product_id}`);
-    };
+const ProductSearchResultMobile = ({ searchProduct  }) => {
 
     return (
-        <div ref={searchResultRef} className="product-search-modal-area">
+        <div className="product-search-modal-area">
             <div className="product-search-modal-content">
                 
                 <div className="search-modal-title">
@@ -45,11 +16,9 @@ const ProductSearchResultMobile = ({ searchProduct, setSearchProduct, setSearch 
                         {searchProduct &&
                             searchProduct.map((product, index) => (
                                 <li
-                                    key={`${product?.product_name}-${product?.slug}-${index}`}
-                                    onClick={() => handleProductClick(product)}
-                                    style={{ cursor:"pointer" }}
+                                    key={`${product?.product_name}-${product?.slug}-${index}`}     
                                 >
-                                    {/* <Link href={`/products/get-product-details?outlet_id=${product?.outlet_id}&product_id=${product?.product_id}`}> */}
+                                    <Link href={`/products/get-product-details?outlet_id=${product?.outlet_id}&product_id=${product?.product_id}`}>
                                         <div className="search-modal-info-inner d-flex align-content-center gap-4">
                                             <div className="search-modal-info-img">
                                                 <Image
@@ -65,8 +34,8 @@ const ProductSearchResultMobile = ({ searchProduct, setSearchProduct, setSearch 
                                                 </strong>
                                             </div>
                                         </div>
-                                    {/* </Link> */}
-                                </li>
+                                    </Link>
+                            </li>
                         ))}
                     </ul>
                 </div>
