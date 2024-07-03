@@ -4,9 +4,9 @@ import SigninBtn from "../components/SigninBtn";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from 'next/navigation'
-import Swal from "sweetalert2";
 
 const Login = () => {
+    const [errorMessage, setErrorMessage] = useState("");
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -22,11 +22,7 @@ const Login = () => {
         e.preventDefault();
 
         if (!formData.username || !formData.password) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Phone number and password are required!'
-            });
+            setErrorMessage("Please provide required information");
             return;
         }
 
@@ -36,24 +32,11 @@ const Login = () => {
             redirect: false
         });
 
-        // console.log('=>>> response in login time', result);
-
         if (result.error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Login failed',
-                text: 'Invalid Credentials'
-            });
+            setErrorMessage("Invalid Credentials");
             return;
         }
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Successfully signed in!'
-        }).then(() => {
-            router.push("/");
-        });
+        router.push("/");
     };
 
     return (
@@ -64,6 +47,9 @@ const Login = () => {
                         <h1 className="text-center text-capitalize">
                             Login to your account.
                         </h1>
+                        {errorMessage && (
+                            <h3 style={{ color: "#f00" }}>{errorMessage}</h3>
+                        )}
                         <div className="user-login-form">
                             <form>
                                 <div className="mb-3">

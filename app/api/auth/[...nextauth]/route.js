@@ -53,6 +53,7 @@ export const authOptions = {
                 return null;
 
               } catch (error) {
+                console.error("Authorization error:", error);
                 throw new Error(error.message);
               }
             },
@@ -90,6 +91,7 @@ export const authOptions = {
           return session;
         }
     },
+    debug: true,
 };
 
 const handler = NextAuth(authOptions);
