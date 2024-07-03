@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SignoutBtn from "./SignoutBtn";
@@ -23,6 +23,7 @@ function MainNav({
     const searchParams = useSearchParams();
     let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
+    const searchResultRef = useRef(null);
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
@@ -48,7 +49,7 @@ function MainNav({
         };
         fetchSearchProduct();
     }, [search, districtId]);
-
+  
     const isSearchProductAvailable = () => {
         return searchProduct.length !== 0;
     };
@@ -68,15 +69,34 @@ function MainNav({
                 let selectedDistrict = districtResult.find(
                     (item) => item.id == districtId
                 );
-                setDistrictName(selectedDistrict.name);
+                setDistrictName(selectedDistrict?.name);
             }
         };
 
         fetchData();
     }, []);
 
+     // Function to handle click outside the modal
+     useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                searchResultRef.current &&
+                !searchResultRef.current.contains(event.target)
+            ) {
+                setSearchProduct([]);
+                setSearch();
+            }
+        };
+        if (typeof window !== "undefined") {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setSearchProduct, setSearch]);
+
     return (
-        <>
+        <div ref={searchResultRef}>
             <div
                 className={`row main-header-section ${
                     !isObserverMenuVisible ? "" : "d-none"
@@ -179,7 +199,7 @@ function MainNav({
                                 </li>
                                 <li>
                                     <Link
-                                        href="#"
+                                        href="/cart-page"
                                         className="text-white text-capitalize d-flex align-items-center"
                                     >
                                         <span className="bg-white d-flex align-items-center">
@@ -226,7 +246,7 @@ function MainNav({
                                         setCategoryHoverMenu(true)
                                     }
                                     onMouseLeave={() =>
-                                        setCategoryHoverMenu(false)
+                                        setCategoryHoverMenu(true)
                                     }
                                 >
                                     <Link
@@ -349,7 +369,7 @@ function MainNav({
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

@@ -1,4 +1,5 @@
-import Pagination from "../components/productCategory/Pagination";
+
+// import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
@@ -6,9 +7,10 @@ import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTi
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getJustForYouProduct } from "../services/getJustForYouProduct";
 import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-import { NagadhatPublicUrl } from "../utils";
+// import { NagadhatPublicUrl } from "../utils";
 
 const ViewAllProductPage = async ({ searchParams }) => {
+
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
@@ -18,7 +20,6 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 const justForYouProductData = await getJustForYouProduct();
                 viewProductData =
                     justForYouProductData?.results?.for_you_products;
-
                 sectionTitle = "Just For You";
                 break;
 
@@ -58,7 +59,6 @@ const ViewAllProductPage = async ({ searchParams }) => {
         },
     ];
 
-    console.log("viewProductData:=>>>>", viewProductData);
 
     return (
         <div className="container view-all-product-container">
@@ -68,12 +68,12 @@ const ViewAllProductPage = async ({ searchParams }) => {
                 isFlashSaleTimer={true}
             />
             <ViewAllProduct viewProductData={viewProductData} />
-
-            <div className="row view-all-product-pagination-area">
+            {/* Pagination code */}
+            {/* <div className="row view-all-product-pagination-area">
                 <div className="col-md-12 text-center">
                     <Pagination />
                 </div>
-            </div>
+            </div> */}
             <Sales
                 isHome={false}
                 bgcolor="bg-white"

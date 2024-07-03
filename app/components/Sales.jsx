@@ -7,8 +7,8 @@ import ProductCard from "./ProductCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-import getAllSettings from "../services/getAllSettings";
+// import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
+// import getAllSettings from "../services/getAllSettings";
 import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
 import { getFlashSlaeShowOnHomePage } from "../services/getFlashSlaeShowOnHomePage";
 
@@ -21,6 +21,7 @@ function Sales({
 }) {
     const [flashSaleProductList, setFlashSaleProductList] = useState([]);
     const [hasFlashSaleSettings, setHasFlashSaleSettings] = useState(false);
+    const [flashSaleEndsTime, setFlashSaleEndsTime] = useState(null);
     const searchParams = useSearchParams();
     let districtId = searchParams.get("districtId");
     useEffect(() => {
@@ -42,8 +43,11 @@ function Sales({
             const settingData = await getFlashSlaeShowOnHomePage();
             if (!ignore) {
                 const settingAllData = settingData?.results;
-                if (settingAllData?.show_on_home == 1) {
+                const showOnHome = settingAllData?.show_on_home;
+                const flashSaleEndsTime = settingAllData?.end_time;
+                if ( showOnHome === 1) {
                     setHasFlashSaleSettings(true);
+                    setFlashSaleEndsTime(flashSaleEndsTime);
                 } else {
                     console.error(
                         "settingAllData is not an array",
@@ -58,28 +62,29 @@ function Sales({
             ignore = true;
         };
     }, []);
+
     const settings = {
         centerPadding: "60px",
         dots: false,
-        infinite: isHome ? true : false,
+        infinite: isHome ? false : false,
         speed: 500,
         slidesToShow: 6,
-        slidesToScroll: 6,
-        arrows: isHome ? true : false,
+        slidesToScroll: 2,
+        arrows: flashSaleProductList?.length < 6 ? false : isHome ? false : true,
         responsive: [
             {
                 breakpoint: 1500,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 4,
-                    arrows: true,
+                    slidesToScroll: 2,
+                    arrows: false,
                 },
             },
             {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToScroll: 2,
                     arrows: true,
                 },
             },
@@ -95,6 +100,7 @@ function Sales({
     };
 
     return (
+        hasFlashSaleSettings && (
         <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
             <div className="container">
                 <SectionTitle
@@ -103,14 +109,14 @@ function Sales({
                     target="flashSale"
                     path="/viewallproduct"
                 >
-                    {isHome && <FlipClock endsAt={`2024-06-30 12:00`} />}
+                    {isHome && flashSaleEndsTime && <FlipClock endsAt={flashSaleEndsTime} />}
                 </SectionTitle>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="flash-sale-content-area-grid">
                             <Slider {...settings}>
                                 {isHome && !isRecentView
-                                    ? flashSaleProductList.length > 0 && flashSaleProductList?.map((product) => (
+                                    ? flashSaleProductList?.length > 0 && flashSaleProductList?.map((product) => (
                                           <ProductCard
                                               key={product.id}
                                               item={product}
@@ -128,6 +134,7 @@ function Sales({
                 </div>
             </div>
         </section>
+        )
     );
 }
 

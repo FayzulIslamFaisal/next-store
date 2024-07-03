@@ -1,3 +1,11 @@
+// For Live
+export const apiBaseUrl = "https://v3.nagadhat.com/api";
+export const NagadhatPublicUrl = "https://v3.nagadhat.com";
+
+// For Localhost
+// export const apiBaseUrl = "http://nagadhat-v3.test/api";
+// export const NagadhatPublicUrl = "http://nagadhat-v3.test";
+
 export const filterByStatus = (arr) => {
     if (!Array.isArray(arr) || arr.length < 1) {
         return [];
@@ -13,7 +21,7 @@ export const filterByStatus = (arr) => {
         }
     });
 };
-   // Function to truncate title
+// Function to truncate title
 export const truncateTitle = (title, maxLength = 24) => {
     if (title.length > maxLength) {
         return title.slice(0, maxLength) + "...";
@@ -142,7 +150,7 @@ export function storeProduct(product) {
         JSON.stringify(storedProducts)
     );
 }
-
+// recent view product List
 export function recentViewProductList() {
     if (typeof localStorage === "undefined") {
         return; // Local storage not available
@@ -152,14 +160,39 @@ export function recentViewProductList() {
     return product;
 }
 
-// For Live
-export const apiBaseUrl = "https://v3.nagadhat.com/api";
-export const NagadhatPublicUrl = "https://v3.nagadhat.com";
+// add to cart button in local storage
+export function addToCartInLocalStorage(product) {
+    if (typeof localStorage === "undefined") {
+        return; // Local storage not available
+    }
 
+    let storedProducts = JSON.parse(localStorage.getItem("addToCart")) || [];
+    // Check if product already exists (by id)
+    const existingProductIndex = storedProducts.findIndex(
+        (p) => p.id === product.id && p.outlet_id === product.outlet_id
+    );
 
-// For Localhost
-// export const apiBaseUrl = "http://nagadhat-v3.test/api";
-// export const NagadhatPublicUrl = "http://nagadhat-v3.test";
+    if (existingProductIndex === -1) {
+        // If product is unique, add it to the end of the array
+        storedProducts = [product, ...storedProducts];
+    } else {
+        // If product exists, remove it from the array
+        storedProducts.splice(existingProductIndex, 1);
+        // Add the updated product to the beginning of the array
+        storedProducts = [product, ...storedProducts];
+    }
+
+    // Update localStorage with the modified array
+    localStorage.setItem("addToCart", JSON.stringify(storedProducts));
+}
+
+export function addToCartProductList() {
+    if (typeof localStorage === "undefined") {
+        return; // Local storage not available
+    }
+    const product = JSON.parse(localStorage.getItem("addToCart")) || [];
+    return product;
+}
 
 // storeUserAgent function captures the user agent using navigator.userAgent and stores it in local storage.
 export function storeUserAgent() {

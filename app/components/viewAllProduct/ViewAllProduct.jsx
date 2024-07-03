@@ -8,14 +8,12 @@ const ViewAllProduct = ({ viewProductData }) => {
             <div className="col-md-12">
                 <div className="flash-sale-content-area">
                     {
-                        viewProductData?.map((viewProductItem) => {
-                            return (
-                                <ViewAllProductItems
-                                    key={viewProductItem.id}
-                                    items={viewProductItem}
-                                />
-                            )
-                        })
+                        viewProductData?.length > 0 ? viewProductData.map((viewProductItem) => (
+                            <ViewAllProductItems
+                                key={viewProductItem.id}
+                                items={viewProductItem}
+                            />
+                        )) : null
                     }
                 </div>
             </div>

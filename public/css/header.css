@@ -106,8 +106,8 @@ header {
 }
 
 .header-search-location {
-    flex: 1;
-    padding: 0 20px;
+    flex: 1.4;
+    padding: 0 15px;
 }
 
 .observerable-header-search-area .header-search-location {
@@ -186,6 +186,7 @@ header {
     outline: 0;
     width: 100%;
     background: transparent;
+    font-size: 13px;
 }
 
 .district-modal-area .modal-header h2 {

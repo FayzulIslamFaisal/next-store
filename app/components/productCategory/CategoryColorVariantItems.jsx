@@ -1,36 +1,43 @@
-import { useCategoryDetailContext } from "@/app/context/CategoryDetailContext";
-import { useCategoryDetailProductContext } from "@/app/context/CategoryDetailProductContext";
+"use client";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+const CategoryColorVariantItems = ({ colorItem, searchParams }) => {
+    const { id, value: bgColor } = colorItem;
 
-const CategoryColorVariantItems = ({ colorItem }) => {
-    const { id, value:bgColor } = colorItem;
+    let router = useRouter()
+    const [checked, setChecked] = useState(id === searchParams?.color);
 
-    const { filters_option, category_all_products, setFilterOption } = useCategoryDetailContext();
-    const { setProducts } = useCategoryDetailProductContext();
+    const handleChange = (e) => {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
 
-    const handleFilterColor = () => {
-        if (!category_all_products || !Array.isArray(category_all_products)) {
-            console.error("category_all_products is not an array or is undefined");
-            return;
+        if (checked) {
+            params.delete('color');
+        } else {
+            params.set('color', id);
         }
-        
-        const filteredProducts = category_all_products.filter(product => product.color === bgColor);
-        setProducts(filteredProducts);
-        setFilterOption(prevState => ({
-            ...prevState,
-            filters_option: {
-                ...prevState.filters_option,
-                color: bgColor
-            }
-        }));
 
-        console.log("Filtered products:", filteredProducts);
+        url.search = params.toString();
+        router.push(url.toString(), undefined, { shallow: true });
+        setChecked(!checked);
     };
+
     return (
-        <div onClick={handleFilterColor} className="product-details-inner-color product-details-variant-item" style={{ background: `${bgColor}` }}>
-            <input readOnly type="checkbox" name="color" id={`color-variant_${id}`} />
+        <div
+            className="product-details-inner-color product-details-variant-item"
+            style={{ background: `${bgColor}` }}
+        >  
+            <input
+                type="checkbox"
+                name="color"
+                id={`color-variant_${id}`}
+                value={id}
+                checked={checked}
+                onChange={handleChange}
+            />
             <label htmlFor={`color-variant_${id}`}></label>
         </div>
-    )
-}
+    );
+};
 
-export default CategoryColorVariantItems
+export default CategoryColorVariantItems;
