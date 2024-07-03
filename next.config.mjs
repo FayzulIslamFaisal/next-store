@@ -3,11 +3,11 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                // For live
+                // For Live
                 protocol: 'https',
                 hostname: 'v3.nagadhat.com',
                 
-                // For localhost
+                // For Localhost
                 // protocol: 'http',
                 // hostname: 'nagadhat-v3.test',
             },

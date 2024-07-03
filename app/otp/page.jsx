@@ -11,6 +11,7 @@ const OTP = () => {
     let phone = searchParams.get("phone") ? searchParams.get("phone") : '';
     const [otp, setOtp] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,19 +25,21 @@ const OTP = () => {
                 return;
             }
 
-            console.log("=>>> OTP Submitted: ", phone, otp);
-
             try {
                 const res = await getOTPVerify({
                     phone: phone,
                     otp: otp,
                 });
+
                 if (!res?.success) {
-                    alert(res.message);
+                    setErrorMessage(res.message);
                     return;
                 }
 
-                window.location.href = "/login";
+                //alert(res.message);
+                
+                router.push("/login");
+
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
             }
@@ -45,7 +48,7 @@ const OTP = () => {
         verifyOTP();
     };
 
-    const handleOTPSubmit = (e) => {
+    const handleResendOTPSubmit = (e) => {
         e.preventDefault();
 
         async function resendOTP() {
@@ -57,20 +60,18 @@ const OTP = () => {
                 return;
             }
 
-            console.log("=>>> Resend OTP Submitted: ", phone);
-
             try {
                 const res = await getResendOTP({
                     phone: phone
                 });
+
                 if (!res?.success) {
-                    alert(res.message);
+                    setErrorMessage(res.message);
                     return;
                 }
 
-                alert("Successfully Resend OTP. Please check again!");
+                setSuccessMessage(res.message);
 
-                
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
             }
@@ -91,15 +92,13 @@ const OTP = () => {
                 return;
             }
 
-            console.log("=>>> Back Registration Submitted: ", phone);
-
             try {
                 const res = await getBackRegistration({
                     phone: phone
                 });
 
                 if (!res?.success) {
-                    alert(res.message);
+                    setErrorMessage(res.message);
                     return;
                 }
 
@@ -121,6 +120,12 @@ const OTP = () => {
                         <div className="users-registration-otp-title">
                             <h1>OTP Verify</h1>
                         </div>
+                        {errorMessage && (
+                            <h3 style={{ color: "#f00" }}>{errorMessage}</h3>
+                        )}
+                        {successMessage && (
+                            <h3 style={{ color: "#008000" }}>{successMessage}</h3>
+                        )}
                         <form className="d-flex flex-column gap-4" role="form" onSubmit={handleSubmit}>
                             <div>
                                 <label
@@ -152,13 +157,6 @@ const OTP = () => {
                                 * check your phone or email for OTP code.
                             </p>
                             <div className=" d-flex justify-content-between align-items-center">
-                                {/* <a
-                                    className="users-registration-otp-back-btn"
-                                    href="#"
-                                >
-                                    <i className="fa-solid fa-arrow-left-long"></i>
-                                    <span>Back</span>
-                                </a> */}
                                 <div>
                                     <button
                                         className="add-to-cart-link border-0"
@@ -170,7 +168,7 @@ const OTP = () => {
                                 <div className="resend-otp-timar">
                                     <button
                                         className="add-to-cart-link border-0"
-                                        onClick={handleOTPSubmit}
+                                        onClick={handleResendOTPSubmit}
                                     >
                                         resend otp
                                     </button>
