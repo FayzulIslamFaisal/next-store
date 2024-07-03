@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const ProductSearchResultMobile = ({ searchProduct, setSearchProduct, setSearch  }) => {
     const searchResultRef = useRef(null);

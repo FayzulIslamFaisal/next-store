@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const ProductSearchResult = ({ searchProduct, setSearchProduct, setSearch }) => {
 
