@@ -66,25 +66,25 @@ function Sales({
     const settings = {
         centerPadding: "60px",
         dots: false,
-        infinite: isHome ? true : false,
+        infinite: isHome ? false : false,
         speed: 500,
         slidesToShow: 6,
-        slidesToScroll: 6,
-        arrows: isHome ? true : false,
+        slidesToScroll: 2,
+        arrows: flashSaleProductList?.length < 6 ? false : isHome ? false : true,
         responsive: [
             {
                 breakpoint: 1500,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 4,
-                    arrows: true,
+                    slidesToScroll: 2,
+                    arrows: false,
                 },
             },
             {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToScroll: 2,
                     arrows: true,
                 },
             },
