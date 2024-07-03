@@ -23,7 +23,7 @@ function MainNav({
     const searchParams = useSearchParams();
     let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
-    const searchResultRef = useRef(null);
+    // const searchResultRef = useRef(null);
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
