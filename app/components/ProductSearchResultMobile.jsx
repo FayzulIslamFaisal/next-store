@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
@@ -22,6 +24,7 @@ useEffect(() => {
         document.removeEventListener("mousedown", handleClickOutside);
     };
 }, [setSearchProduct, setSearch]);
+
     return (
         <div ref={searchResultRef} className="product-search-modal-area">
             <div className="product-search-modal-content">
