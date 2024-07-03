@@ -1,29 +1,31 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRef } from "react";
 
-const ProductSearchResultMobile = ({ searchProduct }) => {
+const ProductSearchResultMobile = ({ searchProduct, setSearchProduct, setSearch  }) => {
+    const searchResultRef = useRef(null);
+// function Click Outside Search Modal hide
+useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (
+            searchResultRef.current &&
+            !searchResultRef.current.contains(event.target)
+        ) {
+            setSearchProduct([]);
+            setSearch("");
+        }
+    };
+    if (typeof window !== "undefined") {
+        document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+}, [setSearchProduct, setSearch]);
     return (
-        <div className="product-search-modal-area">
+        <div ref={searchResultRef} className="product-search-modal-area">
             <div className="product-search-modal-content">
-                {/* <div className="search-modal-title d-none">
-                    <h4>category suggestions</h4>
-                </div>
-                <div className="search-modal-info d-none">
-                    <ul>
-                        <li>
-                            <Link href="#">Food & Beverage</Link>
-                        </li>
-                        <li>
-                            <Link href="#">Baby Food</Link>
-                        </li>
-                        <li>
-                            <Link href="#">Food & Beverage</Link>
-                        </li>
-                        <li>
-                            <Link href="#">Daily Foods</Link>
-                        </li>
-                    </ul>
-                </div> */}
+                
                 <div className="search-modal-title">
                     <h4>products</h4>
                 </div>

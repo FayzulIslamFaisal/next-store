@@ -76,24 +76,9 @@ function MainNav({
         fetchData();
     }, []);
 
-// function Click Outside Search Modal hide
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-          if (searchResultRef.current && !searchResultRef.current.contains(event.target)) {
-            setSearchProduct([]);
-            setSearch("");
-          }
-        };
-        if (typeof window !== "undefined") {
-            document.addEventListener("mousedown", handleClickOutside);
-        }
-        return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-        };
-      }, []);
 
     return (
-        <div ref={searchResultRef}>
+        <div>
             <div
                 className={`row main-header-section ${
                     !isObserverMenuVisible ? "" : "d-none"
@@ -157,6 +142,8 @@ function MainNav({
                             {search && isSearchProductAvailable() && (
                                 <ProductSearchResult
                                     searchProduct={searchProduct}
+                                    setSearch={setSearch}
+                                    setSearchProduct={setSearchProduct}
                                 />
                             )}
                         </div>
@@ -243,7 +230,7 @@ function MainNav({
                                         setCategoryHoverMenu(true)
                                     }
                                     onMouseLeave={() =>
-                                        setCategoryHoverMenu(false)
+                                        setCategoryHoverMenu(true)
                                     }
                                 >
                                     <Link
@@ -306,6 +293,8 @@ function MainNav({
                                     {search && isSearchProductAvailable() && (
                                         <ProductSearchResultMobile
                                             searchProduct={searchProduct}
+                                            setSearch={setSearch}
+                                            setSearchProduct={setSearchProduct}
                                         />
                                     )}
                                 </div>
