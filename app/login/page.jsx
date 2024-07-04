@@ -36,7 +36,7 @@ const Login = () => {
             setErrorMessage("Invalid Credentials");
             return;
         }
-        router.push("/");
+        router.push("/dashboard");
     };
 
     return (
