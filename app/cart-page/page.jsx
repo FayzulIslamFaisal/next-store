@@ -116,6 +116,8 @@ const CartPage = () => {
             {
                 method: "POST",
                 headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${session?.accessToken}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ cart_items: cartItems }),

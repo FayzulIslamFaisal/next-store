@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { addToCartInLocalStorage } from "../utils";
+import { useSession } from "next-auth/react";
+import { addToCartProduct } from "../services/postAddToCartAfterLogin";
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
     const variantKeys = [
@@ -37,7 +39,9 @@ function AddToCartButton({
     selectedVariants,
     selectedVariantProductInfo,
 }) {
-    const handleAddToCard = (e, title) => {
+    const { status, data: session } = useSession();
+
+    const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {
             if (productInfo) {
@@ -78,8 +82,14 @@ function AddToCartButton({
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
                         };
-
-                        addToCartInLocalStorage(addToCartInfo);
+                        if (session) {
+                            await addToCartProduct(
+                                addToCartInfo,
+                                session.accessToken
+                            );
+                        } else {
+                            addToCartInLocalStorage(addToCartInfo);
+                        }
                     }
                 } else {
                     const addToCartInfo = {
@@ -96,7 +106,14 @@ function AddToCartButton({
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
                     };
-                    addToCartInLocalStorage(addToCartInfo);
+                    if (session) {
+                        await addToCartProduct(
+                            addToCartInfo,
+                            session.accessToken
+                        );
+                    } else {
+                        addToCartInLocalStorage(addToCartInfo);
+                    }
                 }
             }
         }
