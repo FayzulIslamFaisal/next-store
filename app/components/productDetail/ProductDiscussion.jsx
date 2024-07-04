@@ -17,20 +17,19 @@ const ProductQuestions = ({ productInfo }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(
-                `${apiBaseUrl}/question/create`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        product_id: productInfo.id,
-                        user_id: 1,
-                        question: userQuestion,
-                    }),
-                }
-            );
+            const res = await fetch(`${apiBaseUrl}/question/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    product_id: productInfo.id,
+                    user_id: 1,
+                    question: userQuestion,
+                }),
+            });
+
+            console.log("this response come fom product  response", res);
 
             if (!res.ok) {
                 const MySwal = withReactContent(Swal);
@@ -57,7 +56,6 @@ const ProductQuestions = ({ productInfo }) => {
     useEffect(() => {
         const fetchQuestion = async () => {
             const questions = await getQuestionAndAns(productInfo?.id);
-
             setQuestionResponse(questions?.results);
         };
         fetchQuestion();
