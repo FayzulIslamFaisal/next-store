@@ -1,10 +1,10 @@
 // For Live
-export const apiBaseUrl = "https://v3.nagadhat.com/api";
-export const NagadhatPublicUrl = "https://v3.nagadhat.com";
+// export const apiBaseUrl = "https://v3.nagadhat.com/api";
+// export const NagadhatPublicUrl = "https://v3.nagadhat.com";
 
 // For Localhost
-// export const apiBaseUrl = "http://nagadhat-v3.test/api";
-// export const NagadhatPublicUrl = "http://nagadhat-v3.test";
+export const apiBaseUrl = "http://nagadhat-v3.test/api";
+export const NagadhatPublicUrl = "http://nagadhat-v3.test";
 
 export const filterByStatus = (arr) => {
     if (!Array.isArray(arr) || arr.length < 1) {
