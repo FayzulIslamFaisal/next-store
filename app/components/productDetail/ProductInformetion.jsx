@@ -24,9 +24,8 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
     const [selectedVariants, setSelectedVariants] = useState([]);
     const [unselected, setUnselected] = useState([]);
     const [decorateVariation, setDecorateVariation] = useState([]);
-    const [variantProductInfo, setVariantProductInfo] = useState({});
-    const [variationsInfo, setVariationsInfo] = useState([]);
-    const [productIncrease, setProductIncrease] = useState([]);
+    const [selectedVariantProductInfo, setSelectedVariantProductInfo] =
+        useState({});
     const [state, dispatch] = useReducer(reducer, initialState);
     const [productPrice, setProductPrice] = useState({
         prices: "",
@@ -300,6 +299,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
     useEffect(() => {
         const decorateProductVariation = productInfo?.variations?.map(
             (item) => ({
+                product_variation_id: item.id,
                 variation_size: item.variation_size
                     ? item.variation_size.title
                     : null,
@@ -314,6 +314,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         ? item?.mrp_price - item?.discount_amount
                         : item?.mrp_price,
                 discountPrice: item?.discount_amount > 0 ? item?.mrp_price : "",
+                discount_type: item?.discount_type,
             })
         );
         setDecorateVariation(decorateProductVariation);
@@ -470,7 +471,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
 
     useEffect(() => {
         const bestMatch = findBestMatch(selectedVariants, decorateVariation);
-        // console.log(bestMatch);
+        setSelectedVariantProductInfo(bestMatch);
         if (selectedVariants.length > 0) {
             setProductPrice({
                 ...productPrice,
@@ -745,6 +746,9 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                     decorateVariation={decorateVariation}
                                     selectedVariants={selectedVariants}
                                     quantity={state.count}
+                                    selectedVariantProductInfo={
+                                        selectedVariantProductInfo
+                                    }
                                 />
                             </div>
                         </div>

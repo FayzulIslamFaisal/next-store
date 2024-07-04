@@ -35,6 +35,7 @@ function AddToCartButton({
     productPrice,
     quantity,
     selectedVariants,
+    selectedVariantProductInfo,
 }) {
     const handleAddToCard = (e, title) => {
         e.preventDefault();
@@ -61,7 +62,7 @@ function AddToCartButton({
                     } else {
                         setProductVariationError(" ");
                         const addToCartInfo = {
-                            id: productInfo?.id,
+                            productInfo_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
                             discountPrice: productPrice?.discountPrice,
@@ -69,19 +70,31 @@ function AddToCartButton({
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
                             selectedVariants: selectedVariants,
+                            outlet_id: 3,
+                            location_id: 47,
+                            order_type: "Regular",
+                            product_variation_id:
+                                selectedVariantProductInfo?.product_variation_id,
+                            discount_type:
+                                selectedVariantProductInfo?.discount_type,
                         };
 
                         addToCartInLocalStorage(addToCartInfo);
                     }
                 } else {
                     const addToCartInfo = {
-                        id: productInfo?.id,
+                        productInfo_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
                         discountPrice: productPrice?.discountPrice,
                         outlet_id: productInfo?.outlet_id,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
+                        outlet_id: 3,
+                        location_id: 47,
+                        order_type: "Regular",
+                        product_variation_id: null,
+                        discount_type: productInfo?.discount_type,
                     };
                     addToCartInLocalStorage(addToCartInfo);
                 }
