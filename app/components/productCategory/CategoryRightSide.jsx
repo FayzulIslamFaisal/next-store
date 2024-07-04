@@ -1,6 +1,6 @@
-import SectionTitle from "../SectionTitle";
-import ProductCategories from "../ProductCategories";
-import FindLooking from "./FindLooking";
+// import SectionTitle from "../SectionTitle";
+// import ProductCategories from "../ProductCategories";
+// import FindLooking from "./FindLooking";
 import Pagination from "./Pagination";
 import CategoryProductArchive from "./CategoryProductArchive";
 import ShotBy from "./ShotBy";
@@ -48,12 +48,6 @@ const CategoryRightSide = ({
                         </div>
                     </div>
                 )}
-
-                {/* <SectionTitle title={`Featured Brands`} />
-        <ProductCategories
-          categoryProductData={featuredBrandtData}
-          isHome={false}
-        /> */}
             </div>
         </main>
     );
