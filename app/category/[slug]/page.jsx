@@ -68,6 +68,7 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
                                 categoryByProduct={categoryByProduct}
                                 categoryByResult={categoryByResult}
                                 categoryTitle={categoryTitle}
+                                searchParams={searchParams}
                             />
                         </div>
                     </div>
