@@ -240,4 +240,3 @@ export function resendOTP() {
         clearInterval(otpInterval);
     }
 }
-

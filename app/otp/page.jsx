@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import { getOTPVerify } from "../services/getOTPVerify";
@@ -183,4 +184,5 @@ const OTP = () => {
 };
 
 export default OTP;
+
 
