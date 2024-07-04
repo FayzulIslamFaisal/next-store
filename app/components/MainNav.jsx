@@ -76,21 +76,24 @@ function MainNav({
         fetchData();
     }, []);
 
-// function Click Outside Search Modal hide
-    useEffect(() => {
+     // Function to handle click outside the modal
+     useEffect(() => {
         const handleClickOutside = (event) => {
-          if (searchResultRef.current && !searchResultRef.current.contains(event.target)) {
-            setSearchProduct([]);
-            setSearch("");
-          }
+            if (
+                searchResultRef.current &&
+                !searchResultRef.current.contains(event.target)
+            ) {
+                setSearchProduct([]);
+                setSearch();
+            }
         };
         if (typeof window !== "undefined") {
             document.addEventListener("mousedown", handleClickOutside);
         }
         return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
-      }, []);
+    }, [setSearchProduct, setSearch]);
 
     return (
         <div ref={searchResultRef}>
@@ -243,7 +246,7 @@ function MainNav({
                                         setCategoryHoverMenu(true)
                                     }
                                     onMouseLeave={() =>
-                                        setCategoryHoverMenu(false)
+                                        setCategoryHoverMenu(true)
                                     }
                                 >
                                     <Link

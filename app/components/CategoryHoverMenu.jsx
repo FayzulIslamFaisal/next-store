@@ -2,15 +2,15 @@
 import { useEffect, useState } from "react";
 import { getCategoryMenu } from "../services/getCategoryMenu";
 import CategoryMainMenu from "./CategoryMainMenu";
-import { filterBySliderMenuView } from "../utils";
+// import { filterBySliderMenuView } from "../utils";
 
 function CategoryHoverMenu({ isActive, setCategoryHoverMenu }) {
     const [categoryMenuOption, setCategoryMenuOption] = useState([]);
     useEffect(() => {
         async function fetchData() {
             const data = await getCategoryMenu();
-            const filteredList = filterBySliderMenuView(data);
-            setCategoryMenuOption(filteredList.slice(0, 10));
+            const filteredList = data;
+            setCategoryMenuOption(filteredList);
         }
         fetchData();
     }, []);

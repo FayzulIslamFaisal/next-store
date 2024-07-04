@@ -68,6 +68,8 @@ export default function RootLayout({ children, slug, option }) {
             <link rel="stylesheet" href="/css/responsive.css" precedence="default"/>
             {/* <Script strategy="afterInteractive" src="/js/jquery.min.js" /> */}
             <Script strategy="afterInteractive" src="/js/bootstrap.bundle.min.js"/>
+            <link rel="stylesheet" href="/css/otp.css" precedence="default"/>
+            <Script src="/js/custom.js" />
 
             <body>
                 <Suspense>

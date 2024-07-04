@@ -1,4 +1,3 @@
-
 // $('.hero-slider-holder').slick({
 //     speed: 300,
 //     infinite: true,
@@ -29,7 +28,6 @@
 // function hideObserverHoverMenu() {
 //     $('.observer-hover-menu').removeClass('active');
 // }
-
 
 // document.onload = function () {
 //     slideOne();
