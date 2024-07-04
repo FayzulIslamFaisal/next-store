@@ -88,9 +88,89 @@ const CartPage = () => {
         }
     }, []);
 
+    const addToCartProduct = async (cartItems) => {
+        /*   try {
+            console.log("post cart product ================", cartItems);
+            const response = await fetch(
+                "https://v3.nagadhat.com/api/add-to-cart-product",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ cart_items: cartItems }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to add product to cart");
+            }
+
+            return response.json();
+        } catch (error) {
+            console.error(error);
+        } */
+
+        const response = await fetch(
+            "https://v3.nagadhat.com/api/add-to-cart-product",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ cart_items: cartItems }),
+            }
+        );
+
+        console.log("post send response1111111111111111", response);
+        return response.json();
+    };
+
+    const fetchCartProducts = async () => {
+        try {
+            console.log("get cart product ================");
+            const response = await fetch(
+                "https://v3.nagadhat.com/api/get-cart-products?outlet_id=3&location_id=47",
+                {
+                    method: "GET",
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${session?.accessToken}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch cart products");
+            }
+
+            return response.json();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleCheckout = async () => {
+        if (session) {
+            console.log("in session");
+            const cartProduct = addToCartProductList();
+            console.log("card product passing", cartProduct);
+            await addToCartProduct(cartProduct);
+            const updatedCartProducts = await fetchCartProducts();
+            setCheckedProductCard(updatedCartProducts?.data);
+            localStorage.removeItem("addToCart");
+            // console.log("updatedCartProducts", updatedCartProducts);
+        }
+    };
+
+    useEffect(() => {
+        handleCheckout();
+        console.log("hello word");
+    }, [session]);
+
     console.log("=>>> get login status", status);
     console.log("=>>> get login session", session);
-
+    console.log("sfddkfjndfk", checkedProductCard);
     return (
         <section className="cart-section-area">
             <div className="container">
@@ -106,7 +186,8 @@ const CartPage = () => {
                                             id="select-all"
                                             name="allSelect"
                                             checked={
-                                                checkedProductCard.length > 0 &&
+                                                checkedProductCard?.length >
+                                                    0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
