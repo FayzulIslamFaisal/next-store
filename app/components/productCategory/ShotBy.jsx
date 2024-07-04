@@ -10,7 +10,6 @@ const ShotBy = ({searchParams, categoryByProduct}) => {
         const order = e.target.value;
         updateURL(order);
     };
-    console.log('orderValue', orderValue);
     const updateURL = (order) => {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);

@@ -1,22 +1,43 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
-const PriceRange = ( {categoryByMinPrice, categoryByMaxPrice}) => {
-    const [value, setValue] = useState([categoryByMinPrice, categoryByMaxPrice]);
-    const [min, max] = value;
+const PriceRange = ( {categoryByMinPrice, categoryByMaxPrice, searchParams}) => {
+    const router = useRouter();
+    const [value, setValue] = useState([
+        searchParams?.min_price || categoryByMinPrice,
+        searchParams?.max_price || categoryByMaxPrice
+    ]);
+
+    const handleInputChange = (value) => {
+        setValue(value);
+        const [min, max] = value;
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+
+        params.set('min_price', min);
+        params.set('max_price', max);
+
+        url.search = params.toString();
+        router.push(url.toString(), undefined, { shallow: true });
+    };
     return (
         <>
             <div className="product-category-range-area sub-category-pb40">
                 <RangeSlider
-                    min={categoryByMinPrice}
-                    max={categoryByMaxPrice}
+                    min={1}
+                    max={10000}
                     value={value}
-                    onInput={setValue}
+                    onInput={handleInputChange}
                 />
                 <div className="product-category-rang-info d-flex align-items-center justify-content-between">
-                    <div className="product-category-rang-value">৳ {min}</div>
-                    <div className="product-category-rang-value">৳ {max}</div>
+                    <div className="product-category-rang-value">
+                        ৳ {value[0]}
+                    </div>
+                    <div className="product-category-rang-value">
+                        ৳ {value[1]}
+                    </div>
                 </div>
             </div>
         </>

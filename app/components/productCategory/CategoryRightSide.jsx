@@ -38,7 +38,7 @@ const CategoryRightSide = ({
                         Category Product Data Not Found!!!
                     </h1>
                 )}
-                {categoryProductLength > 12 && (
+                {categoryProductLength > 16 && (
                     <div className="row product-category-pagination-row">
                         <div className="col-md-12">
                             <div className="product-category-pagination-area d-flex flex-wrap  align-items-center justify-content-center">
