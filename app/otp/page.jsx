@@ -56,10 +56,6 @@ const OTP = () => {
                 setErrorMessage("Please provide required information");
             }
 
-            if (errorMessage) {
-                return;
-            }
-
             try {
                 const res = await getResendOTP({
                     phone: phone
