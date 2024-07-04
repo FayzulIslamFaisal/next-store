@@ -195,11 +195,6 @@ export function addToCartProductList() {
     return product;
 }
 
-
-// For Localhost
-// export const apiBaseUrl = "http://nagadhat-v3.test/api";
-// export const NagadhatPublicUrl = "http://nagadhat-v3.test";
-
 // storeUserAgent function captures the user agent using navigator.userAgent and stores it in local storage.
 export function storeUserAgent() {
     if (typeof window !== "undefined") {
