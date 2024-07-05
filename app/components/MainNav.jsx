@@ -27,7 +27,6 @@ function MainNav({
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
-    console.log("authStatus------>>>", authStatus);
     useEffect(() => {
         const fetchSearchProduct = async () => {
             if (!search || search.length < 3) {
@@ -337,20 +336,23 @@ function MainNav({
                                         </Link>
                                     )}
                                 </li>
-                                <li>
-                                    <Link
-                                        href="/registration"
-                                        className="text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src="/images/register-icon.svg"
-                                            alt="register-icon"
-                                            width={14}
-                                            height={17}
-                                        />
-                                        Register
-                                    </Link>
-                                </li>
+                                {authStatus === "unauthenticated" && (
+                                    <li>
+                                        <Link
+                                            href="/registration"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src="/images/register-icon.svg"
+                                                alt="register-icon"
+                                                width={14}
+                                                height={17}
+                                            />
+                                            Register
+                                        </Link>
+                                    </li>
+                                )}
+
                                 <li>
                                     <Link
                                         href="#"
