@@ -63,7 +63,7 @@
     }
 
     .observerable-header-section .header-search-location {
-        flex: 1.4;
+        flex: 1.6;
     }
 
     .category-menu-holder {
@@ -100,8 +100,7 @@
         width: 50%;
     }
     .observerable-header-section .logo {
-
-        flex: .68;
+        flex: 0.68;
     }
 }
 
@@ -479,7 +478,7 @@
         margin: 0 -5px !important;
     }
 
-    .flash-sale-content-area-grid .slick-slide>div {
+    .flash-sale-content-area-grid .slick-slide > div {
         padding: 0 5px !important;
     }
 
@@ -555,7 +554,7 @@
         flex-direction: column;
     }
     .view-all-product-title-box.justify-content-between {
-       flex-direction: column;
+        flex-direction: column;
     }
     .view-all-product-title-box.justify-content-between h2 {
         margin-bottom: 20px;
