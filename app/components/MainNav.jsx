@@ -94,6 +94,10 @@ function MainNav({
         };
     }, [setSearchProduct, setSearch]);
 
+    const clearSearch = () => {
+        setSearch("");
+    };
+
     return (
         <div ref={searchResultRef}>
             <div
@@ -159,6 +163,7 @@ function MainNav({
                             {search && isSearchProductAvailable() && (
                                 <ProductSearchResult
                                     searchProduct={searchProduct}
+                                    clearSearch={clearSearch}
                                 />
                             )}
                         </div>
