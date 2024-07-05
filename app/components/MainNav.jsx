@@ -316,6 +316,7 @@ function MainNav({
                                     {search && isSearchProductAvailable() && (
                                         <ProductSearchResultMobile
                                             searchProduct={searchProduct}
+                                            clearSearch={clearSearch}
                                         />
                                     )}
                                 </div>
