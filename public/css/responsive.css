@@ -62,10 +62,10 @@
         width: 70px;
     }
 
-    .observerable-header-section .header-search-location {
+    /* .observerable-header-section .header-search-location {
         flex: 1.6;
-    }
-
+    } */
+    
     .category-menu-holder {
         max-width: 25%;
         flex-basis: 25%;
