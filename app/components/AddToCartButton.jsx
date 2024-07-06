@@ -6,22 +6,47 @@ import { addToCartInLocalStorage } from "../utils";
 import { useSession } from "next-auth/react";
 import { addToCartProduct } from "../services/postAddToCartAfterLogin";
 
+//  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
+
 function findMissingProperties(decorateVariation, selectedVariantKey) {
-    const variantKeys = [
+    const requiredKeys = [
         "variation_size",
         "variation_color",
         "variation_weight",
     ];
+
+    const mainKeys = ["variation_size", "variation_color"];
+
     const missingProperties = [];
+
     decorateVariation.forEach((variant) => {
-        variantKeys.forEach((key) => {
-            if (variant[key] !== null && !selectedVariantKey.includes(key)) {
-                if (!missingProperties.includes(key)) {
-                    missingProperties.push(key);
+        const allRequiredKeysPresent = requiredKeys.every(
+            (key) => variant[key] !== null && variant[key] !== undefined
+        );
+
+        if (allRequiredKeysPresent) {
+            mainKeys.forEach((key) => {
+                if (!selectedVariantKey.includes(key)) {
+                    if (!missingProperties.includes(key)) {
+                        missingProperties.push(key);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            requiredKeys.forEach((key) => {
+                if (
+                    variant[key] !== null &&
+                    variant[key] !== undefined &&
+                    !selectedVariantKey.includes(key)
+                ) {
+                    if (!missingProperties.includes(key)) {
+                        missingProperties.push(key);
+                    }
+                }
+            });
+        }
     });
+
     return missingProperties;
 }
 
@@ -40,7 +65,8 @@ function AddToCartButton({
     selectedVariantProductInfo,
 }) {
     const { status, data: session } = useSession();
-
+    console.log("selectedVariantKeys", selectedVariantKeys);
+    console.log("decorateVariation", decorateVariation);
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {

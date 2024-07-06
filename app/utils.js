@@ -169,7 +169,9 @@ export function addToCartInLocalStorage(product) {
     let storedProducts = JSON.parse(localStorage.getItem("addToCart")) || [];
     // Check if product already exists (by id)
     const existingProductIndex = storedProducts.findIndex(
-        (p) => p.id === product.id && p.outlet_id === product.outlet_id
+        (p) =>
+            p.product_id === product.product_id &&
+            p.outlet_id === product.outlet_id
     );
 
     if (existingProductIndex === -1) {
