@@ -284,3 +284,21 @@ body {
 .flash-sale-content-area-grid .slick-slide > div {
   padding: 0 7px !important;
 }
+
+
+/* -------------------- customer-dashboard --------------------------*/
+
+.customer-dashboard-title{
+  font-size: 22px;
+}
+.customer-dashboard-subtitle{
+  font-size: 18px;
+}
+.customer-dashboard-2st-subtitle{
+  font-size: 18px;
+}
+
+.customer-dashboard-section-area {
+  padding: 50px 0;
+  background: var(--color-F5F5F5);
+}

@@ -61,3 +61,14 @@
 //     percent2 = (sliderTwo.value / sliderMaxValue) * 100;
 //     sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
 // }
+function handelUserDasbordNav() {
+    $(document).ready(function () {
+        $('.dropdown-btn').click(function () {
+            $('.dropdown-conteiner').not($(this).next()).slideUp();
+            $('.dropdown').not($(this).find('.dropdown')).removeClass('rotate');
+            $(this).next('.dropdown-conteiner').slideToggle();
+            $(this).find('.dropdown').toggleClass('rotate');
+        });
+    });
+}
+handelUserDasbordNav();

@@ -1,84 +1,274 @@
 "use client";
-
-import { getOrdersByUserId } from "@/app/services/getOrdersByUserId";
+import CustomerLeftSideNavbar from "@/app/components/customerDashboard/CustomerLeftSideNavbar";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 
 const CustomerDashboardPage = () => {
-    const [customerOrders, setCustomerOrders] = useState([]);
     const { data: session, status } = useSession();
-
-    useEffect(() => {
-        if (status === "authenticated") {
-            const getOrderDataFetch = async () => {
-                const orderData = await getOrdersByUserId(session?.accessToken);
-                const orderResult = orderData?.results;
-                setCustomerOrders(orderResult);
-            };
-            getOrderDataFetch();
-        }
-    }, [status, session]);
-
-    if (status === "loading") {
-        return <div>Loading...</div>;
-    }
-
-    if (status === "unauthenticated") {
-        return <div>Please log in to view your orders.</div>;
-    }
-
     return (
-        <section>
+        <section className="customer-dashboard-section-area">
             <div className="container">
-                <div className="row py-5">
-                    <div className="col-md-3">
-                        <div className="row">
-                            <div className=" col-md-12">
-                                <h4>{session?.user?.name}</h4>
-                                <strong>{session?.user?.email}</strong>
+                <div className="row">
+                    <CustomerLeftSideNavbar authSessionData={session} />
+                    <div className="col-lg-9 customer-dashboard-section">
+                        <div className="customer-dashboard-card">
+                            <div className="customer-dashboard-title-bar">
+                                <div>
+                                    <h1 className="customer-dashboard-title">
+                                        Dashboard
+                                    </h1>
+                                </div>
+                                <div className="fs-4">
+                                    <i className="fa-solid fa-bell"></i>
+                                </div>
+                            </div>
+                            <div className="row g-3 mb-4 customer-dashboard-display-area">
+                                <div className="col-6 col-md-3">
+                                    <div className="balance-area">
+                                        <h3>0</h3>
+                                        <p className="opacity-50">Balance</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div className="shopping-alance-area">
+                                        <h3>0</h3>
+                                        <p className="opacity-50">
+                                            Shopping Balance
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div className="ordered-area">
+                                        <h3>0</h3>
+                                        <p className="opacity-50">Ordered</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div className="in-cart-area">
+                                        <h3>0</h3>
+                                        <p className="opacity-50">in cart</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-9">
-                        <div className="row">
-                            <div className=" col-12">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Invoice ID</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Order Status</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">payment status</th>
-                                            <th scope="col">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {customerOrders &&
-                                            customerOrders.length > 0 &&
-                                            customerOrders.map((orderItem) => {
-                                                const {
-                                                    invoice_id,
-                                                    order_date,
-                                                    order_status,
-                                                    price_amount,
-                                                    payment_status,
-                                                } = orderItem;
-                                                return (
-                                                    <tr>
-                                                        <td>{invoice_id}</td>
-                                                        <td>{order_date}</td>
-                                                        <td>{order_status}</td>
-                                                        <td>{price_amount}</td>
-                                                        <td>
-                                                            {payment_status}
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                );
-                                            })}
-                                    </tbody>
-                                </table>
+
+                        <div className="d-flex gap-3 flex-column flex-md-row">
+                            <div className="customer-dashboard-card border-0 flex-1">
+                                <div className="p-3 border-bottom">
+                                    <h2 className="mb-0 customer-dashboard-subtitle">
+                                        Default Shipping Address
+                                    </h2>
+                                </div>
+                                <div className="p-4">
+                                    <div
+                                        className="mx-auto"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                    >
+                                        <div
+                                            className="add-new-address-bar"
+                                            data-toggle="modal"
+                                            data-target="#addNewAddressModal"
+                                        >
+                                            <FaPlus />
+                                            <div className="alpha-7">
+                                                Add New Address
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* <!-- Modal --> */}
+                                <div
+                                    className="modal fade modal-lg"
+                                    id="exampleModal"
+                                    tabindex="-1"
+                                    aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true"
+                                >
+                                    <div className="modal-dialog modal-dialog-centered">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h1
+                                                    className="modal-title customer-dashboard-title"
+                                                    id="exampleModalLabel"
+                                                >
+                                                    Shipping Address
+                                                </h1>
+                                                <button
+                                                    type="button"
+                                                    className="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"
+                                                ></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <div className="shaipping-from-area px-4">
+                                                    <from className="row ">
+                                                        <div className="col-md-6 pb-3">
+                                                            <label
+                                                                for="mobile"
+                                                                className="form-label"
+                                                            >
+                                                                Mobile Number{" "}
+                                                                <span className="text-danger fw-bold">
+                                                                    *
+                                                                </span>
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                name="mobile"
+                                                                className="form-control"
+                                                                id="mobile"
+                                                            />
+                                                        </div>
+                                                        <div className="col-md-6 pb-3">
+                                                            <label
+                                                                for="email"
+                                                                className="form-label"
+                                                            >
+                                                                Email(Optonal)
+                                                            </label>
+                                                            <input
+                                                                type="email"
+                                                                name="email"
+                                                                className="form-control"
+                                                                id="email"
+                                                            />
+                                                        </div>
+                                                        <div className="col-md-6 pb-3">
+                                                            <label
+                                                                for="district"
+                                                                className="form-label"
+                                                            >
+                                                                District{" "}
+                                                                <span className="text-danger fw-bold">
+                                                                    *
+                                                                </span>
+                                                            </label>
+                                                            <select
+                                                                className="form-select district-list"
+                                                                name="district"
+                                                                id="district"
+                                                            >
+                                                                <option defaultValue="District">
+                                                                    District
+                                                                </option>
+                                                                <option value="Barisal">
+                                                                    Barisal
+                                                                </option>
+                                                                <option value="Chittagong">
+                                                                    Chittagong
+                                                                </option>
+                                                                <option value="Dhaka">
+                                                                    Dhaka
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="col-md-6 pb-3">
+                                                            <label
+                                                                for="city"
+                                                                className="form-label"
+                                                            >
+                                                                City
+                                                            </label>
+
+                                                            <select
+                                                                className="form-select district-list"
+                                                                name="city"
+                                                                id="city"
+                                                            >
+                                                                <option defaultValue="City">
+                                                                    City
+                                                                </option>
+                                                                <option value="Barisal">
+                                                                    Barisal
+                                                                </option>
+                                                                <option value="Chittagong">
+                                                                    Chittagong
+                                                                </option>
+                                                                <option value="Dhaka">
+                                                                    Dhaka
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="col-md-12 pb-3">
+                                                            <label
+                                                                for="address"
+                                                                className="form-label"
+                                                            >
+                                                                Address
+                                                            </label>
+                                                            <textarea
+                                                                name="address"
+                                                                id="address"
+                                                                className="form-control textarea-resize"
+                                                                rows="2"
+                                                            ></textarea>
+                                                        </div>
+                                                    </from>
+                                                </div>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button
+                                                    type="button"
+                                                    className="add-to-cart-link bg-danger border-0"
+                                                    data-bs-dismiss="modal"
+                                                >
+                                                    Close
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="add-to-cart-link border-0"
+                                                >
+                                                    Save changes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* <!-- Modal End --> */}
+
+                                {/* <!------------- if Address -------------> */}
+
+                                {/* <!-- <div className="p-4 ">
+                                <div className="d-flex gap-4 border p-3 rounded">
+                                    <div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, fugit?</p>
+                                    </div>
+                                    <div> 
+                                        <i className="fa-solid fa-ellipsis-vertical"></i>
+                                    </div>
+                                </div>
+                            </div>  --> */}
+                            </div>
+                            <div className="customer-dashboard-card flex-1">
+                                <div className="border-bottom p-3">
+                                    <h2 className="mb-0 customer-dashboard-subtitle">
+                                        Affiliate Partner
+                                    </h2>
+                                </div>
+                                <div
+                                    className="d-flex align-items-center justify-content-center gap-4 text-center p-4"
+                                    id="affiliateApply"
+                                >
+                                    <a
+                                        className="customer-dashboard-affiliate-badge"
+                                        href="#"
+                                    >
+                                        <img
+                                            src="/images/affiliate-badge.gif"
+                                            className="img-fluid"
+                                        />
+                                    </a>
+                                    <div className="affiliate-status-title">
+                                        <h4>
+                                            Status:
+                                            <span>Active</span>
+                                        </h4>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
