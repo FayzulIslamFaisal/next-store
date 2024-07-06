@@ -7,6 +7,7 @@ import { getCustomerAllShippingAddress } from "../services/getShippingCustomerAd
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 import { NagadhatPublicUrl } from "../utils";
 import { placeOrder } from "../services/postPlaceOrder";
+import Link from "next/link";
 
 const ShippingPage = () => {
     const [customerAddress, setCustomerAddress] = useState([]);
@@ -1096,12 +1097,13 @@ const ShippingPage = () => {
                                         </div>
                                     </div> */}
                                     <div className="place-order-btn">
-                                        <button
+                                        <Link
+                                            href={"/dashboard"}
                                             onClick={handlePlaceOrder}
                                             className="add-to-cart-link border border-0 w-100"
                                         >
                                             PLACE ORDER
-                                        </button>
+                                        </Link>
                                     </div>
                                     <p>
                                         Lorem ipsum dolor sit amet consectetur
