@@ -66,7 +66,7 @@ function AddToCartButton({
                     } else {
                         setProductVariationError(" ");
                         const addToCartInfo = {
-                            productInfo_id: productInfo?.id,
+                            product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
                             discountPrice: productPrice?.discountPrice,
@@ -93,7 +93,7 @@ function AddToCartButton({
                     }
                 } else {
                     const addToCartInfo = {
-                        productInfo_id: productInfo?.id,
+                        product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
                         discountPrice: productPrice?.discountPrice,

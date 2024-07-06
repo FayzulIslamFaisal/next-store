@@ -4,6 +4,9 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../services/getShippingCustomerAddresses";
+import { fetchCartProducts } from "../services/getShowAddToCartProduct";
+import { NagadhatPublicUrl } from "../utils";
+import { placeOrder } from "../services/postPlaceOrder";
 
 const ShippingPage = () => {
     const [customerAddress, setCustomerAddress] = useState([]);
@@ -16,9 +19,13 @@ const ShippingPage = () => {
         note: "",
         setDefault: false,
     });
-
+    const [cartProduct, setCartProduct] = useState([]);
     const { status, data: session } = useSession();
     const [auth, setAuth] = useState(session?.user);
+    let price;
+    let totalPrice = 0;
+    let discountPrice;
+    let totalDiscountPrice = 0;
     console.log("=>>> get login status", status);
     console.log("=>>> get login session", session);
     console.log("auth", auth);
@@ -29,6 +36,7 @@ const ShippingPage = () => {
             [name]: type === "checkbox" ? checked : value,
         });
     };
+
     const handleAddDeliveryAddress = async () => {
         console.log(formData);
         const response = await fetch(
@@ -60,19 +68,55 @@ const ShippingPage = () => {
             // Handle error
         }
     };
-
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getCustomerAllShippingAddress(
-                session?.accessToken
-            );
-            setCustomerAddress(data.results);
+            if (session) {
+                try {
+                    const data = await getCustomerAllShippingAddress(
+                        session.accessToken
+                    );
+                    setCustomerAddress(data.results);
+                    console.log("session.accessToken", session.accessToken);
+
+                    const cartProduct = await fetchCartProducts(
+                        session.accessToken
+                    );
+                    setCartProduct(cartProduct?.data);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            }
         };
 
         fetchData();
     }, [session]);
 
-    console.log("customerDefaultAddress", customerAddress);
+    console.log(" cartProduct", cartProduct);
+
+    const handlePlaceOrder = async () => {
+        const cartItems = cartProduct?.map((item) => ({
+            product_id: item.product_id,
+            product_quantity: item.quantity,
+            product_unit_price: item.price,
+            product_variation_id: item.product_variation_id,
+            product_shipping_charge: "", // Replace with actual shipping charge if applicable
+            product_discount_type: item.discount_type,
+            product_discount_amount: item.discountPrice,
+            vendor_id: "", // Replace with actual vendor ID if applicable
+            thumbnail: item.product_thumbnail,
+        }));
+        const payload = {
+            outlet_id: 3,
+            location_id: 47,
+            shipping_address_id: 1, // Replace with actual shipping address ID if applicable
+            delivery_note: "",
+            payment_type: "cash_on_delivery",
+            cart_items: cartItems,
+        };
+        console.log("placeOrder", payload);
+        const placeOrderData = await placeOrder(payload, session?.accessToken);
+        console.log("placeOrder", placeOrderData);
+    };
 
     return (
         <section className="shipping-section-area nh-new-shipping-wrapper">
@@ -802,88 +846,143 @@ const ShippingPage = () => {
                         </div>
 
                         <div className="row new-nh-shipping-product-row">
-                            <div className="col-12">
-                                <div className="product-cart-details-continer table-responsive rounded-2">
-                                    <table className="table align-middle">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div className="product-cart-product-img">
-                                                        <Image
-                                                            fill={true}
-                                                            className="img-fluid"
-                                                            src="/images/primaSatgebabyFood.jpg"
-                                                            alt="black-friday"
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <h2 className="product-cart-text">
-                                                        LED Monitor With High
-                                                        Quality In The World
-                                                    </h2>
-                                                    <strong className="product-cart-price">
-                                                        <span>
-                                                            Mediker, Scent:
-                                                            fresh
-                                                        </span>
-                                                    </strong>
-                                                </td>
-                                                <td>
-                                                    <p className="text-capitalize new-nh-product-qty">
-                                                        qty: 1
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex flex-column gap-1 align-items-center justify-content-between new-nh-product-price">
-                                                        <p>৳ 500</p>
-                                                        <del className="rounded-1">
-                                                            ৳ 320
-                                                        </del>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="product-cart-product-img">
-                                                        <Image
-                                                            fill={true}
-                                                            className="img-fluid"
-                                                            src="/images/primaSatgebabyFood.jpg"
-                                                            alt="black-friday"
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <h2 className="product-cart-text">
-                                                        LED Monitor With High
-                                                        Quality In The World
-                                                    </h2>
-                                                    <strong className="product-cart-price">
-                                                        <span>
-                                                            Mediker, Scent:
-                                                            fresh
-                                                        </span>
-                                                    </strong>
-                                                </td>
-                                                <td>
-                                                    <p className="text-capitalize new-nh-product-qty">
-                                                        qty: 1
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex flex-column gap-1 align-items-center justify-content-between new-nh-product-price">
-                                                        <p>৳ 500</p>
-                                                        <del className="rounded-1">
-                                                            ৳ 320
-                                                        </del>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            {cartProduct?.length > 0 && (
+                                <div className="col-12">
+                                    <div className="product-cart-details-continer table-responsive rounded-2">
+                                        <table className="table align-middle">
+                                            <tbody>
+                                                {cartProduct?.map(
+                                                    (item, index) => {
+                                                        price =
+                                                            item.price *
+                                                            item.quantity;
+                                                        discountPrice =
+                                                            item.discountPrice *
+                                                            item.quantity;
+                                                        totalPrice += price;
+                                                        totalDiscountPrice +=
+                                                            discountPrice;
+
+                                                        return (
+                                                            <tr key={index}>
+                                                                <td>
+                                                                    <div className="product-cart-product-img">
+                                                                        <Image
+                                                                            fill={
+                                                                                true
+                                                                            }
+                                                                            className="img-fluid"
+                                                                            src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
+                                                                            alt="black-friday"
+                                                                        />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <h2 className="product-cart-text">
+                                                                        {
+                                                                            item?.product_name
+                                                                        }
+                                                                    </h2>
+                                                                    <strong>
+                                                                        {item?.selectedVariants &&
+                                                                            item?.selectedVariants.map(
+                                                                                (
+                                                                                    variant,
+                                                                                    inx
+                                                                                ) => {
+                                                                                    const [
+                                                                                        key,
+                                                                                        value,
+                                                                                    ] =
+                                                                                        Object.entries(
+                                                                                            variant
+                                                                                        )[0]; // Get the key-value pair from the variant object
+
+                                                                                    // Check if the key is 'variation_color'
+                                                                                    if (
+                                                                                        key ===
+                                                                                        "variation_color"
+                                                                                    ) {
+                                                                                        return (
+                                                                                            <span
+                                                                                                key={
+                                                                                                    inx
+                                                                                                }
+                                                                                                className="product-details-inner-color product-details-variant-item"
+                                                                                                style={{
+                                                                                                    border: "3px solid #44bc9d",
+                                                                                                    width: "30px !important",
+                                                                                                    height: "30px !important",
+                                                                                                    background:
+                                                                                                        value.toLowerCase(),
+                                                                                                    cursor: "pointer",
+                                                                                                    marginLeft:
+                                                                                                        "10px",
+                                                                                                    marginRight:
+                                                                                                        "10px",
+                                                                                                }}
+                                                                                            ></span>
+                                                                                        );
+                                                                                    }
+
+                                                                                    // Default rendering for other variants
+                                                                                    return (
+                                                                                        <span
+                                                                                            key={
+                                                                                                inx
+                                                                                            }
+                                                                                            className="product-details-variant-item variantAttributeActive"
+                                                                                            style={{
+                                                                                                border: "2px solid #7B7B7B",
+                                                                                                cursor: "pointer",
+                                                                                                marginLeft:
+                                                                                                    "10px",
+                                                                                                marginRight:
+                                                                                                    "10px",
+                                                                                            }}
+                                                                                        >
+                                                                                            <label>
+                                                                                                {
+                                                                                                    value
+                                                                                                }
+                                                                                            </label>
+                                                                                        </span>
+                                                                                    );
+                                                                                }
+                                                                            )}
+                                                                    </strong>
+                                                                </td>
+                                                                <td>
+                                                                    <p className="text-capitalize new-nh-product-qty">
+                                                                        qty:{" "}
+                                                                        {
+                                                                            item?.quantity
+                                                                        }
+                                                                    </p>
+                                                                </td>
+                                                                <td>
+                                                                    <div className="d-flex flex-column gap-1 align-items-center justify-content-between new-nh-product-price">
+                                                                        <p>
+                                                                            ৳{" "}
+                                                                            {item?.price *
+                                                                                item?.quantity}
+                                                                        </p>
+                                                                        <del className="rounded-1">
+                                                                            ৳
+                                                                            {item?.discountPrice *
+                                                                                item?.quantity}
+                                                                        </del>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    }
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                     <div className="col-lg-4">
@@ -893,7 +992,7 @@ const ShippingPage = () => {
                                     <div className="shipping-section-subtitle">
                                         <h3>Shopping Summary</h3>
                                     </div>
-                                    <div className="d-flex gap-3 flex-column border-bottom pb-3">
+                                    {/* <div className="d-flex gap-3 flex-column border-bottom pb-3">
                                         <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                             <div className="d-flex gap-3">
                                                 <strong>1x</strong>
@@ -921,11 +1020,12 @@ const ShippingPage = () => {
                                                 </del>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
+
                                     <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                         <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                             <p>Subtotal</p>
-                                            <strong>৳1,952.66</strong>
+                                            <strong>৳{totalPrice}</strong>
                                         </div>
                                         <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                             <p>
@@ -938,18 +1038,20 @@ const ShippingPage = () => {
                                         </div>
                                         <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                             <p>discount</p>
-                                            <strong>৳66.00</strong>
+                                            <strong>
+                                                ৳{totalDiscountPrice}
+                                            </strong>
                                         </div>
                                     </div>
                                     <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                         <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
                                             <strong>Total</strong>
                                             <p className="total-order-price">
-                                                ৳1,952.66
+                                                ৳ {totalPrice}
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="shipping-section-subtitle">
+                                    {/* <div className="shipping-section-subtitle">
                                         <h3>Payment</h3>
                                     </div>
                                     <div>
@@ -992,9 +1094,12 @@ const ShippingPage = () => {
                                                 Cash On Delivery
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="place-order-btn">
-                                        <button className="add-to-cart-link border border-0 w-100">
+                                        <button
+                                            onClick={handlePlaceOrder}
+                                            className="add-to-cart-link border border-0 w-100"
+                                        >
                                             PLACE ORDER
                                         </button>
                                     </div>

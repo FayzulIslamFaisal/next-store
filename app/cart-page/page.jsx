@@ -2,9 +2,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { NagadhatPublicUrl, addToCartProductList } from "../utils";
+import { NagadhatPublicUrl, addToCartProductList, apiBaseUrl } from "../utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { deleteCartProduct } from "../services/getDeleteCartProduct";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -21,12 +22,17 @@ const CartPage = () => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
 
-    const handleDelete = (index) => {
-        const updatedItemsInCard = checkedProductCard.filter(
-            (item, i) => i !== index
-        );
-        setCheckedProductCard(updatedItemsInCard);
-        updateLocalStorage(updatedItemsInCard);
+    const handleDelete = async (cart_id) => {
+        if (session) {
+            console.log("product delete run", session?.accessToken);
+            await deleteCartProduct(cart_id, session?.accessToken);
+        } else {
+            const updatedItemsInCard = checkedProductCard.filter(
+                (item, i) => i !== cart_id
+            );
+            setCheckedProductCard(updatedItemsInCard);
+            updateLocalStorage(updatedItemsInCard);
+        }
     };
 
     const handleSelectedItemDelete = () => {
@@ -132,7 +138,7 @@ const CartPage = () => {
         try {
             console.log("get cart product ================");
             const response = await fetch(
-                "https://v3.nagadhat.com/api/get-cart-products?outlet_id=3&location_id=47",
+                `${apiBaseUrl}/get-cart-products?outlet_id=3&location_id=47`,
                 {
                     method: "GET",
                     headers: {
@@ -173,6 +179,7 @@ const CartPage = () => {
     console.log("=>>> get login status", status);
     console.log("=>>> get login session", session);
     console.log("sfddkfjndfk", checkedProductCard);
+
     return (
         <section className="cart-section-area">
             <div className="container">
@@ -231,7 +238,7 @@ const CartPage = () => {
                                                                 <input
                                                                     className="cart-checkbox"
                                                                     type="checkbox"
-                                                                    name={`${item?.id}`}
+                                                                    name={`${item?.product_id}`}
                                                                     checked={
                                                                         item?.isChecked ||
                                                                         false
@@ -354,7 +361,7 @@ const CartPage = () => {
                                                                             className="btn quantity-increase"
                                                                             onClick={() => {
                                                                                 handleDecrement(
-                                                                                    item?.id
+                                                                                    item?.product_id
                                                                                 );
                                                                             }}
                                                                         >
@@ -385,7 +392,7 @@ const CartPage = () => {
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 handleIncrement(
-                                                                                    item?.id
+                                                                                    item?.product_id
                                                                                 );
                                                                             }}
                                                                         >
@@ -404,7 +411,9 @@ const CartPage = () => {
                                                                         className="product-cart-remov-btn"
                                                                         onClick={() =>
                                                                             handleDelete(
-                                                                                index
+                                                                                session
+                                                                                    ? item?.cart_id
+                                                                                    : index
                                                                             )
                                                                         }
                                                                     >
