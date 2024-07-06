@@ -64,11 +64,15 @@ export default function RootLayout({ children, slug, option }) {
             <link rel="stylesheet" href="/css/collapse.css" precedence="default"/>
             <link rel="stylesheet" href="/css/new-shipping.css" precedence="default"/>
             <link rel="stylesheet" href="/css/questionCard.css" precedence="default"/>
+            <link rel="stylesheet" href="/css/not-found-page.css"  precedence="default"/>
+            <link rel="stylesheet" href="/css/customer-dashboard.css" precedence="default"/>
+            <link rel="stylesheet" href="/css/customer-order-history.css" precedence="default" />
             <link rel="stylesheet" href="/css/common.css" precedence="default"/>
             <link rel="stylesheet" href="/css/responsive.css" precedence="default"/>
+            <link rel="stylesheet" href="/css/otp.css" precedence="default"/>
             {/* <Script strategy="afterInteractive" src="/js/jquery.min.js" /> */}
             <Script strategy="afterInteractive" src="/js/bootstrap.bundle.min.js"/>
-            <link rel="stylesheet" href="/css/otp.css" precedence="default"/>
+            <Script src="/js/jquery.min.js" />
             <Script src="/js/custom.js" />
 
             <body>

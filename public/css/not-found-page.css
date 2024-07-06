@@ -1,0 +1,32 @@
+.not-found-page-area{
+    padding: 20px 0;
+}
+
+.not-found-page-text-holder{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+.not-found-page-text-holder h1{
+ font-size: 100px;
+ font-weight: 800;
+ margin-bottom: 0;
+}
+.not-found-page-text-holder p{
+ font-size: 16px;
+ font-weight: 600;
+ padding-bottom: 28px;
+}
+.not-found-page-img-area{
+    max-width: 500px;
+    flex: 1;
+}
+.not-found-img {
+    position: relative;
+    width: 500px;
+    height: 500px;
+}
+.not-found-img img {
+    object-fit: cover;
+}

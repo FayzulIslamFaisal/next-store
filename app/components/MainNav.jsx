@@ -61,14 +61,18 @@ function MainNav({
                 let selectedDivision = divisionResult.find(
                     (item) => item.id == divisionId
                 );
-                setDivisionName(selectedDivision?.name);
+                if (selectedDivision?.name) {
+                    setDivisionName(selectedDivision?.name);
+                }
             }
 
             if (districtResult && districtResult.length > 0) {
                 let selectedDistrict = districtResult.find(
                     (item) => item.id == districtId
                 );
-                setDistrictName(selectedDistrict?.name);
+                if (selectedDistrict?.name) {
+                    setDistrictName(selectedDistrict?.name);
+                }
             }
         };
 
