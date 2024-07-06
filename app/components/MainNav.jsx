@@ -27,7 +27,6 @@ function MainNav({
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
-
     useEffect(() => {
         const fetchSearchProduct = async () => {
             if (!search || search.length < 3) {
@@ -49,7 +48,7 @@ function MainNav({
         };
         fetchSearchProduct();
     }, [search, districtId]);
-  
+
     const isSearchProductAvailable = () => {
         return searchProduct.length !== 0;
     };
@@ -76,8 +75,8 @@ function MainNav({
         fetchData();
     }, []);
 
-     // Function to handle click outside the modal
-     useEffect(() => {
+    // Function to handle click outside the modal
+    useEffect(() => {
         const handleClickOutside = (event) => {
             if (
                 searchResultRef.current &&
@@ -94,6 +93,10 @@ function MainNav({
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [setSearchProduct, setSearch]);
+
+    const clearSearch = () => {
+        setSearch("");
+    };
 
     return (
         <div ref={searchResultRef}>
@@ -160,6 +163,7 @@ function MainNav({
                             {search && isSearchProductAvailable() && (
                                 <ProductSearchResult
                                     searchProduct={searchProduct}
+                                    clearSearch={clearSearch}
                                 />
                             )}
                         </div>
@@ -183,20 +187,23 @@ function MainNav({
                                         </Link>
                                     )}
                                 </li>
-                                <li>
-                                    <Link
-                                        href="/registration"
-                                        className="text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src="/images/register-icon.svg"
-                                            alt="register-icon"
-                                            width={14}
-                                            height={17}
-                                        />
-                                        Register
-                                    </Link>
-                                </li>
+                                {authStatus === "unauthenticated" && (
+                                    <li>
+                                        <Link
+                                            href="/registration"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src="/images/register-icon.svg"
+                                                alt="register-icon"
+                                                width={14}
+                                                height={17}
+                                            />
+                                            Register
+                                        </Link>
+                                    </li>
+                                )}
+
                                 <li>
                                     <Link
                                         href="/cart-page"
@@ -309,6 +316,7 @@ function MainNav({
                                     {search && isSearchProductAvailable() && (
                                         <ProductSearchResultMobile
                                             searchProduct={searchProduct}
+                                            clearSearch={clearSearch}
                                         />
                                     )}
                                 </div>
@@ -334,20 +342,23 @@ function MainNav({
                                         </Link>
                                     )}
                                 </li>
-                                <li>
-                                    <Link
-                                        href="/registration"
-                                        className="text-white text-capitalize d-flex align-items-center"
-                                    >
-                                        <Image
-                                            src="/images/register-icon.svg"
-                                            alt="register-icon"
-                                            width={14}
-                                            height={17}
-                                        />
-                                        Register
-                                    </Link>
-                                </li>
+                                {authStatus === "unauthenticated" && (
+                                    <li>
+                                        <Link
+                                            href="/registration"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <Image
+                                                src="/images/register-icon.svg"
+                                                alt="register-icon"
+                                                width={14}
+                                                height={17}
+                                            />
+                                            Register
+                                        </Link>
+                                    </li>
+                                )}
+
                                 <li>
                                     <Link
                                         href="#"

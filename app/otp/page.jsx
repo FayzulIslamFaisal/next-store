@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import { getOTPVerify } from "../services/getOTPVerify";
@@ -54,10 +55,6 @@ const OTP = () => {
         async function resendOTP() {
             if (!phone) {
                 setErrorMessage("Please provide required information");
-            }
-
-            if (errorMessage) {
-                return;
             }
 
             try {

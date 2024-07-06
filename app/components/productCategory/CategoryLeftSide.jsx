@@ -34,6 +34,7 @@ const CategoryLeftSide = ({
                         <PriceRange
                             categoryByMinPrice={categoryByMinPrice}
                             categoryByMaxPrice={categoryByMaxPrice}
+                            searchParams={searchParams}
                         />
                     </>
                 )}

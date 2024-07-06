@@ -1,4 +1,4 @@
-//For Live
+// For Live
 export const apiBaseUrl = "https://v3.nagadhat.com/api";
 export const NagadhatPublicUrl = "https://v3.nagadhat.com";
 
