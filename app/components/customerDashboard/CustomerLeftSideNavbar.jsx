@@ -46,308 +46,308 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a
+                            <Link
                                 className="nav-link customer-dashboard-nav-link "
                                 href="/orderhistory"
                             >
                                 <FaThList className="nav-icon me-2" />
                                 Order History
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaCreditCard className="nav-icon me-2" />
                                 Privilege Card
                                 <FaAngleRight className="dropdown" />
-                            </a>
+                            </Link>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Privilege Dashboard
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Discount Partner
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Wallet Statement
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Rebate History
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaWallet className="nav-icon me-2" />
                                 Affiliate
                                 <FaAngleRight className="dropdown" />
-                            </a>
+                            </Link>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Affiliate Dashboard
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         My Team
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Affiliate Products Link
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Resell Products
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Resell Products Option
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Sell On Nagadhat
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Ranks & Rewards
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         My Challenges
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Terms & Condition
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaBangladeshiTakaSign className="nav-icon me-2" />
                                 Payout
                                 <FaAngleRight className="dropdown" />
-                            </a>
+                            </Link>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Affiliate Bonus
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Resell Bonus
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Generation Bonus
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Ranks & Rewards
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Challenge
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Salary
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a
+                            <Link
                                 className="nav-link customer-dashboard-nav-link"
                                 href="#"
                             >
                                 <FaGift className="nav-icon me-2" />
                                 My Vouchers
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a
+                            <Link
                                 className="nav-link customer-dashboard-nav-link"
                                 href="/customerManageProfile.html"
                             >
                                 <FaUser className="nav-icon me-2" />
                                 Manage Profile/KYC
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a className="nav-link customer-dashboard-nav-link dropdown-btn ">
+                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn ">
                                 <FaCog className="nav-icon me-2" />
                                 Settings
                                 <FaAngleRight className="dropdown" />
-                            </a>
+                            </Link>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link "
                                         href="/customerSetting.html"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Password & TXN OTP
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="/customerSettingShaippingAddress.html"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Shipping Address
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaPoll className="nav-icon me-2" />
                                 Others
                                 <FaAngleRight className="dropdown" />
-                            </a>
+                            </Link>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Invitations
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <a
+                                    <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Quizes
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a
+                            <Link
                                 className="nav-link customer-dashboard-nav-link"
                                 href="#"
                             >
                                 <FaTicket className="nav-icon me-2" />
                                 Support
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <a
+                            <Link
                                 className="nav-link customer-dashboard-nav-link"
                                 href="#"
                             >
                                 <i className="fas fa-sign-out-alt nav-icon pe-2"></i>
                                 <FaSignOutAlt className="nav-icon me-2" />
                                 Logout
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </nav>
-                <a className="w-100 add-to-cart-link" href="#">
+                <Link className="w-100 add-to-cart-link" href="#">
                     Be a Seller
-                </a>
+                </Link>
             </div>
         </aside>
     );
