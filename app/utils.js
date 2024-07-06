@@ -167,21 +167,21 @@ export function addToCartInLocalStorage(product) {
     }
 
     let storedProducts = JSON.parse(localStorage.getItem("addToCart")) || [];
-    // Check if product already exists (by id)
+
+    // Check if product already exists (by id and variation id)
     const existingProductIndex = storedProducts.findIndex(
         (p) =>
             p.product_id === product.product_id &&
-            p.outlet_id === product.outlet_id
+            p.outlet_id === product.outlet_id &&
+            p.product_variation_id === product.product_variation_id
     );
 
     if (existingProductIndex === -1) {
-        // If product is unique, add it to the end of the array
+        // If product is unique, add it to the array
         storedProducts = [product, ...storedProducts];
     } else {
-        // If product exists, remove it from the array
-        storedProducts.splice(existingProductIndex, 1);
-        // Add the updated product to the beginning of the array
-        storedProducts = [product, ...storedProducts];
+        // If product exists, increment its quantity
+        storedProducts[existingProductIndex].quantity += product.quantity;
     }
 
     // Update localStorage with the modified array
