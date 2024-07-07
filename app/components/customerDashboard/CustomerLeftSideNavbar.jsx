@@ -55,11 +55,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <p className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaCreditCard className="nav-icon me-2" />
                                 Privilege Card
                                 <FaAngleRight className="dropdown" />
-                            </Link>
+                            </p>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
@@ -100,11 +100,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <p className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaWallet className="nav-icon me-2" />
                                 Affiliate
                                 <FaAngleRight className="dropdown" />
-                            </Link>
+                            </p>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
@@ -190,11 +190,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <p className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaBangladeshiTakaSign className="nav-icon me-2" />
                                 Payout
                                 <FaAngleRight className="dropdown" />
-                            </Link>
+                            </p>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
@@ -271,11 +271,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </Link>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn ">
+                            <p className="nav-link customer-dashboard-nav-link dropdown-btn ">
                                 <FaCog className="nav-icon me-2" />
                                 Settings
                                 <FaAngleRight className="dropdown" />
-                            </Link>
+                            </p>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
@@ -298,11 +298,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </ul>
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
-                            <Link className="nav-link customer-dashboard-nav-link dropdown-btn">
+                            <p className="nav-link customer-dashboard-nav-link dropdown-btn">
                                 <FaPoll className="nav-icon me-2" />
                                 Others
                                 <FaAngleRight className="dropdown" />
-                            </Link>
+                            </p>
                             <ul className="dropdown-conteiner">
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link

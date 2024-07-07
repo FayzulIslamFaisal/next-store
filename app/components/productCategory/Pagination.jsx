@@ -2,7 +2,6 @@
 import Link from "next/link";
 
 const Pagination = ({ currentPage, lastPage, onPageChange }) => {
-    console.log({lastPage})
     const createPageLinks = () => {
         let pages = [];
         for (let i = 1; i <= lastPage; i++) {

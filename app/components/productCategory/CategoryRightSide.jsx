@@ -30,7 +30,12 @@ const CategoryRightSide = ({
                             </p>
                         )}
                     </div>
-                    {categoryProductLength > 0 && <ShotBy searchParams={searchParams} categoryByProduct={categoryByProduct} />}
+                    {categoryProductLength > 0 && (
+                        <ShotBy
+                            searchParams={searchParams}
+                            categoryByProduct={categoryByProduct}
+                        />
+                    )}
                 </div>
                 {categoryProductLength > 0 ? (
                     <CategoryProductArchive productArvhiveList={categoryByProduct} />

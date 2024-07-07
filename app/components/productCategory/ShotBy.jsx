@@ -1,11 +1,13 @@
 "use client";
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-const ShotBy = ({searchParams, categoryByProduct}) => {
+const ShotBy = ({ searchParams, categoryByProduct }) => {
     const { id } = categoryByProduct;
     const router = useRouter();
-    const [orderValue, setOrderValue] = useState(searchParams?.order || 'Best Match');
+    const [orderValue, setOrderValue] = useState(
+        searchParams?.order || "Best Match"
+    );
     const handleChange = (e) => {
         const order = e.target.value;
         updateURL(order);
@@ -14,10 +16,10 @@ const ShotBy = ({searchParams, categoryByProduct}) => {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
 
-        if (order === 'Best Match') {
-            params.delete('order');
+        if (order === "Best Match") {
+            params.delete("order");
         } else {
-            params.set('order', order);
+            params.set("order", order);
         }
 
         url.search = params.toString();
@@ -29,18 +31,28 @@ const ShotBy = ({searchParams, categoryByProduct}) => {
             <div className="category-shot-area d-flex align-items-center">
                 <p className=" text-capitalize">Shot By</p>
                 <div className="category-shot-option">
-                <select className="form-select"
-                    onChange={handleChange}
-                    value={orderValue}
-                >
-                    <option value="Best Match"> Best Match </option>
-                    <option value="asc">Low to High Price</option>
-                    <option value="desc">High to Low Price</option>
-                 </select>
+                    <select
+                        className="form-select"
+                        onChange={handleChange}
+                        value={orderValue}
+                    >
+                        <option
+                            value="Best Match"
+                            selected={orderValue === "Best Match"}
+                        >
+                            Best Match
+                        </option>
+                        <option value="asc" selected={orderValue === "asc"}>
+                            Low to High Price
+                        </option>
+                        <option value="desc" selected={orderValue === "desc"}>
+                            High to Low Price
+                        </option>
+                    </select>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ShotBy
+export default ShotBy;

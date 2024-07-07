@@ -1,39 +1,66 @@
 "use client";
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 const CategoryColorVariantItems = ({ colorItem, searchParams }) => {
     const { id, value: bgColor } = colorItem;
 
-    let router = useRouter()
-    const [checked, setChecked] = useState(id === searchParams?.color);
+    const router = useRouter();
+    const [checked, setChecked] = useState(false);
 
-    const handleChange = (e) => {
+    useEffect(() => {
+        setChecked(
+            searchParams?.color &&
+                searchParams.color.split(",").includes(id.toString())
+        );
+    }, [searchParams, id]);
+
+    const handleChange = () => {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
 
+        // Toggle the selection
         if (checked) {
-            params.delete('color');
+            // Remove color from params
+            const updatedColors = searchParams.color
+                .split(",")
+                .filter((colorId) => colorId !== id.toString());
+            if (updatedColors.length > 0) {
+                params.set("color", updatedColors.join(","));
+            } else {
+                params.delete("color");
+            }
         } else {
-            params.set('color', id);
+            // Add color to params
+            const currentColors = searchParams.color
+                ? searchParams.color.split(",")
+                : [];
+            params.set("color", [...currentColors, id].join(","));
         }
 
-        url.search = params.toString();
-        router.push(url.toString(), undefined, { shallow: true });
+        // Convert params to string with commas instead of %2C
+        const newUrlSearchParams = decodeURIComponent(params.toString());
+
+        router.push(
+            `${window.location.pathname}?${newUrlSearchParams}`,
+            undefined,
+            { shallow: true }
+        );
         setChecked(!checked);
     };
 
     return (
         <div
             className="product-details-inner-color product-details-variant-item"
-            style={{ background: `${bgColor}` }}
-        >  
+            style={{ background: bgColor }}
+        >
             <input
                 type="checkbox"
-                name="color"
+                name={`color-${id}`}
                 id={`color-variant_${id}`}
-                value={id}
                 checked={checked}
                 onChange={handleChange}
+                value={checked}
             />
             <label htmlFor={`color-variant_${id}`}></label>
         </div>
