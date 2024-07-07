@@ -1,6 +1,7 @@
 "use client";
 import CustomerLeftSideNavbar from "@/app/components/customerDashboard/CustomerLeftSideNavbar";
-import CustomerDashboardRightSide from "@/app/components/customerDashboard/dashboard/customerDashboardRightSide";
+import CustomerDashboardRightSide from "@/app/components/customerDashboard/dashboard/CustomerDashboardRightSide";
+
 import { useSession } from "next-auth/react";
 
 const CustomerDashboardPage = () => {
