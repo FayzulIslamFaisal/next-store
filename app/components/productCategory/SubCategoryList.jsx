@@ -9,13 +9,15 @@ const SubCategoryList = ({ subCategoryData }) => {
         >
             <ul>
                 {Array.isArray(subCategoryData) &&
-                    subCategoryData.length &&
+                subCategoryData.length > 0 ? (
                     subCategoryData.map((categoryItem) => (
-                        <SubCategoryListItems
-                            key={categoryItem.id}
-                            categoryItem={categoryItem}
-                        />
-                    ))}
+                        <li key={categoryItem.id}>
+                            <SubCategoryListItems categoryItem={categoryItem} />
+                        </li>
+                    ))
+                ) : (
+                    <li>No subcategories found.</li>
+                )}
             </ul>
         </div>
     );
