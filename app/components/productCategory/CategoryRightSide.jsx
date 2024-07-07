@@ -27,7 +27,12 @@ const CategoryRightSide = ({
                             </p>
                         )}
                     </div>
-                    {categoryProductLength > 0 && <ShotBy searchParams={searchParams} categoryByProduct={categoryByProduct} />}
+                    {categoryProductLength > 0 && (
+                        <ShotBy
+                            searchParams={searchParams}
+                            categoryByProduct={categoryByProduct}
+                        />
+                    )}
                 </div>
                 {categoryProductLength > 0 ? (
                     <CategoryProductArchive
@@ -43,7 +48,7 @@ const CategoryRightSide = ({
                         <div className="col-md-12">
                             <div className="product-category-pagination-area d-flex flex-wrap  align-items-center justify-content-center">
                                 {/* <FindLooking /> */}
-                                <Pagination />
+                                <Pagination searchParams={searchParams} />
                             </div>
                         </div>
                     </div>
