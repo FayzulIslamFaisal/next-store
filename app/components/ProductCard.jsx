@@ -33,7 +33,7 @@ function ProductCard({ item }) {
                                     <strong>
                                         ৳{" "}
                                         {discount_amount
-                                            ? discount_amount
+                                            ? price - discount_amount
                                             : price}
                                     </strong>
                                 )}

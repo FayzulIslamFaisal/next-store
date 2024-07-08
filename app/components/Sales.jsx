@@ -23,6 +23,10 @@ function Sales({
     const [hasFlashSaleSettings, setHasFlashSaleSettings] = useState(false);
     const [flashSaleEndsTime, setFlashSaleEndsTime] = useState(null);
     const searchParams = useSearchParams();
+    const currentDate = new Date();
+    const toDay = currentDate.getDay();
+    const flashSaleEndDate = flashSaleEndsTime < toDay;
+
     let districtId = searchParams.get("districtId");
     useEffect(() => {
         async function fetchData() {
@@ -45,7 +49,7 @@ function Sales({
                 const settingAllData = settingData?.results;
                 const showOnHome = settingAllData?.show_on_home;
                 const flashSaleEndsTime = settingAllData?.end_time;
-                if ( showOnHome === 1) {
+                if (showOnHome === 1) {
                     setHasFlashSaleSettings(true);
                     setFlashSaleEndsTime(flashSaleEndsTime);
                 } else {
@@ -70,7 +74,8 @@ function Sales({
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 2,
-        arrows: flashSaleProductList?.length < 6 ? false : isHome ? false : true,
+        arrows:
+            flashSaleProductList?.length < 6 ? false : isHome ? false : true,
         responsive: [
             {
                 breakpoint: 1500,
@@ -100,40 +105,48 @@ function Sales({
     };
 
     return (
-        hasFlashSaleSettings && flashSaleEndsTime && (
-        <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
-            <div className="container">
-                <SectionTitle
-                    isSale={true}
-                    title={isHome ? `Flash Sale` : `Recent View`}
-                    target="flashSale"
-                    path="/viewallproduct"
-                >
-                    {isHome && flashSaleEndsTime && <FlipClock endsAt={flashSaleEndsTime} />}
-                </SectionTitle>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="flash-sale-content-area-grid">
-                            <Slider {...settings}>
-                                {isHome && !isRecentView
-                                    ? flashSaleProductList?.length > 0 && flashSaleProductList?.map((product) => (
-                                          <ProductCard
-                                              key={product.id}
-                                              item={product}
-                                          />
-                                      ))
-                                    : recentViewProductList?.map((product) => (
-                                          <ProductCard
-                                              key={product.id}
-                                              item={product}
-                                          />
-                                      ))}
-                            </Slider>
+        hasFlashSaleSettings &&
+        flashSaleEndDate && (
+            <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
+                <div className="container">
+                    <SectionTitle
+                        isSale={true}
+                        title={isHome ? `Flash Sale` : `Recent View`}
+                        target="flashSale"
+                        path="/viewallproduct"
+                    >
+                        {isHome && flashSaleEndsTime && (
+                            <FlipClock endsAt={flashSaleEndsTime} />
+                        )}
+                    </SectionTitle>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="flash-sale-content-area-grid">
+                                <Slider {...settings}>
+                                    {isHome && !isRecentView
+                                        ? flashSaleProductList?.length > 0 &&
+                                          flashSaleProductList?.map(
+                                              (product) => (
+                                                  <ProductCard
+                                                      key={product.id}
+                                                      item={product}
+                                                  />
+                                              )
+                                          )
+                                        : recentViewProductList?.map(
+                                              (product) => (
+                                                  <ProductCard
+                                                      key={product.id}
+                                                      item={product}
+                                                  />
+                                              )
+                                          )}
+                                </Slider>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
         )
     );
 }
