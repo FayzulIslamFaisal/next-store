@@ -304,10 +304,14 @@
     background: var(--color-44BC9D);
     color: var(--color-white);
 }
-
-.product-category-pagination-col .page-item .page-link.active {
-    background: var(--color-44BC9D);
-    color: var(--color-white);
+.product-category-pagination-col .pagination .page-item.active .page-link {
+    background: var(--color-44BC9D) !important;
+    color: var(--color-white) !important;
+}
+.product-category-pagination-col .pagination .disabled {
+    pointer-events:none; 
+    cursor: not-allowed !important;
+    opacity:0.3;         
 }
 
 .product-category-pagination-col .page-item .page-link.page-link-dotted {

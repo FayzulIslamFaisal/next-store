@@ -6,10 +6,19 @@ import { getCategorydetailBySlug } from "@/app/services/getCategorydetailBySlug"
 
 const DynamicCategoryPage = async ({ params, searchParams }) => {
     const { slug } = params;
-    let option = {};
-    if (searchParams) {
-        option = searchParams;
+    const option = {};
+
+    for (const key in searchParams) {
+        if (Object.hasOwnProperty.call(searchParams, key)) {
+            option[key] = searchParams[key];
+        }
     }
+
+    const page = parseInt(option.page) || 1;
+    const limit = 12; // Items per page 
+    option.limit = limit;
+    option.offset = (page - 1) * limit;
+
     const categoryBySlugData = await getCategorydetailBySlug(slug, option);
     const categoryByResult = categoryBySlugData?.results;
     const categoryTitle = categoryByResult?.category;
@@ -21,6 +30,8 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
     const allSubCategories = categoryByResult?.sub_categories;
     const categoryByMinPrice = categoryByResult?.min_price;
     const categoryByMaxPrice = categoryByResult?.max_price;
+    const totalProduct = categoryByResult?.total_product;
+    const lastPage = categoryByResult?.products?.last_page;
 
     const serviceItems = [
         {
@@ -64,13 +75,17 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
                                 categoryByMinPrice={categoryByMinPrice}
                                 categoryByMaxPrice={categoryByMaxPrice}
                                 allSubCategories={allSubCategories}
-                                searchParams={searchParams}
+                                searchParams={option}
                             />
                             <CategoryRightSide
                                 categoryByProduct={categoryByProduct}
                                 categoryByResult={categoryByResult}
                                 categoryTitle={categoryTitle}
-                                searchParams={searchParams}
+                                searchParams={option}
+                                totalProduct={totalProduct}
+                                lastPage={lastPage}
+                                currentPage={page}
+                                itemsPerPage={limit}
                             />
                         </div>
                     </div>
