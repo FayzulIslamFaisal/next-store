@@ -1,13 +1,17 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
-const PriceRange = ( {categoryByMinPrice, categoryByMaxPrice, searchParams}) => {
+const PriceRange = ({
+    categoryByMinPrice,
+    categoryByMaxPrice,
+    searchParams,
+}) => {
     const router = useRouter();
     const [value, setValue] = useState([
         searchParams?.min_price || categoryByMinPrice,
-        searchParams?.max_price || categoryByMaxPrice
+        searchParams?.max_price || categoryByMaxPrice,
     ]);
 
     const handleInputChange = (value) => {
@@ -16,8 +20,8 @@ const PriceRange = ( {categoryByMinPrice, categoryByMaxPrice, searchParams}) => 
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
 
-        params.set('min_price', min);
-        params.set('max_price', max);
+        params.set("min_price", min);
+        params.set("max_price", max);
 
         url.search = params.toString();
         router.push(url.toString(), undefined, { shallow: true });
@@ -26,8 +30,8 @@ const PriceRange = ( {categoryByMinPrice, categoryByMaxPrice, searchParams}) => 
         <>
             <div className="product-category-range-area sub-category-pb40">
                 <RangeSlider
-                    min={1}
-                    max={10000}
+                    min={parseInt(categoryByMinPrice)}
+                    max={parseInt(categoryByMaxPrice)}
                     value={value}
                     onInput={handleInputChange}
                 />
