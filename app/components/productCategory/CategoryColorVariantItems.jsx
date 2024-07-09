@@ -37,7 +37,7 @@ const CategoryColorVariantItems = ({ colorItem, searchParams }) => {
                 : [];
             params.set("color", [...currentColors, id].join(","));
         }
-
+        params.set("page","1");
         // Convert params to string with commas instead of %2C
         const newUrlSearchParams = decodeURIComponent(params.toString());
 
@@ -46,6 +46,7 @@ const CategoryColorVariantItems = ({ colorItem, searchParams }) => {
             undefined,
             { shallow: true }
         );
+        
         setChecked(!checked);
     };
 
