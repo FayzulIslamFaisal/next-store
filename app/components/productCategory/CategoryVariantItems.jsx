@@ -32,7 +32,7 @@ const CategoryVariantItems = ({ brandItem, mergeId, type, searchParams }) => {
         } else {
             params.delete(type);
         }
-
+        params.set("page","1");
         // Construct the new URL without encoding commas
         const newUrlSearchParams = params.toString().replace(/%2C/g, ",");
 

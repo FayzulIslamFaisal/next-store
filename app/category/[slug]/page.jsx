@@ -17,7 +17,6 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
     const page = parseInt(option.page) || 1;
     const limit = 12; // Items per page 
     option.limit = limit;
-    option.offset = (page - 1) * limit;
 
     const categoryBySlugData = await getCategorydetailBySlug(slug, option);
     const categoryByResult = categoryBySlugData?.results;
@@ -30,6 +29,8 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
     const allSubCategories = categoryByResult?.sub_categories;
     const categoryByMinPrice = categoryByResult?.min_price;
     const categoryByMaxPrice = categoryByResult?.max_price;
+    const categoryTotalMinPrice = categoryByResult?.category_min_price;
+    const categoryTotalMaxPrice = categoryByResult?.category_max_price;
     const totalProduct = categoryByResult?.total_product;
     const lastPage = categoryByResult?.products?.last_page;
 
@@ -74,6 +75,8 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
                                 subCategoryTitle={subCategoryTitle}
                                 categoryByMinPrice={categoryByMinPrice}
                                 categoryByMaxPrice={categoryByMaxPrice}
+                                categoryTotalMinPrice={categoryTotalMinPrice}
+                                categoryTotalMaxPrice={categoryTotalMaxPrice}
                                 allSubCategories={allSubCategories}
                                 searchParams={option}
                             />

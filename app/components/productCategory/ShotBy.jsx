@@ -21,7 +21,8 @@ const ShotBy = ({ searchParams, categoryByProduct }) => {
         } else {
             params.set("order", order);
         }
-
+        params.set("page","1");
+        
         url.search = params.toString();
         router.push(url.toString(), undefined, { shallow: true });
         setOrderValue(!order);

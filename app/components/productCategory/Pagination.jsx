@@ -7,11 +7,11 @@ const Pagination = ({ currentPage, lastPage, onPageChange }) => {
         for (let i = 1; i <= lastPage; i++) {
             pages.push(
                 <li key={i} className={`page-item ${i == currentPage ? "active" : ""}`}>
-                    <Link href={`?page=${i}`} passHref>
-                        <p className="page-link" onClick={() => onPageChange(i)}>
-                            {i}
-                        </p>
-                    </Link>
+
+                    <p className="page-link" onClick={() => onPageChange(i)}>
+                        {i}
+                    </p>
+
                 </li>
             );
         }
@@ -23,19 +23,15 @@ const Pagination = ({ currentPage, lastPage, onPageChange }) => {
             <nav aria-label="Page navigation example">
                 <ul className="pagination align-items-center">
                     <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                        <Link href={`?page=${currentPage - 1}`} passHref>
-                            <p className="page-link" aria-label="Previous" >
-                                <span aria-hidden="true">&#60;</span>
-                            </p>
-                        </Link>
+                        <p className="page-link" onClick={() => onPageChange(currentPage - 1)} aria-label="Previous" >
+                            <span aria-hidden="true">&#60;</span>
+                        </p>
                     </li>
                     {createPageLinks()}
                     <li className={`page-item ${currentPage === lastPage ? 'disabled' : ""}`}>
-                        <Link href={`?page=${currentPage + 1}`} passHref>
-                            <p className="page-link" aria-label="Next" >
-                                <span aria-hidden="true">&#62;</span>
-                            </p>
-                        </Link>
+                        <p className="page-link" onClick={() => onPageChange(currentPage + 1)} aria-label="Next" >
+                            <span aria-hidden="true">&#62;</span>
+                        </p>
                     </li>
                 </ul>
             </nav>
