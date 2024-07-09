@@ -67,6 +67,7 @@ export default function RootLayout({ children, slug, option }) {
             <link rel="stylesheet" href="/css/not-found-page.css"  precedence="default"/>
             <link rel="stylesheet" href="/css/customer-dashboard.css" precedence="default"/>
             <link rel="stylesheet" href="/css/customer-order-history.css" precedence="default" />
+            <link rel="stylesheet" href="/css/order-invoice.css" precedence="default" />
             <link rel="stylesheet" href="/css/common.css" precedence="default"/>
             <link rel="stylesheet" href="/css/responsive.css" precedence="default"/>
             <link rel="stylesheet" href="/css/otp.css" precedence="default"/>

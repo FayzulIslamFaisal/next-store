@@ -4,9 +4,6 @@ import OrderShippingAddress from "./OrderShippingAddress";
 import TrackYourOrderBtn from "./TrackYourOrderBtn";
 
 const OrderSummaryLeft = () => {
-    const handlePrintInvoice = () => {
-        window.print();
-    };
     return (
         <>
             <div className="col-lg-6">
@@ -22,9 +19,7 @@ const OrderSummaryLeft = () => {
                     <OrderShippingAddress />
                     <div className="billing-btn-area">
                         <TrackYourOrderBtn />
-                        <DownloadInvoiceBtn
-                            onPrintInvoice={handlePrintInvoice}
-                        />
+                        <DownloadInvoiceBtn />
                     </div>
                 </div>
             </div>

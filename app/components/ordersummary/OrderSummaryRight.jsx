@@ -1,7 +1,7 @@
 import Image from "next/image";
 import ProductOrderPriceSummary from "./ProductOrderPriceSummary";
 
-const OrderSummaryRight = () => {
+const OrderSummaryRight = ({ orderProduct }) => {
     return (
         <>
             <div className="col-lg-6">
@@ -37,7 +37,9 @@ const OrderSummaryRight = () => {
                                                 <div className="order-product-img">
                                                     <Image
                                                         fill
-                                                        src="/images/flash-img2.jpg"
+                                                        src={
+                                                            "/images/flash-img2.jpg"
+                                                        }
                                                         alt="image"
                                                     />
                                                 </div>
