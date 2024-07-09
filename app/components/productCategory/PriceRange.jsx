@@ -6,6 +6,8 @@ import "react-range-slider-input/dist/style.css";
 const PriceRange = ({
     categoryByMinPrice,
     categoryByMaxPrice,
+    categoryTotalMinPrice,
+    categoryTotalMaxPrice,
     searchParams,
 }) => {
     const router = useRouter();
@@ -22,7 +24,7 @@ const PriceRange = ({
 
         params.set("min_price", min);
         params.set("max_price", max);
-
+        params.set("page","1");
         url.search = params.toString();
         router.push(url.toString(), undefined, { shallow: true });
     };
@@ -30,8 +32,8 @@ const PriceRange = ({
         <>
             <div className="product-category-range-area sub-category-pb40">
                 <RangeSlider
-                    min={parseInt(categoryByMinPrice)}
-                    max={parseInt(categoryByMaxPrice)}
+                    min={parseInt(categoryTotalMinPrice)}
+                    max={parseInt(categoryTotalMaxPrice)}
                     value={value}
                     onInput={handleInputChange}
                 />
