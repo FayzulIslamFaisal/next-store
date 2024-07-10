@@ -20,7 +20,7 @@ const ThankYouPage = ({ outletId, locationId, orderId }) => {
                         orderId || 1,
                         session?.accessToken
                     );
-                    setOrderSummary(orderData);
+                    setOrderSummary(orderData?.results);
                 } catch (error) {
                     console.error("Failed to fetch order summary:", error);
                 }
@@ -30,22 +30,23 @@ const ThankYouPage = ({ outletId, locationId, orderId }) => {
     }, [session, status]);
 
     if (status === "loading") {
-        return <div>Loading...</div>;
+        return <h1>Loading...</h1>;
     }
 
     if (status === "unauthenticated") {
-        return <div>Please log in to view your orders.</div>;
+        return <h2>Please log in to view your orders.</h2>;
     }
-
-    const orderProduct = orderSummary?.product || [];
-    const orderAddress = orderSummary?.address || {};
+    const orderProduct = orderSummary?.products || [];
 
     return (
         <section className="order-confirm-section-area">
             <div className="custom-container">
                 <div className="row align-items-center order-confirm-section  gy-5">
-                    <OrderSummaryLeft orderAddress={orderAddress} />
-                    <OrderSummaryRight orderProduct={orderProduct} />
+                    <OrderSummaryLeft orderSummary={orderSummary} />
+                    <OrderSummaryRight
+                        orderProduct={orderProduct}
+                        orderSummary={orderSummary}
+                    />
                 </div>
             </div>
         </section>

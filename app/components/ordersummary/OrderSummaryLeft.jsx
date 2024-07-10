@@ -3,7 +3,7 @@ import DownloadInvoiceBtn from "./DownloadInvoiceBtn";
 import OrderShippingAddress from "./OrderShippingAddress";
 import TrackYourOrderBtn from "./TrackYourOrderBtn";
 
-const OrderSummaryLeft = () => {
+const OrderSummaryLeft = ({ orderSummary }) => {
     return (
         <>
             <div className="col-lg-6">
@@ -16,7 +16,7 @@ const OrderSummaryLeft = () => {
                             order has been shipped.
                         </p>
                     </div>
-                    <OrderShippingAddress />
+                    <OrderShippingAddress orderSummary={orderSummary} />
                     <div className="billing-btn-area">
                         <TrackYourOrderBtn />
                         <DownloadInvoiceBtn />

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import ProductOrderPriceSummary from "./ProductOrderPriceSummary";
+import OrderProductItems from "./OrderProductItems";
 
-const OrderSummaryRight = ({ orderProduct }) => {
+const OrderSummaryRight = ({ orderProduct, orderSummary }) => {
     return (
         <>
             <div className="col-lg-6">
@@ -22,75 +23,18 @@ const OrderSummaryRight = ({ orderProduct }) => {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>02 May 2023</td>
-                                            <td>024-125478956</td>
-                                            <td>Mastercard</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="py-2 border-bottom table-responsive order-summary-table-two">
-                                <table className="order-summary">
-                                    <tbody>
-                                        <tr>
+                                            <td>{orderSummary?.date}</td>
+                                            <td>{orderSummary?.invoice}</td>
                                             <td>
-                                                <div className="order-product-img">
-                                                    <Image
-                                                        fill
-                                                        src={
-                                                            "/images/flash-img2.jpg"
-                                                        }
-                                                        alt="image"
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td className="product-cart-text-continer">
-                                                <strong>
-                                                    LED Monitor With High
-                                                    Quality
-                                                </strong>
-                                                <p>
-                                                    <strong>Size: Large</strong>
-                                                </p>
-                                                <p>
-                                                    <strong>Qty: 1</strong>
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <strong>৳20,000</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="order-product-img">
-                                                    <Image
-                                                        fill
-                                                        src="/images/flash-img4.jpg"
-                                                        alt="image"
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td className="product-cart-text-continer">
-                                                <strong>
-                                                    LED Monitor With High
-                                                    Quality
-                                                </strong>
-                                                <p>
-                                                    <strong>Size: Large</strong>
-                                                </p>
-                                                <p>
-                                                    <strong>Qty: 1</strong>
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <strong>৳20,000</strong>
+                                                {orderSummary?.payment_status}
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <OrderProductItems orderProduct={orderProduct} />
                         </div>
-                        <ProductOrderPriceSummary />
+                        <ProductOrderPriceSummary orderSummary={orderSummary} />
                     </div>
                 </div>
             </div>
