@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getLoginToken } from "../../../services/getLoginToken";
+// import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
 
 export const authOptions = {
     providers: [
@@ -40,12 +41,11 @@ export const authOptions = {
                             name: res?.user?.name,
                             email: res?.user?.email,
                         };
-                        // return user;
 
                         // Example accessToken and expiresIn, replace with actual token logic
                         const accessToken = res?.user?.accessToken;
                         // const expiresIn = 3600; // Token expiration time in seconds
-                        const expiresIn = res?.user?.expiresIn; // Token expiration time in seconds
+                        const expiresIn = res?.user?.expiresIn;
 
                         const phone = res?.user?.phone;
 
@@ -61,19 +61,66 @@ export const authOptions = {
     ],
     pages: {
         signIn: "/login",
+        signOut: "/login",
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
+        async signIn({ user, account, profile }) {
+            console.log("=>>> signIn...");
+
+            if (account.provider === "google") {
+                // Example accessToken and expiresIn, replace with actual token logic
+                const accessToken = account.access_token;
+                const expiresIn = account.expires_at;
+
+                user.accessToken = accessToken;
+                user.expiresIn = expiresIn;
+                user.email = profile?.email;
+
+                // console.log("user ----", user);
+                // console.log('profile ----', profile)
+
+                return { ...user };
+            }
+            return true;
+        },
+
+        async redirect({ url, baseUrl }) {
+            console.log("=>>> redirect...");
+
+            // const userExists = await checkUserExistByGoogleLogin({email: "robeul.starit@gmail.com"});
+            // console.log("userExists  1", userExists);
+
+            // if(userExists){
+            //     if (userExists?.message == 'Already User Exists Account Provider Customer') {
+            //         console.log("userExists  2");
+            //         return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
+            //     } else {
+            //         console.log("userExists  3");
+            //         return url.startsWith(baseUrl) ? `${baseUrl}/google-profile` : baseUrl;
+            //     }
+            // }
+
+            return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;
+        },
+
         async jwt({ token, user }) {
+            console.log("=>>> jwt...");
+
+            // console.log('=>>> jwt token', token)
+            // console.log('=>>> jwt user', user)
+
             // Initial sign in
             if (user) {
                 token.accessToken = user.accessToken;
-                token.expiresAt = Date.now() + user.expiresIn * 1000;
+                token.expiresIn = user.expiresIn;
                 token.phone = user.phone;
             }
 
             // Return previous token if the access token has not expired yet
             // if (Date.now() < token.expiresAt) {
+            // console.log('=>>> token expired Date.now()', Date.now())
+            // console.log('=>>> token expired token.expiresAt', token.expiresAt)
             //   return token;
             // }
 
@@ -84,10 +131,14 @@ export const authOptions = {
         },
 
         async session({ session, token }) {
+            console.log("=>>> session...");
+
+            // console.log('=>>> session session', session)
+            // console.log('=>>> session token', token)
+
             if (token) {
                 session.accessToken = token.accessToken;
-                session.expiresAt = token.expiresAt;
-                session.expiresAt = token.expiresAt;
+                session.expiresIn = token.expiresIn;
                 session.phone = token.phone;
             }
             return session;

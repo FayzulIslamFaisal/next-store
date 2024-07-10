@@ -2,7 +2,7 @@
 import Link from "next/link";
 import SigninBtn from "../components/SigninBtn";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 
 const Login = () => {
@@ -57,7 +57,7 @@ const Login = () => {
                                         htmlFor="number"
                                         className="form-label"
                                     >
-                                        Phone Number
+                                        Phone Number <span>*</span>
                                     </label>
                                     <input
                                         type="text"
@@ -74,7 +74,7 @@ const Login = () => {
                                         htmlFor="password"
                                         className="form-label"
                                     >
-                                        Password
+                                        Password <span>*</span>
                                     </label>
                                     <input
                                         type="password"
