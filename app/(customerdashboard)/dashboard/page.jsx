@@ -21,7 +21,7 @@ const CustomerDashboardPage = () => {
     useEffect(() => {
         async function fetchData() {
             if(session != undefined){
-                console.log('fetch data...', 111 );
+                console.log('fetch data...', session);
                 setLoading(true);
                 if(googleImage){
                     const data = await checkUserExistByGoogleLogin(formData2);
@@ -30,12 +30,20 @@ const CustomerDashboardPage = () => {
                         router.push(`/google-profile`);
                     }
                 }
-            }else{
-                console.log('fetch data...', 222 );
             }
         }
         fetchData();
     }, [session?.user?.email]);
+
+    // setTimeout(() => {
+    //     console.log('call after 5 second', session);
+    //     if(!session?.user && loading == false){
+    //         console.log('call after 5 second 1111', session);
+    //         router.push(`/`);
+    //     }else{
+    //         console.log('call after 5 second 1111', session?.user);
+    //     }
+    // }, 5000);
 
     return (
         <div>
