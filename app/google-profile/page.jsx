@@ -19,7 +19,6 @@ const GoogleProfile = () => {
         phone: "",
         email: session?.user?.email || "",
         password: "",
-        gender: "Male",
         account_provider: "google",
     });
 
@@ -30,7 +29,7 @@ const GoogleProfile = () => {
     const handleRegistration = async (e) => {
         e.preventDefault();
 
-        if (!formData.phone || !formData.password || !formData.gender) {
+        if (!formData.phone || !formData.password) {
             setErrorMessage("Please provide required information");
             return;
         }
@@ -126,40 +125,6 @@ const GoogleProfile = () => {
                                         value={formData.password}
                                         onChange={handleChange}
                                     />
-                                </div>
-                                <div className="mb-3 ">
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="gender"
-                                            id="gender1"
-                                            value="male"
-                                            onChange={handleChange}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="gender1"
-                                        >
-                                            Male
-                                        </label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="gender"
-                                            id="gender2"
-                                            value="female"
-                                            onChange={handleChange}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="gender2"
-                                        >
-                                            Female
-                                        </label>
-                                    </div>
                                 </div>
                                 <button
                                     type="submit"

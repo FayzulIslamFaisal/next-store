@@ -22,13 +22,13 @@ const CustomerDashboardPage = () => {
         async function fetchData() {
             if(session != undefined){
                 console.log('fetch data...', session);
-                setLoading(true);
                 if(googleImage){
                     const data = await checkUserExistByGoogleLogin(formData2);
                     if(data?.message != 'Already User Exists Account Provider Customer'){
                         console.log('ssss',data?.message)
                         router.push(`/google-profile`);
                     }
+                    setLoading(true);
                 }
             }
         }
