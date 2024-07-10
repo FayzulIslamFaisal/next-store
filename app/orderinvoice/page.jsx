@@ -15,7 +15,7 @@ const OrderInvoicePage = () => {
         <>
             <div className=" container-fluid">
                 <div className="row invoice-wrapper">
-                    <section className="invoice-section col-12 pt-3 ps-4">
+                    <section className="invoice-section order-invoice-section-area col-12 pt-3 ps-4">
                         <div className="d-flex flex-column align-content-between h-100 ">
                             <div className="invoice-body flex-grow-1">
                                 <div className="row">
@@ -169,8 +169,15 @@ const OrderInvoicePage = () => {
                                         </tbody>
                                     </table>
                                 </div>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <h5 className=" text-capitalize mb-0 py-2">
+                                            payment history
+                                        </h5>
+                                    </div>
+                                </div>
                                 <div className="row sub-section-margin-t">
-                                    <div className="col-8 invoice-payment-info">
+                                    <div className="col-sm-8 invoice-payment-info">
                                         <table className="table border rounded">
                                             <thead>
                                                 <tr>
@@ -206,7 +213,7 @@ const OrderInvoicePage = () => {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div className="col-4 invoice-pay-info">
+                                    <div className="col-sm-4 invoice-pay-info">
                                         <div className="border rounded">
                                             <div className="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
                                                 <p className="text-black">

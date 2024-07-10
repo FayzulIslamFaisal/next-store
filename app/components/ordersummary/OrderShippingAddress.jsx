@@ -1,4 +1,4 @@
-const OrderShippingAddress = () => {
+const OrderShippingAddress = ({ orderSummary }) => {
     return (
         <>
             <div className="billing-address">
@@ -8,22 +8,27 @@ const OrderShippingAddress = () => {
                 <div className="billing-address-item-continar">
                     <div className="billing-address-item">
                         <strong>Name:</strong>
-                        <p>Jane Smith</p>
+                        {orderSummary?.customer_name && (
+                            <p>{orderSummary?.customer_name}</p>
+                        )}
                     </div>
                     <div className="billing-address-item">
                         <strong>Address:</strong>
-                        <p>
-                            Khaja Super Market, 2nd to 7th Floor, Kallyanpur Bus
-                            Stop, Mirpur Road, Dhaka-1207.
-                        </p>
+                        {orderSummary?.shipping_address && (
+                            <p>{orderSummary?.shipping_address}</p>
+                        )}
                     </div>
                     <div className="billing-address-item">
                         <strong>Phone:</strong>
-                        <p>01906198502</p>
+                        {orderSummary?.customer_phone && (
+                            <p>{orderSummary?.customer_phone}</p>
+                        )}
                     </div>
                     <div className="billing-address-item">
                         <strong>Email:</strong>
-                        <p>jane.smith@email.com</p>
+                        {orderSummary?.customer_email && (
+                            <p>{orderSummary?.customer_email}</p>
+                        )}
                     </div>
                 </div>
             </div>
