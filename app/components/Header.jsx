@@ -58,7 +58,7 @@ function Header() {
     }, []);
 
     // console.log('=>>> get login status', status);
-    // console.log('=>>> get login session', session);
+    console.log('=>>> get login session', session);
     // console.log('=>>> get login token', session?.accessToken);
 
     useEffect(() => {
