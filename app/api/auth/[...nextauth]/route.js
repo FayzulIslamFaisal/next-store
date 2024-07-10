@@ -101,7 +101,15 @@ export const authOptions = {
             //     }
             // }
 
-            return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;
+            
+
+            // Allows relative callback URLs
+            // if (url.startsWith("/")) return `${baseUrl}${url}`
+            // // Allows callback URLs on the same origin
+            // else if (new URL(url).origin === baseUrl) return url
+            // return baseUrl
+
+            return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
         },
 
         async jwt({ token, user }) {
