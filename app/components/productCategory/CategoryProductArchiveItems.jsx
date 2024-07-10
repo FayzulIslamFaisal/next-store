@@ -41,7 +41,9 @@ const CategoryProductArchiveItems = ({ productItem }) => {
                             {price && (
                                 <strong>
                                     ৳{" "}
-                                    {discount_amount ? discount_amount : price}
+                                    {discount_amount
+                                        ? price - discount_amount
+                                        : price}
                                 </strong>
                             )}
 
