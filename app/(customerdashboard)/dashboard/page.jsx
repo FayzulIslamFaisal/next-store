@@ -28,8 +28,8 @@ const CustomerDashboardPage = () => {
                         console.log('ssss',data?.message)
                         router.push(`/google-profile`);
                     }
+                    setLoading(true);
                 }
-                setLoading(true);
             }
         }
         fetchData();
