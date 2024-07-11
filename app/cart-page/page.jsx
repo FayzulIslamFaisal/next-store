@@ -6,6 +6,8 @@ import { NagadhatPublicUrl, addToCartProductList, apiBaseUrl } from "../utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { deleteCartProduct } from "../services/getDeleteCartProduct";
+import { addToCartQuantityUpdate } from "../services/addToCartQuantityUpdate";
+import { deleteProductFromTheApi } from "../services/deleteSelectedProduct";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -14,6 +16,7 @@ const CartPage = () => {
     const [cartProduct, setCartProduct] = useState([]);
     const pathName = usePathname();
     const { status, data: session } = useSession();
+    const [selectedProductCardId, setSelectedProductCardId] = useState([]);
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -26,6 +29,8 @@ const CartPage = () => {
         if (session) {
             console.log("product delete run", session?.accessToken);
             await deleteCartProduct(cart_id, session?.accessToken);
+            const updatedCartProducts = await fetchCartProducts();
+            setCheckedProductCard(updatedCartProducts?.data);
         } else {
             const updatedItemsInCard = checkedProductCard.filter(
                 (item, i) => i !== cart_id
@@ -35,12 +40,27 @@ const CartPage = () => {
         }
     };
 
-    const handleSelectedItemDelete = () => {
-        const updatedItemsInCard = checkedProductCard.filter(
-            (item) => !item.isChecked
-        );
-        setCheckedProductCard(updatedItemsInCard);
-        updateLocalStorage(updatedItemsInCard);
+    const handleSelectedItemDelete = async () => {
+        if (session) {
+            const productsCardId = [];
+            const updatedItemsInCard = checkedProductCard
+                .filter((item) => item.isChecked)
+                .map((item) => ({
+                    cart_id: item?.cart_id,
+                }));
+            await deleteProductFromTheApi(
+                updatedItemsInCard,
+                session?.accessToken
+            );
+            const updatedCartProducts = await fetchCartProducts();
+            setCheckedProductCard(updatedCartProducts?.data);
+        } else {
+            const updatedItemsInCard = checkedProductCard.filter(
+                (item) => !item.isChecked
+            );
+            setCheckedProductCard(updatedItemsInCard);
+            updateLocalStorage(updatedItemsInCard);
+        }
     };
 
     const handleChange = (e) => {
@@ -52,8 +72,8 @@ const CartPage = () => {
             setCheckedProductCard(tempCard);
             setSelected(tempCard);
         } else {
-            let tempCard = checkedProductCard.map((checkCard) =>
-                checkCard?.id.toString() === name
+            let tempCard = checkedProductCard.map((checkCard, index) =>
+                index.toString() === name
                     ? { ...checkCard, isChecked: checked }
                     : checkCard
             );
@@ -63,28 +83,59 @@ const CartPage = () => {
         }
     };
 
-    const handleDecrement = (id) => {
-        const updatedUsers = checkedProductCard.map((checkCard) => {
-            if (checkCard.id === id) {
-                if (checkCard.quantity > 1) {
-                    return { ...checkCard, quantity: checkCard.quantity - 1 };
+    const handleDecrement = async (indexId) => {
+        if (session) {
+            const quantityUpdateInfo = {
+                cart_id: indexId,
+                outlet_id: 3,
+                quantity: "decrement",
+            };
+            await addToCartQuantityUpdate(
+                quantityUpdateInfo,
+                session?.accessToken
+            );
+            const updatedCartProducts = await fetchCartProducts();
+            setCheckedProductCard(updatedCartProducts?.data);
+        } else {
+            const updatedUsers = checkedProductCard.map((checkCard, index) => {
+                if (index === indexId) {
+                    if (checkCard.quantity > 1) {
+                        return {
+                            ...checkCard,
+                            quantity: checkCard.quantity - 1,
+                        };
+                    }
                 }
-            }
-            return checkCard;
-        });
-        setCheckedProductCard(updatedUsers);
-        updateLocalStorage(updatedUsers);
+                return checkCard;
+            });
+            setCheckedProductCard(updatedUsers);
+            updateLocalStorage(updatedUsers);
+        }
     };
 
-    const handleIncrement = (id) => {
-        const updatedUsers = checkedProductCard.map((checkCard) => {
-            if (checkCard.id === id) {
-                return { ...checkCard, quantity: checkCard.quantity + 1 };
-            }
-            return checkCard;
-        });
-        setCheckedProductCard(updatedUsers);
-        updateLocalStorage(updatedUsers);
+    const handleIncrement = async (indexId) => {
+        if (session) {
+            const quantityUpdateInfo = {
+                cart_id: indexId,
+                outlet_id: 3,
+                quantity: "increment",
+            };
+            await addToCartQuantityUpdate(
+                quantityUpdateInfo,
+                session?.accessToken
+            );
+            const updatedCartProducts = await fetchCartProducts();
+            setCheckedProductCard(updatedCartProducts?.data);
+        } else {
+            const updatedUsers = checkedProductCard.map((checkCard, index) => {
+                if (index === indexId) {
+                    return { ...checkCard, quantity: checkCard.quantity + 1 };
+                }
+                return checkCard;
+            });
+            setCheckedProductCard(updatedUsers);
+            updateLocalStorage(updatedUsers);
+        }
     };
 
     useEffect(() => {
@@ -233,12 +284,12 @@ const CartPage = () => {
                                                         item.quantity;
                                                     totalPrice += price;
                                                     return (
-                                                        <tr key={item?.id}>
+                                                        <tr key={item?.cart_id}>
                                                             <td>
                                                                 <input
                                                                     className="cart-checkbox"
                                                                     type="checkbox"
-                                                                    name={`${item?.product_id}`}
+                                                                    name={`${index}`}
                                                                     checked={
                                                                         item?.isChecked ||
                                                                         false
@@ -361,7 +412,9 @@ const CartPage = () => {
                                                                             className="btn quantity-increase"
                                                                             onClick={() => {
                                                                                 handleDecrement(
-                                                                                    item?.product_id
+                                                                                    session
+                                                                                        ? item?.cart_id
+                                                                                        : index
                                                                                 );
                                                                             }}
                                                                         >
@@ -392,7 +445,9 @@ const CartPage = () => {
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 handleIncrement(
-                                                                                    item?.product_id
+                                                                                    session
+                                                                                        ? item?.cart_id
+                                                                                        : index
                                                                                 );
                                                                             }}
                                                                         >

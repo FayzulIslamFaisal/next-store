@@ -71,7 +71,7 @@ function AddToCartButton({
         e.preventDefault();
         if (!title) {
             if (productInfo) {
-                if (productInfo.variations.length > 0) {
+                if (productInfo?.variations?.length > 0) {
                     const result = findMissingProperties(
                         decorateVariation,
                         selectedVariantKeys
