@@ -65,8 +65,10 @@ function AddToCartButton({
     selectedVariantProductInfo,
 }) {
     const { status, data: session } = useSession();
-    console.log("selectedVariantKeys", selectedVariantKeys);
-    console.log("decorateVariation", decorateVariation);
+
+    // console.log("selectedVariantKeys", selectedVariantKeys);
+    // console.log("decorateVariation", decorateVariation);
+
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {
