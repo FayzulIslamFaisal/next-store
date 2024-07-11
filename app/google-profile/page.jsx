@@ -1,18 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { googleProfile } from "../services/googleProfile";
 import { validatePhoneNumber } from "../services/validatePhoneNumber";
 import { useSession } from "next-auth/react";
 
 const GoogleProfile = () => {
     const [errorMessage, setErrorMessage] = useState("");
+    const [addtPassword, setAddtPassword] = useState(false);
     const router = useRouter();
     const { status, data: session } = useSession();
 
     // console.log('=>>> google profile page session status', status)
     // console.log('=>>> google profile page session data', session)
-
 
     const [formData, setFormData] = useState({
         name: session?.user?.name || "",
@@ -35,7 +35,6 @@ const GoogleProfile = () => {
         }
 
         try {
-
             const res = await googleProfile(formData);
 
             if (res?.success != true) {
@@ -44,7 +43,6 @@ const GoogleProfile = () => {
             }
 
             router.push(`/dashboard`);
-
         } catch (error) {
             alert("Something went wrong. Please try after sometime");
         }
@@ -61,7 +59,6 @@ const GoogleProfile = () => {
             }
 
             try {
-                
                 const res = await validatePhoneNumber({
                     phone: formData.phone,
                 });
@@ -78,7 +75,9 @@ const GoogleProfile = () => {
         };
         checkPhoneNumberValidity();
     }, [formData.phone]);
-
+    const handleSetPassword = () => {
+        setAddtPassword(!addtPassword);
+    };
     return (
         <div className="container">
             <div className="row justify-content-center user-login-section">
@@ -110,22 +109,67 @@ const GoogleProfile = () => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label
-                                        htmlFor="password"
-                                        className="form-label"
+                                    <button
+                                        onClick={handleSetPassword}
+                                        className=" d-flex align-items-center gap-2 border-0 outline-0 bg-transparent"
                                     >
-                                        Password <span>*</span>
-                                    </label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        name="password"
-                                        required
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                    />
+                                        <span
+                                            style={{
+                                                color: "var(--color-414042)",
+                                            }}
+                                        >
+                                            Do you Set a Password?
+                                        </span>{" "}
+                                        <small
+                                            title="Set Password  "
+                                            className="fs-6 fw-medium"
+                                            style={{
+                                                color: "var(--color-414042)",
+                                            }}
+                                        >
+                                            +
+                                        </small>
+                                    </button>
                                 </div>
+                                {addtPassword && (
+                                    <div>
+                                        <div className="mb-3">
+                                            <label
+                                                htmlFor="password"
+                                                className="form-label"
+                                            >
+                                                Password <span>*</span>
+                                            </label>
+                                            <input
+                                                type="password"
+                                                className="form-control"
+                                                id="password"
+                                                name="password"
+                                                required
+                                                value={formData.password}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label
+                                                htmlFor="confpassword"
+                                                className="form-label"
+                                            >
+                                                Confirm Password <span>*</span>
+                                            </label>
+                                            <input
+                                                type="password"
+                                                className="form-control"
+                                                id="confpassword"
+                                                name="confpassword"
+                                                required
+                                                value={formData.password}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
