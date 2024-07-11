@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import CustomerLeftSideNavbar from "@/app/components/customerDashboard/CustomerLeftSideNavbar";
-import CustomerRightsids from "@/app/components/customerDashboard/CustomerRightsids";
+import CustomerRightsids from "@/app/components/customerDashboard/orderhistory/CustomerRightsids";
 
 const CustomerDashboardPage = () => {
     const [customerOrders, setCustomerOrders] = useState([]);

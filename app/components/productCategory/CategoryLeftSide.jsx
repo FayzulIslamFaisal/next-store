@@ -12,20 +12,23 @@ const CategoryLeftSide = ({
     categoryByMinPrice,
     categoryByMaxPrice,
     searchParams,
+    allSubCategories,
+    categoryTotalMaxPrice,
+    categoryTotalMinPrice
 }) => {
-    const subCategoryData = subCategoryTitle;
+    const subCategoryData = allSubCategories;
     const brandData = categoryByBrand;
     const sizedData = categoryBySize;
     const colorData = categoryByColor;
     const shouldShowPriceRange = categoryByMinPrice && categoryByMaxPrice;
-
+    
     return (
         <aside className="product-category-left-Side">
             <div className="category-left-Side-info">
                 {subCategoryData?.length > 0 && (
                     <>
                         <CategorySectionTitle title={`Sub Categories`} />
-                        <SubCategoryList subCategoryData={subCategoryData} />
+                        <SubCategoryList subCategoryData={allSubCategories} />
                     </>
                 )}
                 {shouldShowPriceRange && (
@@ -34,6 +37,8 @@ const CategoryLeftSide = ({
                         <PriceRange
                             categoryByMinPrice={categoryByMinPrice}
                             categoryByMaxPrice={categoryByMaxPrice}
+                            categoryTotalMinPrice={categoryTotalMinPrice}
+                            categoryTotalMaxPrice={categoryTotalMaxPrice}
                             searchParams={searchParams}
                         />
                     </>
