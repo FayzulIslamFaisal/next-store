@@ -3,11 +3,24 @@ import Image from 'next/image'
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { registerUser } from "../services/registerUser";
 import { validatePhoneNumber } from "../services/validatePhoneNumber";
 
 const Registration = () => {
     const router = useRouter();
+    const { status, data: session } = useSession();
+
+    useEffect(() => {
+        async function fetchData() {
+            if (session != undefined) {
+                console.log("=>>> redirect to dashboard");
+                router.push(`/dashboard`);
+            }
+        }
+        fetchData();
+    }, [session?.user?.email]);
+    
     const [errorMessage, setErrorMessage] = useState("");
     const [existsEmail, setExistsEmail] = useState("");
     const [formData, setFormData] = useState({
