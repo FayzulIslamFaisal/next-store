@@ -1,15 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { googleProfile } from "../services/googleProfile";
+import { googleNewUser } from "../services/googleNewUser";
 import { validatePhoneNumber } from "../services/validatePhoneNumber";
 import { useSession } from "next-auth/react";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
+import { FaInfoCircle } from "react-icons/fa";
 
 const GoogleProfile = () => {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [addtPassword, setAddtPassword] = useState(false);
     const router = useRouter();
     const { status, data: session } = useSession();
 
@@ -21,6 +23,7 @@ const GoogleProfile = () => {
         phone: "",
         email: session?.user?.email || "",
         password: "",
+        confpassword: "",
         account_provider: "google",
     });
 
@@ -41,7 +44,10 @@ const GoogleProfile = () => {
                         "Already User Exists Account Provider Customer"
                     ) {
                         setLoading(true);
-                        console.log("=>>> redirect to dashboard", data?.message);
+                        console.log(
+                            "=>>> redirect to dashboard",
+                            data?.message
+                        );
                         router.push(`/dashboard`);
                     }
                 }
@@ -66,14 +72,22 @@ const GoogleProfile = () => {
     const handleRegistration = async (e) => {
         e.preventDefault();
 
-        if (!formData.phone || !formData.password) {
+        if (!formData.phone) {
             setErrorMessage("Please provide required information");
             return;
         }
 
+        if (formData.password !== formData.confpassword) {
+            setErrorMessage(
+                "Please provide password and confirm password same"
+            );
+            return;
+        }
+
         try {
-            console.log("=>>> formdata before input submit", formData);
-            const res = await googleProfile(formData);
+            console.log("=>>> formdata before form submit", formData);
+
+            const res = await googleNewUser(formData);
 
             if (res?.success != true) {
                 alert(res.message);
@@ -113,6 +127,10 @@ const GoogleProfile = () => {
         };
         checkPhoneNumberValidity();
     }, [formData.phone]);
+
+    const handleSetPassword = () => {
+        setAddtPassword(!addtPassword);
+    };
 
     setTimeout(() => {
         console.log("=>>> This runs after 1 seconds.");
@@ -156,22 +174,70 @@ const GoogleProfile = () => {
                                                 />
                                             </div>
                                             <div className="mb-3">
-                                                <label
-                                                    htmlFor="password"
-                                                    className="form-label"
+                                                <span
+                                                    style={{
+                                                        color: "var(--color-414042)",
+                                                    }}
                                                 >
-                                                    Password <span>*</span>
-                                                </label>
-                                                <input
-                                                    type="password"
-                                                    className="form-control"
-                                                    id="password"
-                                                    name="password"
-                                                    required
-                                                    value={formData.password}
-                                                    onChange={handleChange}
-                                                />
+                                                    <input onClick={handleSetPassword} type="checkbox" id="helpText" /> <label htmlFor="helpText">Are you set password?</label>
+                                                </span>{" "}
+                                                <small
+                                                    title="Do you Set a Password for login phone and password?"
+                                                    className="fs-6 fw-medium"
+                                                    style={{
+                                                        color: "var(--color-414042)",
+                                                    }}
+                                                >
+                                                    <FaInfoCircle/>
+                                                </small>
                                             </div>
+                                            {addtPassword && (
+                                                <div>
+                                                    <div className="mb-3">
+                                                        <label
+                                                            htmlFor="password"
+                                                            className="form-label"
+                                                        >
+                                                            Password{" "}
+                                                            <span>*</span>
+                                                        </label>
+                                                        <input
+                                                            type="password"
+                                                            className="form-control"
+                                                            id="password"
+                                                            name="password"
+                                                            value={
+                                                                formData.password
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label
+                                                            htmlFor="confpassword"
+                                                            className="form-label"
+                                                        >
+                                                            Confirm Password{" "}
+                                                            <span>*</span>
+                                                        </label>
+                                                        <input
+                                                            type="password"
+                                                            className="form-control"
+                                                            id="confpassword"
+                                                            name="confpassword"
+                                                            value={
+                                                                formData.confpassword
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
                                             <button
                                                 type="submit"
                                                 className="btn btn-primary"
@@ -188,7 +254,7 @@ const GoogleProfile = () => {
                 </PrivateRoute>
             ) : (
                 <div className="body-loading">
-                    <h2>Loading...</h2>
+                    <h2>Loading google auth data ...</h2>
                 </div>
             )}
         </div>
