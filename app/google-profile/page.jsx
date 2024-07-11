@@ -19,6 +19,7 @@ const GoogleProfile = () => {
         phone: "",
         email: session?.user?.email || "",
         password: "",
+        confpassword: "",
         account_provider: "google",
     });
 
@@ -29,7 +30,7 @@ const GoogleProfile = () => {
     const handleRegistration = async (e) => {
         e.preventDefault();
 
-        if (!formData.phone || !formData.password) {
+        if (!formData.phone || !formData.password || formData.confpassword) {
             setErrorMessage("Please provide required information");
             return;
         }
@@ -75,9 +76,11 @@ const GoogleProfile = () => {
         };
         checkPhoneNumberValidity();
     }, [formData.phone]);
+
     const handleSetPassword = () => {
         setAddtPassword(!addtPassword);
     };
+
     return (
         <div className="container">
             <div className="row justify-content-center user-login-section">
@@ -163,7 +166,7 @@ const GoogleProfile = () => {
                                                 id="confpassword"
                                                 name="confpassword"
                                                 required
-                                                value={formData.password}
+                                                value={formData.confpassword}
                                                 onChange={handleChange}
                                             />
                                         </div>
