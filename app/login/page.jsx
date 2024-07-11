@@ -1,18 +1,30 @@
 "use client";
 import Link from "next/link";
 import SigninBtn from "../components/SigninBtn";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
 import { useRouter } from 'next/navigation'
+import { useSession } from "next-auth/react";
 
 const Login = () => {
+    const router = useRouter();
+    const { status, data: session } = useSession();
+
+    useEffect(() => {
+        async function fetchData() {
+            if (session != undefined) {
+                console.log("=>>> redirect to dashboard");
+                router.push(`/dashboard`);
+            }
+        }
+        fetchData();
+    }, [session?.user?.email]);
+
     const [errorMessage, setErrorMessage] = useState("");
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
-
-    const router = useRouter();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
