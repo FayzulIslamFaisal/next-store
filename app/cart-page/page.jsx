@@ -1,13 +1,15 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NagadhatPublicUrl, addToCartProductList, apiBaseUrl } from "../utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { deleteCartProduct } from "../services/getDeleteCartProduct";
 import { addToCartQuantityUpdate } from "../services/addToCartQuantityUpdate";
 import { deleteProductFromTheApi } from "../services/deleteSelectedProduct";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, setAddToCart } from "../store/cartSlice";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -20,23 +22,29 @@ const CartPage = () => {
     let price;
     let totalPrice = 0;
     let discountPrice;
-
+    const dispatch = useDispatch();
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
-
     const handleDelete = async (cart_id) => {
         if (session) {
             console.log("product delete run", session?.accessToken);
             await deleteCartProduct(cart_id, session?.accessToken);
             const updatedCartProducts = await fetchCartProducts();
             setCheckedProductCard(updatedCartProducts?.data);
+            dispatch(
+                setAddToCart({
+                    hasSession: true,
+                    length: updatedCartProducts?.data?.length,
+                })
+            );
         } else {
             const updatedItemsInCard = checkedProductCard.filter(
                 (item, i) => i !== cart_id
             );
             setCheckedProductCard(updatedItemsInCard);
             updateLocalStorage(updatedItemsInCard);
+            dispatch(setAddToCart({ hasSession: false }));
         }
     };
 
@@ -54,12 +62,19 @@ const CartPage = () => {
             );
             const updatedCartProducts = await fetchCartProducts();
             setCheckedProductCard(updatedCartProducts?.data);
+            dispatch(
+                setAddToCart({
+                    hasSession: true,
+                    length: updatedCartProducts?.data?.length,
+                })
+            );
         } else {
             const updatedItemsInCard = checkedProductCard.filter(
                 (item) => !item.isChecked
             );
             setCheckedProductCard(updatedItemsInCard);
             updateLocalStorage(updatedItemsInCard);
+            dispatch(setAddToCart({ hasSession: false }));
         }
     };
 
@@ -77,7 +92,6 @@ const CartPage = () => {
                     ? { ...checkCard, isChecked: checked }
                     : checkCard
             );
-
             setCheckedProductCard(tempCard);
             setSelected(tempCard);
         }
@@ -218,19 +232,22 @@ const CartPage = () => {
             const updatedCartProducts = await fetchCartProducts();
             setCheckedProductCard(updatedCartProducts?.data);
             localStorage.removeItem("addToCart");
+            dispatch(
+                setAddToCart({
+                    hasSession: true,
+                    length: updatedCartProducts?.data?.length,
+                })
+            );
             // console.log("updatedCartProducts", updatedCartProducts);
         }
     };
-
     useEffect(() => {
         handleCheckout();
         console.log("hello word");
     }, [session]);
-
     console.log("=>>> get login status", status);
     console.log("=>>> get login session", session);
     console.log("sfddkfjndfk", checkedProductCard);
-
     return (
         <section className="cart-section-area">
             <div className="container">
@@ -330,73 +347,52 @@ const CartPage = () => {
                                                                         discountPrice
                                                                     }
                                                                 </del>
-                                                                <strong>
+                                                                <strong className="ml-3">
                                                                     {item?.selectedVariants &&
-                                                                        item?.selectedVariants.map(
-                                                                            (
-                                                                                variant,
-                                                                                inx
-                                                                            ) => {
-                                                                                const [
-                                                                                    key,
-                                                                                    value,
-                                                                                ] =
-                                                                                    Object.entries(
-                                                                                        variant
-                                                                                    )[0]; // Get the key-value pair from the variant object
+                                                                        item.selectedVariants
+                                                                            .slice(
+                                                                                0,
+                                                                                2
+                                                                            )
+                                                                            .map(
+                                                                                (
+                                                                                    variant,
+                                                                                    inx
+                                                                                ) => {
+                                                                                    const [
+                                                                                        key,
+                                                                                        value,
+                                                                                    ] =
+                                                                                        Object.entries(
+                                                                                            variant
+                                                                                        )[0];
+                                                                                    const keyDisplay =
+                                                                                        key.split(
+                                                                                            "_"
+                                                                                        )[1];
 
-                                                                                // Check if the key is 'variation_color'
-                                                                                if (
-                                                                                    key ===
-                                                                                    "variation_color"
-                                                                                ) {
                                                                                     return (
-                                                                                        <span
+                                                                                        <React.Fragment
                                                                                             key={
                                                                                                 inx
                                                                                             }
-                                                                                            className="product-details-inner-color product-details-variant-item"
-                                                                                            style={{
-                                                                                                border: "3px solid #44bc9d",
-                                                                                                width: "30px !important",
-                                                                                                height: "30px !important",
-                                                                                                background:
-                                                                                                    value.toLowerCase(),
-                                                                                                cursor: "pointer",
-                                                                                                marginLeft:
-                                                                                                    "10px",
-                                                                                                marginRight:
-                                                                                                    "10px",
-                                                                                            }}
-                                                                                        ></span>
+                                                                                        >
+                                                                                            <span>
+                                                                                                {
+                                                                                                    keyDisplay
+                                                                                                }
+                                                                                            </span>
+                                                                                            <span className="product-details-variant-item ms-3 me-2">
+                                                                                                <label>
+                                                                                                    {
+                                                                                                        value
+                                                                                                    }
+                                                                                                </label>
+                                                                                            </span>
+                                                                                        </React.Fragment>
                                                                                     );
                                                                                 }
-
-                                                                                // Default rendering for other variants
-                                                                                return (
-                                                                                    <span
-                                                                                        key={
-                                                                                            inx
-                                                                                        }
-                                                                                        className="product-details-variant-item variantAttributeActive"
-                                                                                        style={{
-                                                                                            border: "2px solid #7B7B7B",
-                                                                                            cursor: "pointer",
-                                                                                            marginLeft:
-                                                                                                "10px",
-                                                                                            marginRight:
-                                                                                                "10px",
-                                                                                        }}
-                                                                                    >
-                                                                                        <label>
-                                                                                            {
-                                                                                                value
-                                                                                            }
-                                                                                        </label>
-                                                                                    </span>
-                                                                                );
-                                                                            }
-                                                                        )}
+                                                                            )}
                                                                 </strong>
                                                             </td>
 

@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../services/getShippingCustomerAddresses";
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 import { NagadhatPublicUrl } from "../utils";
@@ -11,6 +11,7 @@ import Link from "next/link";
 import { postShippingAddress } from "../services/postShippingAddress";
 import { updateShippingAddress } from "../services/updateShippingAddress";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import { pickUpPontes } from "../services/pickupPoint";
 
 const ShippingPage = () => {
     const { status, data: session } = useSession();
@@ -30,7 +31,12 @@ const ShippingPage = () => {
     const [auth, setAuth] = useState(session?.user);
     const [validationErrors, setValidationErrors] = useState({});
     const [userEmail, setUserEmail] = useState("");
-    const [mailError, setMailError] = useState();
+    const [tempEmail, setTempEmail] = useState("");
+    const [mailError, setMailError] = useState("");
+    const [pickUpPoint, setPickUpPoint] = useState([]);
+    const [pickUpId, setPickUpPointId] = useState(null);
+    const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
+    const [shippingPrice, setShippingPrice] = useState("");
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -46,12 +52,6 @@ const ShippingPage = () => {
         if (!formData.city) errors.city = "City is required";
         if (!formData.address) errors.address = "Address is required";
         return errors;
-    };
-
-    const validateEmail = (email) => {
-        // Basic email regex for validation
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
     };
 
     const handleChange = (e) => {
@@ -162,6 +162,10 @@ const ShippingPage = () => {
                         session?.accessToken
                     );
                     setCartProduct(cartProduct?.data);
+                    setShippingPrice(cartProduct?.shipping_charge);
+                    const pickUpPoint = await pickUpPontes(3);
+                    console.log(pickUpPoint);
+                    setPickUpPoint(pickUpPoint);
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }
@@ -171,6 +175,7 @@ const ShippingPage = () => {
     }, [session]);
 
     const handlePlaceOrder = async () => {
+        console.log(userEmail);
         const cartItems = cartProduct?.map((item) => ({
             product_id: item.product_id,
             product_quantity: item.quantity,
@@ -188,11 +193,14 @@ const ShippingPage = () => {
             shipping_address_id: 1, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             payment_type: "cash_on_delivery",
+            shipping_email: userEmail,
+            outlet_pickup_point_id: pickUpIdForOrder,
+
             cart_items: cartItems,
         };
-        console.log("placeOrder", payload);
-        const placeOrderData = await placeOrder(payload, session?.accessToken);
-        console.log("placeOrder", placeOrderData);
+        await placeOrder(payload, session?.accessToken);
+        const cartProduct = await fetchCartProducts(session?.accessToken);
+        setCartProduct(cartProduct?.data);
     };
 
     const handleSetDefaultAddress = (id) => {
@@ -212,6 +220,7 @@ const ShippingPage = () => {
     };
 
     const handleChangeDefaultAddress = async (address_id) => {
+        console.log("hello world");
         const addAddressInfo = {
             address_id: address_id,
             full_name: formData.fullName,
@@ -226,6 +235,9 @@ const ShippingPage = () => {
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const cartProduct = await fetchCartProducts(session?.accessToken);
+        setCartProduct(cartProduct?.data);
+        setShippingPrice(cartProduct?.shipping_charge);
 
         const modalElement = document.getElementById(
             "change-nhn-shipping-address"
@@ -234,21 +246,10 @@ const ShippingPage = () => {
         modalInstance.hide();
     };
 
-    const handleChangeEmail = () => {
-        if (!userEmail) {
-            setMailError("Email field cannot be empty.");
-            return;
-        }
-        if (!validateEmail(userEmail)) {
-            setMailError("Please enter a valid email address.");
-            return;
-        }
-        localStorage.setItem("userEmail", userEmail);
-        setMailError(""); // Clear the error message if validation passes
-        // alert("Email changed successfully!");
-        setUserEmail(" ");
+    const handlePickUpPoint = () => {
+        setPickUpIdForOrder(pickUpId);
         const modalElement = document.getElementById(
-            "edit-mail-shipping-modal"
+            "shipping-pick-point-modal"
         );
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
@@ -256,15 +257,43 @@ const ShippingPage = () => {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            const changedMail = localStorage.getItem("userEmail");
-            console.log(changedMail);
-            if (changedMail) {
-                setUserEmail(changedMail);
-            } else {
-                setUserEmail(session?.user?.email);
+            const savedEmail = localStorage.getItem("userEmail");
+            if (savedEmail) {
+                setUserEmail(savedEmail);
+            } else if (session?.user?.email) {
+                setUserEmail(session.user.email);
             }
         }
     }, [session]);
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const handleEmailChange = (e) => {
+        const email = e.target.value;
+        setTempEmail(email);
+
+        if (!validateEmail(email)) {
+            setMailError("Invalid email address.");
+        } else {
+            setMailError("");
+        }
+    };
+
+    const handleSaveEmail = () => {
+        if (!mailError && tempEmail) {
+            setUserEmail(tempEmail);
+            localStorage.setItem("userEmail", tempEmail);
+            // alert("Email updated successfully!");
+            const modalElement = document.getElementById(
+                "edit-mail-shipping-modal"
+            );
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance.hide();
+        }
+    };
 
     return (
         <PrivateRoute>
@@ -493,160 +522,72 @@ const ShippingPage = () => {
                                                                 </div>
                                                                 <div className="modal-body">
                                                                     <div className="row g-2">
-                                                                        <div className="col-md-6 col-sm-12">
-                                                                            <div className="shipping-delivery-address-radiobox ">
-                                                                                <input
-                                                                                    id="radio3"
-                                                                                    type="radio"
-                                                                                    name="license-radios"
-                                                                                    className="shipping-delivery-address-radio"
-                                                                                />
-                                                                                <label htmlFor="radio3">
-                                                                                    <span className="license_type_circle">
-                                                                                        {" "}
-                                                                                    </span>
-                                                                                    <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
-                                                                                        <div className="d-flex justify-content-between flex-column">
-                                                                                            <p>
-                                                                                                Nagadhat
-                                                                                                E-courier
-                                                                                                kallyanpur
-                                                                                                Collection
-                                                                                                Point-
-                                                                                            </p>
-                                                                                            <p>
-                                                                                                09:30:00-17:00:00
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <p>
-                                                                                            Nagadhat
-                                                                                            E-courier
-                                                                                            kallyanpur
-                                                                                            Collection
-                                                                                            Point,
-                                                                                            144,{" "}
-                                                                                            <br />{" "}
-                                                                                            Muktobangla
-                                                                                            Shopping
-                                                                                            Complex,
-                                                                                            kallyanpur,
-                                                                                            Dhaka,
-                                                                                            kallyanpur,Dhaka
-                                                                                            -
-                                                                                            North,
-                                                                                            Dhaka{" "}
-                                                                                        </p>
+                                                                        {pickUpPoint?.map(
+                                                                            (
+                                                                                item,
+                                                                                id
+                                                                            ) => (
+                                                                                <div
+                                                                                    className="col-md-6 col-sm-12"
+                                                                                    onClick={(
+                                                                                        e
+                                                                                    ) => {
+                                                                                        setPickUpPointId(
+                                                                                            item?.id
+                                                                                        );
+                                                                                    }}
+                                                                                >
+                                                                                    <div className="shipping-delivery-address-radiobox ">
+                                                                                        <input
+                                                                                            id="radio3"
+                                                                                            type="radio"
+                                                                                            name="license-radios"
+                                                                                            className="shipping-delivery-address-radio"
+                                                                                        />
+                                                                                        <label htmlFor="radio3">
+                                                                                            <span className="license_type_circle">
+                                                                                                {" "}
+                                                                                            </span>
+                                                                                            <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
+                                                                                                <div className="d-flex justify-content-between flex-column">
+                                                                                                    <p>
+                                                                                                        {
+                                                                                                            item?.name
+                                                                                                        }
+                                                                                                    </p>
+                                                                                                    <p>
+                                                                                                        {
+                                                                                                            item?.open
+                                                                                                        }
+
+                                                                                                        -{" "}
+                                                                                                        {
+                                                                                                            item?.close
+                                                                                                        }
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <p>
+                                                                                                    {
+                                                                                                        item?.address
+                                                                                                    }
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </label>
                                                                                     </div>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="col-md-6 col-sm-12">
-                                                                            <div className="shipping-delivery-address-radiobox ">
-                                                                                <input
-                                                                                    id="radio4"
-                                                                                    type="radio"
-                                                                                    name="license-radios"
-                                                                                    className="shipping-delivery-address-radio"
-                                                                                />
-                                                                                <label htmlFor="radio4">
-                                                                                    <span className="license_type_circle">
-                                                                                        {" "}
-                                                                                    </span>
-                                                                                    <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
-                                                                                        <div className="d-flex justify-content-between flex-column">
-                                                                                            <p>
-                                                                                                Nagadhat
-                                                                                                E-courier
-                                                                                                kallyanpur
-                                                                                                Collection
-                                                                                                Point-
-                                                                                            </p>
-                                                                                            <p>
-                                                                                                09:30:00-17:00:00
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <p>
-                                                                                            Nagadhat
-                                                                                            E-courier
-                                                                                            kallyanpur
-                                                                                            Collection
-                                                                                            Point,
-                                                                                            144,{" "}
-                                                                                            <br />{" "}
-                                                                                            Muktobangla
-                                                                                            Shopping
-                                                                                            Complex,
-                                                                                            kallyanpur,
-                                                                                            Dhaka,
-                                                                                            kallyanpur,Dhaka
-                                                                                            -
-                                                                                            North,
-                                                                                            Dhaka{" "}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="col-md-6 col-sm-12">
-                                                                            <div className="shipping-delivery-address-radiobox ">
-                                                                                <input
-                                                                                    id="radio5"
-                                                                                    type="radio"
-                                                                                    name="license-radios"
-                                                                                    className="shipping-delivery-address-radio"
-                                                                                />
-                                                                                <label htmlFor="radio5">
-                                                                                    <span className="license_type_circle">
-                                                                                        {" "}
-                                                                                    </span>
-                                                                                    <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
-                                                                                        <div className="d-flex justify-content-between flex-column">
-                                                                                            <p>
-                                                                                                Nagadhat
-                                                                                                E-courier
-                                                                                                kallyanpur
-                                                                                                Collection
-                                                                                                Point-
-                                                                                            </p>
-                                                                                            <p>
-                                                                                                1810099616{" "}
-                                                                                            </p>
-                                                                                            <p>
-                                                                                                (+880)
-                                                                                                1810099616
-                                                                                            </p>
-                                                                                            <p>
-                                                                                                09:30:00-20:00:00
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <p>
-                                                                                            Nagadhat
-                                                                                            E-courier
-                                                                                            kallyanpur
-                                                                                            Collection
-                                                                                            Point,
-                                                                                            144,{" "}
-                                                                                            <br />{" "}
-                                                                                            Muktobangla
-                                                                                            Shopping
-                                                                                            Complex,
-                                                                                            kallyanpur,
-                                                                                            Dhaka,
-                                                                                            kallyanpur,Dhaka
-                                                                                            -
-                                                                                            North,
-                                                                                            Dhaka{" "}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
+                                                                                </div>
+                                                                            )
+                                                                        )}
                                                                     </div>
                                                                 </div>
                                                                 <div className="modal-footer justify-content-center">
                                                                     <button
                                                                         type="button"
                                                                         className="btn add-to-cart-link w-100"
+                                                                        onClick={(
+                                                                            e
+                                                                        ) => {
+                                                                            handlePickUpPoint();
+                                                                        }}
                                                                     >
                                                                         Confirm
                                                                     </button>
@@ -656,7 +597,7 @@ const ShippingPage = () => {
                                                     </div>
                                                     <div className="nhn-shipping-deliver-edit-mail">
                                                         <p>
-                                                            Email to
+                                                            Email to:{" "}
                                                             {userEmail}
                                                             <button
                                                                 type="button"
@@ -700,19 +641,13 @@ const ShippingPage = () => {
                                                                                 type="text"
                                                                                 name="edit-email"
                                                                                 value={
-                                                                                    userEmail
+                                                                                    tempEmail
                                                                                 }
                                                                                 className="form-control"
                                                                                 id="edit-email"
-                                                                                onChange={(
-                                                                                    e
-                                                                                ) => {
-                                                                                    setUserEmail(
-                                                                                        e
-                                                                                            .target
-                                                                                            .value
-                                                                                    );
-                                                                                }}
+                                                                                onChange={
+                                                                                    handleEmailChange
+                                                                                }
                                                                             />
                                                                             {mailError && (
                                                                                 <p
@@ -726,18 +661,19 @@ const ShippingPage = () => {
                                                                                 </p>
                                                                             )}
                                                                         </div>
+
+                                                                        <div className="modal-footer justify-content-center">
+                                                                            <button
+                                                                                type="button"
+                                                                                className="btn add-to-cart-link w-100"
+                                                                                onClick={
+                                                                                    handleSaveEmail
+                                                                                }
+                                                                            >
+                                                                                Confirm
+                                                                            </button>
+                                                                        </div>
                                                                     </form>
-                                                                </div>
-                                                                <div className="modal-footer justify-content-center">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="btn add-to-cart-link w-100"
-                                                                        onClick={
-                                                                            handleChangeEmail
-                                                                        }
-                                                                    >
-                                                                        Confirm
-                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1323,73 +1259,52 @@ const ShippingPage = () => {
                                                                                 item?.product_name
                                                                             }
                                                                         </h2>
-                                                                        <strong>
+                                                                        <strong className="ml-3">
                                                                             {item?.selectedVariants &&
-                                                                                item?.selectedVariants.map(
-                                                                                    (
-                                                                                        variant,
-                                                                                        inx
-                                                                                    ) => {
-                                                                                        const [
-                                                                                            key,
-                                                                                            value,
-                                                                                        ] =
-                                                                                            Object.entries(
-                                                                                                variant
-                                                                                            )[0]; // Get the key-value pair from the variant object
+                                                                                item.selectedVariants
+                                                                                    .slice(
+                                                                                        0,
+                                                                                        2
+                                                                                    )
+                                                                                    .map(
+                                                                                        (
+                                                                                            variant,
+                                                                                            inx
+                                                                                        ) => {
+                                                                                            const [
+                                                                                                key,
+                                                                                                value,
+                                                                                            ] =
+                                                                                                Object.entries(
+                                                                                                    variant
+                                                                                                )[0];
+                                                                                            const keyDisplay =
+                                                                                                key.split(
+                                                                                                    "_"
+                                                                                                )[1];
 
-                                                                                        // Check if the key is 'variation_color'
-                                                                                        if (
-                                                                                            key ===
-                                                                                            "variation_color"
-                                                                                        ) {
                                                                                             return (
-                                                                                                <span
+                                                                                                <React.Fragment
                                                                                                     key={
                                                                                                         inx
                                                                                                     }
-                                                                                                    className="product-details-inner-color product-details-variant-item"
-                                                                                                    style={{
-                                                                                                        border: "3px solid #44bc9d",
-                                                                                                        width: "30px !important",
-                                                                                                        height: "30px !important",
-                                                                                                        background:
-                                                                                                            value.toLowerCase(),
-                                                                                                        cursor: "pointer",
-                                                                                                        marginLeft:
-                                                                                                            "10px",
-                                                                                                        marginRight:
-                                                                                                            "10px",
-                                                                                                    }}
-                                                                                                ></span>
+                                                                                                >
+                                                                                                    <span>
+                                                                                                        {
+                                                                                                            keyDisplay
+                                                                                                        }
+                                                                                                    </span>
+                                                                                                    <span className="product-details-variant-item ms-3 me-2">
+                                                                                                        <label>
+                                                                                                            {
+                                                                                                                value
+                                                                                                            }
+                                                                                                        </label>
+                                                                                                    </span>
+                                                                                                </React.Fragment>
                                                                                             );
                                                                                         }
-
-                                                                                        // Default rendering for other variants
-                                                                                        return (
-                                                                                            <span
-                                                                                                key={
-                                                                                                    inx
-                                                                                                }
-                                                                                                className="product-details-variant-item variantAttributeActive"
-                                                                                                style={{
-                                                                                                    border: "2px solid #7B7B7B",
-                                                                                                    cursor: "pointer",
-                                                                                                    marginLeft:
-                                                                                                        "10px",
-                                                                                                    marginRight:
-                                                                                                        "10px",
-                                                                                                }}
-                                                                                            >
-                                                                                                <label>
-                                                                                                    {
-                                                                                                        value
-                                                                                                    }
-                                                                                                </label>
-                                                                                            </span>
-                                                                                        );
-                                                                                    }
-                                                                                )}
+                                                                                    )}
                                                                         </strong>
                                                                     </td>
                                                                     <td>
@@ -1441,10 +1356,12 @@ const ShippingPage = () => {
                                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                 <p>
                                                     Shipping{" "}
-                                                    <strong> (Free)</strong>
+                                                    {/* <strong> (Free)</strong> */}
                                                 </p>
                                                 <div className="d-flex gap-2 align-items-center">
-                                                    <strong>৳0</strong>
+                                                    <strong>
+                                                        ৳{shippingPrice}
+                                                    </strong>
                                                 </div>
                                             </div>
                                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
@@ -1458,7 +1375,9 @@ const ShippingPage = () => {
                                             <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
                                                 <strong>Total</strong>
                                                 <p className="total-order-price">
-                                                    ৳ {totalPrice}
+                                                    ৳{" "}
+                                                    {totalPrice +
+                                                        parseInt(shippingPrice)}
                                                 </p>
                                             </div>
                                         </div>
