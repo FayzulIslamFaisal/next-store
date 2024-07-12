@@ -83,7 +83,7 @@ export const authOptions = {
 
             if (account.provider === "google") {
                 // Example accessToken and expiresIn, replace with actual token logic
-                
+
                 // console.log("user from api auth route page ----", user);
                 // console.log('profile from api auth route page ----', account)
                 // console.log('profile from api auth route page ----', profile)
@@ -105,6 +105,8 @@ export const authOptions = {
 
                 user.accessToken = googleLogin?.user?.accessToken;
                 user.expiresIn = googleLogin?.user?.expiresIn;
+               
+                user.name = profile?.name;
                 user.email = profile?.email;
 
                 // if(userExists){
