@@ -1,8 +1,8 @@
-import {apiBaseUrl} from '../utils';
+import { apiBaseUrl } from "../utils";
 
-export const googleProfile = async (payload) => {
+export const googleNewUser = async (payload) => {
     try {
-        const response = await fetch(`${apiBaseUrl}/complete-google-profile`, {
+        const response = await fetch(`${apiBaseUrl}/google-new-user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -12,7 +12,7 @@ export const googleProfile = async (payload) => {
 
         return await response.json();
     } catch (error) {
-        console.error('Something went wrong creating user');
+        console.error("Something went wrong creating user");
         console.info(error);
     }
-}
+};
