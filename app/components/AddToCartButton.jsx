@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { addToCartInLocalStorage } from "../utils";
+import { addToCartInLocalStorage, addToCartProductList } from "../utils";
 import { useSession } from "next-auth/react";
 import { addToCartProduct } from "../services/postAddToCartAfterLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { setAddToCart } from "../store/cartSlice";
+import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
 
@@ -49,7 +52,6 @@ function findMissingProperties(decorateVariation, selectedVariantKey) {
 
     return missingProperties;
 }
-
 function AddToCartButton({
     title = "",
     path = "#",
@@ -67,6 +69,7 @@ function AddToCartButton({
     const { status, data: session } = useSession();
     console.log("selectedVariantKeys", selectedVariantKeys);
     console.log("decorateVariation", decorateVariation);
+    const dispatch = useDispatch();
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {
@@ -113,8 +116,19 @@ function AddToCartButton({
                                 addToCartInfo,
                                 session.accessToken
                             );
+                            const updatedCartProducts = await fetchCartProducts(
+                                session?.accessToken
+                            );
+
+                            dispatch(
+                                setAddToCart({
+                                    hasSession: true,
+                                    length: updatedCartProducts?.data?.length,
+                                })
+                            );
                         } else {
                             addToCartInLocalStorage(addToCartInfo);
+                            dispatch(setAddToCart({ hasSession: false }));
                         }
                     }
                 } else {
@@ -137,14 +151,24 @@ function AddToCartButton({
                             addToCartInfo,
                             session.accessToken
                         );
+                        const updatedCartProducts = await fetchCartProducts();
+                        console.log(
+                            "updatedCartProducts cart page ===",
+                            updatedCartProducts
+                        );
                     } else {
                         addToCartInLocalStorage(addToCartInfo);
+                        dispatch(setAddToCart());
                     }
                 }
             }
         }
     };
 
+    const addProductLength = addToCartProductList();
+    console.log("addProductLength", addProductLength);
+    const countK = useSelector((state) => state.cart?.addToCartLength);
+    console.log("countK", countK);
     return (
         <div className="add-to-cart-btn">
             <Link

@@ -9,7 +9,7 @@ import ProductSearchResult from "./ProductSearchResult";
 import ProductSearchResultMobile from "./ProductSearchResultMobile";
 import { getDivision } from "../services/getDivision";
 import { getDistrictByDivisionId } from "../services/getDistrict";
-
+import { useSelector } from "react-redux";
 function MainNav({
     isObserverMenuVisible,
     isCategoryHoverMenu,
@@ -24,6 +24,9 @@ function MainNav({
     let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
     const searchResultRef = useRef(null);
+    const addToCartProductLength = useSelector(
+        (state) => state.cart?.addToCartLength
+    );
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
@@ -221,7 +224,7 @@ function MainNav({
                                                 height={15}
                                             />
                                         </span>
-                                        Cart
+                                        Cart ({addToCartProductLength})
                                     </Link>
                                 </li>
                             </ul>
@@ -376,7 +379,7 @@ function MainNav({
                                                 height={15}
                                             />
                                         </span>
-                                        Cart
+                                        Cart ({addToCartProductLength})
                                     </Link>
                                 </li>
                             </ul>
