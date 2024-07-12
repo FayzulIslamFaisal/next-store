@@ -63,6 +63,7 @@ export const authOptions = {
             },
         }),
     ],
+
     session: {
         strategy: "jwt",
     },
@@ -71,9 +72,18 @@ export const authOptions = {
         async signIn({ user, account, profile }) {
             console.log("=>>> signIn from api auth route page ...");
 
+            console.log(
+                "=>>> signIn from api auth route page account",
+                account
+            );
+            console.log(
+                "=>>> signIn from api auth route page profile",
+                profile
+            );
+
             if (account.provider === "google") {
                 // Example accessToken and expiresIn, replace with actual token logic
-
+                
                 // console.log("user from api auth route page ----", user);
                 // console.log('profile from api auth route page ----', account)
                 // console.log('profile from api auth route page ----', profile)
