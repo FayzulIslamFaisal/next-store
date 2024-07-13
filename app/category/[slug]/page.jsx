@@ -1,24 +1,61 @@
+"use client";
 import Service from "@/app/components/Service";
 import CategoryLeftSide from "@/app/components/productCategory/CategoryLeftSide";
 import CategoryRightSide from "@/app/components/productCategory/CategoryRightSide";
 import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import { getCategorydetailBySlug } from "@/app/services/getCategorydetailBySlug";
+import { getHomeSearchProduct } from "@/app/services/getHomeSearchProduct"; // Add the missing import
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const DynamicCategoryPage = async ({ params, searchParams }) => {
+const DynamicCategoryPage = ({ params, searchParams }) => {
+    const searchParamsOutlet = useSearchParams();
+    const initialDistrictId = searchParamsOutlet.get("districtId") || 47;
+    const [districtId, setDistrictId] = useState(initialDistrictId);
+    const [searchDistrictId, setSearchDistrictId] = useState(null);
+    const [categoryBySlugData, setCategoryBySlugData] = useState(null);
     const { slug } = params;
-    const option = {};
-
-    for (const key in searchParams) {
-        if (Object.hasOwnProperty.call(searchParams, key)) {
-            option[key] = searchParams[key];
+    const [option, setOption] = useState({});
+    console.log(initialDistrictId);
+    useEffect(() => {
+        const newOption = {};
+        for (const key of searchParamsOutlet.keys()) {
+            newOption[key] = searchParamsOutlet.get(key);
         }
-    }
+        setOption(newOption);
+    }, [searchParamsOutlet]);
 
+    const outletId = searchDistrictId?.outlet_id;
     const page = parseInt(option.page) || 1;
-    const limit = 12; // Items per page 
-    option.limit = limit;
+    const limit = 12; // Items per page
 
-    const categoryBySlugData = await getCategorydetailBySlug(slug, option);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getCategorydetailBySlug(
+                    outletId,
+                    slug,
+                    option
+                );
+                setCategoryBySlugData(data);
+            } catch (error) {
+                console.error("Error fetching 'Just For You' products:", error);
+            }
+        };
+        fetchProducts();
+    }, [outletId, slug, option]);
+
+    useEffect(() => {
+        const fetchSearchDistrictId = async () => {
+            const productData = await getHomeSearchProduct(districtId);
+            const searchResults = productData?.results;
+            if (searchResults) {
+                setSearchDistrictId(searchResults);
+            }
+        };
+        fetchSearchDistrictId();
+    }, [districtId]);
+
     const categoryByResult = categoryBySlugData?.results;
     const categoryTitle = categoryByResult?.category;
     const categoryByProduct = categoryByResult?.products?.data;
@@ -45,7 +82,7 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
             imageurl: "/images/gift-cart.svg",
             altText: "gift cart",
             title: " Best Quality",
-            subTitle: "Best Product Peices",
+            subTitle: "Best Product Pieces",
         },
         {
             imageurl: "/images/gift-box.svg",
@@ -56,7 +93,7 @@ const DynamicCategoryPage = async ({ params, searchParams }) => {
         {
             imageurl: "/images/headphone.svg",
             altText: "headphone",
-            title: "  Help Center",
+            title: " Help Center",
             subTitle: "Support System 24/7",
         },
     ];
