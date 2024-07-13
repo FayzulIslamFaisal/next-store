@@ -21,8 +21,7 @@ const ShotBy = ({ searchParams, categoryByProduct }) => {
         } else {
             params.set("order", order);
         }
-        params.set("page","1");
-        
+        params.set("page", "1");
         url.search = params.toString();
         router.push(url.toString(), undefined, { shallow: true });
         setOrderValue(!order);
@@ -37,18 +36,9 @@ const ShotBy = ({ searchParams, categoryByProduct }) => {
                         onChange={handleChange}
                         value={orderValue}
                     >
-                        <option
-                            value="Best Match"
-                            selected={orderValue === "Best Match"}
-                        >
-                            Best Match
-                        </option>
-                        <option value="asc" selected={orderValue === "asc"}>
-                            Low to High Price
-                        </option>
-                        <option value="desc" selected={orderValue === "desc"}>
-                            High to Low Price
-                        </option>
+                        <option value="Best Match">Best Match</option>
+                        <option value="asc">Low to High Price</option>
+                        <option value="desc">High to Low Price</option>
                     </select>
                 </div>
             </div>

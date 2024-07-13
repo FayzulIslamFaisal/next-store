@@ -1,13 +1,17 @@
 import { apiBaseUrl } from "../utils";
 
-export const getCategorydetailBySlug = async (slug, option) => {
+export const getCategorydetailBySlug = async (outletId=3, slug='', option={}) => {
+ 
+    if (!slug) {
+        throw new Error('Slug is required');
+    }
     try {
         let CategoryRootApi = '';
         if ( option ) {
             const params = new URLSearchParams(option).toString();
-            CategoryRootApi = `${apiBaseUrl}/category-detail-by-slug/${slug}?${params}`;
+            CategoryRootApi = `${apiBaseUrl}/category-detail-by-slug/${outletId}/${slug}?${params}`;
         } else {
-            CategoryRootApi = `${apiBaseUrl}/category-detail-by-slug/${slug}`;
+            CategoryRootApi = `${apiBaseUrl}/category-detail-by-slug/${outletId}/${slug}`;
         }
 
         const response = await fetch(CategoryRootApi, {
