@@ -1,10 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 // import StarRating from "./StarRating";
 import AddToCartButton from "../AddToCartButton";
 import { NagadhatPublicUrl } from "../../utils";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getHomeSearchProduct } from "@/app/services/getHomeSearchProduct";
 
 const CategoryProductArchiveItems = ({ productItem }) => {
+    const searchParams = useSearchParams();
+    const initialDistrictId = searchParams.get("districtId") || 47;
+    const [districtId, setDistrictId] = useState(initialDistrictId);
+    const [searchDistrictId, setSearchDistrictId] = useState(null);
     let imageUrl = null;
     const {
         product_name: title,
@@ -19,10 +28,23 @@ const CategoryProductArchiveItems = ({ productItem }) => {
         imageUrl = `${NagadhatPublicUrl}/${productItem?.product_thumbnail}`;
     }
 
+    useEffect(() => {
+        const fetchSearchDistrictId = async () => {
+            const productData = await getHomeSearchProduct(districtId);
+            const searchResults = productData?.results;
+            if (searchResults) {
+                setSearchDistrictId(searchResults);
+            }
+        };
+        fetchSearchDistrictId();
+    }, [districtId]);
+
+    const outletId = searchDistrictId?.outlet_id;
+
     return (
         <div className="flash-sale-content-item">
             <Link
-                href={`/products/get-product-details?outlet_id=${3}&product_id=${id}`}
+                href={`/products/get-product-details?outlet_id=${outletId}&product_id=${id}`}
             >
                 <div className="flash-sale-content-bg nh-hover-box-shadow">
                     <div className="product-category-image">
