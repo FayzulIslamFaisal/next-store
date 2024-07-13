@@ -1,6 +1,6 @@
 .product-details-section {
   padding: 50px 0;
-  /* padding-top: 0px; */
+  padding-top: 0px;
 }
 
 .product-details-info-img {
@@ -73,14 +73,16 @@
 
 /**********************Start product-details-breadcrumb-area **************************/
 .product-details-breadcrumb-area {
-  padding-top: 20px;
+  padding-top: 15px;
 }
 
 .breadcrumb {
   margin-bottom: 0;
-  padding-bottom: 35px;
+  padding-bottom: 25px;
 }
-
+.product-details-section .breadcrumb {
+  padding-bottom: 15px;
+}
 .breadcrumb-item {
   font-size: 16px;
 }
