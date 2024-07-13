@@ -12,11 +12,14 @@ import { postShippingAddress } from "../services/postShippingAddress";
 import { updateShippingAddress } from "../services/updateShippingAddress";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import { pickUpPontes } from "../services/pickupPoint";
-
+import { getDistrictForShipping } from "../services/getDistrictForShipping";
+import { useDispatch, useSelector } from "react-redux";
+import { setAddToCart } from "../store/cartSlice";
 const ShippingPage = () => {
     const { status, data: session } = useSession();
     const [customerAddress, setCustomerAddress] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         fullName: "",
         phone: "",
@@ -37,6 +40,7 @@ const ShippingPage = () => {
     const [pickUpId, setPickUpPointId] = useState(null);
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState("");
+    const [districtsData, setDistrictsData] = useState([]);
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -166,6 +170,14 @@ const ShippingPage = () => {
                     const pickUpPoint = await pickUpPontes(3);
                     console.log(pickUpPoint);
                     setPickUpPoint(pickUpPoint);
+
+                    const totalDistrict = await getDistrictForShipping();
+                    console.log(
+                        totalDistrict?.results?.districts,
+                        "totalDistrict================="
+                    );
+
+                    setDistrictsData(totalDistrict?.results?.districts);
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }
@@ -199,8 +211,14 @@ const ShippingPage = () => {
             cart_items: cartItems,
         };
         await placeOrder(payload, session?.accessToken);
-        const cartProduct = await fetchCartProducts(session?.accessToken);
-        setCartProduct(cartProduct?.data);
+        const cartProductsItem = await fetchCartProducts(session?.accessToken);
+        setCartProduct(cartProductsItem?.data);
+        dispatch(
+            setAddToCart({
+                hasSession: true,
+                length: cartProductsItem?.data?.length,
+            })
+        );
     };
 
     const handleSetDefaultAddress = (id) => {
@@ -245,7 +263,6 @@ const ShippingPage = () => {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
     };
-
     const handlePickUpPoint = () => {
         setPickUpIdForOrder(pickUpId);
         const modalElement = document.getElementById(
@@ -814,15 +831,25 @@ const ShippingPage = () => {
                                                                     Select
                                                                     District
                                                                 </option>
-                                                                <option value="1">
-                                                                    Barisal
-                                                                </option>
-                                                                <option value="2">
-                                                                    Chittagong
-                                                                </option>
-                                                                <option value="3">
-                                                                    Dhaka
-                                                                </option>
+                                                                {districtsData?.map(
+                                                                    (
+                                                                        district,
+                                                                        index
+                                                                    ) => (
+                                                                        <option
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                            value={
+                                                                                district?.id
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                district?.name
+                                                                            }
+                                                                        </option>
+                                                                    )
+                                                                )}
                                                             </select>
                                                             {validationErrors.district && (
                                                                 <span className="text-danger">
@@ -839,8 +866,9 @@ const ShippingPage = () => {
                                                             >
                                                                 City
                                                             </label>
-                                                            <select
-                                                                className="form-select district-list"
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
                                                                 name="city"
                                                                 id="city"
                                                                 value={
@@ -849,20 +877,8 @@ const ShippingPage = () => {
                                                                 onChange={
                                                                     handleChange
                                                                 }
-                                                            >
-                                                                <option value="">
-                                                                    Select City
-                                                                </option>
-                                                                <option value="Barisal">
-                                                                    Barisal
-                                                                </option>
-                                                                <option value="Chittagong">
-                                                                    Chittagong
-                                                                </option>
-                                                                <option value="Dhaka">
-                                                                    Dhaka
-                                                                </option>
-                                                            </select>
+                                                            />
+
                                                             {validationErrors.city && (
                                                                 <span className="text-danger">
                                                                     {
@@ -1047,7 +1063,7 @@ const ShippingPage = () => {
                                                         </div>
                                                         <div className="col-md-6 pb-3">
                                                             <label
-                                                                htmlFor="district"
+                                                                htmlFor="district2"
                                                                 className="form-label"
                                                             >
                                                                 District{" "}
@@ -1058,7 +1074,7 @@ const ShippingPage = () => {
                                                             <select
                                                                 className="form-select district-list"
                                                                 name="district"
-                                                                id="district"
+                                                                id="district2"
                                                                 value={
                                                                     formData.district
                                                                 }
@@ -1070,15 +1086,25 @@ const ShippingPage = () => {
                                                                     Select
                                                                     District
                                                                 </option>
-                                                                <option value="1">
-                                                                    Barisal
-                                                                </option>
-                                                                <option value="2">
-                                                                    Chittagong
-                                                                </option>
-                                                                <option value="3">
-                                                                    Dhaka
-                                                                </option>
+                                                                {districtsData?.map(
+                                                                    (
+                                                                        district,
+                                                                        index
+                                                                    ) => (
+                                                                        <option
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                            value={
+                                                                                district?.id
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                district?.name
+                                                                            }
+                                                                        </option>
+                                                                    )
+                                                                )}
                                                             </select>
                                                             {validationErrors.district && (
                                                                 <span className="text-danger">
@@ -1095,8 +1121,9 @@ const ShippingPage = () => {
                                                             >
                                                                 City
                                                             </label>
-                                                            <select
-                                                                className="form-select district-list"
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
                                                                 name="city"
                                                                 id="city"
                                                                 value={
@@ -1105,20 +1132,8 @@ const ShippingPage = () => {
                                                                 onChange={
                                                                     handleChange
                                                                 }
-                                                            >
-                                                                <option value="">
-                                                                    Select City
-                                                                </option>
-                                                                <option value="Barisal">
-                                                                    Barisal
-                                                                </option>
-                                                                <option value="Chittagong">
-                                                                    Chittagong
-                                                                </option>
-                                                                <option value="Dhaka">
-                                                                    Dhaka
-                                                                </option>
-                                                            </select>
+                                                            />
+
                                                             {validationErrors.city && (
                                                                 <span className="text-danger">
                                                                     {
