@@ -84,10 +84,12 @@ const GoogleProfile = () => {
             return;
         }
 
-        try {
+        // try {
             console.log("=>>> formdata before form submit", formData);
 
             const res = await googleNewUser(formData);
+
+            console.log('=>>> res', res)
 
             if (res?.success != true) {
                 alert(res.message);
@@ -95,9 +97,9 @@ const GoogleProfile = () => {
             }
 
             router.push(`/dashboard`);
-        } catch (error) {
-            alert("Something went wrong. Please try after sometime");
-        }
+        // } catch (error) {
+        //     alert("Something went wrong. Please try after sometime");
+        // }
     };
 
     useEffect(() => {

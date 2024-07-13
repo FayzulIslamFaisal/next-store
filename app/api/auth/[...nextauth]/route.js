@@ -4,6 +4,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getLoginToken } from "../../../services/getLoginToken";
 // import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
+import { googleLoginAPI } from "@/app/services/googleLogin";
 
 export const authOptions = {
     providers: [
@@ -62,22 +63,61 @@ export const authOptions = {
             },
         }),
     ],
-    secret: process.env.NEXTAUTH_SECRET,
+
+    session: {
+        strategy: "jwt",
+    },
+
     callbacks: {
         async signIn({ user, account, profile }) {
             console.log("=>>> signIn from api auth route page ...");
 
+            console.log(
+                "=>>> signIn from api auth route page account",
+                account
+            );
+            console.log(
+                "=>>> signIn from api auth route page profile",
+                profile
+            );
+
             if (account.provider === "google") {
                 // Example accessToken and expiresIn, replace with actual token logic
-                const accessToken = account.access_token;
-                const expiresIn = account.expires_at;
-
-                user.accessToken = accessToken;
-                user.expiresIn = expiresIn;
-                user.email = profile?.email;
 
                 // console.log("user from api auth route page ----", user);
+                // console.log('profile from api auth route page ----', account)
                 // console.log('profile from api auth route page ----', profile)
+
+                const formData = {
+                    provider_account_id: account?.providerAccountId || "",
+                    name: profile?.name || "",
+                    email: profile?.email || "",
+                };
+
+                console.log("=>>> formdata before form submit", formData);
+
+                const googleLogin = await googleLoginAPI(formData);
+
+                console.log(
+                    "googleLogin from api auth route page",
+                    googleLogin
+                );
+
+                user.accessToken = googleLogin?.user?.accessToken;
+                user.expiresIn = googleLogin?.user?.expiresIn;
+               
+                user.name = profile?.name;
+                user.email = profile?.email;
+
+                // if(userExists){
+                //     if (userExists?.message == 'Already User Exists Account Provider Customer') {
+                //         console.log("userExists 2 from api auth route page");
+                //         return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
+                //     } else {
+                //         console.log("userExists 3 from api auth route page");
+                //         return url.startsWith(baseUrl) ? `${baseUrl}/google-profile` : baseUrl;
+                //     }
+                // }
 
                 return { ...user };
             }
@@ -152,6 +192,7 @@ export const authOptions = {
     pages: {
         newUser: "/new-user",
     },
+    secret: process.env.NEXTAUTH_SECRET,
     debug: true,
 };
 
