@@ -130,7 +130,14 @@ function AddToCartButton({
                             );
                         } else {
                             addToCartInLocalStorage(addToCartInfo);
-                            dispatch(setAddToCart({ hasSession: false }));
+                            const addToCartProductLength =
+                                addToCartProductList();
+                            dispatch(
+                                setAddToCart({
+                                    hasSession: false,
+                                    length: addToCartProductLength.length,
+                                })
+                            );
                         }
                     }
                 } else {
@@ -158,9 +165,21 @@ function AddToCartButton({
                             "updatedCartProducts cart page ===",
                             updatedCartProducts
                         );
+                        dispatch(
+                            setAddToCart({
+                                hasSession: true,
+                                length: updatedCartProducts?.data?.length,
+                            })
+                        );
                     } else {
                         addToCartInLocalStorage(addToCartInfo);
-                        dispatch(setAddToCart());
+                        const addToCartProductLength = addToCartProductList();
+                        dispatch(
+                            setAddToCart({
+                                hasSession: false,
+                                length: addToCartProductLength.length,
+                            })
+                        );
                     }
                 }
             }

@@ -1,16 +1,9 @@
-// store/cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     num: 2,
-    addToCartLength: 0,
+    addToCartLength: 0, // Initialize to 0
 };
-
-if (typeof window !== "undefined" && localStorage.getItem("addToCart")) {
-    initialState.addToCartLength = JSON.parse(
-        localStorage.getItem("addToCart")
-    ).length;
-}
 
 const cartSlice = createSlice({
     name: "counter",

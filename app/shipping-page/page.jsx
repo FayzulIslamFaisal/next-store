@@ -263,6 +263,7 @@ const ShippingPage = () => {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
     };
+
     const handlePickUpPoint = () => {
         setPickUpIdForOrder(pickUpId);
         const modalElement = document.getElementById(
