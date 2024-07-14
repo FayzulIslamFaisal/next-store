@@ -77,6 +77,8 @@ const InvoiceProductDetail = ({ invoiceProduct, orderInvoice }) => {
                                     product_name,
                                     quantity,
                                     unit_price,
+                                    product_discount,
+                                    discount_type,
                                 } = productItem;
                                 return (
                                     <tr key={product_id}>
@@ -100,7 +102,16 @@ const InvoiceProductDetail = ({ invoiceProduct, orderInvoice }) => {
                                         </td>
                                         <td className="lh-1">{product_name}</td>
                                         <td>{quantity}</td>
-                                        <td>0</td>
+                                        <td>
+                                            {product_discount !== null && (
+                                                <>
+                                                    {discount_type === "Flat"
+                                                        ? "৳"
+                                                        : "%"}{" "}
+                                                    {product_discount}
+                                                </>
+                                            )}
+                                        </td>
                                         <td>{unit_price}</td>
                                         <td>{quantity * unit_price}</td>
                                     </tr>

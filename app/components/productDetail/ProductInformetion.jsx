@@ -482,7 +482,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             defaultVariation();
         }
     }, [selectedVariants]);
-
+    console.log("variant item", productAllVariants);
     return (
         <div className="col-md-6">
             <div className="product-details-content">
@@ -591,7 +591,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                     <div key={index}>
                                         {item?.name === "variation_color" && (
                                             <>
-                                                <div className="product-details-variant-holder d-flex align-items-center">
+                                                <div className="product-details-variant-holder d-flex align-items-center mb-4">
                                                     <p className="variantName">
                                                         Color
                                                     </p>
@@ -636,60 +636,136 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         </div>
                         <div className="product-details-variant-area">
                             <div className="product-details-variant d-flex align-items-center">
-                                {productAllVariants?.map((item, index) => (
-                                    <div key={index}>
-                                        {item?.name === "variation_size" && (
-                                            <>
-                                                <div className="product-details-variant-holder d-flex align-items-center">
-                                                    <p>Size:</p>
-                                                    {item?.variants?.map(
-                                                        (variant, inx) =>
-                                                            variant.selectAble ? (
-                                                                <div
-                                                                    key={inx}
-                                                                    className={`product-details-variant-item ${
-                                                                        variant.selected
-                                                                            ? "variantAttributeActive"
-                                                                            : "variantAttributeUnitive"
-                                                                    }`}
-                                                                    onClick={() =>
-                                                                        handleVariations(
-                                                                            variant.value,
-                                                                            item.name
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <label>
-                                                                        {
-                                                                            variant?.value
+                                {productAllVariants?.map((item, index) => {
+                                    return (
+                                        <div key={index}>
+                                            {item?.name ===
+                                                "variation_size" && (
+                                                <>
+                                                    <div className="product-details-variant-holder d-flex align-items-center mb-4">
+                                                        <p>Size:</p>
+                                                        {item?.variants?.map(
+                                                            (variant, inx) =>
+                                                                variant.selectAble ? (
+                                                                    <div
+                                                                        key={
+                                                                            inx
                                                                         }
-                                                                    </label>
-                                                                </div>
-                                                            ) : (
-                                                                <div
-                                                                    key={inx}
-                                                                    className={`product-details-variant-item`}
-                                                                    style={{
-                                                                        border: "2px solid #7B7B7B",
-                                                                        cursor: "not-allowed",
-                                                                        opacity: 0.3,
-                                                                    }}
-                                                                >
-                                                                    <label>
-                                                                        {
-                                                                            variant?.value
+                                                                        className={`product-details-variant-item ${
+                                                                            variant.selected
+                                                                                ? "variantAttributeActive"
+                                                                                : "variantAttributeUnitive"
+                                                                        }`}
+                                                                        onClick={() =>
+                                                                            handleVariations(
+                                                                                variant.value,
+                                                                                item.name
+                                                                            )
                                                                         }
-                                                                    </label>
-                                                                </div>
-                                                            )
-                                                    )}
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                ))}
+                                                                    >
+                                                                        <label>
+                                                                            {
+                                                                                variant?.value
+                                                                            }
+                                                                        </label>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div
+                                                                        key={
+                                                                            inx
+                                                                        }
+                                                                        className={`product-details-variant-item`}
+                                                                        style={{
+                                                                            border: "2px solid #7B7B7B",
+                                                                            cursor: "not-allowed",
+                                                                            opacity: 0.3,
+                                                                        }}
+                                                                    >
+                                                                        <label>
+                                                                            {
+                                                                                variant?.value
+                                                                            }
+                                                                        </label>
+                                                                    </div>
+                                                                )
+                                                        )}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
+                        {productAllVariants.length < 3 && (
+                            <div className="product-details-variant-area ">
+                                <div className="product-details-variant d-flex align-items-center justify-content-start">
+                                    {productAllVariants?.map((item, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {item?.name ===
+                                                    "variation_weight" && (
+                                                    <>
+                                                        <div className="product-details-variant-holder d-flex align-items-center mb-4">
+                                                            <p>Weight:</p>
+                                                            {item?.variants?.map(
+                                                                (
+                                                                    variant,
+                                                                    inx
+                                                                ) =>
+                                                                    variant.selectAble ? (
+                                                                        <div
+                                                                            key={
+                                                                                inx
+                                                                            }
+                                                                            className={`product-details-variant-item ${
+                                                                                variant.selected
+                                                                                    ? "variantAttributeActive"
+                                                                                    : "variantAttributeUnitive"
+                                                                            }`}
+                                                                            onClick={() =>
+                                                                                handleVariations(
+                                                                                    variant.value,
+                                                                                    item.name
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            <label>
+                                                                                {
+                                                                                    variant?.value
+                                                                                }
+                                                                            </label>
+                                                                        </div>
+                                                                    ) : (
+                                                                        <div
+                                                                            key={
+                                                                                inx
+                                                                            }
+                                                                            className={`product-details-variant-item`}
+                                                                            style={{
+                                                                                border: "2px solid #7B7B7B",
+                                                                                cursor: "not-allowed",
+                                                                                opacity: 0.3,
+                                                                            }}
+                                                                        >
+                                                                            <label>
+                                                                                {
+                                                                                    variant?.value
+                                                                                }
+                                                                            </label>
+                                                                        </div>
+                                                                    )
+                                                            )}
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
                         <div>
                             <p style={{ color: "red", marginBottom: "10px" }}>
                                 {productVariationsError

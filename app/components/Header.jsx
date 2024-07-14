@@ -8,6 +8,9 @@ import HeroSlider from "./HeroSlider";
 import CategoryHoverMenu from "./CategoryHoverMenu";
 import MobileNav from "./MobileNav";
 import { storeUserAgent } from "../utils";
+import { useDispatch } from "react-redux";
+import { setAddToCart } from "../store/cartSlice";
+import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 
 function Header() {
     const path = useParams();
@@ -15,7 +18,6 @@ function Header() {
     const [isObserverMenuVisible, setObserverMenuVisible] = useState(false);
     const [isCategoryHoverMenu, setCategoryHoverMenu] = useState(false);
     const [isResponsive, setResponsive] = useState(false);
-
     useEffect(() => {
         const handleScrollPosition = () => {
             let scrollPosition = 0;
@@ -57,9 +59,36 @@ function Header() {
         storeUserAgent();
     }, []);
 
-    console.log('=>>> get login status from header page', status);
-    console.log('=>>> get login session from header page', session);
-    console.log('=>>> get login token from header page', session?.accessToken);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const setCartProductLength = async () => {
+            if (session) {
+                const updatedCartProducts = await fetchCartProducts(
+                    session?.accessToken
+                );
+
+                dispatch(
+                    setAddToCart({
+                        hasSession: true,
+                        length: updatedCartProducts?.data?.length,
+                    })
+                );
+            } else {
+                if (typeof window !== "undefined") {
+                    const addToCart = localStorage.getItem("addToCart");
+                    const length = addToCart ? JSON.parse(addToCart).length : 0;
+                    dispatch(setAddToCart({ hasSession: false, length }));
+                }
+            }
+        };
+
+        setCartProductLength();
+    }, [session, dispatch]);
+
+    console.log("=>>> get login status from header page", status);
+    console.log("=>>> get login session from header page", session);
+    // console.log('=>>> get login token from header page', session?.accessToken);
 
     useEffect(() => {
         storeUserAgent();
