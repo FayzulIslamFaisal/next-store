@@ -1,5 +1,5 @@
 "use client";
-import Image from 'next/image'
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ const Registration = () => {
         }
         fetchData();
     }, [session?.user?.email]);
-    
+
     const [errorMessage, setErrorMessage] = useState("");
     const [existsEmail, setExistsEmail] = useState("");
     const [formData, setFormData] = useState({
@@ -32,6 +32,7 @@ const Registration = () => {
     });
 
     const handleInputChange = (e) => {
+        console.log('=>>> formdata', formData)
         setFormData((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
@@ -71,7 +72,6 @@ const Registration = () => {
                 }
 
                 router.push(`/otp?phone=${formData.phone}`);
-
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
             }
@@ -82,33 +82,36 @@ const Registration = () => {
 
     useEffect(() => {
         const checkPhoneNumberValidity = async () => {
-            setExistsEmail("");
             setErrorMessage("");
             const phone_number = formData.phone;
-            const phone_number_length = phone_number.length;
+            let phone_number_length = phone_number.length;
 
             if (phone_number_length < 11) {
+                setExistsEmail("");
                 return;
             }
 
-            try {
-                
-                const res = await validatePhoneNumber({
-                    phone: formData.phone,
-                });
+            if ((phone_number_length = 11)) {
+                try {
+                    const res = await validatePhoneNumber({
+                        phone: formData.phone,
+                    });
 
-                if (res?.message.includes("Already Exists")) {
-                    setErrorMessage(res?.message);
+                    if (res?.message.includes("Already Exists")) {
+                        setFormData({...formData ,email:res.email})
+                        setErrorMessage(res?.message);
 
-                    setExistsEmail(res.email);
-
-                } else {
-                    setErrorMessage("");
+                        setExistsEmail(res.email);
+                    } else {
+                        setErrorMessage("");
+                    }
+                } catch (error) {
+                    alert("Something went wrong. Please try after sometime");
+                    console.log(error);
                 }
-            } catch (error) {
-                alert("Something went wrong. Please try after sometime");
-                console.log(error);
             }
+
+            return;
         };
         checkPhoneNumberValidity();
     }, [formData.phone]);
@@ -173,7 +176,11 @@ const Registration = () => {
                                         className="form-control"
                                         id="email"
                                         placeholder="Enter Email"
-                                        value={existsEmail ? existsEmail : formData.email}
+                                        value={
+                                            existsEmail
+                                                ? existsEmail
+                                                : formData.email
+                                        }
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -246,13 +253,29 @@ const Registration = () => {
                                 </button>
                             </form>
                             <div className="user-social-login mt-3">
-                                <label className="form-label">Or Sign Up With</label>
+                                <label className="form-label">
+                                    Or Sign Up With
+                                </label>
                                 <div className="mb-3 user-social-login-item d-flex align-items-center  justify-content-center ">
                                     {/* <button>Sign in with Facebook</button> */}
-                                    <button> <Image width={25} height={25} alt="google-img" src="/images/google-img.png" ></Image> Sign in with Google</button>
+                                    <button>
+                                        {" "}
+                                        <Image
+                                            width={25}
+                                            height={25}
+                                            alt="google-img"
+                                            src="/images/google-img.png"
+                                        ></Image>{" "}
+                                        Sign in with Google
+                                    </button>
                                 </div>
-                                <p className="form-label"><Link href="/"> Back to home</Link></p>
-                                <p className='text-center'>Existing User ? <Link href="/login">Login here</Link></p>
+                                <p className="form-label">
+                                    <Link href="/"> Back to home</Link>
+                                </p>
+                                <p className="text-center">
+                                    Existing User ?{" "}
+                                    <Link href="/login">Login here</Link>
+                                </p>
                             </div>
                         </div>
                     </div>
