@@ -1,8 +1,9 @@
+"use client";
 import { useEffect, useState } from "react";
 import { getDistrictByDivisionId } from "../services/getDistrict";
 
 const DistrictList = ({ onDistrictChange, divisionId }) => {
-    const [distrists, setDistricts] = useState([]);
+    const [districts, setDistricts] = useState([]);
 
     useEffect(() => {
         async function fetchDistrictData() {
@@ -18,17 +19,28 @@ const DistrictList = ({ onDistrictChange, divisionId }) => {
         fetchDistrictData();
     }, [divisionId]);
 
+    const handleDistrictChange = (event) => {
+        const selectedDistrictId = event.target.value;
+        const selectedDistrict = districts.find(district => district.id == selectedDistrictId);
+        const outletId = selectedDistrict.outlet_id
+        if (selectedDistrict) {
+            localStorage.setItem('outletId', outletId?outletId:3);
+        }
+        
+        onDistrictChange(event);
+    };
+
     return (
         <select
             className="form-select"
             aria-label="Default select example"
-            onChange={onDistrictChange}
+            onChange={handleDistrictChange}
         >
             <option value="">Select District</option>
-            {distrists &&
-                distrists.map((distrist) => (
-                    <option key={distrist.id} value={distrist.id}>
-                        {distrist.name}
+            {districts &&
+                districts.map((district) => (
+                    <option key={district.id} value={district.id}>
+                        {district.name}
                     </option>
                 ))}
         </select>

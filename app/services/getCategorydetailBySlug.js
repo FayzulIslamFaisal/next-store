@@ -1,6 +1,6 @@
 import { apiBaseUrl } from "../utils";
 
-export const getCategorydetailBySlug = async (outletId=3, slug='', option={}) => {
+export const getCategorydetailBySlug = async (outletId , slug='', option={}) => {
  
     if (!slug) {
         throw new Error('Slug is required');
