@@ -4,57 +4,45 @@ import CategoryLeftSide from "@/app/components/productCategory/CategoryLeftSide"
 import CategoryRightSide from "@/app/components/productCategory/CategoryRightSide";
 import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import { getCategorydetailBySlug } from "@/app/services/getCategorydetailBySlug";
-import { getHomeSearchProduct } from "@/app/services/getHomeSearchProduct"; // Add the missing import
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const DynamicCategoryPage = ({ params, searchParams }) => {
-    const searchParamsOutlet = useSearchParams();
-    const initialDistrictId = searchParamsOutlet.get("districtId") || 47;
-    const [districtId, setDistrictId] = useState(initialDistrictId);
-    const [searchDistrictId, setSearchDistrictId] = useState(null);
+const DynamicCategoryPage = ({ params }) => {
+    const searchParams = useSearchParams();
     const [categoryBySlugData, setCategoryBySlugData] = useState(null);
     const { slug } = params;
     const [option, setOption] = useState({});
-    console.log(initialDistrictId);
+    const [outletId, setOutletId] = useState(0); // default outlet
+    
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem('outletId');
+        setOutletId(initialOutletId?parseInt(initialOutletId):3);
+    }, []);
+
     useEffect(() => {
         const newOption = {};
-        for (const key of searchParamsOutlet.keys()) {
-            newOption[key] = searchParamsOutlet.get(key);
+        for (const key of searchParams.keys()) {
+            newOption[key] = searchParams.get(key);
         }
         setOption(newOption);
-    }, [searchParamsOutlet]);
+    }, [searchParams]);
 
-    const outletId = searchDistrictId?.outlet_id;
     const page = parseInt(option.page) || 1;
     const limit = 12; // Items per page
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const data = await getCategorydetailBySlug(
-                    outletId,
-                    slug,
-                    option
-                );
-                setCategoryBySlugData(data);
-            } catch (error) {
-                console.error("Error fetching 'Just For You' products:", error);
-            }
-        };
-        fetchProducts();
-    }, [outletId, slug, option]);
-
-    useEffect(() => {
-        const fetchSearchDistrictId = async () => {
-            const productData = await getHomeSearchProduct(districtId);
-            const searchResults = productData?.results;
-            if (searchResults) {
-                setSearchDistrictId(searchResults);
-            }
-        };
-        fetchSearchDistrictId();
-    }, [districtId]);
+        if (outletId) {
+            const fetchProducts = async () => {
+                try {
+                    const data = await getCategorydetailBySlug(outletId, slug, option);
+                    setCategoryBySlugData(data);
+                } catch (error) {
+                    console.error("Error fetching 'Just For You' products:", error);
+                }
+            };
+            fetchProducts(); 
+        }
+    }, [slug, option]);
 
     const categoryByResult = categoryBySlugData?.results;
     const categoryTitle = categoryByResult?.category;
