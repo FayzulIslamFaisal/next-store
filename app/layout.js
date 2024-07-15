@@ -161,6 +161,11 @@ export default function RootLayout({ children, slug, option }) {
             />
             <link
                 rel="stylesheet"
+                href="/css/customer-manage-profile.css"
+                precedence="default"
+            />
+            <link
+                rel="stylesheet"
                 href="/css/customer-order-history.css"
                 precedence="default"
             />

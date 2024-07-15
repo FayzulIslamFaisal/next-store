@@ -1,6 +1,30 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { FaEllipsisVertical } from "react-icons/fa6";
 
 const CustomerDashboardRightSide = () => {
+    const [showMenu, setShowMenu] = useState(false);
+    const menuRef = useRef(null);
+
+    const handleToggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+    const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setShowMenu(false);
+        }
+    };
+    useEffect(() => {
+        if (showMenu) {
+            document.addEventListener('click', handleClickOutside);
+        } else {
+            document.removeEventListener('click', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [showMenu]);
     return (
         <>
             <div className="col-lg-9 customer-dashboard-section">
@@ -222,17 +246,31 @@ const CustomerDashboardRightSide = () => {
                         {/* <!-- Modal End --> */}
 
                         {/* <!------------- if Address -------------> */}
-
-                        {/* <!-- <div className="p-4 ">
-                                <div className="d-flex gap-4 border p-3 rounded">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, fugit?</p>
-                                    </div>
-                                    <div> 
-                                        <i className="fa-solid fa-ellipsis-vertical"></i>
-                                    </div>
+                        <div className="p-4 ">
+                            <div className="d-flex gap-4 border p-3 rounded">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, fugit?</p>
                                 </div>
-                            </div>  --> */}
+                                <div className="customer-address-action-btn">
+                                    <div onClick={handleToggleMenu}>
+                                        <FaEllipsisVertical />
+                                    </div>
+                                    {showMenu && (
+                                        <div
+                                            ref={menuRef}
+                                            className="customer-address-action-container"
+                                        >
+                                            <div className="customer-address-action-item" >
+                                                Edit
+                                            </div>
+                                            <div className="customer-address-action-item" >
+                                                Delete
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="customer-dashboard-card flex-1">
                         <div className="border-bottom p-3">

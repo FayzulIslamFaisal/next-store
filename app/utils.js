@@ -195,6 +195,32 @@ export function addToCartProductList() {
     const product = JSON.parse(localStorage.getItem("addToCart")) || [];
     return product;
 }
+// Function to store buy now product data in local storage
+export const setProductData = (productData) => {
+    // Check if 'window' is defined (i.e., ensure this code runs only on the client side)
+    if (typeof window !== "undefined") {
+        const dataSet = [productData];
+        localStorage.setItem("buy-now", JSON.stringify(dataSet));
+    }
+};
+
+// Function to retrieve buy now product data from local storage
+export const getBuyNowProductData = () => {
+    // Check if 'window' is defined (i.e., ensure this code runs only on the client side)
+    if (typeof window !== "undefined") {
+        const productData = localStorage.getItem("buy-now");
+        // Return parsed product data if it exists, otherwise return null
+        return productData ? JSON.parse(productData) : null;
+    }
+    return null;
+};
+// Function to delete buy now product data from local storage
+export const deleteBuyNowProductData = () => {
+    // Check if 'window' is defined (i.e., ensure this code runs only on the client side)
+    if (typeof window !== "undefined") {
+        localStorage.removeItem("buy-now");
+    }
+};
 
 // storeUserAgent function captures the user agent using navigator.userAgent and stores it in local storage.
 export function storeUserAgent() {

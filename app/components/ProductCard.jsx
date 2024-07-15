@@ -49,7 +49,7 @@ function ProductCard({ item }) {
                             </div>
                         </div>
                         <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                            <AddToCartButton />
+                            <AddToCartButton productInfo={item} />
                             <Like />
                         </div>
                     </div>

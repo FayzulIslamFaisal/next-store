@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
     FaAngleRight,
     FaCog,
@@ -15,6 +16,9 @@ import {
 import { FaBangladeshiTakaSign, FaTicket } from "react-icons/fa6";
 
 const CustomerLeftSideNavbar = ({ authSessionData }) => {
+    const currentPath = usePathname();
+    const isActive = (href) => currentPath === href;
+    console.log(currentPath);
     return (
         <aside className="col-lg-3 d-none d-lg-block">
             <div className="customer-dashboard-side-nav">
@@ -38,8 +42,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                     <ul className="nav flex-column">
                         <li className="nav-item customer-dashboard-nav-item">
                             <Link
-                                className="nav-link customer-dashboard-nav-link"
+                                className={`${isActive("/dashboard") ? "activ-link" : ""} nav-link customer-dashboard-nav-link`}
                                 href="/dashboard"
+                                scroll={false}
                             >
                                 <FaHome className="nav-icon me-2" />
                                 Dashboard
@@ -47,8 +52,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
                             <Link
-                                className="nav-link customer-dashboard-nav-link "
+                                className={`${isActive("/orderhistory") ? "activ-link" : ""} nav-link customer-dashboard-nav-link`}
                                 href="/orderhistory"
+                                scroll={false}
                             >
                                 <FaThList className="nav-icon me-2" />
                                 Order History
@@ -263,8 +269,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
                             <Link
-                                className="nav-link customer-dashboard-nav-link"
-                                href="/customerManageProfile.html"
+                                className={`${isActive("/manage-profile") ? "activ-link" : ""} nav-link customer-dashboard-nav-link`} 
+                                href="/manage-profile"
+                                scroll={false}
                             >
                                 <FaUser className="nav-icon me-2" />
                                 Manage Profile/KYC

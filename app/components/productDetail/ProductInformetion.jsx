@@ -808,6 +808,18 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                 <AddToCartButton
                                     title="BUY NOW"
                                     buyNowBtn="product-details-action-btn"
+                                    productInfo={productInfo}
+                                    selectedVariantKeys={selectedVariantKeys}
+                                    setProductVariationError={
+                                        setProductVariationError
+                                    }
+                                    productPrice={productPrice}
+                                    decorateVariation={decorateVariation}
+                                    selectedVariants={selectedVariants}
+                                    quantity={state.count}
+                                    selectedVariantProductInfo={
+                                        selectedVariantProductInfo
+                                    }
                                 />
                             </div>
                             <div className="product-details-add-cart">
@@ -825,6 +837,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                     selectedVariantProductInfo={
                                         selectedVariantProductInfo
                                     }
+                                    isDetailsPage={true}
                                 />
                             </div>
                         </div>
