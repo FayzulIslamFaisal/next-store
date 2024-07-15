@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { addToCartInLocalStorage, addToCartProductList } from "../utils";
+import {
+    addToCartInLocalStorage,
+    addToCartProductList,
+    setProductData,
+} from "../utils";
 import { useSession } from "next-auth/react";
 import { addToCartProduct } from "../services/postAddToCartAfterLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../store/cartSlice";
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
-
+import { useRouter } from "next/navigation";
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
@@ -65,13 +69,14 @@ function AddToCartButton({
     quantity,
     selectedVariants,
     selectedVariantProductInfo,
+    isDetailsPage = false,
 }) {
     const { status, data: session } = useSession();
+    console.log("productCart=============>>>>>>>>>>>", productInfo);
 
-    console.log("selectedVariantKeys", selectedVariantKeys);
-    console.log("decorateVariation", decorateVariation);
     const dispatch = useDispatch();
-
+    const router = useRouter();
+    // Function to handle the "Add To Cart" button click event
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {
@@ -185,17 +190,86 @@ function AddToCartButton({
             }
         }
     };
+    // Function to handle the "Buy Now" button click event
+    const handleBuyNow = async (e, title) => {
+        e.preventDefault();
+        if (title) {
+            if (productInfo) {
+                console.log("Hello world");
+                if (productInfo?.variations?.length > 0) {
+                    const result = findMissingProperties(
+                        decorateVariation,
+                        selectedVariantKeys
+                    );
 
-    const addProductLength = addToCartProductList();
-    console.log("addProductLength", addProductLength);
-    const countK = useSelector((state) => state.cart?.addToCartLength);
-    console.log("countK", countK);
+                    if (result?.length == 2) {
+                        setProductVariationError("Please Select variant");
+                    } else if (result?.length == 1) {
+                        setProductVariationError(
+                            `${
+                                result[0]
+                                    .split("_")[1]
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                result[0].split("_")[1].slice(1)
+                            } not selected`
+                        );
+                    } else {
+                        setProductVariationError(" ");
+                        const addToCartInfo = {
+                            product_id: productInfo?.id,
+                            product_name: productInfo?.product_name,
+                            price: productPrice?.prices,
+                            discountPrice: productPrice?.discountPrice,
+                            outlet_id: productInfo?.outlet_id,
+                            product_thumbnail: productInfo?.product_thumbnail,
+                            quantity: quantity,
+                            selectedVariants: selectedVariants,
+                            outlet_id: 3,
+                            location_id: 47,
+                            order_type: "Regular",
+                            product_variation_id:
+                                selectedVariantProductInfo?.product_variation_id,
+                            discount_type:
+                                selectedVariantProductInfo?.discount_type,
+                        };
+
+                        setProductData(addToCartInfo);
+                        router.push("/shipping-page/buy-now");
+                    }
+                } else {
+                    const addToCartInfo = {
+                        product_id: productInfo?.id,
+                        product_name: productInfo?.product_name,
+                        price: productPrice?.prices,
+                        discountPrice: productPrice?.discountPrice,
+                        outlet_id: productInfo?.outlet_id,
+                        product_thumbnail: productInfo?.product_thumbnail,
+                        quantity: quantity,
+                        outlet_id: 3,
+                        location_id: 47,
+                        order_type: "Regular",
+                        product_variation_id: null,
+                        discount_type: productInfo?.discount_type,
+                    };
+
+                    setProductData(addToCartInfo);
+                    router.push("/shipping-page/buy-now");
+                }
+            }
+        }
+    };
+
     return (
         <div className="add-to-cart-btn">
             <Link
                 href={path}
                 className={`add-to-cart-link ${buyNowBtn} ${fullWidth}`}
-                onClick={(e) => handleAddToCard(e, title)}
+                onClick={(e) => {
+                    !title
+                        ? handleAddToCard(e, title)
+                        : title == "BUY NOW" && handleBuyNow(e, title);
+                }}
             >
                 {!title ? "ADD TO CART" : title}
             </Link>
