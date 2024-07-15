@@ -105,12 +105,12 @@ export const authOptions = {
 
                 user.accessToken = googleLogin?.user?.accessToken;
                 user.expiresIn = googleLogin?.user?.expiresIn;
-               
+
                 user.name = profile?.name;
                 user.email = profile?.email;
 
                 // if(userExists){
-                //     if (userExists?.message == 'Already User Exists Account Provider Customer') {
+                //     if (userExists?.message == 'Already User Exists') {
                 //         console.log("userExists 2 from api auth route page");
                 //         return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
                 //     } else {
@@ -131,7 +131,7 @@ export const authOptions = {
             // console.log("userExists 1 from api auth route page", userExists);
 
             // if(userExists){
-            //     if (userExists?.message == 'Already User Exists Account Provider Customer') {
+            //     if (userExists?.message == 'Already User Exists') {
             //         console.log("userExists 2 from api auth route page");
             //         return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
             //     } else {

@@ -40,8 +40,9 @@ const GoogleProfile = () => {
                 if (googleImage) {
                     const data = await checkUserExistByGoogleLogin(formData2);
                     if (
-                        data?.message ==
-                        "Already User Exists Account Provider Customer"
+                        data?.message == "Already User Exists" &&
+                        (data?.account_provider == "credentials" ||
+                            data?.account_provider == "google")
                     ) {
                         setLoading(true);
                         console.log(
@@ -84,12 +85,12 @@ const GoogleProfile = () => {
             return;
         }
 
-        // try {
+        try {
             console.log("=>>> formdata before form submit", formData);
 
             const res = await googleNewUser(formData);
 
-            console.log('=>>> res', res)
+            console.log("=>>> res", res);
 
             if (res?.success != true) {
                 alert(res.message);
@@ -97,9 +98,9 @@ const GoogleProfile = () => {
             }
 
             router.push(`/dashboard`);
-        // } catch (error) {
-        //     alert("Something went wrong. Please try after sometime");
-        // }
+        } catch (error) {
+            alert("Something went wrong. Please try after sometime");
+        }
     };
 
     useEffect(() => {
@@ -181,7 +182,16 @@ const GoogleProfile = () => {
                                                         color: "var(--color-414042)",
                                                     }}
                                                 >
-                                                    <input onClick={handleSetPassword} type="checkbox" id="helpText" /> <label htmlFor="helpText">Are you set password?</label>
+                                                    <input
+                                                        onClick={
+                                                            handleSetPassword
+                                                        }
+                                                        type="checkbox"
+                                                        id="helpText"
+                                                    />{" "}
+                                                    <label htmlFor="helpText">
+                                                        Are you set password?
+                                                    </label>
                                                 </span>{" "}
                                                 <small
                                                     title="Do you Set a Password for login phone and password?"
@@ -190,7 +200,7 @@ const GoogleProfile = () => {
                                                         color: "var(--color-414042)",
                                                     }}
                                                 >
-                                                    <FaInfoCircle/>
+                                                    <FaInfoCircle />
                                                 </small>
                                             </div>
                                             {addtPassword && (
