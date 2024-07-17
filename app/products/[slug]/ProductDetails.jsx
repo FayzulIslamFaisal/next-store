@@ -11,8 +11,10 @@ import { productDetailsPageMetaDataHandler, storeProduct } from "@/app/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import NotFound from "@/app/not-found";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
+import { useSession } from "next-auth/react";
 const ProductSinglePage = ({ params }) => {
     const { slug } = params;
+    const { status, data: session } = useSession();
     const [productInfo, setProductInfo] = useState({});
     const searchParams = useSearchParams();
     const pathName = searchParams.toString();
@@ -68,8 +70,10 @@ const ProductSinglePage = ({ params }) => {
                     outlet_id: outlet_id,
                     product_thumbnail: product_thumbnail,
                 };
-
-                storeProduct(recentViewProductInformation);
+                if (session) {
+                } else {
+                    storeProduct(recentViewProductInformation);
+                }
                 setProductInfo(productDetails);
             }
         }
@@ -107,6 +111,7 @@ const ProductSinglePage = ({ params }) => {
             setRecentViewProduct(storedProducts);
         }
     }, [pathName]);
+
     return (
         <>
             {successCode == 404 ? (
