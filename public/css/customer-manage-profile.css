@@ -1,0 +1,26 @@
+
+.customer-manage-profile-title {
+    padding: 16px;
+    background: var(--color-white);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid var(--color-D8D8D8);
+}
+.customer-manage-profile-from-area{
+    padding: 16px;
+}
+.customer-dashboard-section-area input:focus,
+.customer-dashboard-section-area select:focus,
+.customer-dashboard-section-area button:focus,
+.customer-dashboard-section-area textarea:focus{
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+.customer-dashboard-section-area input:focus,
+.customer-dashboard-section-area select:focus,
+.customer-dashboard-section-area textarea:focus{
+  outline: none;
+  box-shadow: none;
+  border: 1px solid var(--color-D8D8D8);
+}

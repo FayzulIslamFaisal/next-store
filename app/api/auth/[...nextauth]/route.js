@@ -3,8 +3,12 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getLoginToken } from "../../../services/getLoginToken";
-// import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
+import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
 import { googleLoginAPI } from "@/app/services/googleLogin";
+
+let profileData = null;
+let userStatus = null;
+let signInStatus = null;
 
 export const authOptions = {
     providers: [
@@ -72,16 +76,17 @@ export const authOptions = {
         async signIn({ user, account, profile }) {
             console.log("=>>> signIn from api auth route page ...");
 
-            console.log(
-                "=>>> signIn from api auth route page account",
-                account
-            );
-            console.log(
-                "=>>> signIn from api auth route page profile",
-                profile
-            );
+            // console.log(
+            //     "=>>> signIn from api auth route page account",
+            //     account
+            // );
+            // console.log(
+            //     "=>>> signIn from api auth route page profile",
+            //     profile
+            // );
 
             if (account.provider === "google") {
+                signInStatus = "login";
                 // Example accessToken and expiresIn, replace with actual token logic
 
                 // console.log("user from api auth route page ----", user);
@@ -94,14 +99,14 @@ export const authOptions = {
                     email: profile?.email || "",
                 };
 
-                console.log("=>>> formdata before form submit", formData);
+                // console.log("=>>> formdata before form submit", formData);
 
                 const googleLogin = await googleLoginAPI(formData);
 
-                console.log(
-                    "googleLogin from api auth route page",
-                    googleLogin
-                );
+                // console.log(
+                //     "googleLogin from api auth route page",
+                //     googleLogin
+                // );
 
                 user.accessToken = googleLogin?.user?.accessToken;
                 user.expiresIn = googleLogin?.user?.expiresIn;
@@ -109,46 +114,99 @@ export const authOptions = {
                 user.name = profile?.name;
                 user.email = profile?.email;
 
-                // if(userExists){
-                //     if (userExists?.message == 'Already User Exists') {
-                //         console.log("userExists 2 from api auth route page");
-                //         return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
-                //     } else {
-                //         console.log("userExists 3 from api auth route page");
-                //         return url.startsWith(baseUrl) ? `${baseUrl}/google-profile` : baseUrl;
-                //     }
-                // }
+                // Simulate an asynchronous operation that assigns a value to 'profileData'
+                new Promise((resolve) => {
+                    setTimeout(() => {
+                        profileData = profile;
+                        resolve();
+                    }, 1000); // Simulate a 1-second delay
+                });
 
+                // console.log("=> profileData 1 sign", profileData);
+
+                const userExists = await checkUserExistByGoogleLogin({
+                    email: profile?.email,
+                });
+
+                // console.log(
+                //     "userExists 1 signin from api auth route page",
+                //     userExists
+                // );
+
+                if (userExists) {
+                    if (
+                        userExists?.message == "Already User Exists" &&
+                        (userExists?.account_provider == "credentials" ||
+                            userExists?.account_provider == "google")
+                    ) {
+                        // console.log(
+                        //     "userExists 2 signin from api auth route page"
+                        // );
+
+                        userStatus = "complete";
+                    } else {
+                        // console.log(
+                        //     "userExists 3 signin from api auth route page"
+                        // );
+
+                        userStatus = "no complete";
+                    }
+                }
                 return { ...user };
             }
+
             return true;
         },
 
         async redirect({ url, baseUrl }) {
-            console.log("=>>> redirect from api auth route page ...");
+            // console.log("=>>> redirect from api auth route page ...");
+            // console.log("=>>> redirect url", url);
+            // console.log("=>>> redirect baseUrl", baseUrl);
+            // console.log(
+            //     "=>>> profileData 2 email redirect ",
+            //     profileData?.email
+            // );
 
-            // const userExists = await checkUserExistByGoogleLogin({email: "robeul.starit@gmail.com"});
-            // console.log("userExists 1 from api auth route page", userExists);
-
-            // if(userExists){
-            //     if (userExists?.message == 'Already User Exists') {
-            //         console.log("userExists 2 from api auth route page");
-            //         return url.startsWith(baseUrl) ? `${baseUrl}/dashboard` : baseUrl;
-            //     } else {
-            //         console.log("userExists 3 from api auth route page");
-            //         return url.startsWith(baseUrl) ? `${baseUrl}/google-profile` : baseUrl;
-            //     }
-            // }
-
-            // Allows relative callback URLs
-            // if (url.startsWith("/")) return `${baseUrl}${url}`
-            // // Allows callback URLs on the same origin
-            // else if (new URL(url).origin === baseUrl) return url
-            // return baseUrl
-
-            return url.startsWith(baseUrl) ? `${baseUrl}/new-user` : baseUrl;
+            // Wait until 'profileData' has been assigned a value or a timeout occurs
+            try {
+                // Ensure 'profileData' has a value before proceeding
+                // console.log("=>>> signInStatus 111", signInStatus);
+                // console.log("=>>> profileData.email 111", profileData.email);
+                // console.log("=>>> userStatus 111", userStatus);
+                
+                if (
+                    signInStatus == "login" &&
+                    profileData &&
+                    profileData.email &&
+                    userStatus == "complete"
+                ) {
+                    // console.log(
+                    //     "=>>> profileData 3 email redirect ",
+                    //     profileData.email
+                    // );
+                    return `${baseUrl}/dashboard`;
+                } else if (
+                    signInStatus == null &&
+                    profileData &&
+                    profileData.email &&
+                    userStatus == "no complete"
+                ) {
+                    // console.log(
+                    //     "=>>> profileData 3 email redirect ",
+                    //     profileData.email
+                    // );
+                    return url.startsWith(baseUrl)
+                        ? `${baseUrl}/new-user`
+                        : baseUrl;
+                } else {
+                    // console.log("=>>> profileData 4 email redirect ");
+                    return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;
+                }
+            } catch (error) {
+                console.error("=>>> profileData 5 error", error.message);
+                return url.startsWith(baseUrl) ? `${baseUrl}` : baseUrl;
+            }
         },
-
         async jwt({ token, user }) {
             console.log("=>>> jwt...");
 
@@ -161,16 +219,6 @@ export const authOptions = {
                 token.expiresIn = user.expiresIn;
                 token.phone = user.phone;
             }
-
-            // Return previous token if the access token has not expired yet
-            // if (Date.now() < token.expiresAt) {
-            // console.log('=>>> token expired Date.now()', Date.now() from api auth route page)
-            // console.log('=>>> token expired token.expiresAt from api auth route page', token.expiresAt)
-            //   return token;
-            // }
-
-            // Access token has expired, try to refresh it (or return previous token if refresh logic not implemented)
-            // Here you should add your refresh logic if necessary
 
             return token;
         },
@@ -190,7 +238,7 @@ export const authOptions = {
         },
     },
     pages: {
-        newUser: "/new-user",
+        newUser: "/dashboard",
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: true,

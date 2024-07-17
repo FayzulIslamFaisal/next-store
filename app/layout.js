@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { CategoryDetailProvider } from "./context/CategoryDetailContext";
 import { CategoryDetailProductProvider } from "./context/CategoryDetailProductContext";
 import { ReduxProvider } from "./ReduxProvider";
+import { ToastContainer } from "react-toastify";
 
 const lato = Lato({
     subsets: ["latin"],
@@ -161,6 +162,11 @@ export default function RootLayout({ children, slug, option }) {
             />
             <link
                 rel="stylesheet"
+                href="/css/customer-manage-profile.css"
+                precedence="default"
+            />
+            <link
+                rel="stylesheet"
                 href="/css/customer-order-history.css"
                 precedence="default"
             />
@@ -201,6 +207,7 @@ export default function RootLayout({ children, slug, option }) {
                                     <DistrictModal />
                                     {children}
                                     <Footer />
+                                    <ToastContainer />
                                 </CategoryDetailProvider>
                             </CategoryDetailProductProvider>
                         </AuthProvider>

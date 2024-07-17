@@ -12,7 +12,6 @@ const CategoryPagination = ({ lastPage, currentPage }) => {
         newParams.set('page', page);
         const newUrl = `${window.location.pathname}?${newParams.toString()}`;
         router.push(newUrl);
-        console.log(newUrl);
     };
 
     return (
