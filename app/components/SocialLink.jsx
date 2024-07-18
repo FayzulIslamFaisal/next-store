@@ -5,17 +5,17 @@ const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
         {
             image: "/images/facbook.svg",
             alt: "Facebook",
-            path: `https://www.facebook.com/sharer/sharer.php?u=https://next-store-self-five.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=${product_thumbnail}`,
+            path: `https://www.facebook.com/sharer/sharer.php?u=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=${product_thumbnail}`,
         },
         {
             image: "/images/twitter.svg",
             alt: "Twitter",
-            path: `https://twitter.com/intent/tweet?url=https://next-store-self-five.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=${product_thumbnail}`,
+            path: `https://twitter.com/intent/tweet?url=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=${product_thumbnail}`,
         },
         {
             image: "/images/linkedin.svg",
             alt: "LinkedIn",
-            path: `https://www.linkedin.com/shareArticle?mini=true&url=https://next-store-self-five.vercel.app/products/get-product-details?${path_name}&title=${product_name}&source=LinkedIn`,
+            path: `https://www.linkedin.com/shareArticle?mini=true&url=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&source=LinkedIn`,
         },
         {
             image: "/images/youtube.svg",
@@ -28,6 +28,7 @@ const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
             path: "https://www.instagram.com",
         },
     ];
+    console.log(socialLinkItem);
 
     return (
         <div className="nh-social-link d-flex align-items-center">

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../store/cartSlice";
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 import { useRouter } from "next/navigation";
+
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
@@ -26,7 +27,7 @@ function findMissingProperties(decorateVariation, selectedVariantKey) {
 
     const missingProperties = [];
 
-    decorateVariation.forEach((variant) => {
+    decorateVariation?.forEach((variant) => {
         const allRequiredKeysPresent = requiredKeys.every(
             (key) => variant[key] !== null && variant[key] !== undefined
         );
@@ -56,14 +57,15 @@ function findMissingProperties(decorateVariation, selectedVariantKey) {
 
     return missingProperties;
 }
+
 function AddToCartButton({
     title = "",
     path = "#",
     buyNowBtn,
     fullWidth,
     productInfo,
-    selectedVariantKeys,
-    decorateVariation,
+    selectedVariantKeys = [],
+    decorateVariation = [],
     setProductVariationError,
     productPrice,
     quantity,
@@ -72,8 +74,10 @@ function AddToCartButton({
     isDetailsPage = false,
 }) {
     const { status, data: session } = useSession();
-    console.log("productCart=============>>>>>>>>>>>", productInfo);
-
+    console.log(
+        "====================================selectedVariants",
+        selectedVariants
+    );
     const dispatch = useDispatch();
     const router = useRouter();
     // Function to handle the "Add To Cart" button click event
@@ -100,7 +104,9 @@ function AddToCartButton({
                             } not selected`
                         );
                     } else {
-                        setProductVariationError(" ");
+                        if (isDetailsPage) {
+                            setProductVariationError(" ");
+                        }
                         const addToCartInfo = {
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
@@ -165,7 +171,9 @@ function AddToCartButton({
                             addToCartInfo,
                             session.accessToken
                         );
-                        const updatedCartProducts = await fetchCartProducts();
+                        const updatedCartProducts = await fetchCartProducts(
+                            session?.accessToken
+                        );
                         console.log(
                             "updatedCartProducts cart page ===",
                             updatedCartProducts
@@ -190,6 +198,7 @@ function AddToCartButton({
             }
         }
     };
+
     // Function to handle the "Buy Now" button click event
     const handleBuyNow = async (e, title) => {
         e.preventDefault();

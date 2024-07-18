@@ -16,16 +16,26 @@ const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
+
     let price;
     let totalPrice = 0;
     let discountPrice;
     const dispatch = useDispatch();
+
+    //Update Add To Cart product after operation in localStore addToCart Item
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
+
+    /**
+     * Handles the deletion of a cart item.
+     * If a session exists, it deletes the item from the server and updates the state accordingly.
+     * If no session exists, it removes the item from the local state and updates local storage.
+     *
+     * @param {number} cart_id - The ID of the cart item to be deleted.
+     */
     const handleDelete = async (cart_id) => {
         if (session) {
-            console.log("product delete run", session?.accessToken);
             await deleteCartProduct(cart_id, session?.accessToken);
             const updatedCartProducts = await fetchCartProducts();
             setCheckedProductCard(updatedCartProducts?.data);
@@ -51,9 +61,13 @@ const CartPage = () => {
         }
     };
 
+    /**
+     * Handles the deletion of selected cart items.
+     * If a session exists, it deletes the selected items from the server and updates the state accordingly.
+     * If no session exists, it removes the selected items from the local state and updates local storage.
+     */
     const handleSelectedItemDelete = async () => {
         if (session) {
-            const productsCardId = [];
             const updatedItemsInCard = checkedProductCard
                 .filter((item) => item.isChecked)
                 .map((item) => ({
@@ -87,6 +101,13 @@ const CartPage = () => {
         }
     };
 
+    /**
+     * Handles changes to the selection state of cart items.
+     * If the "allSelect" checkbox is changed, it updates the selection state of all items.
+     * If an individual item checkbox is changed, it updates the selection state of that specific item.
+     *
+     * @param {Event} e - The change event triggered by the checkbox.
+     */
     const handleChange = (e) => {
         const { name, checked } = e.target;
         if (name === "allSelect") {
@@ -106,6 +127,13 @@ const CartPage = () => {
         }
     };
 
+    /**
+     * Handles decrementing the quantity of a cart item.
+     * If a session exists, it updates the quantity on the server and refreshes the cart state.
+     * If no session exists, it updates the quantity locally and updates local storage.
+     *
+     * @param {number} indexId - The ID of the cart item to decrement.
+     */
     const handleDecrement = async (indexId) => {
         if (session) {
             const quantityUpdateInfo = {
@@ -135,6 +163,14 @@ const CartPage = () => {
             updateLocalStorage(updatedUsers);
         }
     };
+
+    /**
+     * Handles incrementing the quantity of a cart item.
+     * If a session exists, it updates the quantity on the server and refreshes the cart state.
+     * If no session exists, it updates the quantity locally and updates local storage.
+     *
+     * @param {number} indexId - The ID of the cart item to increment.
+     */
 
     const handleIncrement = async (indexId) => {
         if (session) {
@@ -167,50 +203,34 @@ const CartPage = () => {
             setCheckedProductCard(cartProduct);
         }
     }, []);
-
+    /**
+     * Adds products to the cart by making a POST request to the API.
+     *
+     * @param {Array} cartItems - The items to be added to the cart.
+     * @returns {Promise<Object>} - The response from the API.
+     */
     const addToCartProduct = async (cartItems) => {
-        /*   try {
-            console.log("post cart product ================", cartItems);
-            const response = await fetch(
-                "https://v3.nagadhat.com/api/add-to-cart-product",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ cart_items: cartItems }),
-                }
-            );
+        const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
+            method: "POST",
+            headers: {
+                accept: "application/json",
+                Authorization: `Bearer ${session?.accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ cart_items: cartItems }),
+        });
 
-            if (!response.ok) {
-                throw new Error("Failed to add product to cart");
-            }
-
-            return response.json();
-        } catch (error) {
-            console.error(error);
-        } */
-
-        const response = await fetch(
-            "https://v3.nagadhat.com/api/add-to-cart-product",
-            {
-                method: "POST",
-                headers: {
-                    accept: "application/json",
-                    Authorization: `Bearer ${session?.accessToken}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ cart_items: cartItems }),
-            }
-        );
-
-        console.log("post send response1111111111111111", response);
         return response.json();
     };
 
+    /**
+     * Fetches the products in the cart by making a GET request to the API.
+     *
+     * @returns {Promise<Object>} - The response from the API containing the cart products.
+     */
+
     const fetchCartProducts = async () => {
         try {
-            console.log("get cart product ================");
             const response = await fetch(
                 `${apiBaseUrl}/get-cart-products?outlet_id=3&location_id=47`,
                 {
@@ -232,11 +252,23 @@ const CartPage = () => {
         }
     };
 
+    /**
+     * Handles the checkout process for the user.
+     *
+     * If the user is logged in (session exists), it performs the following steps:
+     * 1. Retrieves the list of products to be added to the cart.
+     * 2. Adds the products to the cart.
+     * 3. Fetches the updated cart products after adding the new items.
+     * 4. Updates the state with the new cart products.
+     * 5. Removes the 'addToCart' item from local storage.
+     * 6. Dispatches an action to update the cart state in the Redux store.
+     *
+     * If any error occurs during the process, it logs the error to the console.
+     */
+
     const handleCheckout = async () => {
         if (session) {
-            console.log("in session");
             const cartProduct = addToCartProductList();
-            console.log("card product passing", cartProduct);
             await addToCartProduct(cartProduct);
             const updatedCartProducts = await fetchCartProducts();
             setCheckedProductCard(updatedCartProducts?.data);
@@ -255,9 +287,6 @@ const CartPage = () => {
         handleCheckout();
     }, [session]);
 
-    console.log("=>>> get login status", status);
-    console.log("=>>> get login session", session);
-    console.log("sfddkfjndfk", checkedProductCard);
     return (
         <section className="cart-section-area">
             <div className="container">
@@ -527,7 +556,7 @@ const CartPage = () => {
                                         </strong>
                                     </div>
                                     <Link
-                                        href={"/shipping-page"}
+                                        href={"/shipping-page/cart-product"}
                                         className="add-to-cart-link border border-0 w-100"
                                     >
                                         CHECKOUT
