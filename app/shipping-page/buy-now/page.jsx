@@ -640,7 +640,7 @@ const ShippingPage = () => {
                                                 </div>
                                                 <div className="nhn-shipping-deliver-edit-mail">
                                                     <p>
-                                                        Email to: {userEmail}
+                                                        Email to: {userEmail} {" "}
                                                         <button
                                                             type="button"
                                                             data-bs-toggle="modal"
@@ -1288,58 +1288,62 @@ const ShippingPage = () => {
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <h2 className="product-cart-text">
-                                                                        {
-                                                                            item?.product_name
-                                                                        }
-                                                                    </h2>
-                                                                    <strong className="ml-3">
-                                                                        {item?.selectedVariants &&
-                                                                            item.selectedVariants
-                                                                                .slice(
-                                                                                    0,
-                                                                                    2
-                                                                                )
-                                                                                .map(
-                                                                                    (
-                                                                                        variant,
-                                                                                        inx
-                                                                                    ) => {
-                                                                                        const [
-                                                                                            key,
-                                                                                            value,
-                                                                                        ] =
-                                                                                            Object.entries(
-                                                                                                variant
-                                                                                            )[0];
-                                                                                        const keyDisplay =
-                                                                                            key.split(
-                                                                                                "_"
-                                                                                            )[1];
+                                                                <div>
+                                                                            <p className="product-cart-text">
+                                                                                {
+                                                                                    item?.product_name
+                                                                                }
+                                                                            </p>
+                                                                            <p className="cart-prodect-variants">
+                                                                                {item?.selectedVariants &&
+                                                                                    item.selectedVariants
+                                                                                        .slice(
+                                                                                            0,
+                                                                                            2
+                                                                                        )
+                                                                                        .map(
+                                                                                            (
+                                                                                                variant,
+                                                                                                inx
+                                                                                            ) => {
+                                                                                                const [
+                                                                                                    key,
+                                                                                                    value,
+                                                                                                ] =
+                                                                                                    Object.entries(
+                                                                                                        variant
+                                                                                                    )[0];
+                                                                                                const keyDisplay =
+                                                                                                    key.split(
+                                                                                                        "_"
+                                                                                                    )[1];
 
-                                                                                        return (
-                                                                                            <React.Fragment
-                                                                                                key={
-                                                                                                    inx
-                                                                                                }
-                                                                                            >
-                                                                                                <span>
-                                                                                                    {
-                                                                                                        keyDisplay
-                                                                                                    }
-                                                                                                </span>
-                                                                                                <span className="product-details-variant-item ms-3 me-2">
-                                                                                                    <label>
-                                                                                                        {
-                                                                                                            value
+                                                                                                return (
+                                                                                                    <React.Fragment
+                                                                                                        key={
+                                                                                                            inx
                                                                                                         }
-                                                                                                    </label>
-                                                                                                </span>
-                                                                                            </React.Fragment>
-                                                                                        );
-                                                                                    }
-                                                                                )}
-                                                                    </strong>
+                                                                                                    >
+                                                                                                        <p>
+                                                                                                            <span>
+                                                                                                                {
+                                                                                                                    keyDisplay
+                                                                                                                }
+                                                                                                            </span>:
+                                                                                                            <span className="cart-prodect-variants-item">
+                                                                                                                <label>
+                                                                                                                    {
+                                                                                                                        value
+                                                                                                                    }
+                                                                                                                </label>
+                                                                                                            </span>
+                                                                                                        </p>
+                                                                                                    </React.Fragment>
+                                                                                                );
+                                                                                            }
+                                                                                        )}
+                                                                            </p>
+                                                                        </div>
                                                                 </td>
                                                                 <td>
                                                                     <p className="text-capitalize new-nh-product-qty">
@@ -1350,7 +1354,7 @@ const ShippingPage = () => {
                                                                     </p>
                                                                 </td>
                                                                 <td>
-                                                                    <div className="d-flex flex-column gap-1 align-items-center justify-content-between new-nh-product-price">
+                                                                    <div className="d-flex gap-2 new-nh-product-price">
                                                                         <p>
                                                                             ৳{" "}
                                                                             {item?.price *

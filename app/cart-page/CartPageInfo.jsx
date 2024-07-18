@@ -10,6 +10,8 @@ import { addToCartQuantityUpdate } from "../services/addToCartQuantityUpdate";
 import { deleteProductFromTheApi } from "../services/deleteSelectedProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../store/cartSlice";
+import { FaHeart, FaMinus, FaPlus, FaRegHeart, FaTrash, FaTrashCan } from "react-icons/fa6";
+import { FaMagic } from "react-icons/fa";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -272,7 +274,7 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                    0 &&
+                                                0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
@@ -288,7 +290,7 @@ const CartPage = () => {
                                         <button
                                             onClick={handleSelectedItemDelete}
                                         >
-                                            REMOVE
+                                            <FaTrashCan />  REMOVE
                                         </button>
                                     </div>
                                 </div>
@@ -296,9 +298,9 @@ const CartPage = () => {
                         </div>
                         <div className="row product-cart-details-area">
                             <div className="col-12">
-                                <div className="product-cart-details-continer table-responsive">
-                                    <table className="table align-middle">
-                                        <tbody>
+                                <div className="product-cart-details-continer overflow-x-auto">
+                                    <div className="table align-middle">
+                                        <div className="d-flex flex-column gap-2">
                                             {checkedProductCard?.map(
                                                 (item, index) => {
                                                     price =
@@ -309,127 +311,143 @@ const CartPage = () => {
                                                         item.quantity;
                                                     totalPrice += price;
                                                     return (
-                                                        <tr key={item?.cart_id}>
-                                                            <td>
-                                                                <input
-                                                                    className="cart-checkbox"
-                                                                    type="checkbox"
-                                                                    name={`${index}`}
-                                                                    checked={
-                                                                        item?.isChecked ||
-                                                                        false
-                                                                    }
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <div className="product-cart-product-img">
-                                                                    <Image
-                                                                        fill
-                                                                        src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
-                                                                        alt="black-friday"
+                                                        <div className="d-flex justify-content-between gap-2 product-cart-details-item" key={item?.cart_id}>
+                                                            <div className="d-flex gap-3">
+                                                                <div className="d-flex justify-content-center align-items-center">
+                                                                    <input
+                                                                        className="cart-checkbox"
+                                                                        type="checkbox"
+                                                                        name={`${index}`}
+                                                                        checked={
+                                                                            item?.isChecked ||
+                                                                            false
+                                                                        }
+                                                                        onChange={
+                                                                            handleChange
+                                                                        }
                                                                     />
                                                                 </div>
-                                                            </td>
-                                                            <td>
-                                                                <h2 className="product-cart-text">
-                                                                    {
-                                                                        item.product_name
-                                                                    }
-                                                                </h2>
-                                                                <strong className="product-cart-price">
-                                                                    ৳{price}
-                                                                </strong>
-                                                                <del
-                                                                    className="product-cart-price"
-                                                                    style={{
-                                                                        marginLeft:
-                                                                            "15px",
-                                                                        color: "#a4a4a4",
-                                                                    }}
-                                                                >
-                                                                    ৳
-                                                                    {
-                                                                        discountPrice
-                                                                    }
-                                                                </del>
-                                                                <strong className="ml-3">
-                                                                    {item?.selectedVariants &&
-                                                                        item.selectedVariants
-                                                                            .slice(
-                                                                                0,
-                                                                                2
-                                                                            )
-                                                                            .map(
-                                                                                (
-                                                                                    variant,
-                                                                                    inx
-                                                                                ) => {
-                                                                                    const [
-                                                                                        key,
-                                                                                        value,
-                                                                                    ] =
-                                                                                        Object.entries(
-                                                                                            variant
-                                                                                        )[0];
-                                                                                    const keyDisplay =
-                                                                                        key.split(
-                                                                                            "_"
-                                                                                        )[1];
+                                                                <div>
+                                                                    <div className="product-cart-product-img">
+                                                                        <Image
+                                                                            fill
+                                                                            src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
+                                                                            alt="black-friday"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <h2 className="product-cart-text">
+                                                                        {
+                                                                            item.product_name
+                                                                        }
+                                                                    </h2>
+                                                                    <p className="cart-prodect-variants">
+                                                                        {item?.selectedVariants &&
+                                                                            item.selectedVariants
+                                                                                .slice(
+                                                                                    0,
+                                                                                    2
+                                                                                )
+                                                                                .map(
+                                                                                    (
+                                                                                        variant,
+                                                                                        inx
+                                                                                    ) => {
+                                                                                        const [
+                                                                                            key,
+                                                                                            value,
+                                                                                        ] =
+                                                                                            Object.entries(
+                                                                                                variant
+                                                                                            )[0];
+                                                                                        const keyDisplay =
+                                                                                            key.split(
+                                                                                                "_"
+                                                                                            )[1];
 
-                                                                                    return (
-                                                                                        <React.Fragment
-                                                                                            key={
-                                                                                                inx
-                                                                                            }
-                                                                                        >
-                                                                                            <span>
-                                                                                                {
-                                                                                                    keyDisplay
+                                                                                        return (
+                                                                                            <React.Fragment
+                                                                                                key={
+                                                                                                    inx
                                                                                                 }
-                                                                                            </span>
-                                                                                            <span className="product-details-variant-item ms-3 me-2">
-                                                                                                <label>
-                                                                                                    {
-                                                                                                        value
-                                                                                                    }
-                                                                                                </label>
-                                                                                            </span>
-                                                                                        </React.Fragment>
-                                                                                    );
-                                                                                }
-                                                                            )}
-                                                                </strong>
-                                                            </td>
-
-                                                            <td>
+                                                                                            >
+                                                                                                <p>
+                                                                                                    <span>
+                                                                                                        {
+                                                                                                            keyDisplay
+                                                                                                        }:
+                                                                                                    </span>
+                                                                                                    <span className="cart-prodect-variants-item">
+                                                                                                        <label>
+                                                                                                            {
+                                                                                                                value
+                                                                                                            }
+                                                                                                        </label>
+                                                                                                    </span>
+                                                                                                </p>
+                                                                                            </React.Fragment>
+                                                                                        );
+                                                                                    }
+                                                                                )}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div>
+                                                                    <p>
+                                                                        <strong className="product-cart-price">
+                                                                            ৳{price}
+                                                                        </strong>
+                                                                    </p>
+                                                                    <p>
+                                                                        <del className="product-cart-discount-price">
+                                                                            ৳{discountPrice}
+                                                                        </del>
+                                                                    </p>
+                                                                    <p>
+                                                                        -10%
+                                                                    </p>
+                                                                </div>
+                                                                <div className="d-flex gap-2">
+                                                                    <button
+                                                                        className="product-cart-remov-btn"
+                                                                        onClick={() =>
+                                                                            handleDelete(
+                                                                                session
+                                                                                    ? item?.cart_id
+                                                                                    : index
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <FaTrashCan />
+                                                                    </button>
+                                                                    <button
+                                                                        className="product-cart-remov-btn"
+                                                                    >
+                                                                        <FaRegHeart />
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div>
                                                                 <div
                                                                     className="btn-group quantity-area"
                                                                     role="group"
                                                                     aria-label="Basic example"
                                                                 >
-                                                                    <div className="quantity-increase-bg">
-                                                                        <button
-                                                                            type="button"
-                                                                            className="btn quantity-increase"
-                                                                            onClick={() => {
-                                                                                handleDecrement(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
-                                                                                );
-                                                                            }}
-                                                                        >
-                                                                            <Image
-                                                                                fill
-                                                                                src="/images/minusIcon.png"
-                                                                                alt="black-friday"
-                                                                            />
-                                                                        </button>
-                                                                    </div>
-
+                                                                    <button
+                                                                        type="button"
+                                                                        className="quantity-increase"
+                                                                        onClick={() => {
+                                                                            handleDecrement(
+                                                                                session
+                                                                                    ? item?.cart_id
+                                                                                    : index
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        <FaMinus />
+                                                                    </button>
                                                                     <input
                                                                         className="quantity-fild"
                                                                         min="1"
@@ -443,64 +461,27 @@ const CartPage = () => {
                                                                         }
                                                                         readOnly
                                                                     />
-                                                                    <div className="quantity-decrease-bg">
-                                                                        <button
-                                                                            className="btn quantity-decrease"
-                                                                            type="button"
-                                                                            onClick={() => {
-                                                                                handleIncrement(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
-                                                                                );
-                                                                            }}
-                                                                        >
-                                                                            <Image
-                                                                                fill
-                                                                                src="/images/+icon.png"
-                                                                                alt="black-friday"
-                                                                            />
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="product-cart-remov-btn-bg">
                                                                     <button
-                                                                        className="product-cart-remov-btn"
-                                                                        onClick={() =>
-                                                                            handleDelete(
+                                                                        className="quantity-decrease"
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            handleIncrement(
                                                                                 session
                                                                                     ? item?.cart_id
                                                                                     : index
-                                                                            )
-                                                                        }
+                                                                            );
+                                                                        }}
                                                                     >
-                                                                        <Image
-                                                                            fill
-                                                                            src="/images/trash-bin.png"
-                                                                            alt="delete"
-                                                                        />
+                                                                        <FaPlus />
                                                                     </button>
                                                                 </div>
-                                                            </td>
-                                                            {/* <td>
-                                                                <div className="product-cart-like-btn-bg">
-                                                                    <button className="product-cart-like-btn">
-                                                                        <Image
-                                                                            fill
-                                                                            src="/images/heart.png"
-                                                                            alt="heart image"
-                                                                        />
-                                                                    </button>
-                                                                </div>
-                                                            </td> */}
-                                                        </tr>
+                                                            </div>
+                                                        </div>
                                                     );
                                                 }
                                             )}
-                                        </tbody>
-                                    </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

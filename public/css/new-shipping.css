@@ -69,11 +69,15 @@
     font-size: 15px;
 }
 .new-nh-product-qty {
-    font-size: 16px;
+    font-size: 15px;
 }
 .new-nh-product-price {
+    font-size: 14px;
+}
+.new-nh-product-price p{
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
+    color: var(--color-1A9D78);
 }
 .new-nh-product-price del {
     background: var(--color-FFEEEE);
