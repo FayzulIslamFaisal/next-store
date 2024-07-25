@@ -39,8 +39,12 @@ const AddToCartProductShippingPage = () => {
     const [pickUpPoint, setPickUpPoint] = useState([]);
     const [pickUpId, setPickUpPointId] = useState(null);
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
-    const [shippingPrice, setShippingPrice] = useState("");
+    const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
+    const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(
+        []
+    );
+
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -89,6 +93,9 @@ const AddToCartProductShippingPage = () => {
         await postShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const cartProduct = await fetchCartProducts(session?.accessToken);
+        setCartProduct(cartProduct?.data);
+        setShippingPrice(cartProduct?.shipping_charge);
         const modalElement = document.getElementById("addnewdeliveryaddress");
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
@@ -139,6 +146,10 @@ const AddToCartProductShippingPage = () => {
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const cartProduct = await fetchCartProducts(session?.accessToken);
+        setCartProduct(cartProduct?.data);
+        setShippingPrice(cartProduct?.shipping_charge);
+
         const modalElement = document.getElementById("updatedeliveryaddress");
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
@@ -222,9 +233,11 @@ const AddToCartProductShippingPage = () => {
     };
 
     const handleSetDefaultAddress = (id) => {
+        setSelectedDefaultAddressId(id);
         const findDefaultAddress = customerAddress?.find(
             (address, index) => address.id == id
         );
+
         setFormData({
             fullName: findDefaultAddress?.full_name,
             phone: findDefaultAddress?.phone,
@@ -234,13 +247,13 @@ const AddToCartProductShippingPage = () => {
             note: findDefaultAddress?.note,
             setDefault: true,
         });
+
         console.log("formData", formData);
     };
 
     const handleChangeDefaultAddress = async (address_id) => {
-        console.log("hello world");
         const addAddressInfo = {
-            address_id: address_id,
+            address_id: selectedDefaultAddressId,
             full_name: formData.fullName,
             phone: formData.phone,
             district_id: formData.district,
@@ -249,19 +262,19 @@ const AddToCartProductShippingPage = () => {
             note: formData.note,
             set_default: formData.setDefault ? 1 : 0,
         };
-
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
-        const cartProduct = await fetchCartProducts(session?.accessToken);
-        setCartProduct(cartProduct?.data);
-        setShippingPrice(cartProduct?.shipping_charge);
-
         const modalElement = document.getElementById(
             "change-nhn-shipping-address"
         );
-        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-        modalInstance.hide();
+        if (modalElement) {
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance.hide();
+        }
+        const cartProduct = await fetchCartProducts(session?.accessToken);
+        setCartProduct(cartProduct?.data);
+        setShippingPrice(cartProduct?.shipping_charge);
     };
 
     const handlePickUpPoint = () => {
@@ -269,6 +282,7 @@ const AddToCartProductShippingPage = () => {
         const modalElement = document.getElementById(
             "shipping-pick-point-modal"
         );
+        setShippingPrice(0);
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
     };
@@ -488,9 +502,7 @@ const AddToCartProductShippingPage = () => {
                                                                         onClick={(
                                                                             e
                                                                         ) => {
-                                                                            handleChangeDefaultAddress(
-                                                                                address?.id
-                                                                            );
+                                                                            handleChangeDefaultAddress();
                                                                         }}
                                                                     >
                                                                         Confirm
@@ -1311,7 +1323,9 @@ const AddToCartProductShippingPage = () => {
                                                                                                                 {
                                                                                                                     keyDisplay
                                                                                                                 }
-                                                                                                            </span>:
+                                                                                                            </span>
+
+                                                                                                            :
                                                                                                             <span className="cart-prodect-variants-item">
                                                                                                                 <label>
                                                                                                                     {
@@ -1423,7 +1437,6 @@ const AddToCartProductShippingPage = () => {
                 </div>
             </section>
         </PrivateRoute>
-
     );
 };
 
