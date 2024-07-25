@@ -105,8 +105,8 @@ function Sales({
     };
 
     return (
-        hasFlashSaleSettings &&
-        flashSaleEndDate && (
+        hasFlashSaleSettings && (
+            // flashSaleEndDate &&
             <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
                 <div className="container">
                     <SectionTitle

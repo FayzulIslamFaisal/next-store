@@ -12,6 +12,8 @@ import { usePathname, useSearchParams } from "next/navigation";
 import NotFound from "@/app/not-found";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { useSession } from "next-auth/react";
+import { recentViewProductApi } from "@/app/services/postRecentViewProduct";
+import { fetchRecentViewProducts } from "@/app/services/getRecentViewProduct";
 const ProductSinglePage = ({ params }) => {
     const { slug } = params;
     const { status, data: session } = useSession();
@@ -59,7 +61,10 @@ const ProductSinglePage = ({ params }) => {
                     price,
                     product_thumbnail,
                     outlet_id,
+                    category,
+                    variations,
                 } = productDetails;
+                console.log("=......................", variations);
                 const recentViewProductInformation = {
                     id: id,
                     product_name,
@@ -69,16 +74,28 @@ const ProductSinglePage = ({ params }) => {
                             : price?.original?.results?.regular_price,
                     outlet_id: outlet_id,
                     product_thumbnail: product_thumbnail,
+                    variations: variations,
+                };
+
+                const productInfoRecentView = {
+                    product_id: id,
+                    outlet_id: outlet_id,
+                    category_id: category[0]?.id,
                 };
                 if (session) {
-                } else {
-                    storeProduct(recentViewProductInformation);
+                    await recentViewProductApi(
+                        productInfoRecentView,
+                        session?.accessToken
+                    );
                 }
+
+                storeProduct(recentViewProductInformation);
+
                 setProductInfo(productDetails);
             }
         }
         fetchData();
-    }, [pathName]);
+    }, [pathName, session]);
 
     const metadata = {
         openGraph: {
@@ -105,12 +122,24 @@ const ProductSinglePage = ({ params }) => {
     };
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const storedProducts =
-                JSON.parse(localStorage.getItem("recentlyViewProducts")) || [];
-            setRecentViewProduct(storedProducts);
-        }
-    }, [pathName]);
+        const recentViewConfigure = async () => {
+            if (session) {
+                const recentViewProductFetch = await fetchRecentViewProducts(
+                    session?.accessToken,
+                    3
+                );
+            } else {
+                if (typeof window !== "undefined") {
+                    const storedProducts =
+                        JSON.parse(
+                            localStorage.getItem("recentlyViewProducts")
+                        ) || [];
+                    setRecentViewProduct(storedProducts);
+                }
+            }
+        };
+        recentViewConfigure();
+    }, [pathName, session]);
 
     return (
         <>
@@ -142,7 +171,7 @@ const ProductSinglePage = ({ params }) => {
                                             recentViewProduct
                                         }
                                     />
-                                    <Service serviceItems={serviceItems} />
+                                    {/* <Service serviceItems={serviceItems} /> */}
                                 </>
                             ) : (
                                 <DefaultLoader />

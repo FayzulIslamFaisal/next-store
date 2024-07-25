@@ -14,7 +14,6 @@ const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
-
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -396,38 +395,53 @@ const CartPage = () => {
                                                                                     variant,
                                                                                     inx
                                                                                 ) => {
-                                                                                    const [
-                                                                                        key,
-                                                                                        value,
-                                                                                    ] =
+                                                                                    if (
+                                                                                        variant &&
                                                                                         Object.entries(
                                                                                             variant
-                                                                                        )[0];
-                                                                                    const keyDisplay =
-                                                                                        key.split(
-                                                                                            "_"
-                                                                                        )[1];
+                                                                                        )
+                                                                                            .length >
+                                                                                            0
+                                                                                    ) {
+                                                                                        const [
+                                                                                            key,
+                                                                                            value,
+                                                                                        ] =
+                                                                                            Object.entries(
+                                                                                                variant
+                                                                                            )[0];
+                                                                                        const keyDisplay =
+                                                                                            key.split(
+                                                                                                "_"
+                                                                                            )[1];
 
-                                                                                    return (
-                                                                                        <React.Fragment
-                                                                                            key={
-                                                                                                inx
-                                                                                            }
-                                                                                        >
-                                                                                            <span>
-                                                                                                {
-                                                                                                    keyDisplay
+                                                                                        return (
+                                                                                            <React.Fragment
+                                                                                                key={
+                                                                                                    inx
                                                                                                 }
-                                                                                            </span>
-                                                                                            <span className="product-details-variant-item ms-3 me-2">
-                                                                                                <label>
+                                                                                            >
+                                                                                                <span>
                                                                                                     {
-                                                                                                        value
+                                                                                                        keyDisplay
                                                                                                     }
-                                                                                                </label>
-                                                                                            </span>
-                                                                                        </React.Fragment>
-                                                                                    );
+                                                                                                </span>
+                                                                                                <span className="product-details-variant-item ms-3 me-2">
+                                                                                                    <label>
+                                                                                                        {
+                                                                                                            value
+                                                                                                        }
+                                                                                                    </label>
+                                                                                                </span>
+                                                                                            </React.Fragment>
+                                                                                        );
+                                                                                    } else {
+                                                                                        console.error(
+                                                                                            "Variant is undefined or empty",
+                                                                                            variant
+                                                                                        );
+                                                                                        return null; // Or any fallback UI
+                                                                                    }
                                                                                 }
                                                                             )}
                                                                 </strong>

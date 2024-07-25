@@ -13,10 +13,10 @@ const DynamicCategoryPage = ({ params }) => {
     const { slug } = params;
     const [option, setOption] = useState({});
     const [outletId, setOutletId] = useState(0); // default outlet
-    
+
     useEffect(() => {
-        const initialOutletId = localStorage.getItem('outletId');
-        setOutletId(initialOutletId?parseInt(initialOutletId):3);
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
     }, []);
 
     useEffect(() => {
@@ -34,19 +34,26 @@ const DynamicCategoryPage = ({ params }) => {
         if (outletId) {
             const fetchProducts = async () => {
                 try {
-                    const data = await getCategorydetailBySlug(outletId, slug, option);
+                    const data = await getCategorydetailBySlug(
+                        outletId,
+                        slug,
+                        option
+                    );
                     setCategoryBySlugData(data);
                 } catch (error) {
-                    console.error("Error fetching 'Just For You' products:", error);
+                    console.error(
+                        "Error fetching 'Just For You' products:",
+                        error
+                    );
                 }
             };
-            fetchProducts(); 
+            fetchProducts();
         }
     }, [slug, option]);
 
     const categoryByResult = categoryBySlugData?.results;
     const categoryTitle = categoryByResult?.category;
-    const categoryByProduct = categoryByResult?.products?.data;
+    const categoryByProduct = categoryByResult?.products;
     const categoryByBrand = categoryByResult?.brands;
     const categoryByColor = categoryByResult?.colors;
     const categoryBySize = categoryByResult?.sizes;
