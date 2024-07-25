@@ -21,7 +21,11 @@ const ShippingAddressModal = ({ defaultAddress, session }) => {
             setNewCity(defaultAddress.city || "");
             setNewDistrict(defaultAddress.district_id || "");
         }
-    }, [defaultAddress]);
+        if (!defaultAddress && session) {
+            setNewEmail( session?.user?.email || "");
+            setNewPhone( session?.user?.phone || "");
+        }
+    }, [defaultAddress, session]);
 
     useEffect(() => {
         const fetchDistricts = async () => {

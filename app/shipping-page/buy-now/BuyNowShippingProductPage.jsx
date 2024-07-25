@@ -419,8 +419,7 @@ const BuyNowShippingProductPage = () => {
                                                             <div className="modal-content">
                                                                 <div className="modal-header">
                                                                     <p className="modal-title">
-                                                                        My
-                                                                        delivery
+                                                                        My delivery
                                                                         Address
                                                                     </p>
                                                                     <button
@@ -558,14 +557,12 @@ const BuyNowShippingProductPage = () => {
                                                     </div>
                                                     <div className="nhn-shipping-deliver-pic-point rounded-3">
                                                         <p>
-                                                            Collect your parcel
-                                                            from the nearest
-                                                            Nagadhat Pick-up
-                                                            Point with a reduced
-                                                            shipping fee 20
+                                                            Collect your parcel from
+                                                            the nearest Nagadhat
+                                                            Pick-up Point with a
+                                                            reduced shipping fee 20
                                                             suggested collection
-                                                            point(s) nearby
-                                                            Check{" "}
+                                                            point(s) nearby Check{" "}
                                                             <button
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#shipping-pick-point-modal"
@@ -672,8 +669,7 @@ const BuyNowShippingProductPage = () => {
                                                     </div>
                                                     <div className="nhn-shipping-deliver-edit-mail">
                                                         <p>
-                                                            Email to:{" "}
-                                                            {userEmail}
+                                                            Email to: {userEmail} {" "}
                                                             <button
                                                                 type="button"
                                                                 data-bs-toggle="modal"
@@ -886,8 +882,7 @@ const BuyNowShippingProductPage = () => {
                                                                 }
                                                             >
                                                                 <option value="">
-                                                                    Select
-                                                                    District
+                                                                    Select District
                                                                 </option>
                                                                 {districtsData?.map(
                                                                     (
@@ -1010,8 +1005,7 @@ const BuyNowShippingProductPage = () => {
                                                                     className="form-check-label text-capitalize"
                                                                     htmlFor="address-book"
                                                                 >
-                                                                    Default
-                                                                    delivery
+                                                                    Default delivery
                                                                     address
                                                                 </label>
                                                             </div>
@@ -1141,8 +1135,7 @@ const BuyNowShippingProductPage = () => {
                                                                 }
                                                             >
                                                                 <option value="">
-                                                                    Select
-                                                                    District
+                                                                    Select District
                                                                 </option>
                                                                 {districtsData?.map(
                                                                     (
@@ -1265,8 +1258,7 @@ const BuyNowShippingProductPage = () => {
                                                                     className="form-check-label text-capitalize"
                                                                     htmlFor="address-book"
                                                                 >
-                                                                    Default
-                                                                    delivery
+                                                                    Default delivery
                                                                     address
                                                                 </label>
                                                             </div>
@@ -1282,9 +1274,7 @@ const BuyNowShippingProductPage = () => {
                                                 data-bs-dismiss={
                                                     isOpen ? "modal" : " "
                                                 }
-                                                onClick={
-                                                    handleAddDeliveryAddress
-                                                }
+                                                onClick={handleAddDeliveryAddress}
                                             >
                                                 Save
                                             </button>
@@ -1327,58 +1317,62 @@ const BuyNowShippingProductPage = () => {
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <h2 className="product-cart-text">
-                                                                            {
-                                                                                item?.product_name
-                                                                            }
-                                                                        </h2>
-                                                                        <strong className="ml-3">
-                                                                            {item?.selectedVariants &&
-                                                                                item.selectedVariants
-                                                                                    .slice(
-                                                                                        0,
-                                                                                        2
-                                                                                    )
-                                                                                    .map(
-                                                                                        (
-                                                                                            variant,
-                                                                                            inx
-                                                                                        ) => {
-                                                                                            const [
-                                                                                                key,
-                                                                                                value,
-                                                                                            ] =
-                                                                                                Object.entries(
-                                                                                                    variant
-                                                                                                )[0];
-                                                                                            const keyDisplay =
-                                                                                                key.split(
-                                                                                                    "_"
-                                                                                                )[1];
+                                                                        <div>
+                                                                            <p className="product-cart-text">
+                                                                                {
+                                                                                    item?.product_name
+                                                                                }
+                                                                            </p>
+                                                                            <p className="cart-prodect-variants">
+                                                                                {item?.selectedVariants &&
+                                                                                    item.selectedVariants
+                                                                                        .slice(
+                                                                                            0,
+                                                                                            2
+                                                                                        )
+                                                                                        .map(
+                                                                                            (
+                                                                                                variant,
+                                                                                                inx
+                                                                                            ) => {
+                                                                                                const [
+                                                                                                    key,
+                                                                                                    value,
+                                                                                                ] =
+                                                                                                    Object.entries(
+                                                                                                        variant
+                                                                                                    )[0];
+                                                                                                const keyDisplay =
+                                                                                                    key.split(
+                                                                                                        "_"
+                                                                                                    )[1];
 
-                                                                                            return (
-                                                                                                <React.Fragment
-                                                                                                    key={
-                                                                                                        inx
-                                                                                                    }
-                                                                                                >
-                                                                                                    <span>
-                                                                                                        {
-                                                                                                            keyDisplay
+                                                                                                return (
+                                                                                                    <React.Fragment
+                                                                                                        key={
+                                                                                                            inx
                                                                                                         }
-                                                                                                    </span>
-                                                                                                    <span className="product-details-variant-item ms-3 me-2">
-                                                                                                        <label>
-                                                                                                            {
-                                                                                                                value
-                                                                                                            }
-                                                                                                        </label>
-                                                                                                    </span>
-                                                                                                </React.Fragment>
-                                                                                            );
-                                                                                        }
-                                                                                    )}
-                                                                        </strong>
+                                                                                                    >
+                                                                                                        <p>
+                                                                                                            <span>
+                                                                                                                {
+                                                                                                                    keyDisplay
+                                                                                                                }
+                                                                                                            </span>:
+                                                                                                            <span className="cart-prodect-variants-item">
+                                                                                                                <label>
+                                                                                                                    {
+                                                                                                                        value
+                                                                                                                    }
+                                                                                                                </label>
+                                                                                                            </span>
+                                                                                                        </p>
+                                                                                                    </React.Fragment>
+                                                                                                );
+                                                                                            }
+                                                                                        )}
+                                                                            </p>
+                                                                        </div>
                                                                     </td>
                                                                     <td>
                                                                         <p className="text-capitalize new-nh-product-qty">
@@ -1389,7 +1383,7 @@ const BuyNowShippingProductPage = () => {
                                                                         </p>
                                                                     </td>
                                                                     <td>
-                                                                        <div className="d-flex flex-column gap-1 align-items-center justify-content-between new-nh-product-price">
+                                                                        <div className="d-flex gap-2 new-nh-product-price">
                                                                             <p>
                                                                                 ৳{" "}
                                                                                 {item?.price *
@@ -1464,9 +1458,8 @@ const BuyNowShippingProductPage = () => {
                                             </Link>
                                         </div>
                                         <p>
-                                            Lorem ipsum dolor sit amet
-                                            consectetur adipisicing elit.
-                                            Dolores, tenetur.
+                                            Lorem ipsum dolor sit amet consectetur
+                                            adipisicing elit. Dolores, tenetur.
                                         </p>
                                     </div>
                                 </div>
