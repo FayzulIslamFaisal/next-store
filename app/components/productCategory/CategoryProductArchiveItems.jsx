@@ -10,6 +10,10 @@ import { useEffect, useState } from "react";
 import { getHomeSearchProduct } from "@/app/services/getHomeSearchProduct";
 
 const CategoryProductArchiveItems = ({ productItem }) => {
+    console.log(
+        "========================productItem=============================",
+        productItem
+    );
     const searchParams = useSearchParams();
     const initialDistrictId = searchParams.get("districtId") || 47;
     const [districtId, setDistrictId] = useState(initialDistrictId);
@@ -41,6 +45,62 @@ const CategoryProductArchiveItems = ({ productItem }) => {
 
     const outletId = searchDistrictId?.outlet_id;
 
+    const defaultVariant = productItem?.variations?.find(
+        (variant) => variant.variations_default === 1
+    );
+
+    const selectedVariantProductInfo = {
+        product_variation_id: defaultVariant?.id,
+        discount_type: defaultVariant?.discount_type,
+    };
+
+    const productPrice = {
+        prices: "",
+        discountPrice: "",
+    };
+
+    if (productItem?.variations?.length > 0) {
+        productPrice.prices =
+            defaultVariant?.discount_amount > 0
+                ? defaultVariant?.mrp_price - defaultVariant?.discount_amount
+                : defaultVariant?.mrp_price;
+
+        productPrice.discountPrice =
+            defaultVariant?.discount_amount > 0
+                ? defaultVariant?.mrp_price
+                : "";
+    } else {
+        (productPrice.prices =
+            productItem?.discount_price !== 0
+                ? productItem?.discount_price
+                : productItem?.mrp_price),
+            (productPrice.discountPrice =
+                productItem?.discount_price > 0 && productItem?.mrp_price);
+    }
+
+    const selectedVariants = [];
+    if (defaultVariant?.variation_size !== null) {
+        selectedVariants.push({
+            variation_size: defaultVariant?.variation_size?.title,
+        });
+    }
+
+    if (defaultVariant?.variation_color !== null) {
+        selectedVariants.push({
+            variation_color: defaultVariant?.variation_color?.title,
+        });
+    }
+
+    if (defaultVariant?.variation_weight !== null) {
+        selectedVariants.push({
+            variation_weight: defaultVariant?.variation_weight?.title,
+        });
+    }
+
+    console.log(
+        "==========================productPrice",
+        productItem?.discount_price
+    );
     return (
         <div className="flash-sale-content-item">
             <Link
@@ -83,6 +143,13 @@ const CategoryProductArchiveItems = ({ productItem }) => {
                         <div className="add-to-cart-holder">
                             <AddToCartButton
                                 fullWidth={`category-product-add-btn`}
+                                productInfo={productItem}
+                                quantity={1}
+                                selectedVariantProductInfo={
+                                    selectedVariantProductInfo
+                                }
+                                selectedVariants={selectedVariants}
+                                productPrice={productPrice}
                             />
                         </div>
                     </div>

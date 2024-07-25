@@ -10,13 +10,19 @@ import { addToCartQuantityUpdate } from "../services/addToCartQuantityUpdate";
 import { deleteProductFromTheApi } from "../services/deleteSelectedProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../store/cartSlice";
-import { FaHeart, FaMinus, FaPlus, FaRegHeart, FaTrash, FaTrashCan } from "react-icons/fa6";
+import {
+    FaHeart,
+    FaMinus,
+    FaPlus,
+    FaRegHeart,
+    FaTrash,
+    FaTrashCan,
+} from "react-icons/fa6";
 import { FaMagic } from "react-icons/fa";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
-
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -303,7 +309,7 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                0 &&
+                                                    0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
@@ -319,7 +325,7 @@ const CartPage = () => {
                                         <button
                                             onClick={handleSelectedItemDelete}
                                         >
-                                            <FaTrashCan />  REMOVE
+                                            <FaTrashCan /> REMOVE
                                         </button>
                                     </div>
                                 </div>
@@ -340,7 +346,10 @@ const CartPage = () => {
                                                         item.quantity;
                                                     totalPrice += price;
                                                     return (
-                                                        <div className="d-flex justify-content-between gap-2 product-cart-details-item" key={item?.cart_id}>
+                                                        <div
+                                                            className="d-flex justify-content-between gap-2 product-cart-details-item"
+                                                            key={item?.cart_id}
+                                                        >
                                                             <div className="d-flex gap-3">
                                                                 <div className="d-flex justify-content-center align-items-center">
                                                                     <input
@@ -356,6 +365,7 @@ const CartPage = () => {
                                                                         }
                                                                     />
                                                                 </div>
+
                                                                 <div>
                                                                     <div className="product-cart-product-img">
                                                                         <Image
@@ -372,7 +382,9 @@ const CartPage = () => {
                                                                         }
                                                                     </h2>
                                                                     <p className="cart-prodect-variants">
-                                                                        {item?.selectedVariants &&
+                                                                        {Array.isArray(
+                                                                            item?.selectedVariants
+                                                                        ) &&
                                                                             item.selectedVariants
                                                                                 .slice(
                                                                                     0,
@@ -383,40 +395,53 @@ const CartPage = () => {
                                                                                         variant,
                                                                                         inx
                                                                                     ) => {
-                                                                                        const [
-                                                                                            key,
-                                                                                            value,
-                                                                                        ] =
+                                                                                        if (
+                                                                                            variant &&
+                                                                                            typeof variant ===
+                                                                                                "object" &&
                                                                                             Object.entries(
                                                                                                 variant
-                                                                                            )[0];
-                                                                                        const keyDisplay =
-                                                                                            key.split(
-                                                                                                "_"
-                                                                                            )[1];
+                                                                                            )
+                                                                                                .length >
+                                                                                                0
+                                                                                        ) {
+                                                                                            const [
+                                                                                                key,
+                                                                                                value,
+                                                                                            ] =
+                                                                                                Object.entries(
+                                                                                                    variant
+                                                                                                )[0];
+                                                                                            const keyDisplay =
+                                                                                                key.split(
+                                                                                                    "_"
+                                                                                                )[1];
 
-                                                                                        return (
-                                                                                            <React.Fragment
-                                                                                                key={
-                                                                                                    inx
-                                                                                                }
-                                                                                            >
-                                                                                                <p>
-                                                                                                    <span>
-                                                                                                        {
-                                                                                                            keyDisplay
-                                                                                                        }:
-                                                                                                    </span>
-                                                                                                    <span className="cart-prodect-variants-item">
-                                                                                                        <label>
+                                                                                            return (
+                                                                                                <React.Fragment
+                                                                                                    key={
+                                                                                                        inx
+                                                                                                    }
+                                                                                                >
+                                                                                                    <p>
+                                                                                                        <span>
                                                                                                             {
-                                                                                                                value
+                                                                                                                keyDisplay
                                                                                                             }
-                                                                                                        </label>
-                                                                                                    </span>
-                                                                                                </p>
-                                                                                            </React.Fragment>
-                                                                                        );
+                                                                                                            :
+                                                                                                        </span>
+                                                                                                        <span className="cart-prodect-variants-item">
+                                                                                                            <label>
+                                                                                                                {
+                                                                                                                    value
+                                                                                                                }
+                                                                                                            </label>
+                                                                                                        </span>
+                                                                                                    </p>
+                                                                                                </React.Fragment>
+                                                                                            );
+                                                                                        }
+                                                                                        return null; // Return null if variant is not valid
                                                                                     }
                                                                                 )}
                                                                     </p>
@@ -426,17 +451,21 @@ const CartPage = () => {
                                                                 <div>
                                                                     <p>
                                                                         <strong className="product-cart-price">
-                                                                            ৳{price}
+                                                                            ৳
+                                                                            {
+                                                                                price
+                                                                            }
                                                                         </strong>
                                                                     </p>
                                                                     <p>
                                                                         <del className="product-cart-discount-price">
-                                                                            ৳{discountPrice}
+                                                                            ৳
+                                                                            {
+                                                                                discountPrice
+                                                                            }
                                                                         </del>
                                                                     </p>
-                                                                    <p>
-                                                                        -10%
-                                                                    </p>
+                                                                    <p>-10%</p>
                                                                 </div>
                                                                 <div className="d-flex gap-2">
                                                                     <button
@@ -451,9 +480,7 @@ const CartPage = () => {
                                                                     >
                                                                         <FaTrashCan />
                                                                     </button>
-                                                                    <button
-                                                                        className="product-cart-remov-btn"
-                                                                    >
+                                                                    <button className="product-cart-remov-btn">
                                                                         <FaRegHeart />
                                                                     </button>
                                                                 </div>

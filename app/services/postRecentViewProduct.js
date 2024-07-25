@@ -1,6 +1,6 @@
 import { apiBaseUrl } from "../utils";
 
-export const recentViewProduct = async (productInfo, token) => {
+export const recentViewProductApi = async (productInfo, token) => {
     const response = await fetch(`${apiBaseUrl}/just-for-you-products`, {
         method: "POST",
         headers: {

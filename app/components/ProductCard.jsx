@@ -19,12 +19,16 @@ function ProductCard({ item }) {
     const defaultVariant = item?.variations?.find(
         (variant) => variant.variations_default === 1
     );
+
+    const selectedVariantProductInfo = {
+        product_variation_id: defaultVariant?.id,
+        discount_type: defaultVariant?.discount_type,
+    };
+
     const productPrice = {
         prices: "",
         discountPrice: "",
     };
-
-    item?.price.discounted_price > 0 && item?.price?.regular_price;
 
     if (item?.variations?.length > 0) {
         productPrice.prices =
@@ -42,7 +46,8 @@ function ProductCard({ item }) {
                 ? item?.price?.discounted_price
                 : item?.price?.regular_price),
             (productPrice.discountPrice =
-                item?.price.discounted_price > 0 && item?.price?.regular_price);
+                item?.price?.discounted_price > 0 &&
+                item?.price?.regular_price);
     }
 
     const selectedVariants = [];
@@ -63,6 +68,8 @@ function ProductCard({ item }) {
             variation_weight: defaultVariant?.variation_weight?.title,
         });
     }
+
+    console.log(selectedVariants);
 
     return (
         <div className="flash-sale-content-item">
@@ -101,7 +108,9 @@ function ProductCard({ item }) {
                             <AddToCartButton
                                 productInfo={item}
                                 quantity={1}
-                                selectedVariantProductInfo={defaultVariant}
+                                selectedVariantProductInfo={
+                                    selectedVariantProductInfo
+                                }
                                 selectedVariants={selectedVariants}
                                 productPrice={productPrice}
                             />

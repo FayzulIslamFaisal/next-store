@@ -1,4 +1,3 @@
-
 // import Pagination from "../components/productCategory/Pagination";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
@@ -10,7 +9,6 @@ import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 // import { NagadhatPublicUrl } from "../utils";
 
 const ViewAllProductPage = async ({ searchParams }) => {
-
     let viewProductData = [];
     let sectionTitle = "View All Product";
     let bannerUrl = "/images/fashion.jpg";
@@ -58,7 +56,6 @@ const ViewAllProductPage = async ({ searchParams }) => {
             subTitle: "Support System 24/7",
         },
     ];
-
 
     return (
         <div className="container view-all-product-container">
