@@ -44,7 +44,6 @@ const AddToCartProductShippingPage = () => {
     const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(
         []
     );
-
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -109,11 +108,13 @@ const AddToCartProductShippingPage = () => {
             setDefault: false,
         });
     };
+
     const afterClickingEidButton = (id) => {
         setEditAddressId(id);
         const findDefaultAddress = customerAddress?.find(
             (address, index) => address.id == id
         );
+
         setFormData({
             fullName: findDefaultAddress?.full_name,
             phone: findDefaultAddress?.phone,

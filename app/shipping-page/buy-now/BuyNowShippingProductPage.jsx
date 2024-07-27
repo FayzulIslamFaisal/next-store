@@ -41,6 +41,10 @@ const BuyNowShippingProductPage = () => {
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
+    const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(
+        []
+    );
+
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -108,6 +112,7 @@ const BuyNowShippingProductPage = () => {
             note: formData.note,
             set_default: formData.setDefault ? 1 : 0,
         };
+
         // Send address information to the server
         await postShippingAddress(addAddressInfo, session?.accessToken);
         // Fetch updated list of shipping addresses
@@ -170,7 +175,6 @@ const BuyNowShippingProductPage = () => {
             note: formData.note,
             set_default: formData.setDefault ? 1 : 0,
         };
-
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
@@ -254,6 +258,7 @@ const BuyNowShippingProductPage = () => {
     };
 
     const handleSetDefaultAddress = (id) => {
+        setSelectedDefaultAddressId(id);
         const findDefaultAddress = customerAddress?.find(
             (address, index) => address.id == id
         );
@@ -270,7 +275,7 @@ const BuyNowShippingProductPage = () => {
 
     const handleChangeDefaultAddress = async (address_id) => {
         const addAddressInfo = {
-            address_id: address_id,
+            address_id: selectedDefaultAddressId,
             full_name: formData.fullName,
             phone: formData.phone,
             district_id: formData.district,
@@ -282,6 +287,7 @@ const BuyNowShippingProductPage = () => {
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+
         fetchShippingCharge();
 
         const modalElement = document.getElementById(
@@ -419,7 +425,8 @@ const BuyNowShippingProductPage = () => {
                                                             <div className="modal-content">
                                                                 <div className="modal-header">
                                                                     <p className="modal-title">
-                                                                        My delivery
+                                                                        My
+                                                                        delivery
                                                                         Address
                                                                     </p>
                                                                     <button
@@ -557,12 +564,14 @@ const BuyNowShippingProductPage = () => {
                                                     </div>
                                                     <div className="nhn-shipping-deliver-pic-point rounded-3">
                                                         <p>
-                                                            Collect your parcel from
-                                                            the nearest Nagadhat
-                                                            Pick-up Point with a
-                                                            reduced shipping fee 20
+                                                            Collect your parcel
+                                                            from the nearest
+                                                            Nagadhat Pick-up
+                                                            Point with a reduced
+                                                            shipping fee 20
                                                             suggested collection
-                                                            point(s) nearby Check{" "}
+                                                            point(s) nearby
+                                                            Check{" "}
                                                             <button
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#shipping-pick-point-modal"
@@ -669,7 +678,8 @@ const BuyNowShippingProductPage = () => {
                                                     </div>
                                                     <div className="nhn-shipping-deliver-edit-mail">
                                                         <p>
-                                                            Email to: {userEmail} {" "}
+                                                            Email to:{" "}
+                                                            {userEmail}{" "}
                                                             <button
                                                                 type="button"
                                                                 data-bs-toggle="modal"
@@ -882,7 +892,8 @@ const BuyNowShippingProductPage = () => {
                                                                 }
                                                             >
                                                                 <option value="">
-                                                                    Select District
+                                                                    Select
+                                                                    District
                                                                 </option>
                                                                 {districtsData?.map(
                                                                     (
@@ -1005,7 +1016,8 @@ const BuyNowShippingProductPage = () => {
                                                                     className="form-check-label text-capitalize"
                                                                     htmlFor="address-book"
                                                                 >
-                                                                    Default delivery
+                                                                    Default
+                                                                    delivery
                                                                     address
                                                                 </label>
                                                             </div>
@@ -1135,7 +1147,8 @@ const BuyNowShippingProductPage = () => {
                                                                 }
                                                             >
                                                                 <option value="">
-                                                                    Select District
+                                                                    Select
+                                                                    District
                                                                 </option>
                                                                 {districtsData?.map(
                                                                     (
@@ -1258,7 +1271,8 @@ const BuyNowShippingProductPage = () => {
                                                                     className="form-check-label text-capitalize"
                                                                     htmlFor="address-book"
                                                                 >
-                                                                    Default delivery
+                                                                    Default
+                                                                    delivery
                                                                     address
                                                                 </label>
                                                             </div>
@@ -1274,7 +1288,9 @@ const BuyNowShippingProductPage = () => {
                                                 data-bs-dismiss={
                                                     isOpen ? "modal" : " "
                                                 }
-                                                onClick={handleAddDeliveryAddress}
+                                                onClick={
+                                                    handleAddDeliveryAddress
+                                                }
                                             >
                                                 Save
                                             </button>
@@ -1358,7 +1374,9 @@ const BuyNowShippingProductPage = () => {
                                                                                                                 {
                                                                                                                     keyDisplay
                                                                                                                 }
-                                                                                                            </span>:
+                                                                                                            </span>
+
+                                                                                                            :
                                                                                                             <span className="cart-prodect-variants-item">
                                                                                                                 <label>
                                                                                                                     {
@@ -1458,8 +1476,9 @@ const BuyNowShippingProductPage = () => {
                                             </Link>
                                         </div>
                                         <p>
-                                            Lorem ipsum dolor sit amet consectetur
-                                            adipisicing elit. Dolores, tenetur.
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Dolores, tenetur.
                                         </p>
                                     </div>
                                 </div>
