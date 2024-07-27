@@ -21,12 +21,18 @@ const DistrictList = ({ onDistrictChange, divisionId }) => {
 
     const handleDistrictChange = (event) => {
         const selectedDistrictId = event.target.value;
-        const selectedDistrict = districts.find(district => district.id == selectedDistrictId);
-        const outletId = selectedDistrict.outlet_id
+        const selectedDistrict = districts.find(
+            (district) => district.id == selectedDistrictId
+        );
+        const outletId = selectedDistrict.outlet_id;
         if (selectedDistrict) {
-            localStorage.setItem('outletId', outletId?outletId:3);
+            localStorage.setItem("outletId", outletId ? outletId : 3);
+            localStorage.setItem(
+                "districtId",
+                selectedDistrict.id ? selectedDistrict.id : 47
+            );
         }
-        
+
         onDistrictChange(event);
     };
 
