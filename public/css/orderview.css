@@ -1,0 +1,190 @@
+.order-view-wrapper {
+    padding-bottom: 50px;
+}
+.order-view-top-btn-area {
+    padding-top: 30px;
+}
+.order-invoce-btn {
+    background: var(--color-41ac8f);
+    color: var(--color-white);
+}
+.order-invoce-btn:hover {
+    background: var(--color-414042);
+    color: var(--color-white);
+}
+.order-view-summary-area {
+    padding-top: 25px;
+    padding-bottom: 30px;
+}
+.order-view-summary-bg {
+    -webkit-box-shadow: 0 0 13px 0 rgba(82, 63, 105, 0.05);
+    box-shadow: 0 0 13px 0 rgba(82, 63, 105, 0.05);
+    background-color: #fff;
+    border:1px solid #ebedf2;
+}
+.order-view-summary-title,
+.order-view-summary-detail{
+    padding: 20px;
+}
+.order-view-summary-title {
+    border-bottom: 1px solid #ebedf2;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.order-view-summary-title h1 {
+    font-size: 15px;
+    margin-bottom: 0;
+}
+.order-view-summary-info p {
+    padding-bottom: 20px;
+}
+.order-view-summary-info p:last-child {
+    padding-bottom: 0;
+}
+.order-view-summary-status-area {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.order-view-summary-status {
+    position: relative;
+    background-color: #ddd;
+    height: 7px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 60px;
+    margin-top: 50px;
+}
+.order-view-summary-status .step {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative;
+}
+.order-view-summary-status .step::before {
+    height: 7px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px;
+}
+.order-view-summary-status .step.active:before {
+    background: #44BC9D;
+}
+.order-view-summary-status .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd;
+}
+.order-view-summary-status .step.active .icon {
+    background: #44BC9D;
+    color: #fff;
+}
+.order-view-summary-status .text {
+    display: block;
+    margin-top: 7px;
+}
+.back-to-order-view {
+    padding-top: 15px;
+}
+
+.order-timeline-title {
+    font-size: 20px;
+  }
+  .vertical-timeline {
+    width: 100%;
+    position: relative;
+    padding: 1.5rem 1rem;
+  }
+  .vertical-timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 86px;
+    height: 100%;
+    width: 4px;
+    background: #e9ecef;
+    border-radius: 0.25rem;
+  }
+  .vertical-timeline-element {
+    position: relative;
+    margin: 0 0 1rem;
+  }
+  .vertical-timeline-element:last-child {
+    margin-bottom: 0;
+  }
+  .vertical-timeline--animate .vertical-timeline-element-icon.bounce-in {
+    visibility: visible;
+    animation: cd-bounce-1 0.8s;
+  }
+  .vertical-timeline-element-icon {
+    position: absolute;
+    top: 0;
+    left: 60px;
+  }
+  .vertical-timeline-element-content {
+    position: relative;
+    margin-left: 90px;
+    font-size: 0.8rem;
+  }
+  .vertical-timeline-element-content .timeline-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    padding: 2px 0 0;
+    font-weight: bold;
+  }
+  .vertical-timeline-element-content .vertical-timeline-element-date {
+    display: block;
+    position: absolute;
+    left: -85px;
+    top: 0;
+    padding-right: 10px;
+    text-align: right;
+    color: #adb5bd;
+    font-size: 0.7619rem;
+    white-space: nowrap;
+  }
+  .vertical-timeline-element-content .vertical-timeline-element-date-time {
+    display: block;
+    position: absolute;
+    left: -105px;
+    top: 20px;
+    padding-right: 10px;
+    text-align: right;
+    color: #adb5bd;
+    font-size: 0.7619rem;
+    white-space: nowrap;
+  }
+  .card-body .table thead tr th {
+    font-size: 14px;
+  }
+  .card-body .table tbody tr td {
+    font-size: 14px;
+    color: #000;
+  }
+  .card-body .table tbody tr td a {
+    color: #000;
+  }
+  /* .back-to-order-view {
+    padding: 20px;
+  } */
+  .back-to-order-view-btn {
+    padding: 20px;
+    border-top: 1px solid #ebedf2;
+  }
+  .back-to-order-view-btn .btn-warning {
+    background: var(--color-41ac8f);
+    border: none;
+    color: var(--color-white);
+    font-size: 14px;
+    text-transform: capitalize;
+  }
