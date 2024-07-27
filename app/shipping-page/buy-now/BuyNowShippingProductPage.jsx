@@ -1468,9 +1468,29 @@ const BuyNowShippingProductPage = () => {
                                         </div>
                                         <div className="place-order-btn">
                                             <Link
-                                                href={"/dashboard"}
+                                                href={
+                                                    customerAddress?.length >
+                                                        0 &&
+                                                    cartProduct?.length > 0
+                                                        ? "/dashboard"
+                                                        : "#"
+                                                }
                                                 onClick={handlePlaceOrder}
                                                 className="add-to-cart-link border border-0 w-100"
+                                                style={{
+                                                    pointerEvents:
+                                                        customerAddress?.length >
+                                                            0 &&
+                                                        cartProduct?.length > 0
+                                                            ? "auto"
+                                                            : "none",
+                                                    opacity:
+                                                        customerAddress?.length >
+                                                            0 &&
+                                                        cartProduct?.length > 0
+                                                            ? 1
+                                                            : 0.5,
+                                                }}
                                             >
                                                 PLACE ORDER
                                             </Link>
