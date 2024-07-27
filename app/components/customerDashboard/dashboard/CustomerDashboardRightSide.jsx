@@ -19,35 +19,38 @@ const CustomerDashboardRightSide = () => {
         return <p>Loading....</p>;
     }
 
-    const handleToggleMenu = (index) => {
-        setMenuStates(prevStates => ({
+    const handleToggleMenu = (event, index) => {
+        event.stopPropagation();
+        setMenuStates((prevStates) => ({
             ...prevStates,
             [index]: !prevStates[index],
         }));
+
     };
 
     const handleClickOutside = (event) => {
-        menuRefs.current.forEach((menuRef, index) => {
-            if (menuRef && !menuRef.contains(event.target)) {
-                setMenuStates(prevStates => ({
-                    ...prevStates,
-                    [index]: false,
-                }));
-            }
-        });
+        const isClickInsideMenu = menuRefs.current.some((ref) => ref?.current?.contains(event.target));
+        const isClickInsideContainer = event.target.closest('.customer-address-action-container');
+
+        if (!isClickInsideMenu && !isClickInsideContainer) {
+            setMenuStates((prevStates) => {
+                const newStates = { ...prevStates };
+                Object.keys(newStates).forEach((key) => (newStates[key] = false));
+                return newStates;
+            });
+        }
     };
 
     useEffect(() => {
-        if (Object.values(menuStates).some(state => state)) {
-            document.addEventListener("click", handleClickOutside);
-        } else {
-            document.removeEventListener("click", handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
+        const handleClick = (event) => {
+            handleClickOutside(event);
         };
-    }, [menuStates]);
+
+        document.addEventListener('mousedown', handleClick);
+        return () => {
+            document.removeEventListener('mousedown', handleClick);
+        };
+    }, []);
 
     useEffect(() => {
         const handleGetShippingAddress = async () => {
@@ -123,73 +126,59 @@ const CustomerDashboardRightSide = () => {
                     <div className="p-3 border-bottom">
                         <h2 className="mb-0 customer-dashboard-subtitle">Default Shipping Address</h2>
                     </div>
-                    {customerAddress?.map((allAddress, index) => (
-                        <div className="col-12" key={index}>
-                            <div className="shipping-delivery-address-radiobox">
-                                <input
-                                    id={`radio${index}`}
-                                    type="radio"
-                                    name="license-radios"
-                                    className="shipping-delivery-address-radio opacity-0"
-                                    defaultChecked={allAddress.set_default === 1}
-                                    onChange={() => handleSetDefaultAddress(allAddress?.id)}
-                                />
-                                <label htmlFor={`radio${index}`}>
-                                    <span className="license_type_circle">{" "}</span>
-                                    <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <p>{allAddress?.full_name}</p>
-                                            <div className="customer-address-action-btn">
-                                                <div className="p-1 z-3" onClick={() => handleToggleMenu(index)}>
-                                                    <FaEllipsisVertical />
-                                                </div>
-                                                {menuStates[index] && (
-                                                    <div ref={el => (menuRefs.current[index] = el)} className="customer-address-action-container">
-                                                        <div
-                                                            className="customer-address-action-item"
-                                                            type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal"
-                                                        >
-                                                            Edit
+                    {customerAddress ? (
+                        <div className="p-4 d-flex flex-column gap-3">
+                            {customerAddress?.map((allAddress, index) => (
+                                <div key={index}>
+                                    <div className="shipping-delivery-address-radiobox">
+                                        <input
+                                            id={`radio${index}`}
+                                            type="radio"
+                                            name="license-radios"
+                                            className="shipping-delivery-address-radio"
+                                            defaultChecked={
+                                                allAddress.set_default ===
+                                                1
+                                            }
+                                            onChange={(
+                                                e
+                                            ) => {
+                                                handleSetDefaultAddress(
+                                                    allAddress?.id
+                                                );
+                                            }}
+                                        />
+                                        <label htmlFor={`radio${index}`}>
+                                            <span className="license_type_circle">{" "}</span>
+                                            <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <p>{allAddress?.full_name}</p>
+                                                    <button className="customer-address-action-btn text-black">
+                                                        <div className="p-1" onClick={(event) => handleToggleMenu(event, index)}>
+                                                            <FaEllipsisVertical />
                                                         </div>
-                                                        <div className="customer-address-action-item">Delete</div>
-                                                    </div>
-                                                )}
+                                                        {menuStates[index] && (
+                                                            <div ref={el => (menuRefs.current[index] = el)} className="customer-address-action-container">
+                                                                <div
+                                                                    className="customer-address-action-item"
+                                                                    type="button"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#exampleModal"
+                                                                >
+                                                                    Edit
+                                                                </div>
+                                                                <div className="customer-address-action-item">Delete</div>
+                                                            </div>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                                <span>{allAddress?.phone}</span>
+                                                <p>{allAddress?.address}</p>
                                             </div>
-                                        </div>
-                                        <span>{allAddress?.phone}</span>
-                                        <p>{allAddress?.address}</p>
+                                        </label>
                                     </div>
-                                </label>
-                            </div>
-                        </div>
-                    ))}
-                    {defaultAddress ? (
-                        <div className="p-4">
-                            <div className="d-flex justify-content-between gap-4 border p-3 rounded">
-                                <div>
-                                    <p>{defaultAddress?.address}</p>
                                 </div>
-                                <div className="customer-address-action-btn">
-                                    <div onClick={() => handleToggleMenu("default")}>
-                                        <FaEllipsisVertical />
-                                    </div>
-                                    {menuStates["default"] && (
-                                        <div ref={el => (menuRefs.current["default"] = el)} className="customer-address-action-container">
-                                            <div
-                                                className="customer-address-action-item"
-                                                type="button"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal"
-                                            >
-                                                Edit
-                                            </div>
-                                            <div className="customer-address-action-item">Delete</div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     ) : (
                         <div className="p-4">

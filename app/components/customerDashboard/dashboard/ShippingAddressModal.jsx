@@ -45,7 +45,7 @@ const ShippingAddressModal = ({ defaultAddress, session }) => {
         district_id: parseInt(newDistrict),
         city: newCity,
         address: newAddress,
-        set_default: defaultAddress?.set_default || 1,
+        set_default: defaultAddress?.set_default,
     };
     if (defaultAddress) {
         const address_id = defaultAddress?.id;
