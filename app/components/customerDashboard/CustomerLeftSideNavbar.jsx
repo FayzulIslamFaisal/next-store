@@ -18,7 +18,6 @@ import { FaBangladeshiTakaSign, FaTicket } from "react-icons/fa6";
 const CustomerLeftSideNavbar = ({ authSessionData }) => {
     const currentPath = usePathname();
     const isActive = (href) => currentPath === href;
-    console.log(currentPath);
     return (
         <aside className="col-lg-3 d-none d-lg-block">
             <div className="customer-dashboard-side-nav">
@@ -42,7 +41,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                     <ul className="nav flex-column">
                         <li className="nav-item customer-dashboard-nav-item">
                             <Link
-                                className={`${isActive("/dashboard") ? "activ-link" : ""} nav-link customer-dashboard-nav-link`}
+                                className={`${
+                                    isActive("/dashboard") ? "activ-link" : ""
+                                } nav-link customer-dashboard-nav-link`}
                                 href="/dashboard"
                                 scroll={false}
                             >
@@ -52,7 +53,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
                             <Link
-                                className={`${isActive("/orderhistory") ? "activ-link" : ""} nav-link customer-dashboard-nav-link`}
+                                className={`${
+                                    isActive("/orderhistory")
+                                        ? "activ-link"
+                                        : ""
+                                } nav-link customer-dashboard-nav-link`}
                                 href="/orderhistory"
                                 scroll={false}
                             >
@@ -269,7 +274,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         </li>
                         <li className="nav-item customer-dashboard-nav-item">
                             <Link
-                                className={`${isActive("/manage-profile") ? "activ-link" : ""} nav-link customer-dashboard-nav-link`} 
+                                className={`${
+                                    isActive("/manage-profile")
+                                        ? "activ-link"
+                                        : ""
+                                } nav-link customer-dashboard-nav-link`}
                                 href="/manage-profile"
                                 scroll={false}
                             >

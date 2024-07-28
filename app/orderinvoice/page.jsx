@@ -8,11 +8,11 @@ import InvoiceFooter from "../components/orderinvoice/InvoiceFooter";
 import { getProductOrderSummery } from "../services/getProductOrderSummery";
 import { useSession } from "next-auth/react";
 
-const OrderInvoicePage = () => {
+const OrderInvoicePage = ({ orderId }) => {
     const [orderInvoice, setOrderInvoice] = useState(null);
     const { data: session, status } = useSession();
-    const [outletId, setOutletId] = useState(0); // default outlet
-    const [districtId, setDistrictId] = useState(0); // default outlet
+    const [outletId, setOutletId] = useState(0);
+    const [districtId, setDistrictId] = useState(0);
 
     useEffect(() => {
         const initialOutletId = localStorage.getItem("outletId");
@@ -22,8 +22,6 @@ const OrderInvoicePage = () => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
     }, []);
-
-    const orderId = 1;
 
     useEffect(() => {
         window.print();
