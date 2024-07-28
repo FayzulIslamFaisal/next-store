@@ -13,19 +13,23 @@ const CustomerDashboardRightSide = () => {
     const menuRefs = useRef([]);
     const [defaultAddress, setDefaultAddress] = useState(null);
     const [customerAddress, setCustomerAddress] = useState([]);
+    const [currentAddress, setCurrentAddress] = useState(null); // New state
     const { data: session, status } = useSession();
 
     if (status === "loading") {
         return <p>Loading....</p>;
     }
 
-    const handleToggleMenu = (event, index) => {
+    const handleToggleMenu = (event, index, address) => {
         event.stopPropagation();
         setMenuStates((prevStates) => ({
             ...prevStates,
             [index]: !prevStates[index],
         }));
 
+        if (!menuStates[index]) {
+            setCurrentAddress(address); // Set the current address for editing
+        }
     };
 
     const handleClickOutside = (event) => {
@@ -140,13 +144,7 @@ const CustomerDashboardRightSide = () => {
                                                 allAddress.set_default ===
                                                 1
                                             }
-                                            onChange={(
-                                                e
-                                            ) => {
-                                                handleSetDefaultAddress(
-                                                    allAddress?.id
-                                                );
-                                            }}
+                                            onChange={() => handleSetDefaultAddress(allAddress?.id)}
                                         />
                                         <label htmlFor={`radio${index}`}>
                                             <span className="license_type_circle">{" "}</span>
@@ -154,7 +152,7 @@ const CustomerDashboardRightSide = () => {
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <p>{allAddress?.full_name}</p>
                                                     <button className="customer-address-action-btn text-black">
-                                                        <div className="p-1" onClick={(event) => handleToggleMenu(event, index)}>
+                                                        <div className="p-1" onClick={(event) => handleToggleMenu(event, index, allAddress)}>
                                                             <FaEllipsisVertical />
                                                         </div>
                                                         {menuStates[index] && (
@@ -195,7 +193,7 @@ const CustomerDashboardRightSide = () => {
                             </div>
                         </div>
                     )}
-                    <ShippingAddressModal defaultAddress={defaultAddress} session={session} />
+                    <ShippingAddressModal currentAddress={currentAddress} session={session} />
                 </div>
                 <div className="customer-dashboard-card flex-1">
                     <div className="border-bottom p-3">

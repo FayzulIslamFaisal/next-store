@@ -11,7 +11,7 @@ const ViewAllProductPage = ({ searchParams }) => {
     const [viewProductData, setViewProductData] = useState([]);
     const [sectionTitle, setSectionTitle] = useState("View All Product");
     const [bannerUrl, setBannerUrl] = useState("/images/fashion.jpg");
-    const [districtId, setDistrictId] = useState(47);
+    const [districtId, setDistrictId] = useState(null);
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
@@ -19,7 +19,7 @@ const ViewAllProductPage = ({ searchParams }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (searchParams) {
+            if (searchParams && districtId) {
                 const justForYouProductData = await getHomeFlashAndJfyProduct(districtId);
                 switch (searchParams.type) {
                     case "justForYou":
@@ -38,7 +38,7 @@ const ViewAllProductPage = ({ searchParams }) => {
             }
         };
         fetchData();
-    }, []);
+    }, [districtId, searchParams]);
 
     const serviceItems = [
         {

@@ -6,6 +6,6 @@ export const getHomeFlashAndJfyProduct = async (districtId = 47) => {
         return await response.json();  
     } catch (error) {
         console.error('Something went wrong fetching slider data');
-        console.info(error);
+        console.info(error); 
     }
 }
