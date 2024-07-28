@@ -1,35 +1,45 @@
-// import Pagination from "../components/productCategory/Pagination";
+"use client";
+import { useEffect, useState } from "react";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
-import { getJustForYouProduct } from "../services/getJustForYouProduct";
-import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
-// import { NagadhatPublicUrl } from "../utils";
+import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
 
-const ViewAllProductPage = async ({ searchParams }) => {
-    let viewProductData = [];
-    let sectionTitle = "View All Product";
-    let bannerUrl = "/images/fashion.jpg";
-    if (searchParams) {
-        switch (searchParams.type) {
-            case "justForYou":
-                const justForYouProductData = await getJustForYouProduct();
-                viewProductData =
-                    justForYouProductData?.results?.for_you_products;
-                sectionTitle = "Just For You";
-                break;
+const ViewAllProductPage = ({ searchParams }) => {
+    const [viewProductData, setViewProductData] = useState([]);
+    const [sectionTitle, setSectionTitle] = useState("View All Product");
+    const [bannerUrl, setBannerUrl] = useState("/images/fashion.jpg");
+    const [districtId, setDistrictId] = useState(47);
+    useEffect(() => {
+        const initialDistrictId = localStorage.getItem("districtId");
+        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+    }, []);
 
-            case "flashSale":
-                const flashSaleProduct = await getFlashSaleProduct();
-                viewProductData = flashSaleProduct?.results;
-                sectionTitle = "Flash Sale";
-                break;
-            default:
-                break;
-        }
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            if (searchParams) {
+                const justForYouProductData = await getHomeFlashAndJfyProduct(districtId);
+                switch (searchParams.type) {
+                    case "justForYou":
+                        setViewProductData(justForYouProductData?.results?.just_for_you?.for_you_products);
+                        setSectionTitle("Just For You");
+                        break;
+
+                    case "flashSale":
+                        setViewProductData(justForYouProductData?.results?.flash_sales_product);
+                        setSectionTitle("Flash Sale");
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        };
+        fetchData();
+    }, []);
+
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
