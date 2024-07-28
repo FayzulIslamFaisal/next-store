@@ -10,7 +10,7 @@ import { CategoryDetailProvider } from "./context/CategoryDetailContext";
 import { CategoryDetailProductProvider } from "./context/CategoryDetailProductContext";
 import { ReduxProvider } from "./ReduxProvider";
 import { ToastContainer } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 const lato = Lato({
     subsets: ["latin"],
     display: "swap",

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../store/cartSlice";
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 import { useRouter } from "next/navigation";
+import { Bounce, toast } from "react-toastify";
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
@@ -73,7 +74,6 @@ function AddToCartButton({
     productStoke,
 }) {
     const { status, data: session } = useSession();
-    console.log("productCart=============>>>>>>>>>>>", productInfo);
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -101,11 +101,6 @@ function AddToCartButton({
                             } not selected`
                         );
                     } else {
-                        console.log(
-                            "hello world==============",
-                            selectedVariantProductInfo
-                        );
-
                         if (isDetailsPage) {
                             setProductVariationError(" ");
                         }
@@ -128,10 +123,22 @@ function AddToCartButton({
                                 selectedVariantProductInfo?.discount_type,
                         };
                         if (session) {
-                            await addToCartProduct(
+                            const cartProductApp = await addToCartProduct(
                                 addToCartInfo,
                                 session.accessToken
                             );
+
+                            toast.success("Add To Cart Success", {
+                                position: "top-right",
+                                autoClose: 1000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                transition: Bounce,
+                            });
                             const updatedCartProducts = await fetchCartProducts(
                                 session?.accessToken
                             );
@@ -146,6 +153,17 @@ function AddToCartButton({
                             addToCartInLocalStorage(addToCartInfo);
                             const addToCartProductLength =
                                 addToCartProductList();
+                            toast.success("Add To Cart Success", {
+                                position: "top-right",
+                                autoClose: 1000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                transition: Bounce,
+                            });
                             dispatch(
                                 setAddToCart({
                                     hasSession: false,
@@ -155,10 +173,6 @@ function AddToCartButton({
                         }
                     }
                 } else {
-                    console.log(
-                        "hello world================",
-                        selectedVariantProductInfo
-                    );
                     const addToCartInfo = {
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
@@ -183,6 +197,17 @@ function AddToCartButton({
                             "updatedCartProducts cart page ===",
                             updatedCartProducts
                         );
+                        toast.success("🦄 Wow so easy!", {
+                            position: "top-right",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            transition: Bounce,
+                        });
                         dispatch(
                             setAddToCart({
                                 hasSession: true,
@@ -192,6 +217,17 @@ function AddToCartButton({
                     } else {
                         addToCartInLocalStorage(addToCartInfo);
                         const addToCartProductLength = addToCartProductList();
+                        toast.success("Add To Cart Success", {
+                            position: "top-right",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            transition: Bounce,
+                        });
                         dispatch(
                             setAddToCart({
                                 hasSession: false,

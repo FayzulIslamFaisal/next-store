@@ -6,7 +6,7 @@ const MultipleProductSlider = ({ multipleImage }) => {
         <>
             <div className="product-multiple-photo-item">
                 <Image
-                    className="img-fluid"
+                    className="img-fluid object-fit-cover"
                     src={`${NagadhatPublicUrl}/${path}`}
                     fill={true}
                     alt=" product gallery Image "

@@ -42,6 +42,17 @@
     border: 1px solid var(--color-D8D8D8);
     padding: 10px 20px;
 }
+.product-details-info-multiple-photo .product-multiple-photo-item {
+    transition: border 0.3s ease-in-out;
+}
+
+.product-details-info-multiple-photo .product-multiple-photo-item:hover {
+    border: 2px solid var(--color-41ac8f); /* Change this to your desired border color */
+}
+/* Add this to your CSS file */
+.slick-slide.slick-current .product-multiple-photo-item {
+    border: 2px solid var(--color-41ac8f); /* Change to your desired border style */
+}
 
 .product-multiple-photo-item img {
     object-fit: contain;

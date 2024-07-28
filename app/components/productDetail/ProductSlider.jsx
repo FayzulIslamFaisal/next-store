@@ -34,7 +34,7 @@ function ProductSlider({ sliderItems, productGallery }) {
                                 src={`${NagadhatPublicUrl}/${sliderItem.path}`}
                                 layout="fill"
                                 alt="product gallery banner image"
-                                className="img-fluid"
+                                className="img-fluid object-fit-cover"
                             />
                         </div>
                     </div>
@@ -48,6 +48,8 @@ function ProductSlider({ sliderItems, productGallery }) {
                     swipeToSlide={true}
                     focusOnSelect={true}
                     infinite={productGallery?.length > 1 ? true : false}
+                    pauseOnFocus={true}
+                    pauseOnHover={true}
                     responsive={[
                         {
                             breakpoint: 767,
