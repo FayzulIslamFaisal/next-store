@@ -139,7 +139,7 @@
 .nh-new-shipping-wrapper .modal-body {
     background: #fff8f8;
 }
-.change-nhn-shipping-address-modal .shipping-delivery-address-radio {
+.shipping-delivery-address-radio {
     display: none;
 }
 .shipping-delivery-address-radiobox label {
