@@ -6,18 +6,29 @@ import OrderSummaryRight from "../components/ordersummary/OrderSummaryRight";
 import { getProductOrderSummery } from "../services/getProductOrderSummery";
 import { useSession } from "next-auth/react";
 
-const ThankYouPage = ({ outletId, locationId, orderId }) => {
+const ThankYouPage = ({ orderId }) => {
     const [orderSummary, setOrderSummary] = useState(null);
+    const [outletId, setOutletId] = useState(0);
+    const [districtId, setDistrictId] = useState(0);
     const { data: session, status } = useSession();
+
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    }, []);
+    useEffect(() => {
+        const initialDistrictId = localStorage.getItem("districtId");
+        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+    }, []);
 
     useEffect(() => {
         if (status === "authenticated") {
             const fetchOrderSummary = async () => {
                 try {
                     const orderData = await getProductOrderSummery(
-                        outletId || 3,
-                        locationId || 47,
-                        orderId || 1,
+                        outletId,
+                        districtId,
+                        orderId,
                         session?.accessToken
                     );
                     setOrderSummary(orderData?.results);

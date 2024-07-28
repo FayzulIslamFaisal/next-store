@@ -1,8 +1,8 @@
 import { apiBaseUrl } from "../utils";
 
-export const getJustForYouProduct = async () => {
+export const getJustForYouProduct = async (outletId) => {
     try {
-        const response = await fetch(`${apiBaseUrl}/just-for-you-products/3`, {
+        const response = await fetch(`${apiBaseUrl}/global-just-for-you-products/${outletId}`, {
             next: { revalidate: 1 },
         });
         return await response.json();

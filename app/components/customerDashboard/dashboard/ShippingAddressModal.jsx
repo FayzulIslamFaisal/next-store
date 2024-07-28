@@ -4,7 +4,7 @@ import { updateShippingAddress } from "@/app/services/updateShippingAddress";
 import { useEffect, useState, useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-const ShippingAddressModal = ({ defaultAddress, session }) => {
+const ShippingAddressModal = ({ currentAddress, session }) => {
     const [newEmail, setNewEmail] = useState("");
     const [newPhone, setNewPhone] = useState("");
     const [newAddress, setNewAddress] = useState("");
@@ -14,18 +14,18 @@ const ShippingAddressModal = ({ defaultAddress, session }) => {
     const [districtsData, setDistrictsData] = useState([]);
 
     useEffect(() => {
-        if (defaultAddress) {
-            setNewEmail(defaultAddress.email || "");
-            setNewPhone(defaultAddress.phone || "");
-            setNewAddress(defaultAddress.address || "");
-            setNewCity(defaultAddress.city || "");
-            setNewDistrict(defaultAddress.district_id || "");
+        if (currentAddress) {
+            setNewEmail(currentAddress.email || "");
+            setNewPhone(currentAddress.phone || "");
+            setNewAddress(currentAddress.address || "");
+            setNewCity(currentAddress.city || "");
+            setNewDistrict(currentAddress.district_id || "");
         }
-        if (!defaultAddress && session) {
+        if (!currentAddress && session) {
             setNewEmail( session?.user?.email || "");
             setNewPhone( session?.user?.phone || "");
         }
-    }, [defaultAddress, session]);
+    }, [currentAddress, session]);
 
     useEffect(() => {
         const fetchDistricts = async () => {
@@ -45,19 +45,19 @@ const ShippingAddressModal = ({ defaultAddress, session }) => {
         district_id: parseInt(newDistrict),
         city: newCity,
         address: newAddress,
-        set_default: defaultAddress?.set_default || 1,
+        set_default: currentAddress?.set_default,
     };
-    if (defaultAddress) {
-        const address_id = defaultAddress?.id;
+    if (currentAddress) {
+        const address_id = currentAddress?.id;
         addAddressInfo={address_id, ...addAddressInfo}
     }
-    if (!defaultAddress) {
+    if (!currentAddress) {
         const full_name=session?.user?.name;
         addAddressInfo={full_name, ...addAddressInfo}
     }
     
     const handleUpdateShippingAddress = async () => {
-        if (defaultAddress) {
+        if (currentAddress) {
             try {
                 const response = await updateShippingAddress(addAddressInfo, session?.accessToken);
                 if (response) {
