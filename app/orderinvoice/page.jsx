@@ -11,9 +11,18 @@ import { useSession } from "next-auth/react";
 const OrderInvoicePage = () => {
     const [orderInvoice, setOrderInvoice] = useState(null);
     const { data: session, status } = useSession();
+    const [outletId, setOutletId] = useState(0); // default outlet
+    const [districtId, setDistrictId] = useState(0); // default outlet
 
-    const outletId = 3;
-    const locationId = 47;
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    }, []);
+    useEffect(() => {
+        const initialDistrictId = localStorage.getItem("districtId");
+        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+    }, []);
+
     const orderId = 1;
 
     useEffect(() => {
@@ -26,7 +35,7 @@ const OrderInvoicePage = () => {
                 try {
                     const invoiceData = await getProductOrderSummery(
                         outletId,
-                        locationId,
+                        districtId,
                         orderId,
                         session?.accessToken
                     );

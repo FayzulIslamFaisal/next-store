@@ -57,10 +57,24 @@ const CustomerRightsids = ({ customerOrders }) => {
                                                 <td>
                                                     <div className="customer-dashboard-order-history-actions">
                                                         <button>
-                                                            <FaEye />
+                                                            <Link
+                                                                href="/orderview"
+                                                                style={{
+                                                                    color: "white",
+                                                                }}
+                                                            >
+                                                                <FaEye />
+                                                            </Link>
                                                         </button>
                                                         <button>
-                                                            <FaDownload />
+                                                            <Link
+                                                                href="/orderinvoice"
+                                                                style={{
+                                                                    color: "white",
+                                                                }}
+                                                            >
+                                                                <FaDownload />
+                                                            </Link>
                                                         </button>
                                                         <button>
                                                             <FaXmark />

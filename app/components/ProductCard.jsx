@@ -29,6 +29,7 @@ function ProductCard({ item }) {
         prices: "",
         discountPrice: "",
     };
+    let productStoke;
 
     if (item?.variations?.length > 0) {
         productPrice.prices =
@@ -40,6 +41,10 @@ function ProductCard({ item }) {
             defaultVariant?.discount_amount > 0
                 ? defaultVariant?.mrp_price
                 : "";
+        productStoke =
+            defaultVariant?.variation_max_quantity === null
+                ? 0
+                : defaultVariant?.variation_max_quantity;
     } else {
         (productPrice.prices =
             item?.price?.discounted_price !== 0
@@ -48,6 +53,7 @@ function ProductCard({ item }) {
             (productPrice.discountPrice =
                 item?.price?.discounted_price > 0 &&
                 item?.price?.regular_price);
+        productStoke = item?.max_quantity === null ? 0 : item?.max_quantity;
     }
 
     const selectedVariants = [];
@@ -113,6 +119,7 @@ function ProductCard({ item }) {
                                 }
                                 selectedVariants={selectedVariants}
                                 productPrice={productPrice}
+                                productStoke={productStoke}
                             />
                             <Like />
                         </div>

@@ -70,6 +70,7 @@ function AddToCartButton({
     selectedVariants,
     selectedVariantProductInfo,
     isDetailsPage = false,
+    productStoke,
 }) {
     const { status, data: session } = useSession();
     console.log("productCart=============>>>>>>>>>>>", productInfo);
@@ -277,13 +278,20 @@ function AddToCartButton({
             <Link
                 href={path}
                 className={`add-to-cart-link ${buyNowBtn} ${fullWidth}`}
-                onClick={(e) => {
-                    !title
-                        ? handleAddToCard(e, title)
-                        : title == "BUY NOW" && handleBuyNow(e, title);
+                onClick={(e) =>
+                    productStoke > 0 &&
+                    (title === "BUY NOW" ? handleBuyNow(e) : handleAddToCard(e))
+                }
+                style={{
+                    pointerEvents: productStoke > 0 ? "auto" : "none",
+                    opacity: productStoke > 0 ? 1 : 0.5,
                 }}
             >
-                {!title ? "ADD TO CART" : title}
+                {!title
+                    ? productStoke > 0
+                        ? "ADD TO CART"
+                        : "Stoke Out"
+                    : title}
             </Link>
         </div>
     );

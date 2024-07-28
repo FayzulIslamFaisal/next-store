@@ -32,6 +32,8 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         discountPrice: "",
     });
     const [productVariationsError, setProductVariationError] = useState("");
+    const [productStoke, setProductStoke] = useState(0);
+
     useEffect(() => {
         updateProductInitialVariations();
 
@@ -123,6 +125,11 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         : "",
             });
             setProductGallery(defaultProduct?.gallery);
+            setProductStoke(
+                defaultProduct?.variation_max_quantity === null
+                    ? 0
+                    : defaultProduct?.variation_max_quantity
+            );
         } else {
             // console.log("productInfo?.gallery");
             setProductPrice({
@@ -138,6 +145,12 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         0 &&
                     productInfo?.price?.original?.results?.regular_price,
             });
+            setProductStoke(
+                productInfo?.max_quantity === null
+                    ? 0
+                    : productInfo?.max_quantity
+            );
+
             setProductGallery(productInfo?.gallery);
         }
     }
@@ -315,6 +328,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         : item?.mrp_price,
                 discountPrice: item?.discount_amount > 0 ? item?.mrp_price : "",
                 discount_type: item?.discount_type,
+                variation_max_quantity: item?.variation_max_quantity,
             })
         );
         setDecorateVariation(decorateProductVariation);
@@ -473,16 +487,27 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         const bestMatch = findBestMatch(selectedVariants, decorateVariation);
         setSelectedVariantProductInfo(bestMatch);
         if (selectedVariants.length > 0) {
+            console.log(
+                bestMatch,
+                "==================================> bestMatch"
+            );
             setProductPrice({
                 ...productPrice,
                 prices: bestMatch?.price,
                 discountPrice: bestMatch?.discountPrice,
             });
+
+            setProductStoke(
+                bestMatch?.variation_max_quantity === null
+                    ? 0
+                    : bestMatch?.variation_max_quantity
+            );
         } else {
             defaultVariation();
         }
     }, [selectedVariants]);
     console.log("variant item", productAllVariants);
+
     return (
         <div className="col-md-6">
             <div className="product-details-content">
@@ -697,6 +722,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                 })}
                             </div>
                         </div>
+
                         {productAllVariants.length < 3 && (
                             <div className="product-details-variant-area ">
                                 <div className="product-details-variant d-flex align-items-center justify-content-start">
@@ -773,7 +799,8 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                     : ""}
                             </p>
                         </div>
-                        <div className="product-details-quantity-area d-flex align-items-center justify-content-between">
+
+                        <div className="product-details-quantity-area d-flex align-items-center justify-content-start">
                             <div className="product-details-quantity d-flex align-items-center">
                                 <div className="product-details-inner-quantity d-flex align-items-center">
                                     <p>Quantity:</p>
@@ -801,8 +828,15 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                         +
                                     </button>
                                 </div>
+                                <div>
+                                    {productStoke > 0
+                                        ? productStoke - state.count
+                                        : productStoke}{" "}
+                                    pieces available
+                                </div>
                             </div>
                         </div>
+
                         <div className="product-details-add-cart-area d-flex align-items-center">
                             <div className="product-details-add-cart">
                                 <AddToCartButton
@@ -820,6 +854,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                     selectedVariantProductInfo={
                                         selectedVariantProductInfo
                                     }
+                                    productStoke={productStoke}
                                 />
                             </div>
                             <div className="product-details-add-cart">
@@ -838,6 +873,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                         selectedVariantProductInfo
                                     }
                                     isDetailsPage={true}
+                                    productStoke={productStoke}
                                 />
                             </div>
                         </div>

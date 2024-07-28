@@ -177,6 +177,11 @@ export default function RootLayout({ children, slug, option }) {
             />
             <link
                 rel="stylesheet"
+                href="/css/orderview.css"
+                precedence="default"
+            />
+            <link
+                rel="stylesheet"
                 href="/css/common.css"
                 precedence="default"
             />
