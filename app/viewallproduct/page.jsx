@@ -16,7 +16,6 @@ const ViewAllProductPage = ({ searchParams }) => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
     }, []);
-
     useEffect(() => {
         const fetchData = async () => {
             if (searchParams && districtId) {
