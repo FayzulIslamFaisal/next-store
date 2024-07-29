@@ -27,7 +27,6 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
   };
 
   return (
-    <aside className="col-lg-3 d-none d-lg-block">
       <div className="customer-dashboard-side-nav">
         <div className="p-4 text-center customer-dashboard-profile">
           <div className="mb-3 customer-dashboard-profile-avatar">
@@ -405,7 +404,6 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
           Be a Seller
         </Link>
       </div>
-    </aside>
   );
 };
 
