@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getDistrictByDivisionId } from "../services/getDistrict";
+import { getDeliveryLocations } from "../services/getDeliveryLocations";
 
 const DistrictList = ({ onDistrictChange, divisionId }) => {
     const [districts, setDistricts] = useState([]);
+    const [selectedDistrictId, setSelectedDistrictId] = useState('');
 
     useEffect(() => {
         async function fetchDistrictData() {
@@ -19,20 +21,21 @@ const DistrictList = ({ onDistrictChange, divisionId }) => {
         fetchDistrictData();
     }, [divisionId]);
 
-    const handleDistrictChange = (event) => {
+    const handleDistrictChange = async (event) => {
         const selectedDistrictId = event.target.value;
         const selectedDistrict = districts.find(
             (district) => district.id == selectedDistrictId
         );
-        const outletId = selectedDistrict.outlet_id;
+        const outletId = selectedDistrict?.outlet_id || 3;
         if (selectedDistrict) {
-            localStorage.setItem("outletId", outletId ? outletId : 3);
+            localStorage.setItem("outletId", outletId);
+            localStorage.setItem("districtId", selectedDistrict.id || 47);
+            setSelectedDistrictId(selectedDistrict.id);
+            const location = await getDeliveryLocations(selectedDistrictId);
             localStorage.setItem(
-                "districtId",
-                selectedDistrict.id ? selectedDistrict.id : 47
+                "location", `${location?.division}, ${location?.district}`
             );
         }
-
         onDistrictChange(event);
     };
 

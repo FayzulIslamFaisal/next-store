@@ -17,8 +17,7 @@ function MainNav({
     authStatus,
 }) {
     const [search, setSearch] = useState("");
-    const [divisionName, setDivisionName] = useState("Dhaka City");
-    const [districtName, setDistrictName] = useState("Dhaka");
+    const [location, setLoction] = useState("Dhaka City, Dhaka");
     const [searchProduct, setSearchProduct] = useState([]);
     const searchParams = useSearchParams();
     let divisionId = searchParams.get("divisionId");
@@ -57,30 +56,9 @@ function MainNav({
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const divisionResult = await getDivision(divisionId);
-            const districtResult = await getDistrictByDivisionId(divisionId);
-            if (divisionResult && divisionResult.length > 0) {
-                let selectedDivision = divisionResult.find(
-                    (item) => item.id == divisionId
-                );
-                if (selectedDivision?.name) {
-                    setDivisionName(selectedDivision?.name);
-                }
-            }
-
-            if (districtResult && districtResult.length > 0) {
-                let selectedDistrict = districtResult.find(
-                    (item) => item.id == districtId
-                );
-                if (selectedDistrict?.name) {
-                    setDistrictName(selectedDistrict?.name);
-                }
-            }
-        };
-
-        fetchData();
-    }, []);
+        const location = localStorage.getItem("location")
+        setLoction(location);
+    }, [districtId]);
 
     // Function to handle click outside the modal
     useEffect(() => {
@@ -140,7 +118,7 @@ function MainNav({
                                         width={17}
                                         height={15}
                                     />
-                                    {`${divisionName}, ${districtName}`}
+                                    {location}
                                 </button>
                             </div>
                             <div className="header-search-field">
@@ -291,7 +269,7 @@ function MainNav({
                                                 width={17}
                                                 height={15}
                                             />
-                                            {`${divisionName}, ${districtName}`}
+                                            {location}
                                         </button>
                                     </div>
                                     <div className="header-search-field">

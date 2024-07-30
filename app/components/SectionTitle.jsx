@@ -33,12 +33,12 @@ function SectionTitle({
                                         pathname: path,
                                         query: { type: target },
                                     }}
-                                    target="_blank"
+
                                 >
                                     View All
                                 </Link>
                             ) : (
-                                <Link href={path}  target="_blank" >View All</Link>
+                                <Link href={path}>View All</Link>
                             )}
                         </div>
                     )}

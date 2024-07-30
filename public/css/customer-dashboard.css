@@ -170,6 +170,10 @@
     background: var(--color-white);
     border-radius: 8px;
 }
+.customer-dashboard-address{
+    height: 380px;
+    overflow-y: auto;
+}
 .add-new-address-bar{
     max-width: 350px;
     margin: 0 auto;

@@ -14,26 +14,36 @@ const ViewAllProductPage = ({ searchParams }) => {
     const [districtId, setDistrictId] = useState(null);
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
-        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+        setDistrictId(initialDistrictId || 47);
     }, []);
+    console.log(districtId);
+    
+    console.log(viewProductData);
     useEffect(() => {
         const fetchData = async () => {
-            if (searchParams && districtId) {
-                const justForYouProductData = await getHomeFlashAndJfyProduct(districtId);
-                switch (searchParams.type) {
-                    case "justForYou":
-                        setViewProductData(justForYouProductData?.results?.just_for_you?.for_you_products);
-                        setSectionTitle("Just For You");
-                        break;
+            try {
+                if (districtId && searchParams) {
+                    const justForYouProductData = await getHomeFlashAndJfyProduct(districtId);
+                    switch (searchParams.type) {
+                        case "justForYou":
+                            setViewProductData(justForYouProductData?.results?.just_for_you?.for_you_products);
+                            setSectionTitle("Just For You");
+                            break;
 
-                    case "flashSale":
-                        setViewProductData(justForYouProductData?.results?.flash_sales_product);
-                        setSectionTitle("Flash Sale");
-                        break;
+                        case "flashSale":
+                            setViewProductData(justForYouProductData?.results?.flash_sales_product);
+                            setSectionTitle("Flash Sale");
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            setViewProductData(["No Data"]);
+                            setSectionTitle("View All Product");
+                            break;
+                    }
                 }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                
             }
         };
         fetchData();

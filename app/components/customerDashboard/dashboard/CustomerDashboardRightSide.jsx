@@ -131,7 +131,7 @@ const CustomerDashboardRightSide = () => {
                         <h2 className="mb-0 customer-dashboard-subtitle">Default Shipping Address</h2>
                     </div>
                     {customerAddress ? (
-                        <div className="p-4 d-flex flex-column gap-3">
+                        <div className="p-4 d-flex flex-column gap-3 customer-dashboard-address">
                             {customerAddress?.map((allAddress, index) => (
                                 <div key={index}>
                                     <div className="shipping-delivery-address-radiobox">
