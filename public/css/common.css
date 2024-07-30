@@ -170,7 +170,9 @@ body {
 .nh-categories-holder-s .slick-next:before {
     color: var(--color-44BC9D);
 }
-
+.nh-categories-holder-s .slick-track {
+    width: 100% !important;
+}
 .nh-categories-img {
     margin-bottom: 20px;
     height: 110px;
@@ -283,7 +285,9 @@ body {
 
 .flash-sale-content-area-grid .slick-slide > div {
   padding: 0 7px !important;
-} */
+
+}
+
 
 /* -------------------- customer-dashboard --------------------------*/
 

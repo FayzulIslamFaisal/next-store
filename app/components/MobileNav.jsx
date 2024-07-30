@@ -2,14 +2,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { FaBars, FaXmark } from "react-icons/fa6";
+import CustomerLeftSideNavbar from "./customerDashboard/CustomerLeftSideNavbar";
+import { useSession } from "next-auth/react";
+
 
 const MobileNav = () => {
     const [popupSearch, setPopupSearch] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to handle sidebar toggle
     const searchAreaRef = useRef(null);
 
     const toggleSearchField = () => {
         setPopupSearch(!popupSearch);
     };
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen); // Toggle the sidebar visibility
+    };
+    const { data: session, status } = useSession();
+    if (status === "loading") {
+        return <p>Loading....</p>;
+    }
 
     useEffect(() => {
         const searchPopupClickOutsideHide = (event) => {
@@ -20,7 +33,7 @@ const MobileNav = () => {
                 setPopupSearch(false);
             }
         };
-        console.log("hide search");
+
         if (typeof window !== "undefined") {
             document.body.addEventListener(
                 "click",
@@ -37,7 +50,7 @@ const MobileNav = () => {
 
     return (
         <div className="row mobile-nav-row-area">
-            <div className="col-md-12 ">
+            <div className="col-md-12">
                 <div className="mobile-nav-col-area">
                     <div className="mobile-nav-holder d-flex align-items-center justify-content-between">
                         <div className="mobile-nav-item">
@@ -75,6 +88,12 @@ const MobileNav = () => {
                                     height={21}
                                 />
                             </div>
+                            <div
+                                className="fs-2 text-white dashboard-side-navbar-togol"
+                                onClick={toggleSidebar}
+                            >
+                                <FaBars />
+                            </div>
                         </div>
                     </div>
                     <div
@@ -105,6 +124,17 @@ const MobileNav = () => {
                             </div>
                         </form>
                     </div>
+                    {isSidebarOpen && (
+                        <aside className="customer-dashboard-side-navbar-mobile d-xl-none shadow">
+                            <div
+                                className="fs-2 dashboard-side-navbar-togol-mobile"
+                                onClick={toggleSidebar}
+                            >
+                                <FaXmark />
+                            </div>
+                            <CustomerLeftSideNavbar authSessionData={session} />
+                        </aside>
+                    )}
                 </div>
             </div>
         </div>

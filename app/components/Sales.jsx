@@ -24,19 +24,21 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     const currentDate = new Date();
     const toDay = currentDate.getDay();
     const flashSaleEndDate = flashSaleEndsTime < toDay;
-    let districtId = searchParams.get("districtId");
+
+    const [districtId, setDistrictId] = useState(null);
+    useEffect(() => {
+        const initialDistrictId = localStorage.getItem("districtId");
+        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
-            if (!districtId) {
-                districtId = 47;
-            }
             const flashSale = await getHomeFlashAndJfyProduct(districtId);
             let flashProduct = flashSale?.results?.flash_sales_product;
             setFlashSaleProductList(flashProduct);
         }
         fetchData();
-    }, []);
+    }, [districtId]);
 
     useEffect(() => {
         let ignore = false;

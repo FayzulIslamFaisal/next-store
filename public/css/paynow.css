@@ -1,0 +1,152 @@
+
+.pay-now-wrapper {
+    background: var(--color-F0F0F0);
+    padding-bottom: 30px;
+}
+.pay-now-pagination-area {
+    padding-top: 30px;
+}
+.pay-now-pagination {
+    max-width: 70%;
+    margin: 0 auto;
+}
+.pay-now-success p svg {
+    color: var(--color-1A9D78);
+    font-size: 25px;
+}
+.pay-now-success .fa-chevron-right {
+    color: var(--color-ACACAC);
+}
+.pay-now-success .pay-now-pagination-bottom {
+    color: var(--color-1A9D78);
+    font-size: 16px;
+}
+.pay-now-warning p svg {
+    color: var(--color-ACACAC);
+    font-size: 25px;
+}
+.pay-now-warning .pay-now-pagination-bottom {
+    color: var(--color-ACACAC);
+    font-size: 16px;
+}
+.pay-now-payment-option-area {
+    padding-top: 20px;
+}
+.pay-now-payment-option-img {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    padding-top: 15px;
+    max-width: 75%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+.pay-now-payment-option-img-box {
+    border: 1px solid var(--color-FFEEEE);
+    padding: 15px;
+}
+.pay-now-payment-option-img-item img {
+    display: block;
+    margin: 0 auto;
+}
+.pay-now-payment-option-title {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--color-FFEEEE);
+}
+.pay-now-payment-option-title h1 {
+    font-size: 20px;
+    margin-bottom: 0;
+}
+.pay-now-terms-condition-area {
+    padding-top: 30px;
+}
+.pay-now-terms-condition .form-check-input {
+    background-color: transparent;
+    border: 1px solid var(--color-ACACAC);
+}
+.pay-now-terms-condition .form-check-input:checked {
+    border:1px solid var(--color-ACACAC);
+}
+.pay-now-terms-condition .form-check-input:focus {
+    box-shadow: none;
+}
+.pay-now-payment-option-bg {
+    padding: 15px 0;
+}
+.pay-now-summary-title h2 {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+.pay-now-summary-title {
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid var(--color-FFEEEE);
+}
+.pay-now-summary-body {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.pay-now-summary-cash-on-bg {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pay-now-summary-cash-on-bg p {
+    background: var(--color-F5F5F5);
+    padding: 2px 10px;
+    font-size: 16px;
+}
+.pay-now-summary-info {
+    padding-top: 6px;
+    padding-bottom: 8px;
+    /* border-bottom: 1px solid var(--color-FFEEEE); */
+    border-top: 1px solid var(--color-FFEEEE);
+}
+.pay-now-summary-info strong {
+    font-size: 15px;
+}
+.pay-now-summary-info input:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+.pay-now-summary-info input {
+    margin-right: 10px;
+}
+.pay-now-payment-option-img-item {
+    position: relative;
+    width: 100%;
+    height: 110px;
+    margin: 0 auto;
+}
+.pay-now-payment-option-img-item img {
+    object-fit: scale-down;
+}
+.pay-now-wrapper .nh-service-area {
+    padding-top: 50px;
+}
+
+@media (max-width:991px) {
+    .pay-now-terms-condition-area {
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+    .pay-now-pagination {
+        max-width: 100%;
+    }
+}
+@media (max-width:767px){
+    .pay-now-warning p svg,
+    .pay-now-success p svg {
+        font-size: 18px;
+    }
+    .pay-now-warning .pay-now-pagination-bottom,
+    .pay-now-success .pay-now-pagination-bottom {
+        font-size: 14px;
+    }
+    .pay-now-payment-option-img {
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

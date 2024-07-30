@@ -7,10 +7,10 @@ import ProductCategoryItem from "./ProductCategoryItem";
 const ProductCategories = ({ categoryProductData, isHome = true }) => {
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: isHome ? 8 : 6,
-        slidesToScroll: isHome ? 8 : 6,
+        slidesToScroll: isHome ? 1 : 1,
         rows: isHome ? 2 : 1,
         arrows: false,
         responsive: [
@@ -18,7 +18,7 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                 breakpoint: 1500,
                 settings: {
                     slidesToShow: isHome ? 6 : 3,
-                    slidesToScroll: isHome ? 6 : 3,
+                    slidesToScroll: isHome ? 1 : 1,
                     arrows: false,
                 },
             },
@@ -26,7 +26,7 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                 breakpoint: 1199,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToScroll: 1,
                     arrows: true,
                 },
             },
@@ -34,7 +34,7 @@ const ProductCategories = ({ categoryProductData, isHome = true }) => {
                 breakpoint: 767,
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToScroll: 1,
                     arrows: true,
                 },
             },

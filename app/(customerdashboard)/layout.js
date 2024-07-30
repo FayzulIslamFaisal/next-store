@@ -13,7 +13,9 @@ export default function DashboardLayout({ children }) {
             <section className="customer-dashboard-section-area">
                 <div className="container">
                     <div className="row">
-                        <CustomerLeftSideNavbar authSessionData={session} />
+                        <aside className="col-lg-3 d-none d-lg-block">
+                            <CustomerLeftSideNavbar authSessionData={session} />
+                        </aside>
 
                         {/* customer dashboard right side */}
                         {children}

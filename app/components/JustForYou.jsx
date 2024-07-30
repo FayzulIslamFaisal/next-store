@@ -10,15 +10,14 @@ function JustForYou() {
     const [jfyProducts, setJfyProducts] = useState([]);
     const [offset, setOffset] = useState(12);
     const [showLoadMore, setShowLoadMore] = useState(true);
-    const searchParams = useSearchParams();
-    let districtId = searchParams.get("districtId");
-
+    const [districtId, setDistrictId] = useState(null);
+    useEffect(() => {
+        const initialDistrictId = localStorage.getItem("districtId");
+        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+    }, []);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                if (!districtId) {
-                    districtId = 47;
-                }
                 const justForYoutList = await getHomeFlashAndJfyProduct(
                     districtId
                 );
@@ -37,7 +36,7 @@ function JustForYou() {
         };
 
         fetchProducts();
-    }, [offset]);
+    }, [offset, districtId]);
 
     const handleLoadMore = (e) => {
         e.preventDefault();
