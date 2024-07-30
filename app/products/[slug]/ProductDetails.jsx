@@ -63,6 +63,7 @@ const ProductSinglePage = ({ params }) => {
                     outlet_id,
                     category,
                     variations,
+                    max_quantity,
                 } = productDetails;
                 console.log("=......................", variations);
                 const recentViewProductInformation = {
@@ -75,6 +76,7 @@ const ProductSinglePage = ({ params }) => {
                     outlet_id: outlet_id,
                     product_thumbnail: product_thumbnail,
                     variations: variations,
+                    max_quantity: max_quantity,
                 };
 
                 const productInfoRecentView = {
@@ -121,26 +123,6 @@ const ProductSinglePage = ({ params }) => {
         },
     };
 
-    useEffect(() => {
-        const recentViewConfigure = async () => {
-            if (session) {
-                const recentViewProductFetch = await fetchRecentViewProducts(
-                    session?.accessToken,
-                    3
-                );
-            } else {
-                if (typeof window !== "undefined") {
-                    const storedProducts =
-                        JSON.parse(
-                            localStorage.getItem("recentlyViewProducts")
-                        ) || [];
-                    setRecentViewProduct(storedProducts);
-                }
-            }
-        };
-        recentViewConfigure();
-    }, [pathName, session]);
-
     return (
         <>
             {successCode == 404 ? (
@@ -167,9 +149,6 @@ const ProductSinglePage = ({ params }) => {
                                         bgcolor="bg-white"
                                         removePx={`removepadding-x`}
                                         isRecentView={true}
-                                        recentViewProductList={
-                                            recentViewProduct
-                                        }
                                     />
                                     {/* <Service serviceItems={serviceItems} /> */}
                                 </>

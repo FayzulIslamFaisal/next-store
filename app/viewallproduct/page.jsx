@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import Sales from "../components/Sales";
 import Service from "../components/Service";
@@ -6,12 +7,34 @@ import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
 import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
+import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
+import { useSession } from "next-auth/react";
 
 const ViewAllProductPage = ({ searchParams }) => {
     const [viewProductData, setViewProductData] = useState([]);
     const [sectionTitle, setSectionTitle] = useState("View All Product");
     const [bannerUrl, setBannerUrl] = useState("/images/fashion.jpg");
     const [districtId, setDistrictId] = useState(null);
+    const { status, data: session } = useSession();
+    const recentViewConfigure = async () => {
+        if (session) {
+            const recentViewProductFetch = await fetchRecentViewProducts(
+                session?.accessToken,
+                3
+            );
+            setViewProductData(
+                recentViewProductFetch?.results?.for_you_products
+            );
+        } else {
+            if (typeof window !== "undefined") {
+                const storedProducts =
+                    JSON.parse(localStorage.getItem("recentlyViewProducts")) ||
+                    [];
+                setViewProductData(storedProducts);
+            }
+        }
+    };
+
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
@@ -20,17 +43,27 @@ const ViewAllProductPage = ({ searchParams }) => {
     useEffect(() => {
         const fetchData = async () => {
             if (searchParams && districtId) {
-                const justForYouProductData = await getHomeFlashAndJfyProduct(districtId);
+                const justForYouProductData = await getHomeFlashAndJfyProduct(
+                    districtId
+                );
                 switch (searchParams.type) {
                     case "justForYou":
-                        setViewProductData(justForYouProductData?.results?.just_for_you?.for_you_products);
+                        setViewProductData(
+                            justForYouProductData?.results?.just_for_you
+                                ?.for_you_products
+                        );
                         setSectionTitle("Just For You");
                         break;
 
                     case "flashSale":
-                        setViewProductData(justForYouProductData?.results?.flash_sales_product);
+                        setViewProductData(
+                            justForYouProductData?.results?.flash_sales_product
+                        );
                         setSectionTitle("Flash Sale");
                         break;
+                    case "recentview":
+                        recentViewConfigure();
+                        setSectionTitle("Recent View Product");
 
                     default:
                         break;

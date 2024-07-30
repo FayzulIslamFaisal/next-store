@@ -262,3 +262,11 @@ export function resendOTP() {
         clearInterval(otpInterval);
     }
 }
+
+//get location id, outlet id
+export function outletLocationInfo() {
+    if (typeof window !== "undefined") {
+        return localStorage.getItem("");
+    }
+    return null;
+}

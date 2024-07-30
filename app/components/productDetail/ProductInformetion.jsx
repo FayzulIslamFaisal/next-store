@@ -487,10 +487,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         const bestMatch = findBestMatch(selectedVariants, decorateVariation);
         setSelectedVariantProductInfo(bestMatch);
         if (selectedVariants.length > 0) {
-            console.log(
-                bestMatch,
-                "==================================> bestMatch"
-            );
             setProductPrice({
                 ...productPrice,
                 prices: bestMatch?.price,

@@ -11,23 +11,21 @@ import "slick-carousel/slick/slick-theme.css";
 // import getAllSettings from "../services/getAllSettings";
 import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
 import { getFlashSlaeShowOnHomePage } from "../services/getFlashSlaeShowOnHomePage";
+import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
+import { useSession } from "next-auth/react";
 
-function Sales({
-    bgcolor = "",
-    isHome = true,
-    removePx = "",
-    isRecentView,
-    recentViewProductList,
-}) {
+function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     const [flashSaleProductList, setFlashSaleProductList] = useState([]);
     const [hasFlashSaleSettings, setHasFlashSaleSettings] = useState(false);
     const [flashSaleEndsTime, setFlashSaleEndsTime] = useState(null);
+    const [recentViewProductList, setRecentViewProductList] = useState([]);
+    const { status, data: session } = useSession();
     const searchParams = useSearchParams();
     const currentDate = new Date();
     const toDay = currentDate.getDay();
     const flashSaleEndDate = flashSaleEndsTime < toDay;
-
     let districtId = searchParams.get("districtId");
+
     useEffect(() => {
         async function fetchData() {
             if (!districtId) {
@@ -66,6 +64,29 @@ function Sales({
             ignore = true;
         };
     }, []);
+
+    useEffect(() => {
+        const recentViewConfigure = async () => {
+            if (session) {
+                const recentViewProductFetch = await fetchRecentViewProducts(
+                    session?.accessToken,
+                    3
+                );
+                setRecentViewProductList(
+                    recentViewProductFetch?.results?.for_you_products
+                );
+            } else {
+                if (typeof window !== "undefined") {
+                    const storedProducts =
+                        JSON.parse(
+                            localStorage.getItem("recentlyViewProducts")
+                        ) || [];
+                    setRecentViewProductList(storedProducts);
+                }
+            }
+        };
+        recentViewConfigure();
+    }, [session]);
 
     const settings = {
         centerPadding: "60px",
@@ -111,8 +132,13 @@ function Sales({
                 <div className="container">
                     <SectionTitle
                         isSale={true}
-                        title={isHome ? `Flash Sale` : `Recent View`}
-                        target="flashSale"
+                        title={
+                            isHome
+                                ? `Flash Sale`
+                                : recentViewProductList?.length > 0 &&
+                                  `Recent View`
+                        }
+                        target={isHome ? "flashSale" : `recentview`}
                         path="/viewallproduct"
                     >
                         {isHome && flashSaleEndsTime && (
@@ -121,7 +147,10 @@ function Sales({
                     </SectionTitle>
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="flash-sale-content-area-grid">
+                            {/* */}
+                            <div
+                                className={`${"flash-sale-content-area-grid "}`}
+                            >
                                 <Slider {...settings}>
                                     {isHome && !isRecentView
                                         ? flashSaleProductList?.length > 0 &&
@@ -133,7 +162,8 @@ function Sales({
                                                   />
                                               )
                                           )
-                                        : recentViewProductList?.map(
+                                        : recentViewProductList?.length > 0 &&
+                                          recentViewProductList?.map(
                                               (product) => (
                                                   <ProductCard
                                                       key={product.id}

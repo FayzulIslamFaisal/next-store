@@ -1,41 +1,116 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 import AddToCartButton from "../AddToCartButton";
 import Like from "../Like";
 import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
 
-const ViewAllProductItems = ({ items }) => {
-    
-    const {product_name:title, mrp_price:price, slug:path, id, outlet_id } = items;
+const ViewAllProductitemss = ({ items }) => {
+    const {
+        product_name: title,
+        mrp_price: price,
+        slug: path,
+        id,
+        outlet_id,
+    } = items;
     let imageUrl = `${NagadhatPublicUrl}/${items.product_thumbnail}`;
+
+    const defaultVariant = items?.variations?.find(
+        (variant) => variant.variations_default === 1
+    );
+
+    const selectedVariantProductInfo = {
+        product_variation_id: defaultVariant?.id,
+        discount_type: defaultVariant?.discount_type,
+    };
+
+    const productPrice = {
+        prices: "",
+        discountPrice: "",
+    };
+    let productStoke;
+
+    if (items?.variations?.length > 0) {
+        productPrice.prices =
+            defaultVariant?.discount_amount > 0
+                ? defaultVariant?.mrp_price - defaultVariant?.discount_amount
+                : defaultVariant?.mrp_price;
+
+        productPrice.discountPrice =
+            defaultVariant?.discount_amount > 0
+                ? defaultVariant?.mrp_price
+                : "";
+        productStoke =
+            defaultVariant?.variation_max_quantity === null
+                ? 0
+                : defaultVariant?.variation_max_quantity;
+    } else {
+        (productPrice.prices =
+            items?.price?.discounted_price !== 0
+                ? items?.price?.discounted_price
+                : items?.price?.regular_price),
+            (productPrice.discountPrice =
+                items?.price?.discounted_price > 0 &&
+                items?.price?.regular_price);
+        productStoke = items?.max_quantity === null ? 0 : items?.max_quantity;
+    }
+
+    const selectedVariants = [];
+    if (defaultVariant?.variation_size !== null) {
+        selectedVariants.push({
+            variation_size: defaultVariant?.variation_size?.title,
+        });
+    }
+
+    if (defaultVariant?.variation_color !== null) {
+        selectedVariants.push({
+            variation_color: defaultVariant?.variation_color?.title,
+        });
+    }
+
+    if (defaultVariant?.variation_weight !== null) {
+        selectedVariants.push({
+            variation_weight: defaultVariant?.variation_weight?.title,
+        });
+    }
+
     return (
-        <div className="flash-sale-content-item">
+        <div className="flash-sale-content-items">
             <div className="flash-sale-content-bg nh-hover-box-shadow ">
-            <Link href={`/products/get-product-details?outlet_id=${outlet_id}&product_id=${id}`} className="d-flex flex-column justify-content-between h-100">
-                <div className="flash-sale-content-img image-hover-effect">
-                    <Image
-                        src={imageUrl ? imageUrl : null}
-                        fill={true}
-                        className="img-fluid"
-                        alt={title ? title : "Product Title"}
-                    />
-                </div>
-                <div className="flash-sale-content-info text-hover-effect">
-                    <h4>
-                        {truncateTitle(title, 40)}
-                    </h4>
-                    <strong>৳ {price ? price : 0}</strong>
-                    <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">
-                        <AddToCartButton />
-                        <div className="add-to-cart-icon">
-                            <Like />
+                <Link
+                    href={`/products/get-product-details?outlet_id=${outlet_id}&product_id=${id}`}
+                    className="d-flex flex-column justify-content-between h-100"
+                >
+                    <div className="flash-sale-content-img image-hover-effect">
+                        <Image
+                            src={imageUrl ? imageUrl : null}
+                            fill={true}
+                            className="img-fluid"
+                            alt={title ? title : "Product Title"}
+                        />
+                    </div>
+                    <div className="flash-sale-content-info text-hover-effect">
+                        <h4>{truncateTitle(title, 40)}</h4>
+                        <strong>৳ {price ? price : 0}</strong>
+                        <div className="add-to-cart-holder d-flex align-itemss-center justify-content-between ">
+                            <AddToCartButton
+                                productInfo={items}
+                                quantity={1}
+                                selectedVariantProductInfo={
+                                    selectedVariantProductInfo
+                                }
+                                selectedVariants={selectedVariants}
+                                productPrice={productPrice}
+                                productStoke={productStoke}
+                            />
+                            <div className="add-to-cart-icon">
+                                <Like />
+                            </div>
                         </div>
                     </div>
-                </div>
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ViewAllProductItems
+export default ViewAllProductitemss;
