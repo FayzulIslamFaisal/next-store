@@ -14,6 +14,8 @@ import { setAddToCart } from "../store/cartSlice";
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
+import { showToast } from "./Toast";
+import { RotatingLines, ThreeDots } from "react-loader-spinner";
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
@@ -74,7 +76,7 @@ function AddToCartButton({
     productStoke,
 }) {
     const { status, data: session } = useSession();
-
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
     // Function to handle the "Add To Cart" button click event
@@ -104,7 +106,6 @@ function AddToCartButton({
                         if (isDetailsPage) {
                             setProductVariationError(" ");
                         }
-
                         const addToCartInfo = {
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
@@ -122,54 +123,50 @@ function AddToCartButton({
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
                         };
-                        if (session) {
-                            const cartProductApp = await addToCartProduct(
-                                addToCartInfo,
-                                session.accessToken
-                            );
 
-                            toast.success("Add To Cart Success", {
-                                position: "top-right",
-                                autoClose: 1000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: "light",
-                                transition: Bounce,
-                            });
-                            const updatedCartProducts = await fetchCartProducts(
-                                session?.accessToken
-                            );
+                        try {
+                            setLoading(true);
+                            if (session) {
+                                const productAdded = await addToCartProduct(
+                                    addToCartInfo,
+                                    session.accessToken
+                                );
+                                const updatedCartProducts =
+                                    await fetchCartProducts(
+                                        session?.accessToken
+                                    );
 
-                            dispatch(
-                                setAddToCart({
-                                    hasSession: true,
-                                    length: updatedCartProducts?.data?.length,
-                                })
-                            );
-                        } else {
-                            addToCartInLocalStorage(addToCartInfo);
-                            const addToCartProductLength =
-                                addToCartProductList();
-                            toast.success("Add To Cart Success", {
-                                position: "top-right",
-                                autoClose: 1000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: "light",
-                                transition: Bounce,
-                            });
-                            dispatch(
-                                setAddToCart({
-                                    hasSession: false,
-                                    length: addToCartProductLength.length,
-                                })
-                            );
+                                dispatch(
+                                    setAddToCart({
+                                        hasSession: true,
+                                        length: updatedCartProducts?.data
+                                            ?.length,
+                                    })
+                                );
+                                if (
+                                    productAdded.code == 200 &&
+                                    productAdded.error == false
+                                ) {
+                                    showToast(productAdded.message);
+                                } else {
+                                    showToast(productAdded.message, "error");
+                                }
+                            } else {
+                                addToCartInLocalStorage(addToCartInfo);
+                                const addToCartProductLength =
+                                    addToCartProductList();
+                                showToast("Add To Cart Success");
+                                dispatch(
+                                    setAddToCart({
+                                        hasSession: false,
+                                        length: addToCartProductLength.length,
+                                    })
+                                );
+                            }
+                        } catch (error) {
+                            showToast("An error occurred", "error");
+                        } finally {
+                            setLoading(false);
                         }
                     }
                 } else {
@@ -187,53 +184,48 @@ function AddToCartButton({
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
                     };
-                    if (session) {
-                        await addToCartProduct(
-                            addToCartInfo,
-                            session.accessToken
-                        );
-                        const updatedCartProducts = await fetchCartProducts();
-                        console.log(
-                            "updatedCartProducts cart page ===",
-                            updatedCartProducts
-                        );
-                        toast.success("🦄 Wow so easy!", {
-                            position: "top-right",
-                            autoClose: 1000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                            transition: Bounce,
-                        });
-                        dispatch(
-                            setAddToCart({
-                                hasSession: true,
-                                length: updatedCartProducts?.data?.length,
-                            })
-                        );
-                    } else {
-                        addToCartInLocalStorage(addToCartInfo);
-                        const addToCartProductLength = addToCartProductList();
-                        toast.success("Add To Cart Success", {
-                            position: "top-right",
-                            autoClose: 1000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                            transition: Bounce,
-                        });
-                        dispatch(
-                            setAddToCart({
-                                hasSession: false,
-                                length: addToCartProductLength.length,
-                            })
-                        );
+                    try {
+                        setLoading(true);
+                        if (session) {
+                            const productAdded = await addToCartProduct(
+                                addToCartInfo,
+                                session.accessToken
+                            );
+                            const updatedCartProducts = await fetchCartProducts(
+                                session?.accessToken
+                            );
+
+                            dispatch(
+                                setAddToCart({
+                                    hasSession: true,
+                                    length: updatedCartProducts?.data?.length,
+                                })
+                            );
+
+                            if (
+                                productAdded.code == 200 &&
+                                productAdded.error == false
+                            ) {
+                                showToast(productAdded.message);
+                            } else {
+                                showToast(productAdded.message, "error");
+                            }
+                        } else {
+                            addToCartInLocalStorage(addToCartInfo);
+                            const addToCartProductLength =
+                                addToCartProductList();
+                            showToast("Add To Cart Success");
+                            dispatch(
+                                setAddToCart({
+                                    hasSession: false,
+                                    length: addToCartProductLength.length,
+                                })
+                            );
+                        }
+                    } catch (error) {
+                        showToast("An error occurred", "error");
+                    } finally {
+                        setLoading(false);
                     }
                 }
             }
@@ -316,18 +308,46 @@ function AddToCartButton({
                 className={`add-to-cart-link ${buyNowBtn} ${fullWidth}`}
                 onClick={(e) =>
                     productStoke > 0 &&
-                    (title === "BUY NOW" ? handleBuyNow(e) : handleAddToCard(e))
+                    (title === "BUY NOW"
+                        ? handleBuyNow(e)
+                        : !loading && handleAddToCard(e))
                 }
                 style={{
                     pointerEvents: productStoke > 0 ? "auto" : "none",
                     opacity: productStoke > 0 ? 1 : 0.5,
                 }}
             >
-                {!title
-                    ? productStoke > 0
-                        ? "ADD TO CART"
-                        : "Stoke Out"
-                    : title}
+                {!title ? (
+                    productStoke > 0 ? (
+                        loading ? (
+                            <div
+                                style={{
+                                    height: "28px",
+                                    width: "100px",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <RotatingLines
+                                    visible={true}
+                                    height="10"
+                                    width="30"
+                                    color="#ffffff"
+                                    strokeWidth="5"
+                                    animationDuration="0.75"
+                                    ariaLabel="rotating-lines-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="w-25"
+                                />
+                            </div>
+                        ) : (
+                            "ADD TO CART"
+                        )
+                    ) : (
+                        "Stoke Out"
+                    )
+                ) : (
+                    title
+                )}
             </Link>
         </div>
     );
