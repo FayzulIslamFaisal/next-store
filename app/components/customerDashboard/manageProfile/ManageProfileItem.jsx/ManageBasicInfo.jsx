@@ -1,37 +1,47 @@
 "use client";
 import { useEffect, useState } from "react";
-import { apiBaseUrl } from "next-auth/client/_utils";
 import { useSession } from "next-auth/react";
+import { getManageBasicInfo } from "@/app/services/getManageBasicInfo";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { postManageBasicInfo } from "@/app/services/postManageBasicInfo";
 
 const ManageBasicInfo = () => {
     const [formData, setFormData] = useState({
-        name: "",
-        mobile: "",
+        user_name: "",
+        mobile_number: "",
         email: "",
         date_of_birth: "",
         gender: "",
         marital_status: "",
     });
+
     const { data: session, status } = useSession();
 
     useEffect(() => {
-        // Fetch the initial data from the API if authenticated
-        const fetchManageBasicInfoData = async () => {
-            if (status === "authenticated") {
+        if (status === "authenticated") {
+            const fetchManageBasicInfoData = async () => {
                 try {
-                    const response = await fetch(
-                        `${apiBaseUrl}/get-basic-info`
+                    const basicInfo = await getManageBasicInfo(
+                        session?.accessToken
                     );
-                    const data = await response.json();
-                    setFormData(data);
+                    const basicInfoResult = basicInfo?.results || {};
+                    setFormData({
+                        ...formData,
+                        user_name: basicInfoResult.user_name || "",
+                        mobile_number: basicInfoResult.mobile_number || "",
+                        email: basicInfoResult.email || "",
+                        date_of_birth: basicInfoResult.date_of_birth || "",
+                        gender: basicInfoResult.gender || "",
+                        marital_status: basicInfoResult.marital_status || "",
+                    });
                 } catch (error) {
-                    console.error("Error fetching initial data:", error);
+                    toast.error("Failed to fetch user information.");
                 }
-            }
-        };
-
-        fetchManageBasicInfoData();
-    }, [status]);
+            };
+            fetchManageBasicInfoData();
+        }
+    }, [status, session]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -45,25 +55,35 @@ const ManageBasicInfo = () => {
         event.preventDefault();
 
         // Check for required fields
-        if (!formData.name || !formData.mobile || !formData.email) {
-            alert("Please fill out all required fields.");
+        if (!formData.date_of_birth || !formData.marital_status) {
+            toast.error("Please fill out all required fields.");
             return;
         }
 
-        const response = await fetch(`${apiBaseUrl}/manage-basic-info`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
+        try {
+            const response = await postManageBasicInfo(
+                formData,
+                session?.accessToken
+            );
 
-        const data = await response.json();
-        console.log("Post request response:", data);
+            if (response.ok) {
+                toast.success("Profile updated successfully!");
+            } else {
+                const data = await response.json();
+                toast.error(data.message || "Failed to update profile.");
+            }
+        } catch (error) {
+            toast.error("An error occurred. Please try again later.");
+        }
     };
+
+    if (status === "loading") {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="accordion-item mb-4 border-0 rounded-bottom">
+            <ToastContainer />
             <h2 className="accordion-header">
                 <button
                     className="accordion-button shadow-none rounded-bottom bg-white customer-dashboard-subtitle"
@@ -83,44 +103,44 @@ const ManageBasicInfo = () => {
             >
                 <div className="accordion-body">
                     <div className="customer-manage-profile-from-area">
-                        <from className="row " onSubmit={handleSubmit}>
+                        <form className="row" onSubmit={handleSubmit}>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="name" className="form-label">
+                                <label
+                                    htmlFor="user_name"
+                                    className="form-label"
+                                >
                                     Full Name
-                                    <span className="text-danger fw-bold">
-                                        *
-                                    </span>
                                 </label>
                                 <input
                                     type="text"
-                                    name="name"
+                                    name="user_name"
                                     className="form-control"
-                                    id="name"
-                                    value={formData.name}
+                                    id="user_name"
+                                    value={formData.user_name}
                                     onChange={handleChange}
                                     required
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="mobile" className="form-label">
+                                <label
+                                    htmlFor="mobile_number"
+                                    className="form-label"
+                                >
                                     Mobile Number
-                                    <span className="text-danger fw-bold">
-                                        *
-                                    </span>
                                 </label>
                                 <input
                                     type="text"
-                                    name="mobile"
+                                    name="mobile_number"
                                     className="form-control"
-                                    id="mobile"
-                                    value={formData.mobile}
+                                    id="mobile_number"
+                                    value={formData.mobile_number}
                                     onChange={handleChange}
                                     required
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="email" className="form-label">
-                                    Email (Optonal)
+                                    Email
                                 </label>
                                 <input
                                     type="email"
@@ -153,9 +173,6 @@ const ManageBasicInfo = () => {
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="gender" className="form-label">
                                     Gender
-                                    <span className="text-danger fw-bold">
-                                        *
-                                    </span>
                                 </label>
                                 <select
                                     className="form-select district-list"
@@ -167,7 +184,7 @@ const ManageBasicInfo = () => {
                                     <option defaultValue="Select">
                                         Select
                                     </option>
-                                    <option Value="Male">Male</option>
+                                    <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                     <option value="Others">Others</option>
                                 </select>
@@ -177,7 +194,7 @@ const ManageBasicInfo = () => {
                                     htmlFor="marital_status"
                                     className="form-label"
                                 >
-                                    Marital status
+                                    Marital Status
                                     <span className="text-danger fw-bold">
                                         *
                                     </span>
@@ -203,7 +220,7 @@ const ManageBasicInfo = () => {
                                     value="Update Profile"
                                 />
                             </div>
-                        </from>
+                        </form>
                     </div>
                 </div>
             </div>
