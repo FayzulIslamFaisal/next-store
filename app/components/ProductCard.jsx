@@ -78,7 +78,7 @@ function ProductCard({ item }) {
     console.log(selectedVariants);
 
     return (
-        <div className="flash-sale-content-item">
+        <div className="flash-sale-content-item mx-1 ">
             <Link
                 href={`/products/get-product-details?outlet_id=${outlet_id}&product_id=${product_id}`}
                 target="_blank"

@@ -1,53 +1,53 @@
 :root {
-  --lato: "Lato", sans-serif;
-  --open-sans: "Open Sans", sans-serif;
-  --philosopher: "Philosopher", sans-serif;
-  --color-44BC9D: #44bc9d;
-  --color-white: #fff;
-  --color-black: #000;
-  --color-414042: #414042;
-  --color-41ac8f: #41ac8f;
-  --color-dfdfdf: #6f6f6f;
-  --color-d9d9d9d: #d9d9d9;
-  --color-1A9D78: #1a9d78;
-  --color-50BE9F: #50be9f;
-  --color-3EAE8F: #3eae8f;
-  --color-F5F5F5: #f5f5f5;
-  --color-8A8A8A: #8a8a8a;
-  --color-DEDEDE: #dedede;
-  --color-53C0A0: #53c0a0;
-  --color-F6F6F6: #f6f6f6;
-  --color-D8D8D8: #d8d8d8;
-  --color-A7A7A7: #a7a7a7;
-  --color-D6D6D6: #d6d6d6;
-  --color-F0F0F0: #f0f0f0;
-  --color-C5EEE3: #c5eee3;
-  --color-dcfff6: #dcfff6;
-  --color-7C79DD: #7c79dd;
-  --color-D3C5C5: #d3c5c5;
-  --color-9f9f9f: #9f9f9f;
-  --color-53c0a080: #53c0a080;
-  --color-949495: #949495;
-  --color-ACACAC: #acacac;
-  --color-8F8F8F: #8f8f8f;
-  --color-FFEEEE: #ffeeee;
-  --color-646464: #646464;
-  --color-FC7024: #fc7024;
+    --lato: "Lato", sans-serif;
+    --open-sans: "Open Sans", sans-serif;
+    --philosopher: "Philosopher", sans-serif;
+    --color-44BC9D: #44bc9d;
+    --color-white: #fff;
+    --color-black: #000;
+    --color-414042: #414042;
+    --color-41ac8f: #41ac8f;
+    --color-dfdfdf: #6f6f6f;
+    --color-d9d9d9d: #d9d9d9;
+    --color-1A9D78: #1a9d78;
+    --color-50BE9F: #50be9f;
+    --color-3EAE8F: #3eae8f;
+    --color-F5F5F5: #f5f5f5;
+    --color-8A8A8A: #8a8a8a;
+    --color-DEDEDE: #dedede;
+    --color-53C0A0: #53c0a0;
+    --color-F6F6F6: #f6f6f6;
+    --color-D8D8D8: #d8d8d8;
+    --color-A7A7A7: #a7a7a7;
+    --color-D6D6D6: #d6d6d6;
+    --color-F0F0F0: #f0f0f0;
+    --color-C5EEE3: #c5eee3;
+    --color-dcfff6: #dcfff6;
+    --color-7C79DD: #7c79dd;
+    --color-D3C5C5: #d3c5c5;
+    --color-9f9f9f: #9f9f9f;
+    --color-53c0a080: #53c0a080;
+    --color-949495: #949495;
+    --color-ACACAC: #acacac;
+    --color-8F8F8F: #8f8f8f;
+    --color-FFEEEE: #ffeeee;
+    --color-646464: #646464;
+    --color-FC7024: #fc7024;
 }
 
 ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 a {
-  color: var(--color-414042);
-  text-decoration: none !important;
+    color: var(--color-414042);
+    text-decoration: none !important;
 }
 
 p {
-  margin: 0;
+    margin: 0;
 }
 
 h1,
@@ -56,188 +56,190 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--color-414042);
+    color: var(--color-414042);
 }
 
 body {
-  font-size: 14px;
-  background: var(--color-white);
-  font-weight: 400;
-  font-family: var(--lato);
-  color: var(--color-414042);
+    font-size: 14px;
+    background: var(--color-white);
+    font-weight: 400;
+    font-family: var(--lato);
+    color: var(--color-414042);
 }
 
 .nh-common-title-area {
-  padding-bottom: 25px;
+    padding-bottom: 25px;
 }
 
 .nh-common-title h3 {
-  font-size: 26px;
-  text-transform: capitalize;
-  margin: 0;
-  font-weight: 400;
+    font-size: 26px;
+    text-transform: capitalize;
+    margin: 0;
+    font-weight: 400;
 }
 
 .nh-common-title a {
-  font-size: 16px;
-  text-transform: capitalize;
-  border-bottom: 1px solid var(--color-414042);
+    font-size: 16px;
+    text-transform: capitalize;
+    border-bottom: 1px solid var(--color-414042);
 }
 
 .nh-common-item.d-flex {
-  gap: 15px;
+    gap: 15px;
 }
 
 .nh-common-title .common-border {
-  width: 184px;
-  max-width: 100%;
-  height: 1px;
-  background: var(--color-50BE9F);
-  position: relative;
+    width: 184px;
+    max-width: 100%;
+    height: 1px;
+    background: var(--color-50BE9F);
+    position: relative;
 }
 
 .nh-common-title .common-border::before {
-  position: absolute;
-  content: "";
-  left: 0;
-  top: 100%;
-  transform: translateY(-100%);
-  width: 40px;
-  height: 3px;
-  background: var(--color-1A9D78);
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 100%;
+    transform: translateY(-100%);
+    width: 40px;
+    height: 3px;
+    background: var(--color-1A9D78);
 }
 
 .flash-end-time {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .flash-sale-end-time {
-  gap: 5px;
+    gap: 5px;
 }
 
 .flash-sale-end-time-box {
-  width: 28px;
-  height: 28px;
-  background: var(--color-44BC9D);
-  border-radius: 2px;
+    width: 28px;
+    height: 28px;
+    background: var(--color-44BC9D);
+    border-radius: 2px;
 }
 
 .flash-sale-end-time-box span {
-  color: var(--color-white);
+    color: var(--color-white);
 }
 
 /*-------------------- hover-box-shadow css color change -------------*/
 .nh-hover-box-shadow {
-  transition: all 0.2s linear;
+    transition: all 0.2s linear;
 }
 
 .nh-hover-box-shadow:hover {
-  -webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
 }
 
 /*------------------ hover-box-shadow css color change ---------------*/
 
 /*------------------- Start nh-categories-area ---------------------------*/
 .nh-categories-area {
-  padding: 50px 0;
+    padding: 50px 0;
 }
 
 .nh-categories-holder {
-  display: grid;
-  display: -ms-grid;
-  grid-template-columns: repeat(8, 1fr);
-  /* -ms-grid-columns: (1fr)[8]; */
+    display: grid;
+    display: -ms-grid;
+    grid-template-columns: repeat(8, 1fr);
+    /* -ms-grid-columns: (1fr)[8]; */
 }
 
 .nh-categories-item {
-  width: 100% !important;
-  position: relative;
-  height: 100%;
+    width: 100% !important;
+    position: relative;
+    height: 100%;
 }
 
 .nh-categories-item-bg {
-  border: 1px solid var(--color-D8D8D8);
-  position: relative;
-  height: 100%;
-  background: var(--color-white);
-  padding: 15px;
-  padding-bottom: 10px;
-  min-height: 220px;
+    border: 1px solid var(--color-D8D8D8);
+    position: relative;
+    height: 100%;
+    background: var(--color-white);
+    padding: 15px;
+    padding-bottom: 10px;
+    min-height: 220px;
 }
 
 .nh-categories-holder-s .slick-prev:before,
 .nh-categories-holder-s .slick-next:before {
-  color: var(--color-44BC9D);
+    color: var(--color-44BC9D);
 }
-
+/* .nh-categories-holder-s .slick-track {
+    width: 100% !important;
+} */
 .nh-categories-img {
-  margin-bottom: 20px;
-  height: 110px;
-  width: 100%;
+    margin-bottom: 20px;
+    height: 110px;
+    width: 100%;
 }
 
 .nh-categories-img img {
-  object-fit: scale-down;
-  display: block;
-  margin: 0 auto;
+    object-fit: scale-down;
+    display: block;
+    margin: 0 auto;
 }
 
 .nh-categories-info h4 {
-  font-weight: 700;
-  color: var(--color-414042);
-  font-size: 16px;
-  line-height: 20px;
-  margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--color-414042);
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 8px;
 }
 
 .nh-categories-info h4:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .nh-categories-info h4 a {
-  color: var(--color-414042);
-  text-decoration: none !important;
+    color: var(--color-414042);
+    text-decoration: none !important;
 }
 
 .image-hover-effect {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .image-hover-effect::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(65, 64, 66, 0.4);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-  z-index: 1000;
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(65, 64, 66, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    z-index: 1000;
 }
 
 .nh-hover-box-shadow:hover .image-hover-effect::before {
-  opacity: 1;
-  visibility: visible;
+    opacity: 1;
+    visibility: visible;
 }
 
 .image-hover-effect img {
-  transition: transform 0.4s ease;
+    transition: transform 0.4s ease;
 }
 
 .nh-hover-box-shadow:hover .image-hover-effect img {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .nh-hover-box-shadow:hover .text-hover-effect h4 a {
-  color: var(--color-black);
+    color: var(--color-black);
 }
 
 .nh-hover-box-shadow:hover .text-hover-effect .add-to-cart-link {
-  background: var(--color-414042);
+    background: var(--color-414042);
 }
 
 /*------------------- End nh-categories-area ---------------------------*/
@@ -245,60 +247,61 @@ body {
 /*------------------- Start nh-brands-area ---------------------------*/
 .nh-just-for-you,
 .nh-brands-area {
-  padding-top: 50px;
+    padding-top: 50px;
 }
 
 /*------------------- End nh-brands-area ---------------------------*/
 
 /*------------------- Start load-more-btn-row ---------------------------*/
 .load-more-btn-row {
-  padding-top: 50px;
+    padding-top: 50px;
 }
 
 .load-more-btn {
-  background: var(--color-44BC9D);
-  max-width: 420px;
-  display: block;
-  margin: 0 auto;
-  color: var(--color-white);
-  font-weight: 700;
-  padding: 8px 15px;
-  transition: all 0.2s linear;
+    background: var(--color-44BC9D);
+    max-width: 420px;
+    display: block;
+    margin: 0 auto;
+    color: var(--color-white);
+    font-weight: 700;
+    padding: 8px 15px;
+    transition: all 0.2s linear;
 }
 
 .load-more-btn:hover {
-  background: var(--color-414042);
+    background: var(--color-414042);
 }
 
 /*------------------- End load-more-btn-row ---------------------------*/
 
 .slick-prev:before,
 .slick-next:before {
-  color: var(--color-44BC9D) !important;
+    color: var(--color-44BC9D) !important;
 }
 
-.flash-sale-content-area-grid .slick-list {
+/* .flash-sale-content-area-grid .slick-list {
   margin: 0 -7px !important;
 }
 
 .flash-sale-content-area-grid .slick-slide > div {
   padding: 0 7px !important;
+
 }
 
 
 /* -------------------- customer-dashboard --------------------------*/
 
-.customer-dashboard-title{
-  font-size: 22px;
+.customer-dashboard-title {
+    font-size: 22px;
 }
-.customer-dashboard-subtitle{
-  font-size: 18px;
+.customer-dashboard-subtitle {
+    font-size: 18px;
 }
-.customer-dashboard-2st-subtitle{
-  font-size: 18px;
+.customer-dashboard-2st-subtitle {
+    font-size: 18px;
 }
 
 .customer-dashboard-section-area {
-  padding: 50px 0;
-  background: var(--color-F5F5F5);
+    padding: 50px 0;
+    background: var(--color-F5F5F5);
 }

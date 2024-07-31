@@ -263,6 +263,11 @@ export function resendOTP() {
     }
 }
 
+//get location id, outlet id
+export function outletLocationInfo() {
+    if (typeof window !== "undefined") {
+        return localStorage.getItem("");
+    }
+    return null;
+}
 
-
-console.log("HEllo world")

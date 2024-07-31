@@ -8,7 +8,7 @@
     display: grid;
     -ms-grid-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr;
     grid-template-columns: repeat(6, 1fr);
-    gap: 24px;
+    gap: 15px;
 }
 
 .flash-sale-content-bg {
@@ -85,7 +85,7 @@ section.flash-sale-area.removepadding-x {
     color: var(--color-white);
     font-weight: 700;
     text-transform: uppercase;
-    transition: all .2s linear;
+    transition: all 0.2s linear;
     display: flex;
     justify-content: center;
 }
