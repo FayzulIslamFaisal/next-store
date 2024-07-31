@@ -58,6 +58,7 @@ const CategoryProductArchiveItems = ({ productItem }) => {
         prices: "",
         discountPrice: "",
     };
+    let productStoke;
 
     if (productItem?.variations?.length > 0) {
         productPrice.prices =
@@ -69,6 +70,10 @@ const CategoryProductArchiveItems = ({ productItem }) => {
             defaultVariant?.discount_amount > 0
                 ? defaultVariant?.mrp_price
                 : "";
+        productStoke =
+            defaultVariant?.variation_max_quantity === null
+                ? 0
+                : defaultVariant?.variation_max_quantity;
     } else {
         (productPrice.prices =
             productItem?.discount_price !== 0
@@ -76,6 +81,8 @@ const CategoryProductArchiveItems = ({ productItem }) => {
                 : productItem?.mrp_price),
             (productPrice.discountPrice =
                 productItem?.discount_price > 0 && productItem?.mrp_price);
+        productStoke =
+            productItem?.max_quantity === null ? 0 : productItem?.max_quantity;
     }
 
     const selectedVariants = [];
@@ -97,10 +104,6 @@ const CategoryProductArchiveItems = ({ productItem }) => {
         });
     }
 
-    console.log(
-        "==========================productPrice",
-        productItem?.discount_price
-    );
     return (
         <div className="flash-sale-content-item">
             <Link
@@ -150,6 +153,7 @@ const CategoryProductArchiveItems = ({ productItem }) => {
                                 }
                                 selectedVariants={selectedVariants}
                                 productPrice={productPrice}
+                                productStoke={productStoke}
                             />
                         </div>
                     </div>

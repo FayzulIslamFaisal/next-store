@@ -80,6 +80,7 @@ function AddToCartButton({
     const dispatch = useDispatch();
     const router = useRouter();
     // Function to handle the "Add To Cart" button click event
+
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {
@@ -106,6 +107,7 @@ function AddToCartButton({
                         if (isDetailsPage) {
                             setProductVariationError(" ");
                         }
+
                         const addToCartInfo = {
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
@@ -234,6 +236,7 @@ function AddToCartButton({
     // Function to handle the "Buy Now" button click event
     const handleBuyNow = async (e, title) => {
         e.preventDefault();
+        console.log("Hello world title");
         if (title) {
             if (productInfo) {
                 console.log("Hello world");
@@ -308,8 +311,8 @@ function AddToCartButton({
                 className={`add-to-cart-link ${buyNowBtn} ${fullWidth}`}
                 onClick={(e) =>
                     productStoke > 0 &&
-                    (title === "BUY NOW"
-                        ? handleBuyNow(e)
+                    (title == "BUY NOW"
+                        ? handleBuyNow(e, title)
                         : !loading && handleAddToCard(e))
                 }
                 style={{
