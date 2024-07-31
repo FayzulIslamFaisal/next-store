@@ -5,13 +5,15 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductCategoryItem from "./ProductCategoryItem";
 
 const ProductCategories = ({ categoryProductData, isHome = true }) => {
+    const isMoreThanEight = categoryProductData?.length > 8;
+
     const settings = {
         dots: false,
         infinite: false,
         speed: 500,
         slidesToShow: isHome ? 8 : 6,
         slidesToScroll: isHome ? 1 : 1,
-        rows: isHome ? 2 : 1,
+        rows: isMoreThanEight ? 2 : 1,
         arrows: false,
         responsive: [
             {
