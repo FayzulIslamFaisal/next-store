@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addToCartProductList, getTotalQuantity } from "../utils";
 
 const initialState = {
     num: 2,
     addToCartLength: 0, // Initialize to 0
 };
+const getAddToCartProduct = addToCartProductList();
+const productQuantityCount = getTotalQuantity(getAddToCartProduct);
+
+console.log("addToCartLength", initialState.addToCartLength);
 
 const cartSlice = createSlice({
     name: "counter",
@@ -20,9 +25,8 @@ const cartSlice = createSlice({
             if (hasSession) {
                 state.addToCartLength = length;
             } else {
-                state.addToCartLength = localStorage.getItem("addToCart")
-                    ? JSON.parse(localStorage.getItem("addToCart")).length
-                    : 0;
+                state.addToCartLength = length;
+                console.log("slice redux redux", productQuantityCount);
             }
         },
     },

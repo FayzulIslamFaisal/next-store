@@ -807,6 +807,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                         onClick={() => {
                                             dispatch({ type: "DECREMENT" });
                                         }}
+                                        disabled={state.count == 1}
                                     >
                                         -
                                     </button>
@@ -820,6 +821,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                         onClick={() => {
                                             dispatch({ type: "INCREMENT" });
                                         }}
+                                        disabled={state.count >= productStoke}
                                     >
                                         +
                                     </button>
