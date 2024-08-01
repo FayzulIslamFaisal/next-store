@@ -1,11 +1,13 @@
 "use client";
 import Service from "@/app/components/Service";
+import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import CategoryLeftSide from "@/app/components/productCategory/CategoryLeftSide";
 import CategoryRightSide from "@/app/components/productCategory/CategoryRightSide";
 import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import { getCategorydetailBySlug } from "@/app/services/getCategorydetailBySlug";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Audio } from "react-loader-spinner";
 
 const DynamicCategoryPage = ({ params }) => {
     const searchParams = useSearchParams();
@@ -13,6 +15,7 @@ const DynamicCategoryPage = ({ params }) => {
     const { slug } = params;
     const [option, setOption] = useState({});
     const [outletId, setOutletId] = useState(0); // default outlet
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const initialOutletId = localStorage.getItem("outletId");
@@ -34,13 +37,16 @@ const DynamicCategoryPage = ({ params }) => {
         if (outletId) {
             const fetchProducts = async () => {
                 try {
+                    setLoading(true);
                     const data = await getCategorydetailBySlug(
                         outletId,
                         slug,
                         option
                     );
                     setCategoryBySlugData(data);
+                    setLoading(false);
                 } catch (error) {
+                    setLoading(false);
                     console.error(
                         "Error fetching 'Just For You' products:",
                         error
@@ -92,6 +98,10 @@ const DynamicCategoryPage = ({ params }) => {
             subTitle: "Support System 24/7",
         },
     ];
+
+    // if (loading) {
+    //     return <DefaultLoader />
+    // }
 
     return (
         <section className="product-category-wrapper">
