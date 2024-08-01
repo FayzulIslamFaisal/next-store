@@ -1,10 +1,10 @@
 "use client";
-
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
     addToCartInLocalStorage,
     addToCartProductList,
+    getTotalQuantity,
     setProductData,
 } from "../utils";
 import { useSession } from "next-auth/react";
@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
 import { showToast } from "./Toast";
 import { RotatingLines, ThreeDots } from "react-loader-spinner";
+
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
 
 function findMissingProperties(decorateVariation, selectedVariantKey) {
@@ -80,7 +81,6 @@ function AddToCartButton({
     const dispatch = useDispatch();
     const router = useRouter();
     // Function to handle the "Add To Cart" button click event
-
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
         if (!title) {
@@ -137,31 +137,42 @@ function AddToCartButton({
                                     await fetchCartProducts(
                                         session?.accessToken
                                     );
-
-                                dispatch(
-                                    setAddToCart({
-                                        hasSession: true,
-                                        length: updatedCartProducts?.data
-                                            ?.length,
-                                    })
-                                );
                                 if (
                                     productAdded.code == 200 &&
-                                    productAdded.error == false
+                                    productAdded.error == false &&
+                                    updatedCartProducts?.success == true
                                 ) {
+                                    const quantityTotal = getTotalQuantity(
+                                        updatedCartProducts?.data
+                                    );
+                                    console.log(
+                                        "updatedCartProducts =================================> button page",
+                                        updatedCartProducts
+                                    );
+                                    dispatch(
+                                        setAddToCart({
+                                            hasSession: true,
+                                            length: quantityTotal,
+                                        })
+                                    );
                                     showToast(productAdded.message);
                                 } else {
                                     showToast(productAdded.message, "error");
                                 }
                             } else {
                                 addToCartInLocalStorage(addToCartInfo);
-                                const addToCartProductLength =
-                                    addToCartProductList();
+                                const addToCartProduct = addToCartProductList();
                                 showToast("Add To Cart Success");
+                                const quantityTotal =
+                                    getTotalQuantity(addToCartProduct);
+                                console.log(
+                                    "---------------------------------add to cart",
+                                    quantityTotal
+                                );
                                 dispatch(
                                     setAddToCart({
                                         hasSession: false,
-                                        length: addToCartProductLength.length,
+                                        length: quantityTotal,
                                     })
                                 );
                             }
@@ -197,30 +208,38 @@ function AddToCartButton({
                                 session?.accessToken
                             );
 
-                            dispatch(
-                                setAddToCart({
-                                    hasSession: true,
-                                    length: updatedCartProducts?.data?.length,
-                                })
-                            );
-
                             if (
                                 productAdded.code == 200 &&
-                                productAdded.error == false
+                                productAdded.error == false &&
+                                updatedCartProducts?.success == true
                             ) {
+                                const quantityTotal = getTotalQuantity(
+                                    updatedCartProducts?.data
+                                );
+                                console.log(
+                                    "updatedCartProducts =================================> button page",
+                                    updatedCartProducts
+                                );
+                                dispatch(
+                                    setAddToCart({
+                                        hasSession: true,
+                                        length: quantityTotal,
+                                    })
+                                );
                                 showToast(productAdded.message);
                             } else {
                                 showToast(productAdded.message, "error");
                             }
                         } else {
                             addToCartInLocalStorage(addToCartInfo);
-                            const addToCartProductLength =
-                                addToCartProductList();
+                            const addToCartProduct = addToCartProductList();
                             showToast("Add To Cart Success");
+                            const quantityTotal =
+                                getTotalQuantity(addToCartProduct);
                             dispatch(
                                 setAddToCart({
                                     hasSession: false,
-                                    length: addToCartProductLength.length,
+                                    length: quantityTotal,
                                 })
                             );
                         }

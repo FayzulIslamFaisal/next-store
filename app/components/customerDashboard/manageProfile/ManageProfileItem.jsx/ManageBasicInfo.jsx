@@ -54,9 +54,14 @@ const ManageBasicInfo = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check for required fields
-        if (!formData.date_of_birth || !formData.marital_status) {
-            toast.error("Please fill out all required fields.");
+        // Check for  fields
+        if (
+            !formData.user_name ||
+            !formData.mobile_number ||
+            !formData.date_of_birth ||
+            !formData.marital_status
+        ) {
+            toast.error("Please fill out all  fields.");
             return;
         }
 
@@ -65,15 +70,19 @@ const ManageBasicInfo = () => {
                 formData,
                 session?.accessToken
             );
+            console.log("response update", response);
 
-            if (response.ok) {
-                toast.success("Profile updated successfully!");
+            if (!response?.error) {
+                toast.success(response?.message);
             } else {
-                const data = await response.json();
-                toast.error(data.message || "Failed to update profile.");
+                console.error("Update failed:", response);
+                toast.error(response.message || "Failed to update profile.");
             }
         } catch (error) {
-            toast.error("An error occurred. Please try again later.");
+            console.error("Error during update:", error);
+            toast.error(
+                error.message || "An error occurred. Please try again later."
+            );
         }
     };
 
@@ -118,7 +127,6 @@ const ManageBasicInfo = () => {
                                     id="user_name"
                                     value={formData.user_name}
                                     onChange={handleChange}
-                                    required
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
@@ -135,7 +143,6 @@ const ManageBasicInfo = () => {
                                     id="mobile_number"
                                     value={formData.mobile_number}
                                     onChange={handleChange}
-                                    required
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
@@ -181,9 +188,7 @@ const ManageBasicInfo = () => {
                                     value={formData.gender}
                                     onChange={handleChange}
                                 >
-                                    <option defaultValue="Select">
-                                        Select
-                                    </option>
+                                    <option value="">Select</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                     <option value="Others">Others</option>
@@ -206,11 +211,9 @@ const ManageBasicInfo = () => {
                                     value={formData.marital_status}
                                     onChange={handleChange}
                                 >
-                                    <option defaultValue="Select">
-                                        Select
-                                    </option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
+                                    <option value="">Select</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
                                 </select>
                             </div>
                             <div className="">

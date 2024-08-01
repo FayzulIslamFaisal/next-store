@@ -2,7 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
-import { NagadhatPublicUrl, addToCartProductList, apiBaseUrl } from "../utils";
+import {
+    NagadhatPublicUrl,
+    addToCartProductList,
+    apiBaseUrl,
+    getTotalQuantity,
+} from "../utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { deleteCartProduct } from "../services/getDeleteCartProduct";
@@ -22,6 +27,8 @@ import { FaMagic } from "react-icons/fa";
 import DefaultLoader from "../components/defaultloader/DefaultLoader";
 import { RotatingLines } from "react-loader-spinner";
 import NoProductShows from "../components/NoProductShows";
+import Swal from "sweetalert2";
+import { showToast } from "../components/Toast";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -46,29 +53,55 @@ const CartPage = () => {
     const handleDelete = async (cart_id) => {
         try {
             setLoading(true);
+            const wantToDelete = await Swal.fire({
+                title: "Are you sure?",
+                text: "Remove the product from cart !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Remove",
+            });
             if (session) {
-                await deleteCartProduct(cart_id, session?.accessToken);
-                const updatedCartProducts = await fetchCartProducts();
-                setCheckedProductCard(updatedCartProducts?.data);
-                dispatch(
-                    setAddToCart({
-                        hasSession: true,
-                        length: updatedCartProducts?.data?.length,
-                    })
-                );
+                if (wantToDelete.isConfirmed) {
+                    const deleteProduct = await deleteCartProduct(
+                        cart_id,
+                        session?.accessToken
+                    );
+                    const updatedCartProducts = await fetchCartProducts();
+                    console.log(deleteProduct);
+                    if (updatedCartProducts.success) {
+                        showToast("Product delete successfully");
+                        setCheckedProductCard(updatedCartProducts?.data);
+                        const quantityTotal = getTotalQuantity(
+                            updatedCartProducts?.data
+                        );
+                        dispatch(
+                            setAddToCart({
+                                hasSession: true,
+                                length: quantityTotal,
+                            })
+                        );
+                    }
+                }
             } else {
-                const updatedItemsInCard = checkedProductCard.filter(
-                    (item, i) => i !== cart_id
-                );
-                setCheckedProductCard(updatedItemsInCard);
-                updateLocalStorage(updatedItemsInCard);
-                const addToCartProductLength = addToCartProductList();
-                dispatch(
-                    setAddToCart({
-                        hasSession: false,
-                        length: addToCartProductLength.length,
-                    })
-                );
+                if (wantToDelete.isConfirmed) {
+                    const updatedItemsInCard = checkedProductCard.filter(
+                        (item, i) => i !== cart_id
+                    );
+                    setCheckedProductCard(updatedItemsInCard);
+                    updateLocalStorage(updatedItemsInCard);
+                    const addToCartProductLength = addToCartProductList();
+                    const quantityTotal = getTotalQuantity(
+                        addToCartProductLength
+                    );
+                    dispatch(
+                        setAddToCart({
+                            hasSession: false,
+                            length: quantityTotal,
+                        })
+                    );
+                }
             }
             setLoading(false);
         } catch (error) {
@@ -84,37 +117,60 @@ const CartPage = () => {
     const handleSelectedItemDelete = async () => {
         try {
             setLoading(true);
+            const wantToDelete = await Swal.fire({
+                title: "Are you sure?",
+                text: "Remove the product from cart !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Remove",
+            });
             if (session) {
-                const updatedItemsInCard = checkedProductCard
-                    .filter((item) => item.isChecked)
-                    .map((item) => ({
-                        cart_id: item?.cart_id,
-                    }));
-                await deleteProductFromTheApi(
-                    updatedItemsInCard,
-                    session?.accessToken
-                );
-                const updatedCartProducts = await fetchCartProducts();
-                setCheckedProductCard(updatedCartProducts?.data);
-                dispatch(
-                    setAddToCart({
-                        hasSession: true,
-                        length: updatedCartProducts?.data?.length,
-                    })
-                );
+                if (wantToDelete.isConfirmed) {
+                    const updatedItemsInCard = checkedProductCard
+                        .filter((item) => item.isChecked)
+                        .map((item) => ({
+                            cart_id: item?.cart_id,
+                        }));
+                    await deleteProductFromTheApi(
+                        updatedItemsInCard,
+                        session?.accessToken
+                    );
+                    const updatedCartProducts = await fetchCartProducts();
+
+                    if (updatedCartProducts.success) {
+                        setCheckedProductCard(updatedCartProducts?.data);
+                        const quantityTotal = getTotalQuantity(
+                            updatedCartProducts?.data
+                        );
+
+                        dispatch(
+                            setAddToCart({
+                                hasSession: true,
+                                length: quantityTotal,
+                            })
+                        );
+                    }
+                }
             } else {
-                const updatedItemsInCard = checkedProductCard.filter(
-                    (item) => !item.isChecked
-                );
-                setCheckedProductCard(updatedItemsInCard);
-                updateLocalStorage(updatedItemsInCard);
-                const addToCartProductLength = addToCartProductList();
-                dispatch(
-                    setAddToCart({
-                        hasSession: false,
-                        length: addToCartProductLength.length,
-                    })
-                );
+                if (wantToDelete.isConfirmed) {
+                    const updatedItemsInCard = checkedProductCard.filter(
+                        (item) => !item.isChecked
+                    );
+                    setCheckedProductCard(updatedItemsInCard);
+                    updateLocalStorage(updatedItemsInCard);
+                    const addToCartProductLength = addToCartProductList();
+                    const quantityTotal = getTotalQuantity(
+                        addToCartProductLength
+                    );
+                    dispatch(
+                        setAddToCart({
+                            hasSession: false,
+                            length: quantityTotal,
+                        })
+                    );
+                }
             }
             setLoading(false);
         } catch (error) {
@@ -168,7 +224,18 @@ const CartPage = () => {
             );
             console.log("Decrement ProductCountBackend", decrementApi);
             const updatedCartProducts = await fetchCartProducts();
-            setCheckedProductCard(updatedCartProducts?.data);
+            if (updatedCartProducts.success) {
+                setCheckedProductCard(updatedCartProducts?.data);
+                const quantityTotal = getTotalQuantity(
+                    updatedCartProducts?.data
+                );
+                dispatch(
+                    setAddToCart({
+                        hasSession: true,
+                        length: quantityTotal,
+                    })
+                );
+            }
         } else {
             const updatedUsers = checkedProductCard.map((checkCard, index) => {
                 if (index === indexId) {
@@ -181,6 +248,13 @@ const CartPage = () => {
                 }
                 return checkCard;
             });
+            const quantityTotal = getTotalQuantity(updatedUsers);
+            dispatch(
+                setAddToCart({
+                    hasSession: false,
+                    length: quantityTotal,
+                })
+            );
             setCheckedProductCard(updatedUsers);
             updateLocalStorage(updatedUsers);
         }
@@ -208,7 +282,22 @@ const CartPage = () => {
             );
             console.log(incrementApi, "incrementApi ======>>>>>>>>>>>>>>>>");
             const updatedCartProducts = await fetchCartProducts();
-            setCheckedProductCard(updatedCartProducts?.data);
+            if (updatedCartProducts.success) {
+                setCheckedProductCard(updatedCartProducts?.data);
+                const quantityTotal = getTotalQuantity(
+                    updatedCartProducts?.data
+                );
+                console.log(
+                    "updatedCartProducts =================================> cart page after log",
+                    updatedCartProducts
+                );
+                dispatch(
+                    setAddToCart({
+                        hasSession: true,
+                        length: quantityTotal,
+                    })
+                );
+            }
         } else {
             const updatedUsers = checkedProductCard.map((checkCard, index) => {
                 if (index === indexId) {
@@ -216,6 +305,13 @@ const CartPage = () => {
                 }
                 return checkCard;
             });
+            const quantityTotal = getTotalQuantity(updatedUsers);
+            dispatch(
+                setAddToCart({
+                    hasSession: false,
+                    length: quantityTotal,
+                })
+            );
             setCheckedProductCard(updatedUsers);
             updateLocalStorage(updatedUsers);
         }
@@ -224,6 +320,13 @@ const CartPage = () => {
     useEffect(() => {
         if (typeof window !== "undefined") {
             const cartProduct = addToCartProductList();
+            const quantityTotal = getTotalQuantity(cartProduct);
+            dispatch(
+                setAddToCart({
+                    hasSession: false,
+                    length: quantityTotal,
+                })
+            );
             setCheckedProductCard(cartProduct);
         }
     }, []);
@@ -298,14 +401,24 @@ const CartPage = () => {
                 console.log(cartProduct);
                 await addToCartProduct(cartProduct);
                 const updatedCartProducts = await fetchCartProducts();
-                setCheckedProductCard(updatedCartProducts?.data);
                 localStorage.removeItem("addToCart");
-                dispatch(
-                    setAddToCart({
-                        hasSession: true,
-                        length: updatedCartProducts?.data?.length,
-                    })
-                );
+
+                if (updatedCartProducts.success) {
+                    setCheckedProductCard(updatedCartProducts?.data);
+                    const quantityTotal = getTotalQuantity(
+                        updatedCartProducts?.data
+                    );
+                    console.log(
+                        "updatedCartProducts =================================> cart page after log",
+                        updatedCartProducts
+                    );
+                    dispatch(
+                        setAddToCart({
+                            hasSession: true,
+                            length: quantityTotal,
+                        })
+                    );
+                }
             }
             setLoading(false);
         } catch (error) {
@@ -594,7 +707,7 @@ const CartPage = () => {
                                                 ) : (
                                                     <NoProductShows
                                                         text={
-                                                            "Please Add To Cart Product"
+                                                            "There are no items in this cart"
                                                         }
                                                     ></NoProductShows>
                                                 )}

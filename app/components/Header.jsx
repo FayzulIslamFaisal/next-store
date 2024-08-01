@@ -7,7 +7,11 @@ import MainNav from "./MainNav";
 import HeroSlider from "./HeroSlider";
 import CategoryHoverMenu from "./CategoryHoverMenu";
 import MobileNav from "./MobileNav";
-import { storeUserAgent } from "../utils";
+import {
+    addToCartProductList,
+    getTotalQuantity,
+    storeUserAgent,
+} from "../utils";
 import { useDispatch } from "react-redux";
 import { setAddToCart } from "../store/cartSlice";
 import { fetchCartProducts } from "../services/getShowAddToCartProduct";
@@ -67,18 +71,38 @@ function Header() {
                 const updatedCartProducts = await fetchCartProducts(
                     session?.accessToken
                 );
-
-                dispatch(
-                    setAddToCart({
-                        hasSession: true,
-                        length: updatedCartProducts?.data?.length,
-                    })
-                );
+                if (updatedCartProducts?.success) {
+                    const quantityTotal = getTotalQuantity(
+                        updatedCartProducts?.data
+                    );
+                    console.log(
+                        "updatedCartProducts =================================> header page after log",
+                        updatedCartProducts
+                    );
+                    dispatch(
+                        setAddToCart({
+                            hasSession: true,
+                            length: quantityTotal,
+                        })
+                    );
+                }
             } else {
                 if (typeof window !== "undefined") {
-                    const addToCart = localStorage.getItem("addToCart");
-                    const length = addToCart ? JSON.parse(addToCart).length : 0;
-                    dispatch(setAddToCart({ hasSession: false, length }));
+                    const addToCart = addToCartProductList();
+                    const quantityTotal = getTotalQuantity(addToCart);
+                    dispatch(
+                        setAddToCart({
+                            hasSession: false,
+                            length: quantityTotal,
+                        })
+                    );
+
+                    dispatch(
+                        setAddToCart({
+                            hasSession: false,
+                            length: quantityTotal,
+                        })
+                    );
                 }
             }
         };
