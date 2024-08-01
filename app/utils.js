@@ -271,3 +271,13 @@ export function outletLocationInfo() {
     return null;
 }
 
+// function that takes an array as an argument and returns the total quantity of products:
+export function getTotalQuantity(products) {
+    let totalQuantity = 0;
+
+    products?.forEach((product) => {
+        totalQuantity += product?.quantity;
+    });
+
+    return totalQuantity;
+}
