@@ -42,7 +42,7 @@ const CartPage = () => {
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
-
+    const [quanticUpdateLoader, setQuantityUpdateLoader] = useState(false);
     /**
      * Handles the deletion of a cart item.
      * If a session exists, it deletes the item from the server and updates the state accordingly.
@@ -212,51 +212,63 @@ const CartPage = () => {
      * @param {number} indexId - The ID of the cart item to decrement.
      */
     const handleDecrement = async (indexId) => {
-        if (session) {
-            const quantityUpdateInfo = {
-                cart_id: indexId,
-                outlet_id: 3,
-                quantity: "decrement",
-            };
-            const decrementApi = await addToCartQuantityUpdate(
-                quantityUpdateInfo,
-                session?.accessToken
-            );
-            console.log("Decrement ProductCountBackend", decrementApi);
-            const updatedCartProducts = await fetchCartProducts();
-            if (updatedCartProducts.success) {
-                setCheckedProductCard(updatedCartProducts?.data);
-                const quantityTotal = getTotalQuantity(
-                    updatedCartProducts?.data
+        try {
+            setQuantityUpdateLoader(true);
+
+            if (session) {
+                const quantityUpdateInfo = {
+                    cart_id: indexId,
+                    outlet_id: 3,
+                    quantity: "decrement",
+                };
+                const decrementApi = await addToCartQuantityUpdate(
+                    quantityUpdateInfo,
+                    session?.accessToken
                 );
+                console.log("Decrement ProductCountBackend", decrementApi);
+                const updatedCartProducts = await fetchCartProducts();
+                if (updatedCartProducts.success) {
+                    const configMessage = decrementApi?.error
+                        ? showToast(decrementApi.message, "error")
+                        : showToast(decrementApi.message);
+                    setCheckedProductCard(updatedCartProducts?.data);
+                    const quantityTotal = getTotalQuantity(
+                        updatedCartProducts?.data
+                    );
+                    dispatch(
+                        setAddToCart({
+                            hasSession: true,
+                            length: quantityTotal,
+                        })
+                    );
+                }
+            } else {
+                const updatedUsers = checkedProductCard.map(
+                    (checkCard, index) => {
+                        if (index === indexId) {
+                            if (checkCard.quantity > 1) {
+                                return {
+                                    ...checkCard,
+                                    quantity: checkCard.quantity - 1,
+                                };
+                            }
+                        }
+                        return checkCard;
+                    }
+                );
+                const quantityTotal = getTotalQuantity(updatedUsers);
                 dispatch(
                     setAddToCart({
-                        hasSession: true,
+                        hasSession: false,
                         length: quantityTotal,
                     })
                 );
+                setCheckedProductCard(updatedUsers);
+                updateLocalStorage(updatedUsers);
             }
-        } else {
-            const updatedUsers = checkedProductCard.map((checkCard, index) => {
-                if (index === indexId) {
-                    if (checkCard.quantity > 1) {
-                        return {
-                            ...checkCard,
-                            quantity: checkCard.quantity - 1,
-                        };
-                    }
-                }
-                return checkCard;
-            });
-            const quantityTotal = getTotalQuantity(updatedUsers);
-            dispatch(
-                setAddToCart({
-                    hasSession: false,
-                    length: quantityTotal,
-                })
-            );
-            setCheckedProductCard(updatedUsers);
-            updateLocalStorage(updatedUsers);
+            setQuantityUpdateLoader(false);
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -269,51 +281,66 @@ const CartPage = () => {
      */
 
     const handleIncrement = async (indexId) => {
-        if (session) {
-            const quantityUpdateInfo = {
-                cart_id: indexId,
-                outlet_id: 3,
-                quantity: "increment",
-            };
-            console.log("cart id with payload", quantityUpdateInfo);
-            const incrementApi = await addToCartQuantityUpdate(
-                quantityUpdateInfo,
-                session?.accessToken
-            );
-            console.log(incrementApi, "incrementApi ======>>>>>>>>>>>>>>>>");
-            const updatedCartProducts = await fetchCartProducts();
-            if (updatedCartProducts.success) {
-                setCheckedProductCard(updatedCartProducts?.data);
-                const quantityTotal = getTotalQuantity(
-                    updatedCartProducts?.data
+        try {
+            setQuantityUpdateLoader(true);
+            if (session) {
+                const quantityUpdateInfo = {
+                    cart_id: indexId,
+                    outlet_id: 3,
+                    quantity: "increment",
+                };
+                console.log("cart id with payload", quantityUpdateInfo);
+                const incrementApi = await addToCartQuantityUpdate(
+                    quantityUpdateInfo,
+                    session?.accessToken
                 );
                 console.log(
-                    "updatedCartProducts =================================> cart page after log",
-                    updatedCartProducts
+                    incrementApi,
+                    "incrementApi ======>>>>>>>>>>>>>>>>"
                 );
+                const updatedCartProducts = await fetchCartProducts();
+
+                if (updatedCartProducts.success) {
+                    const configMessage = incrementApi?.error
+                        ? showToast(incrementApi.message, "error")
+                        : showToast(incrementApi.message);
+                    setCheckedProductCard(updatedCartProducts?.data);
+                    const quantityTotal = getTotalQuantity(
+                        updatedCartProducts?.data
+                    );
+
+                    dispatch(
+                        setAddToCart({
+                            hasSession: true,
+                            length: quantityTotal,
+                        })
+                    );
+                }
+            } else {
+                const updatedUsers = checkedProductCard.map(
+                    (checkCard, index) => {
+                        if (index === indexId) {
+                            return {
+                                ...checkCard,
+                                quantity: checkCard.quantity + 1,
+                            };
+                        }
+                        return checkCard;
+                    }
+                );
+                const quantityTotal = getTotalQuantity(updatedUsers);
                 dispatch(
                     setAddToCart({
-                        hasSession: true,
+                        hasSession: false,
                         length: quantityTotal,
                     })
                 );
+                setCheckedProductCard(updatedUsers);
+                updateLocalStorage(updatedUsers);
             }
-        } else {
-            const updatedUsers = checkedProductCard.map((checkCard, index) => {
-                if (index === indexId) {
-                    return { ...checkCard, quantity: checkCard.quantity + 1 };
-                }
-                return checkCard;
-            });
-            const quantityTotal = getTotalQuantity(updatedUsers);
-            dispatch(
-                setAddToCart({
-                    hasSession: false,
-                    length: quantityTotal,
-                })
-            );
-            setCheckedProductCard(updatedUsers);
-            updateLocalStorage(updatedUsers);
+            setQuantityUpdateLoader(false);
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -669,6 +696,9 @@ const CartPage = () => {
                                                                                             : index
                                                                                     );
                                                                                 }}
+                                                                                disabled={
+                                                                                    quanticUpdateLoader
+                                                                                }
                                                                             >
                                                                                 <FaMinus />
                                                                             </button>
@@ -695,6 +725,9 @@ const CartPage = () => {
                                                                                             : index
                                                                                     );
                                                                                 }}
+                                                                                disabled={
+                                                                                    quanticUpdateLoader
+                                                                                }
                                                                             >
                                                                                 <FaPlus />
                                                                             </button>
