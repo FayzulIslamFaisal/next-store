@@ -16,6 +16,8 @@ function ProductCard({ item }) {
         discount_amount,
     } = item;
 
+    console.log("=>>> item", item);
+
     const defaultVariant = item?.variations?.find(
         (variant) => variant.variations_default === 1
     );
@@ -90,24 +92,38 @@ function ProductCard({ item }) {
                     <div className="flash-sale-content-info text-hover-effect">
                         <div className="">
                             <h4>{truncateTitle(title, 40)}</h4>
-                            <div className=" d-flex align-items-center justify-content-between">
-                                {price && (
-                                    <strong>
-                                        ৳{" "}
-                                        {discount_amount
-                                            ? price - discount_amount
-                                            : price}
-                                    </strong>
-                                )}
-
-                                {discount_amount && (
-                                    <strong className="product-discount-price">
-                                        ৳{" "}
-                                        {discount_amount ? (
-                                            <del>{price}</del>
-                                        ) : null}
-                                    </strong>
-                                )}
+                            <div>
+                                {
+                                    item?.product_type === "variants" ? (
+                                        item.variations?.map((variant_item) => (
+                                            variant_item?.variations_default === 1 ? (
+                                                <div key={variant_item.id} >
+                                                    {variant_item?.price?.discount_amount > 0 ? (
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <strong>{variant_item?.price?.discounted_price}</strong>
+                                                            <strong>
+                                                            <del>{variant_item?.price?.regular_price}</del>
+                                                            </strong>
+                                                        </div>
+                                                    ) : (
+                                                        <strong>{variant_item?.price?.regular_price}</strong>
+                                                    )}
+                                                </div>
+                                            ) : null
+                                        ))
+                                    ) : (
+                                        item?.price?.discounted_price > 0 ? (
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <strong>{item.price.discounted_price}</strong>
+                                                <strong>
+                                                <del>{item.price.regular_price}</del>
+                                                </strong>
+                                            </div>
+                                        ) : (
+                                            <strong>{item?.price?.regular_price}</strong>
+                                        )
+                                    )
+                                }
                             </div>
                         </div>
                         <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">

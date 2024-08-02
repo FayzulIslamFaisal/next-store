@@ -4,6 +4,7 @@
 import CategoryProductArchive from "./CategoryProductArchive";
 import ShotBy from "./ShotBy";
 import CategoryPagination from "./CategoryPagination";
+import NoDataFound from "../NoDataFound";
 
 const CategoryRightSide = ({
     categoryByProduct,
@@ -40,9 +41,7 @@ const CategoryRightSide = ({
                     productArvhiveList={categoryByProduct}
                     />
                 ) : (
-                    <h1 className=" text-center text-capitalize pt-5">
-                        Category Product Data Not Found!!!
-                    </h1>
+                    <NoDataFound />
                 )}
                 {lastPage > 1 && (
                     <div className="row product-category-pagination-row">
