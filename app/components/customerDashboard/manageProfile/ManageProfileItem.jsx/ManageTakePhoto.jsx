@@ -1,6 +1,69 @@
-import React from "react";
+"use client";
+
+import { getProfilePicture } from "@/app/services/getProfilePicture";
+import { postManageProfilePicture } from "@/app/services/postManageProfilePicture";
+import { NagadhatPublicUrl } from "@/app/utils";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ManageTakePhoto = () => {
+    const [profilePicture, setProfilePicture] = useState("");
+    const [file, setFile] = useState(null);
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchProfilePicture = async () => {
+                try {
+                    const profilePictureData = await getProfilePicture(
+                        session?.accessToken
+                    );
+                    const profilePictureResult =
+                        profilePictureData?.results?.profile_picture || "";
+                    setProfilePicture(profilePictureResult);
+                } catch (error) {
+                    console.error("Error fetching profile picture:", error);
+                }
+            };
+            fetchProfilePicture();
+        }
+    }, [session, status]);
+
+    const handleFileChange = (event) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0]);
+        }
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!file) return;
+
+        try {
+            const formData = new FormData();
+            formData.append("profile_picture", file);
+
+            const result = await postManageProfilePicture(
+                formData,
+                session.accessToken
+            );
+
+            if (!result?.error) {
+                toast.success(result?.message);
+                setProfilePicture(result);
+            } else {
+                toast.error("Failed to update profile picture");
+            }
+        } catch (error) {
+            console.error("Error updating profile picture:", error);
+            toast.error(
+                "An error occurred while updating your profile picture."
+            );
+        }
+    };
+
     return (
         <div className="accordion-item rounded border-0 mb-4">
             <h2 className="accordion-header">
@@ -22,7 +85,18 @@ const ManageTakePhoto = () => {
             >
                 <div className="accordion-body border-top">
                     <div className="customer-manage-profile-from-area">
-                        <form action="">
+                        <form onSubmit={handleSubmit}>
+                            {profilePicture && (
+                                <div className="mb-2">
+                                    <Image
+                                        src={`${NagadhatPublicUrl}/${profilePicture}`}
+                                        alt="Profile Picture"
+                                        width={80}
+                                        height={80}
+                                        className="rounded-circle"
+                                    />
+                                </div>
+                            )}
                             <div className="mb-3">
                                 <label htmlFor="photo" className="form-label">
                                     Uplod Your Photo
@@ -37,6 +111,7 @@ const ManageTakePhoto = () => {
                                     name="photo"
                                     capture
                                     id="photo"
+                                    onChange={handleFileChange}
                                 />
                             </div>
                             <div>
