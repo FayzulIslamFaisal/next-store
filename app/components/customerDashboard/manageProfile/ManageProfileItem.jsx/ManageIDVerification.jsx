@@ -1,17 +1,20 @@
 "use client";
 
 import { getManageIdVerificationInfo } from "@/app/services/getManageIdVerificationInfo";
+import { postManageIdVerificationInfo } from "@/app/services/postManageIdVerificationInfo";
 import { NagadhatPublicUrl } from "@/app/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ManageIDVerification = () => {
     const [idVerification, setIdVerification] = useState({
         nid_no: "",
         nid_front: "",
     });
-    // const nidImage = `${NagadhatPublicUrl}/nidDataResult.nid_front`;
+    console.log("id Verification ------->>>>", idVerification);
+
     const { data: session, status } = useSession();
 
     useEffect(() => {
@@ -21,7 +24,6 @@ const ManageIDVerification = () => {
                     session?.accessToken
                 );
                 const nidDataResult = nidData?.results || {};
-
                 setIdVerification({
                     ...idVerification,
                     nid_no: nidDataResult.nid_no || "",
@@ -38,6 +40,38 @@ const ManageIDVerification = () => {
             ...prevData,
             [name]: value,
         }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        // Check for  fields
+        if (!idVerification.nid_no || !idVerification.nid_front) {
+            toast.error("Please fill out all  fields.");
+            return;
+        }
+        // if (idVerification?.nid_front) {
+        //     setIdVerification();
+        // }
+        try {
+            const response = await postManageIdVerificationInfo(
+                idVerification,
+                session?.accessToken
+            );
+            if (!response?.error) {
+                toast.success(response?.message);
+            } else {
+                console.error("Update failed:", response);
+                toast.error(
+                    response?.message ||
+                        "Failed to update Id Verification Info."
+                );
+            }
+        } catch (error) {
+            console.error("Error during update:", error);
+            toast.error(
+                error.message || "An error occurred. Please try again later."
+            );
+        }
     };
 
     if (status === "loading") {
@@ -65,9 +99,9 @@ const ManageIDVerification = () => {
             >
                 <div className="accordion-body border-top">
                     <div className="customer-manage-profile-from-area">
-                        <form action="">
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
-                                <label htmlFor="nid-no" className="form-label">
+                                <label htmlFor="nid_no" className="form-label">
                                     NID/ Birth Certificate/ Passport/ Driving
                                     License No
                                     {/* <span className="text-danger fw-bold">
@@ -76,22 +110,25 @@ const ManageIDVerification = () => {
                                 </label>
                                 <input
                                     className="form-control"
-                                    type="text"
-                                    id="nid-no"
-                                    name="nid-no"
+                                    type="number"
+                                    id="nid_no"
+                                    name="nid_no"
                                     value={idVerification.nid_no}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="mb-3">
-                                <p>Image Area</p>
-                                {/* <Image
-                                    src={nidImage}
-                                    width={120}
-                                    height={100}
-                                    alt="nid image"
-                                /> */}
-                            </div>
+
+                            {idVerification.nid_front && (
+                                <div className="mb-3">
+                                    <Image
+                                        src={`${NagadhatPublicUrl}/${idVerification?.nid_front}`}
+                                        width={120}
+                                        height={100}
+                                        alt="NID Image"
+                                    />
+                                </div>
+                            )}
+
                             <div className="mb-3">
                                 <label htmlFor="nid" className="form-label">
                                     Uplod NID/ Birth Certificate/ Passport/
@@ -102,12 +139,12 @@ const ManageIDVerification = () => {
                                 </label>
                                 <input
                                     className="form-control"
-                                    type="text"
+                                    type="file"
                                     id="nid_front"
-                                    // accept="image/*"
+                                    accept="image/*"
                                     name="nid_front"
+                                    // value={idVerification.nid_front}
                                     capture
-                                    value={idVerification.nid_front}
                                     onChange={handleChange}
                                 />
                             </div>
