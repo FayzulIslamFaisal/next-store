@@ -97,8 +97,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 2,
-        arrows:
-            flashSaleProductList?.length < 6 ? false : isHome ? false : true,
+        arrows: flashSaleProductList?.length <= 6 ? false : true,
         responsive: [
             {
                 breakpoint: 1500,
