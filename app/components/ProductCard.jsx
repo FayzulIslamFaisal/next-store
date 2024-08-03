@@ -16,6 +16,8 @@ function ProductCard({ item }) {
         discount_amount,
     } = item;
 
+    console.log("=>>> item", item);
+
     const defaultVariant = item?.variations?.find(
         (variant) => variant.variations_default === 1
     );
@@ -75,6 +77,9 @@ function ProductCard({ item }) {
             variation_weight: defaultVariant?.variation_weight?.title,
         });
     }
+
+    console.log(selectedVariants);
+
     return (
         <div className="flash-sale-content-item mx-1 ">
             <Link
@@ -125,14 +130,15 @@ function ProductCard({ item }) {
                                             </div>
                                         ) : null
                                     )
-                                ) : item?.price?.discounted_price > 0 ? (
+                                ) : item?.product_type === "single" &&
+                                  item?.price?.discounted_price > 0 ? (
                                     <div className="d-flex align-items-center justify-content-between">
                                         <strong>
-                                            {item.price.discounted_price}
+                                            {item?.price?.discounted_price}
                                         </strong>
                                         <strong>
                                             <del>
-                                                {item.price.regular_price}
+                                                {item?.price?.regular_price}
                                             </del>
                                         </strong>
                                     </div>
