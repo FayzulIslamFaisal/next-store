@@ -75,10 +75,7 @@ function Header() {
                     const quantityTotal = getTotalQuantity(
                         updatedCartProducts?.data
                     );
-                    console.log(
-                        "updatedCartProducts =================================> header page after log",
-                        updatedCartProducts
-                    );
+
                     dispatch(
                         setAddToCart({
                             hasSession: true,

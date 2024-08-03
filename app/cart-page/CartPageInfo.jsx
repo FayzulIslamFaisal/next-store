@@ -69,7 +69,7 @@ const CartPage = () => {
                         session?.accessToken
                     );
                     const updatedCartProducts = await fetchCartProducts();
-                    console.log(deleteProduct);
+
                     if (updatedCartProducts.success) {
                         showToast("Product delete successfully");
                         setCheckedProductCard(updatedCartProducts?.data);
@@ -225,7 +225,7 @@ const CartPage = () => {
                     quantityUpdateInfo,
                     session?.accessToken
                 );
-                console.log("Decrement ProductCountBackend", decrementApi);
+
                 const updatedCartProducts = await fetchCartProducts();
                 if (updatedCartProducts.success) {
                     const configMessage = decrementApi?.error
@@ -289,15 +289,12 @@ const CartPage = () => {
                     outlet_id: 3,
                     quantity: "increment",
                 };
-                console.log("cart id with payload", quantityUpdateInfo);
+
                 const incrementApi = await addToCartQuantityUpdate(
                     quantityUpdateInfo,
                     session?.accessToken
                 );
-                console.log(
-                    incrementApi,
-                    "incrementApi ======>>>>>>>>>>>>>>>>"
-                );
+
                 const updatedCartProducts = await fetchCartProducts();
 
                 if (updatedCartProducts.success) {
@@ -364,7 +361,6 @@ const CartPage = () => {
      * @returns {Promise<Object>} - The response from the API.
      */
     const addToCartProduct = async (cartItems) => {
-        console.log(addToCartProduct, "addToCartProduct payload");
         const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
             method: "POST",
             headers: {
@@ -374,7 +370,7 @@ const CartPage = () => {
             },
             body: JSON.stringify({ cart_items: cartItems }),
         });
-        console.log(response);
+
         return response.json();
     };
 
@@ -426,7 +422,7 @@ const CartPage = () => {
             setLoading(true);
             if (session) {
                 const cartProduct = addToCartProductList();
-                console.log("cartProduct=>>>>>", cartProduct);
+
                 await addToCartProduct(cartProduct);
                 const updatedCartProducts = await fetchCartProducts();
                 localStorage.removeItem("addToCart");
@@ -436,10 +432,7 @@ const CartPage = () => {
                     const quantityTotal = getTotalQuantity(
                         updatedCartProducts?.data
                     );
-                    console.log(
-                        "updatedCartProducts =================================> cart page after log",
-                        updatedCartProducts
-                    );
+
                     dispatch(
                         setAddToCart({
                             hasSession: true,
@@ -452,7 +445,6 @@ const CartPage = () => {
         } catch (error) {
             console.log(error);
         }
-        // console.log("updatedCartProducts", updatedCartProducts);
     };
 
     useEffect(() => {

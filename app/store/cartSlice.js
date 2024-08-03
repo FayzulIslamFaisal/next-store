@@ -7,9 +7,6 @@ const initialState = {
 };
 const getAddToCartProduct = addToCartProductList();
 const productQuantityCount = getTotalQuantity(getAddToCartProduct);
-
-console.log("addToCartLength", initialState.addToCartLength);
-
 const cartSlice = createSlice({
     name: "counter",
     initialState,
@@ -26,7 +23,6 @@ const cartSlice = createSlice({
                 state.addToCartLength = length;
             } else {
                 state.addToCartLength = length;
-                console.log("slice redux redux", productQuantityCount);
             }
         },
     },

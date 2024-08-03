@@ -1,9 +1,6 @@
 import { apiBaseUrl } from "../utils";
 export const postShippingAddress = async (addressData, accessToken) => {
     // Your logic here
-    console.log(addressData);
-
-    console.log("postShippingAddress called with:", addressData, accessToken);
     const response = await fetch(`${apiBaseUrl}/add-shipping-address`, {
         method: "POST",
         headers: {

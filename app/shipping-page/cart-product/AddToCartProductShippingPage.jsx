@@ -18,6 +18,9 @@ import { setAddToCart } from "../../store/cartSlice";
 import { RotatingLines } from "react-loader-spinner";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { showToast } from "@/app/components/Toast";
+function findObjectWithKey(array, key, value) {
+    return array.find((obj) => obj[key] === value);
+}
 const AddToCartProductShippingPage = () => {
     const { status, data: session } = useSession();
     const [customerAddress, setCustomerAddress] = useState([]);
@@ -44,18 +47,16 @@ const AddToCartProductShippingPage = () => {
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
-    const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(
-        []
-    );
+    const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
+        useState(null);
     const [loading, setLoading] = useState(false);
     const [PicShowsTost, setPicShowsTost] = useState(false);
+    const [redirectPath, setRedirectPath] = useState("#");
     let price;
     let totalPrice = 0;
     let discountPrice;
     let totalDiscountPrice = 0;
-    console.log("=>>> get login status", status);
-    console.log("=>>> get login session", session);
-    console.log("auth", auth);
+
     const validate = () => {
         const errors = {};
         if (!formData.fullName) errors.fullName = "Full Name is required";
@@ -97,6 +98,12 @@ const AddToCartProductShippingPage = () => {
         await postShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const defaultAddressInfo = findObjectWithKey(
+            data.results,
+            "set_default",
+            1
+        );
+        setSelectedDefaultAddressId(defaultAddressInfo?.id);
         const cartProduct = await fetchCartProducts(session?.accessToken);
         setCartProduct(cartProduct?.data);
         setShippingPrice(cartProduct?.shipping_charge);
@@ -152,6 +159,12 @@ const AddToCartProductShippingPage = () => {
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const defaultAddressInfo = findObjectWithKey(
+            data.results,
+            "set_default",
+            1
+        );
+        setSelectedDefaultAddressId(defaultAddressInfo.id);
         const cartProduct = await fetchCartProducts(session?.accessToken);
         setCartProduct(cartProduct?.data);
         setShippingPrice(cartProduct?.shipping_charge);
@@ -180,21 +193,22 @@ const AddToCartProductShippingPage = () => {
                         session?.accessToken
                     );
                     setCustomerAddress(data.results);
+                    const defaultAddressInfo = findObjectWithKey(
+                        data.results,
+                        "set_default",
+                        1
+                    );
+                    setSelectedDefaultAddressId(defaultAddressInfo?.id);
                     const cartProduct = await fetchCartProducts(
                         session?.accessToken
                     );
+
                     setCartProduct(cartProduct?.data);
                     setShippingPrice(cartProduct?.shipping_charge);
                     const pickUpPoint = await pickUpPontes(3);
-                    console.log(pickUpPoint);
+
                     setPickUpPoint(pickUpPoint);
-
                     const totalDistrict = await getDistrictForShipping();
-                    console.log(
-                        totalDistrict?.results?.districts,
-                        "totalDistrict================="
-                    );
-
                     setDistrictsData(totalDistrict?.results?.districts);
                     setLoading(false);
                 } catch (error) {
@@ -206,7 +220,6 @@ const AddToCartProductShippingPage = () => {
     }, [session]);
 
     const handlePlaceOrder = async () => {
-        console.log(userEmail);
         const cartItems = cartProduct?.map((item) => ({
             product_id: item.product_id,
             product_quantity: item.quantity,
@@ -216,12 +229,13 @@ const AddToCartProductShippingPage = () => {
             product_discount_type: item.discount_type,
             product_discount_amount: item.discountPrice,
             vendor_id: "", // Replace with actual vendor ID if applicable
-            thumbnail: item.product_thumbnail,
+            thumbnail: item?.product_thumbnail,
+            regular_price: item?.regular_price,
         }));
         const payload = {
             outlet_id: 3,
             location_id: 47,
-            shipping_address_id: 1, // Replace with actual shipping address ID if applicable
+            shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             total_delivery_charge: shippingPrice,
             payment_type: "cash_on_delivery",
@@ -230,15 +244,23 @@ const AddToCartProductShippingPage = () => {
             outlet_pickup_point_id: pickUpIdForOrder,
             cart_items: cartItems,
         };
-        await placeOrder(payload, session?.accessToken);
+        const order = await placeOrder(payload, session?.accessToken);
         const cartProductsItem = await fetchCartProducts(session?.accessToken);
         setCartProduct(cartProductsItem?.data);
-        dispatch(
-            setAddToCart({
-                hasSession: true,
-                length: cartProductsItem?.data?.length,
-            })
-        );
+        if (order.code == 200) {
+            showToast(order.message);
+            setRedirectPath("/dashboard");
+            deleteBuyNowProductData();
+            dispatch(
+                setAddToCart({
+                    hasSession: true,
+                    length: cartProductsItem?.data?.length,
+                })
+            );
+        } else {
+            setRedirectPath("#");
+            showToast(order.message, "error");
+        }
     };
 
     const handleSetDefaultAddress = (id) => {
@@ -256,8 +278,6 @@ const AddToCartProductShippingPage = () => {
             note: findDefaultAddress?.note,
             setDefault: true,
         });
-
-        console.log("formData", formData);
     };
 
     const handleChangeDefaultAddress = async (address_id) => {
@@ -276,7 +296,14 @@ const AddToCartProductShippingPage = () => {
             const data = await getCustomerAllShippingAddress(
                 session?.accessToken
             );
+
             setCustomerAddress(data.results);
+            const defaultAddressInfo = findObjectWithKey(
+                data.results,
+                "set_default",
+                1
+            );
+            setSelectedDefaultAddressId(defaultAddressInfo?.id);
 
             const modalElement = document.getElementById(
                 "change-nhn-shipping-address"
@@ -1508,7 +1535,7 @@ const AddToCartProductShippingPage = () => {
                                                                 0 &&
                                                             cartProduct?.length >
                                                                 0
-                                                                ? "/dashboard"
+                                                                ? redirectPath
                                                                 : "#"
                                                         }
                                                         onClick={

@@ -16,9 +16,7 @@ import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
 import { showToast } from "./Toast";
 import { RotatingLines, ThreeDots } from "react-loader-spinner";
-
 //  function to check if all three properties (variation_size, variation_color, variation_weight) are present and not null in the decorateVariation object. If they are, the function will only check the first two properties (variation_size and variation_color) against selectedVariantKey.
-
 function findMissingProperties(decorateVariation, selectedVariantKey) {
     const requiredKeys = [
         "variation_size",
@@ -90,7 +88,6 @@ function AddToCartButton({
                         decorateVariation,
                         selectedVariantKeys
                     );
-
                     if (result?.length == 2) {
                         setProductVariationError("Please Select variant");
                     } else if (result?.length == 1) {
@@ -127,7 +124,7 @@ function AddToCartButton({
                             regular_price:
                                 selectedVariantProductInfo?.discount_amount,
                         };
-                        console.log("addToCartInfo", addToCartInfo);
+
                         try {
                             setLoading(true);
                             if (session) {
@@ -147,10 +144,7 @@ function AddToCartButton({
                                     const quantityTotal = getTotalQuantity(
                                         updatedCartProducts?.data
                                     );
-                                    console.log(
-                                        "updatedCartProducts =================================> button page",
-                                        updatedCartProducts
-                                    );
+
                                     dispatch(
                                         setAddToCart({
                                             hasSession: true,
@@ -167,10 +161,7 @@ function AddToCartButton({
                                 showToast("Add To Cart Success");
                                 const quantityTotal =
                                     getTotalQuantity(addToCartProduct);
-                                console.log(
-                                    "---------------------------------add to cart",
-                                    quantityTotal
-                                );
+
                                 dispatch(
                                     setAddToCart({
                                         hasSession: false,
@@ -200,7 +191,7 @@ function AddToCartButton({
                         discount_type: productInfo?.discount_type,
                         regular_price: productInfo?.discount_amount,
                     };
-                    console.log("addToCartInfo", addToCartInfo);
+
                     try {
                         setLoading(true);
                         if (session) {
@@ -220,10 +211,7 @@ function AddToCartButton({
                                 const quantityTotal = getTotalQuantity(
                                     updatedCartProducts?.data
                                 );
-                                console.log(
-                                    "updatedCartProducts =================================> button page",
-                                    updatedCartProducts
-                                );
+
                                 dispatch(
                                     setAddToCart({
                                         hasSession: true,
@@ -259,10 +247,9 @@ function AddToCartButton({
     // Function to handle the "Buy Now" button click event
     const handleBuyNow = async (e, title) => {
         e.preventDefault();
-        console.log("Hello world title");
+
         if (title) {
             if (productInfo) {
-                console.log("Hello world");
                 if (productInfo?.variations?.length > 0) {
                     const result = findMissingProperties(
                         decorateVariation,

@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 const CheckoutPage = () => {
     const { status, data: session } = useSession();
     const [auth, setAuth] = useState(session?.user);
-    console.log("=>>> get login status", status);
-    console.log("=>>> get login session", session);
 
     return (
         <section className="shipping-section-area">

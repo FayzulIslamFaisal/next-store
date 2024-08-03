@@ -16,6 +16,10 @@ import { pickUpPontes } from "../../services/pickupPoint";
 import { getDistrictForShipping } from "../../services/getDistrictForShipping";
 import { shippingChare } from "@/app/services/getShipping";
 import PrivateRoute from "@/app/components/PrivateRoute/PrivateRoute";
+import { showToast } from "@/app/components/Toast";
+function findObjectWithKey(array, key, value) {
+    return array.find((obj) => obj[key] === value);
+}
 const BuyNowShippingProductPage = () => {
     const { status, data: session } = useSession();
     const [customerAddress, setCustomerAddress] = useState([]);
@@ -41,10 +45,9 @@ const BuyNowShippingProductPage = () => {
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
-    const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(
-        []
-    );
-
+    const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
+        useState(null);
+    const [redirectPath, setRedirectPath] = useState("#");
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -118,6 +121,12 @@ const BuyNowShippingProductPage = () => {
         // Fetch updated list of shipping addresses
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const defaultAddressInfo = findObjectWithKey(
+            data.results,
+            "set_default",
+            1
+        );
+        setSelectedDefaultAddressId(defaultAddressInfo?.id);
         // Close the modal
         const modalElement = document.getElementById("addnewdeliveryaddress");
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
@@ -178,6 +187,12 @@ const BuyNowShippingProductPage = () => {
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
+        const defaultAddressInfo = findObjectWithKey(
+            data.results,
+            "set_default",
+            1
+        );
+        setSelectedDefaultAddressId(defaultAddressInfo?.id);
         fetchShippingCharge();
 
         // Hide modal after update
@@ -211,10 +226,15 @@ const BuyNowShippingProductPage = () => {
                         session?.accessToken
                     );
                     setCustomerAddress(data.results);
-
+                    const defaultAddressInfo = findObjectWithKey(
+                        data.results,
+                        "set_default",
+                        1
+                    );
+                    setSelectedDefaultAddressId(defaultAddressInfo?.id);
                     // Fetch pick-up points
                     const pickUpPoint = await pickUpPontes(3);
-                    console.log(pickUpPoint);
+
                     setPickUpPoint(pickUpPoint);
                     // Fetch total districts for shipping
                     const totalDistrict = await getDistrictForShipping();
@@ -238,23 +258,29 @@ const BuyNowShippingProductPage = () => {
             product_discount_amount: item.discountPrice,
             vendor_id: "", // Replace with actual vendor ID if applicable
             thumbnail: item.product_thumbnail,
+            regular_price: item?.regular_price,
         }));
+
         const payload = {
             outlet_id: 3,
             location_id: 47,
-            shipping_address_id: 1, // Replace with actual shipping address ID if applicable
+            shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             total_delivery_charge: shippingPrice,
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
             place_order_with: "buy now",
             outlet_pickup_point_id: pickUpIdForOrder,
-
             cart_items: cartItems,
         };
         const order = await placeOrder(payload, session?.accessToken);
         if (order.code == 200) {
+            showToast(order.message);
+            setRedirectPath("/dashboard");
             deleteBuyNowProductData();
+        } else {
+            setRedirectPath("#");
+            showToast(order.message, "error");
         }
     };
 
@@ -288,7 +314,12 @@ const BuyNowShippingProductPage = () => {
         await updateShippingAddress(addAddressInfo, session?.accessToken);
         const data = await getCustomerAllShippingAddress(session?.accessToken);
         setCustomerAddress(data.results);
-
+        const defaultAddressInfo = findObjectWithKey(
+            data.results,
+            "set_default",
+            1
+        );
+        setSelectedDefaultAddressId(defaultAddressInfo?.id);
         fetchShippingCharge();
 
         const modalElement = document.getElementById(
@@ -1473,7 +1504,7 @@ const BuyNowShippingProductPage = () => {
                                                     customerAddress?.length >
                                                         0 &&
                                                     cartProduct?.length > 0
-                                                        ? "/dashboard"
+                                                        ? redirectPath
                                                         : "#"
                                                 }
                                                 onClick={handlePlaceOrder}
