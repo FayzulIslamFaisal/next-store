@@ -49,9 +49,6 @@ const ManageIDVerification = () => {
             toast.error("Please fill out all  fields.");
             return;
         }
-        // if (idVerification?.nid_front) {
-        //     setIdVerification();
-        // }
         try {
             const response = await postManageIdVerificationInfo(
                 idVerification,
