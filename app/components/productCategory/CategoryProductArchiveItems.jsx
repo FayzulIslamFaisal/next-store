@@ -52,6 +52,7 @@ const CategoryProductArchiveItems = ({ productItem }) => {
     const selectedVariantProductInfo = {
         product_variation_id: defaultVariant?.id,
         discount_type: defaultVariant?.discount_type,
+        discount_amount: defaultVariant?.discount_amount,
     };
 
     const productPrice = {

@@ -328,6 +328,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                         : item?.mrp_price,
                 discountPrice: item?.discount_amount > 0 ? item?.mrp_price : "",
                 discount_type: item?.discount_type,
+                discount_amount: item?.discount_amount,
                 variation_max_quantity: item?.variation_max_quantity,
             })
         );

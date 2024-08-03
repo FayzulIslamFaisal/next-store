@@ -25,6 +25,7 @@ function ProductCard({ item }) {
     const selectedVariantProductInfo = {
         product_variation_id: defaultVariant?.id,
         discount_type: defaultVariant?.discount_type,
+        discount_amount: defaultVariant?.discount_amount,
     };
 
     const productPrice = {
@@ -93,37 +94,58 @@ function ProductCard({ item }) {
                         <div className="">
                             <h4>{truncateTitle(title, 40)}</h4>
                             <div>
-                                {
-                                    item?.product_type === "variants" ? (
-                                        item.variations?.map((variant_item) => (
-                                            variant_item?.variations_default === 1 ? (
-                                                <div key={variant_item.id} >
-                                                    {variant_item?.price?.discount_amount > 0 ? (
-                                                        <div className="d-flex align-items-center justify-content-between">
-                                                            <strong>{variant_item?.price?.discounted_price}</strong>
-                                                            <strong>
-                                                            <del>{variant_item?.price?.regular_price}</del>
-                                                            </strong>
-                                                        </div>
-                                                    ) : (
-                                                        <strong>{variant_item?.price?.regular_price}</strong>
-                                                    )}
-                                                </div>
-                                            ) : null
-                                        ))
-                                    ) : (
-                                        item?.price?.discounted_price > 0 ? (
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <strong>{item.price.discounted_price}</strong>
-                                                <strong>
-                                                <del>{item.price.regular_price}</del>
-                                                </strong>
+                                {item?.product_type === "variants" ? (
+                                    item.variations?.map((variant_item) =>
+                                        variant_item?.variations_default ===
+                                        1 ? (
+                                            <div key={variant_item.id}>
+                                                {variant_item?.price
+                                                    ?.discount_amount > 0 ? (
+                                                    <div className="d-flex align-items-center justify-content-between">
+                                                        <strong>
+                                                            {
+                                                                variant_item
+                                                                    ?.price
+                                                                    ?.discounted_price
+                                                            }
+                                                        </strong>
+                                                        <strong>
+                                                            <del>
+                                                                {
+                                                                    variant_item
+                                                                        ?.price
+                                                                        ?.regular_price
+                                                                }
+                                                            </del>
+                                                        </strong>
+                                                    </div>
+                                                ) : (
+                                                    <strong>
+                                                        {
+                                                            variant_item?.price
+                                                                ?.regular_price
+                                                        }
+                                                    </strong>
+                                                )}
                                             </div>
-                                        ) : (
-                                            <strong>{item?.price?.regular_price}</strong>
-                                        )
+                                        ) : null
                                     )
-                                }
+                                ) : item?.price?.discounted_price > 0 ? (
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <strong>
+                                            {item.price.discounted_price}
+                                        </strong>
+                                        <strong>
+                                            <del>
+                                                {item.price.regular_price}
+                                            </del>
+                                        </strong>
+                                    </div>
+                                ) : (
+                                    <strong>
+                                        {item?.price?.regular_price}
+                                    </strong>
+                                )}
                             </div>
                         </div>
                         <div className="add-to-cart-holder d-flex align-items-center justify-content-between ">

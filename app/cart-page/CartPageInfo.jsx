@@ -364,6 +364,7 @@ const CartPage = () => {
      * @returns {Promise<Object>} - The response from the API.
      */
     const addToCartProduct = async (cartItems) => {
+        console.log(addToCartProduct, "addToCartProduct payload");
         const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
             method: "POST",
             headers: {
@@ -373,7 +374,7 @@ const CartPage = () => {
             },
             body: JSON.stringify({ cart_items: cartItems }),
         });
-
+        console.log(response);
         return response.json();
     };
 
@@ -425,7 +426,7 @@ const CartPage = () => {
             setLoading(true);
             if (session) {
                 const cartProduct = addToCartProductList();
-                console.log(cartProduct);
+                console.log("cartProduct=>>>>>", cartProduct);
                 await addToCartProduct(cartProduct);
                 const updatedCartProducts = await fetchCartProducts();
                 localStorage.removeItem("addToCart");

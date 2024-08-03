@@ -124,8 +124,10 @@ function AddToCartButton({
                                 selectedVariantProductInfo?.product_variation_id,
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
+                            regular_price:
+                                selectedVariantProductInfo?.discount_amount,
                         };
-
+                        console.log("addToCartInfo", addToCartInfo);
                         try {
                             setLoading(true);
                             if (session) {
@@ -196,7 +198,9 @@ function AddToCartButton({
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
+                        regular_price: productInfo?.discount_amount,
                     };
+                    console.log("addToCartInfo", addToCartInfo);
                     try {
                         setLoading(true);
                         if (session) {
@@ -295,6 +299,8 @@ function AddToCartButton({
                                 selectedVariantProductInfo?.product_variation_id,
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
+                            regular_price:
+                                selectedVariantProductInfo?.discount_amount,
                         };
 
                         setProductData(addToCartInfo);
@@ -314,6 +320,7 @@ function AddToCartButton({
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
+                        regular_price: productInfo?.discount_amount,
                     };
 
                     setProductData(addToCartInfo);

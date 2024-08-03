@@ -223,6 +223,7 @@ const AddToCartProductShippingPage = () => {
             location_id: 47,
             shipping_address_id: 1, // Replace with actual shipping address ID if applicable
             delivery_note: "",
+            total_delivery_charge: shippingPrice,
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
             place_order_with: "add to cart",
