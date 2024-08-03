@@ -1,4 +1,4 @@
-import React from "react";
+import { FaEllipsisV } from "react-icons/fa";
 
 const ManageShippingAddress = () => {
     return (
@@ -21,6 +21,20 @@ const ManageShippingAddress = () => {
                 data-bs-parent="#accordionFlushExample"
             >
                 <div className="accordion-body">
+                    <div className="p-4 shipping-ddress-if">
+                        <div className="d-flex gap-4 border p-3 rounded">
+                            <div>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Repudiandae, fugit?
+                                </p>
+                            </div>
+                            <div>
+                                <FaEllipsisV />
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="p-4">
                         <div
                             className="mx-auto"
@@ -189,19 +203,6 @@ const ManageShippingAddress = () => {
                         </div>
                     </div>
                     {/* <!-- Modal End --> */}
-
-                    {/* <!------------- if Address -------------> */}
-
-                    {/* <!-- <div className="p-4 ">
-                        <div className="d-flex gap-4 border p-3 rounded">
-                            <div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, fugit?</p>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-ellipsis-vertical"></i>
-                            </div>
-                        </div>
-                    </div>  --> */}
                 </div>
             </div>
         </div>
