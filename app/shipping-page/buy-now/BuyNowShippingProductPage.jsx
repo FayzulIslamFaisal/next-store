@@ -17,6 +17,7 @@ import { getDistrictForShipping } from "../../services/getDistrictForShipping";
 import { shippingChare } from "@/app/services/getShipping";
 import PrivateRoute from "@/app/components/PrivateRoute/PrivateRoute";
 import { showToast } from "@/app/components/Toast";
+import { useRouter } from "next/navigation";
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
 }
@@ -48,6 +49,7 @@ const BuyNowShippingProductPage = () => {
     const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
         useState(null);
     const [redirectPath, setRedirectPath] = useState("#");
+    const router = useRouter();
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -258,7 +260,7 @@ const BuyNowShippingProductPage = () => {
             product_discount_amount: item.discountPrice,
             vendor_id: "", // Replace with actual vendor ID if applicable
             thumbnail: item.product_thumbnail,
-            regular_price: item?.regular_price,
+            product_regular_price: item?.regular_price,
         }));
 
         const payload = {
@@ -278,6 +280,7 @@ const BuyNowShippingProductPage = () => {
             showToast(order.message);
             setRedirectPath("/dashboard");
             deleteBuyNowProductData();
+            router.push("/dashboard");
         } else {
             setRedirectPath("#");
             showToast(order.message, "error");

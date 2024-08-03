@@ -18,6 +18,7 @@ import { setAddToCart } from "../../store/cartSlice";
 import { RotatingLines } from "react-loader-spinner";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { showToast } from "@/app/components/Toast";
+import { useRouter } from "next/navigation";
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
 }
@@ -52,6 +53,7 @@ const AddToCartProductShippingPage = () => {
     const [loading, setLoading] = useState(false);
     const [PicShowsTost, setPicShowsTost] = useState(false);
     const [redirectPath, setRedirectPath] = useState("#");
+    const router = useRouter();
     let price;
     let totalPrice = 0;
     let discountPrice;
@@ -230,7 +232,7 @@ const AddToCartProductShippingPage = () => {
             product_discount_amount: item.discountPrice,
             vendor_id: "", // Replace with actual vendor ID if applicable
             thumbnail: item?.product_thumbnail,
-            regular_price: item?.regular_price,
+            product_regular_price: item?.regular_price,
         }));
         const payload = {
             outlet_id: 3,
@@ -250,7 +252,8 @@ const AddToCartProductShippingPage = () => {
         if (order.code == 200) {
             showToast(order.message);
             setRedirectPath("/dashboard");
-            deleteBuyNowProductData();
+
+            router.push("/dashboard");
             dispatch(
                 setAddToCart({
                     hasSession: true,
