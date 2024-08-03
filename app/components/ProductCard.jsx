@@ -16,8 +16,6 @@ function ProductCard({ item }) {
         discount_amount,
     } = item;
 
-    console.log("=>>> item", item);
-
     const defaultVariant = item?.variations?.find(
         (variant) => variant.variations_default === 1
     );

@@ -70,7 +70,6 @@ const ManageBasicInfo = () => {
                 formData,
                 session?.accessToken
             );
-            console.log("response update", response);
 
             if (!response?.error) {
                 toast.success(response?.message);
