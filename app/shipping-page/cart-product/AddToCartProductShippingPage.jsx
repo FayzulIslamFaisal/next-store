@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../../services/getShippingCustomerAddresses";
 import { fetchCartProducts } from "../../services/getShowAddToCartProduct";
-import { NagadhatPublicUrl } from "../../utils";
+import { getTotalQuantity, NagadhatPublicUrl } from "../../utils";
 import { placeOrder } from "../../services/postPlaceOrder";
 import Link from "next/link";
 import { postShippingAddress } from "../../services/postShippingAddress";
@@ -240,6 +240,7 @@ const AddToCartProductShippingPage = () => {
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             total_delivery_charge: shippingPrice,
+            total_products_price: totalPrice + parseInt(shippingPrice),
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
             place_order_with: "add to cart",
@@ -248,7 +249,10 @@ const AddToCartProductShippingPage = () => {
         };
         const order = await placeOrder(payload, session?.accessToken);
         const cartProductsItem = await fetchCartProducts(session?.accessToken);
+        const quantityTotal = getTotalQuantity(cartProductsItem?.data);
+
         setCartProduct(cartProductsItem?.data);
+
         if (order.code == 200) {
             showToast(order.message);
             setRedirectPath("/dashboard");
@@ -257,7 +261,7 @@ const AddToCartProductShippingPage = () => {
             dispatch(
                 setAddToCart({
                     hasSession: true,
-                    length: cartProductsItem?.data?.length,
+                    length: quantityTotal,
                 })
             );
         } else {

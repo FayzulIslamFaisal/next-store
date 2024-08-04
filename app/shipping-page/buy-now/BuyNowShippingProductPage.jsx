@@ -269,12 +269,14 @@ const BuyNowShippingProductPage = () => {
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             total_delivery_charge: shippingPrice,
+            total_products_price: totalPrice + parseInt(shippingPrice),
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
             place_order_with: "buy now",
             outlet_pickup_point_id: pickUpIdForOrder,
             cart_items: cartItems,
         };
+        console.log(shippingPrice);
         const order = await placeOrder(payload, session?.accessToken);
         if (order.code == 200) {
             showToast(order.message);
