@@ -229,10 +229,10 @@ const AddToCartProductShippingPage = () => {
             product_variation_id: item.product_variation_id,
             product_shipping_charge: "", // Replace with actual shipping charge if applicable
             product_discount_type: item.discount_type,
-            product_discount_amount: item.discountPrice,
+            product_discount_amount: item?.regular_price,
             vendor_id: "", // Replace with actual vendor ID if applicable
             thumbnail: item?.product_thumbnail,
-            product_regular_price: item?.regular_price,
+            product_regular_price: item.discountPrice,
         }));
         const payload = {
             outlet_id: 3,
@@ -1376,7 +1376,8 @@ const AddToCartProductShippingPage = () => {
                                                                     totalPrice +=
                                                                         price;
                                                                     totalDiscountPrice +=
-                                                                        discountPrice;
+                                                                        item?.regular_price *
+                                                                        item.quantity;
 
                                                                     return (
                                                                         <tr
