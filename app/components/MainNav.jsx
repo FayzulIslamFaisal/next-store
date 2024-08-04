@@ -10,6 +10,7 @@ import ProductSearchResultMobile from "./ProductSearchResultMobile";
 import { getDivision } from "../services/getDivision";
 import { getDistrictByDivisionId } from "../services/getDistrict";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 function MainNav({
     isObserverMenuVisible,
     isCategoryHoverMenu,
@@ -20,15 +21,18 @@ function MainNav({
     const [location, setLoction] = useState("Dhaka City, Dhaka");
     const [searchProduct, setSearchProduct] = useState([]);
     const searchParams = useSearchParams();
+    const router = useRouter();
     let divisionId = searchParams.get("divisionId");
     let districtId = searchParams.get("districtId");
     const searchResultRef = useRef(null);
     const addToCartProductLength = useSelector(
         (state) => state.cart?.addToCartLength
     );
+
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
     };
+
     useEffect(() => {
         const fetchSearchProduct = async () => {
             if (!search || search.length < 3) {
@@ -56,7 +60,7 @@ function MainNav({
     };
 
     useEffect(() => {
-        const location = localStorage.getItem("location")
+        const location = localStorage.getItem("location");
         setLoction(location);
     }, [districtId]);
 
@@ -82,7 +86,9 @@ function MainNav({
     const clearSearch = () => {
         setSearch("");
     };
-
+    const handleNavigation = () => {
+        router.push("/cart-page");
+    };
     return (
         <div ref={searchResultRef}>
             <div
@@ -189,7 +195,7 @@ function MainNav({
                                     </li>
                                 )}
 
-                                <li>
+                                <li onClick={(e) => handleNavigation()}>
                                     <Link
                                         href="/cart-page"
                                         className="text-white text-capitalize d-flex align-items-center"

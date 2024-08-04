@@ -344,13 +344,6 @@ const CartPage = () => {
     useEffect(() => {
         if (typeof window !== "undefined") {
             const cartProduct = addToCartProductList();
-            const quantityTotal = getTotalQuantity(cartProduct);
-            dispatch(
-                setAddToCart({
-                    hasSession: false,
-                    length: quantityTotal,
-                })
-            );
             setCheckedProductCard(cartProduct);
         }
     }, []);
@@ -421,15 +414,11 @@ const CartPage = () => {
         try {
             setLoading(true);
             if (session) {
-                const cartProduct = addToCartProductList();
-
-                await addToCartProduct(cartProduct);
                 const updatedCartProducts = await fetchCartProducts();
-                localStorage.removeItem("addToCart");
-
                 if (updatedCartProducts.success) {
                     setCheckedProductCard(updatedCartProducts?.data);
-                    const quantityTotal = getTotalQuantity(
+
+                    /* const quantityTotal = getTotalQuantity(
                         updatedCartProducts?.data
                     );
 
@@ -438,7 +427,7 @@ const CartPage = () => {
                             hasSession: true,
                             length: quantityTotal,
                         })
-                    );
+                    ); */
                 }
             }
             setLoading(false);
