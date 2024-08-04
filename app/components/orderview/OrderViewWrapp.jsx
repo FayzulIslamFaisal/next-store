@@ -8,9 +8,11 @@ import OrderViewTimeLine from "./OrderViewTimeLine";
 import OrderViewTopBtn from "./OrderViewTopBtn";
 import { useSession } from "next-auth/react";
 import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
+import { getOrderStatusHistory } from "@/app/services/getOrderStatusHistory";
 
 const OrderViewWrapp = ({ orderId }) => {
     const [orderSummary, setOrderSummary] = useState(null);
+    const [orderStatus, setOrderStatus] = useState([]);
     const [outletId, setOutletId] = useState(0);
     const [districtId, setDistrictId] = useState(0);
     const { data: session, status } = useSession();
@@ -42,7 +44,25 @@ const OrderViewWrapp = ({ orderId }) => {
             };
             fetchOrderSummary();
         }
-    }, [session, status]);
+    }, [session, status, orderId]);
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchOrderStatus = async () => {
+                try {
+                    const orderStatusData = await getOrderStatusHistory(
+                        orderId,
+                        session.accessToken
+                    );
+                    const orderStatusResults = orderStatusData?.results || {};
+                    setOrderStatus(orderStatusResults);
+                } catch (error) {
+                    console.error("Failed to fetch order summary:", error);
+                }
+            };
+            fetchOrderStatus();
+        }
+    }, [session, status, orderId]);
 
     if (status === "loading") {
         return <h1>Loading...</h1>;
@@ -58,13 +78,13 @@ const OrderViewWrapp = ({ orderId }) => {
                 <div className=" container">
                     <OrderViewTopBtn />
                     <OrderViewSummary orderSummary={orderSummary} />
-                    <OrderViewTimeLine />
+                    <OrderViewTimeLine orderStatus={orderStatus} />
                     <div className="row order-view-payment-history">
                         <div className="col-lg-9">
-                            <OrderViewDetail />
+                            <OrderViewDetail orderProduct={orderProduct} />
                             <OrderViewPaymentHistory />
                         </div>
-                        <OrderViewAmmount />
+                        <OrderViewAmmount orderSummary={orderSummary} />
                     </div>
                 </div>
             </div>
