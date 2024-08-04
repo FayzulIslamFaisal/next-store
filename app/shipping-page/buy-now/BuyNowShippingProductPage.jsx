@@ -54,6 +54,7 @@ const BuyNowShippingProductPage = () => {
     let totalPrice = 0;
     let discountPrice;
     let totalDiscountPrice = 0;
+    let subTotal = 0;
 
     const validate = () => {
         const errors = {};
@@ -269,11 +270,14 @@ const BuyNowShippingProductPage = () => {
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             total_delivery_charge: shippingPrice,
-            total_products_price: totalPrice + parseInt(shippingPrice),
+            total_products_price: totalPrice,
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
             place_order_with: "buy now",
             outlet_pickup_point_id: pickUpIdForOrder,
+            sub_total: subTotal,
+            discount_amount: totalDiscountPrice,
+            grand_total: totalPrice + parseInt(shippingPrice),
             cart_items: cartItems,
         };
         console.log(shippingPrice);
@@ -827,6 +831,7 @@ const BuyNowShippingProductPage = () => {
                                     </div>
                                 </div>
                             )}
+
                             <div
                                 className="modal fade new-nh-delivery-address-modal"
                                 id="updatedeliveryaddress"
@@ -1352,6 +1357,9 @@ const BuyNowShippingProductPage = () => {
                                                                 item.discountPrice *
                                                                 item.quantity;
                                                             totalPrice += price;
+                                                            subTotal +=
+                                                                discountPrice;
+
                                                             totalDiscountPrice +=
                                                                 item?.regular_price *
                                                                 item.quantity;
@@ -1474,8 +1482,27 @@ const BuyNowShippingProductPage = () => {
                                         <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                 <p>Subtotal</p>
-                                                <strong>৳{totalPrice}</strong>
+                                                <strong>৳{subTotal}</strong>
                                             </div>
+                                            <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
+                                                <p>discount</p>
+                                                <strong>
+                                                    ৳{totalDiscountPrice}
+                                                </strong>
+                                            </div>
+
+                                            <div className="d-flex gap-2 flex-column border-top pb-3">
+                                                <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
+                                                    <strong>Total</strong>
+                                                    <p className="total-order-price">
+                                                        <strong>
+                                                            {" "}
+                                                            ৳ {totalPrice}
+                                                        </strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+
                                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                 <p>
                                                     Shipping{" "}
@@ -1487,16 +1514,10 @@ const BuyNowShippingProductPage = () => {
                                                     </strong>
                                                 </div>
                                             </div>
-                                            <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
-                                                <p>discount</p>
-                                                <strong>
-                                                    ৳{totalDiscountPrice}
-                                                </strong>
-                                            </div>
                                         </div>
                                         <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                             <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
-                                                <strong>Total</strong>
+                                                <strong>Grand Total</strong>
                                                 <p className="total-order-price">
                                                     ৳{" "}
                                                     {totalPrice +

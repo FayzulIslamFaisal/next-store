@@ -58,7 +58,7 @@ const AddToCartProductShippingPage = () => {
     let totalPrice = 0;
     let discountPrice;
     let totalDiscountPrice = 0;
-
+    let subTotal = 0;
     const validate = () => {
         const errors = {};
         if (!formData.fullName) errors.fullName = "Full Name is required";
@@ -240,11 +240,14 @@ const AddToCartProductShippingPage = () => {
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: "",
             total_delivery_charge: shippingPrice,
-            total_products_price: totalPrice + parseInt(shippingPrice),
+            total_products_price: totalPrice,
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
             place_order_with: "add to cart",
             outlet_pickup_point_id: pickUpIdForOrder,
+            sub_total: subTotal,
+            discount_amount: totalDiscountPrice,
+            grand_total: totalPrice + parseInt(shippingPrice),
             cart_items: cartItems,
         };
         const order = await placeOrder(payload, session?.accessToken);
@@ -1375,6 +1378,10 @@ const AddToCartProductShippingPage = () => {
                                                                         item.quantity;
                                                                     totalPrice +=
                                                                         price;
+
+                                                                    subTotal +=
+                                                                        discountPrice;
+
                                                                     totalDiscountPrice +=
                                                                         item?.regular_price *
                                                                         item.quantity;
@@ -1502,9 +1509,27 @@ const AddToCartProductShippingPage = () => {
                                                     <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                         <p>Subtotal</p>
                                                         <strong>
-                                                            ৳{totalPrice}
+                                                            ৳{subTotal}
                                                         </strong>
                                                     </div>
+                                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
+                                                        <p>discount</p>
+                                                        <strong>
+                                                            ৳
+                                                            {totalDiscountPrice}
+                                                        </strong>
+                                                    </div>
+                                                    <div className="d-flex gap-2 flex-column border-top pb-3">
+                                                        <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
+                                                            <strong>
+                                                                Total
+                                                            </strong>
+                                                            <p className="total-order-price">
+                                                                ৳ {totalPrice}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
                                                     <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                         <p>
                                                             Shipping{" "}
@@ -1516,17 +1541,12 @@ const AddToCartProductShippingPage = () => {
                                                             </strong>
                                                         </div>
                                                     </div>
-                                                    <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
-                                                        <p>discount</p>
-                                                        <strong>
-                                                            ৳
-                                                            {totalDiscountPrice}
-                                                        </strong>
-                                                    </div>
                                                 </div>
                                                 <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                                     <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
-                                                        <strong>Total</strong>
+                                                        <strong>
+                                                            Grand Total
+                                                        </strong>
                                                         <p className="total-order-price">
                                                             ৳{" "}
                                                             {totalPrice +
