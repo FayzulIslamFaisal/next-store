@@ -1,4 +1,4 @@
-const OrderViewAmmount = () => {
+const OrderViewAmmount = ({ orderSummary }) => {
     return (
         <>
             <div className="col-lg-3">
@@ -16,8 +16,7 @@ const OrderViewAmmount = () => {
                                         </td>
                                         <td className="text-right">
                                             <span className="strong-600">
-                                                {" "}
-                                                ৳ 1500{" "}
+                                                ৳ {orderSummary?.sub_total}
                                             </span>
                                         </td>
                                     </tr>
@@ -27,8 +26,11 @@ const OrderViewAmmount = () => {
                                         </td>
                                         <td className="text-right">
                                             <span className="text-italic">
-                                                {" "}
-                                                ৳ 0{" "}
+                                                ৳{" "}
+                                                {orderSummary?.shipping_charge >
+                                                0
+                                                    ? orderSummary?.shipping_charge
+                                                    : 0}
                                             </span>
                                         </td>
                                     </tr>
@@ -38,7 +40,10 @@ const OrderViewAmmount = () => {
                                         </td>
                                         <td className="text-right">
                                             <span className="text-italic">
-                                                - ৳ 300
+                                                - ৳{" "}
+                                                {orderSummary?.discount > 0
+                                                    ? orderSummary?.discount
+                                                    : 0}
                                             </span>
                                         </td>
                                     </tr>
@@ -46,7 +51,9 @@ const OrderViewAmmount = () => {
                                         <td className="w-50 fw-600">TOTAL</td>
                                         <td className="text-right">
                                             <strong>
-                                                <span> ৳ 1200 </span>
+                                                <span>
+                                                    ৳ {orderSummary?.total}
+                                                </span>
                                             </strong>
                                         </td>
                                     </tr>
