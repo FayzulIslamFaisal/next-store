@@ -122,7 +122,10 @@ function AddToCartButton({
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
                             regular_price:
-                                selectedVariantProductInfo?.discount_amount,
+                                selectedVariantProductInfo?.discount_amount ==
+                                null
+                                    ? 0
+                                    : selectedVariantProductInfo?.discount_amount,
                         };
 
                         try {
@@ -189,7 +192,10 @@ function AddToCartButton({
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
-                        regular_price: productInfo?.discount_amount,
+                        regular_price:
+                            productInfo?.discount_amount == null
+                                ? 0
+                                : productInfo?.discount_amount,
                     };
 
                     try {
@@ -287,7 +293,10 @@ function AddToCartButton({
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
                             regular_price:
-                                selectedVariantProductInfo?.discount_amount,
+                                selectedVariantProductInfo?.discount_amount ==
+                                null
+                                    ? 0
+                                    : selectedVariantProductInfo?.discount_amount,
                         };
 
                         setProductData(addToCartInfo);
@@ -307,7 +316,10 @@ function AddToCartButton({
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
-                        regular_price: productInfo?.discount_amount,
+                        regular_price:
+                            productInfo?.discount_amount == null
+                                ? 0
+                                : productInfo?.discount_amount,
                     };
 
                     setProductData(addToCartInfo);
