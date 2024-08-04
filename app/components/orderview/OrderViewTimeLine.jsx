@@ -1,4 +1,6 @@
-const OrderViewTimeLine = () => {
+import { FaArrowCircleRight } from "react-icons/fa";
+
+const OrderViewTimeLine = ({ orderStatus }) => {
     return (
         <>
             <div className="row order-view-product-detail d-flex justify-content-center mt-70 mb-70">
@@ -9,52 +11,52 @@ const OrderViewTimeLine = () => {
                                 Order Timeline
                             </h5>
                             <div className="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
-                                <div className="vertical-timeline-item vertical-timeline-element">
-                                    <div>
-                                        <span className="vertical-timeline-element-icon bounce-in">
-                                            <i className="fas fa-arrow-circle-right"></i>
-                                        </span>
-                                        <div className="vertical-timeline-element-content bounce-in">
-                                            <h4 className="timeline-title text-danger">
-                                                Canceled
-                                            </h4>
-                                            <p>
-                                                Your order has been canceled.{" "}
-                                                <br />
-                                                For any query, call 01906198502.
-                                            </p>
-                                            <span className="vertical-timeline-element-date">
-                                                5:56 PM
-                                            </span>
-                                            <span className="vertical-timeline-element-date-time">
-                                                11-Mar, 2024
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="vertical-timeline-item vertical-timeline-element">
-                                    <div>
-                                        <span className="vertical-timeline-element-icon bounce-in">
-                                            <i className="fas fa-arrow-circle-right"></i>
-                                        </span>
-                                        <div className="vertical-timeline-element-content bounce-in">
-                                            <h4 className="timeline-title text-info">
-                                                Order Placed
-                                            </h4>
-                                            <p>
-                                                Please pay total amount within
-                                                74 hours to confirm your order.
-                                            </p>
-                                            <span className="vertical-timeline-element-date">
-                                                1:23 PM
-                                            </span>
-                                            <span className="vertical-timeline-element-date-time">
-                                                11-Mar, 2024
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                {orderStatus.length > 0 ? (
+                                    orderStatus.map((statusItem) => {
+                                        const { id, status, time, date } =
+                                            statusItem;
+                                        return (
+                                            <div
+                                                key={id}
+                                                className="vertical-timeline-item vertical-timeline-element"
+                                            >
+                                                <div>
+                                                    <span className="vertical-timeline-element-icon bounce-in">
+                                                        <FaArrowCircleRight />
+                                                    </span>
+                                                    <div className="vertical-timeline-element-content bounce-in">
+                                                        <h4
+                                                            className={`timeline-title ${
+                                                                status ===
+                                                                "Canceled"
+                                                                    ? "text-danger"
+                                                                    : "text-info"
+                                                            }`}
+                                                        >
+                                                            {status
+                                                                ? status
+                                                                : null}
+                                                        </h4>
+                                                        <p>
+                                                            Please pay total
+                                                            amount within 74
+                                                            hours to confirm
+                                                            your order.
+                                                        </p>
+                                                        <span className="vertical-timeline-element-date">
+                                                            {time ? time : null}
+                                                        </span>
+                                                        <span className="vertical-timeline-element-date-time">
+                                                            {date ? date : null}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <h1>No Data Found</h1>
+                                )}
                             </div>
                         </div>
                     </div>

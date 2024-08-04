@@ -1,5 +1,6 @@
 import Link from "next/link";
-import OrderViewProgressbar from "./OrderViewProgressbar";
+// import OrderViewProgressbar from "./OrderViewProgressbar";
+import { FaChevronLeft } from "react-icons/fa";
 
 const OrderViewSummary = async ({ orderSummary }) => {
     return (
@@ -91,7 +92,7 @@ const OrderViewSummary = async ({ orderSummary }) => {
                                 </div>
                             </div>
                         </div>
-                        <OrderViewProgressbar />
+                        {/* <OrderViewProgressbar /> */}
                         <div className="row back-to-order-view">
                             <div className="col-md-12">
                                 <div className="back-to-order-view-btn">
@@ -100,7 +101,7 @@ const OrderViewSummary = async ({ orderSummary }) => {
                                         className="btn btn-warning"
                                         data-abc="true"
                                     >
-                                        <i className="fa fa-chevron-left"></i>
+                                        <FaChevronLeft />
                                         Back to orders
                                     </Link>
                                 </div>

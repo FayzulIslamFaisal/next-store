@@ -1,4 +1,8 @@
-const OrderViewDetail = () => {
+import { NagadhatPublicUrl } from "@/app/utils";
+import Image from "next/image";
+import Link from "next/link";
+
+const OrderViewDetail = ({ orderProduct }) => {
     return (
         <>
             <div className="card mt-3">
@@ -10,8 +14,9 @@ const OrderViewDetail = () => {
                         <table className="table table-borderless table-responsive">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th width="30%">Product</th>
+                                    <th>SL</th>
+                                    <th>Image</th>
+                                    <th width="30%">Title</th>
                                     <th>Quantity</th>
                                     <th>Vendor Name</th>
                                     <th>Delivery Partner</th>
@@ -20,31 +25,46 @@ const OrderViewDetail = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <img
-                                            className="rounded"
-                                            src="https://nagadhat.com.bd/storage/media/products/images/1709628514_IMG_4228.jpg"
-                                            width="60"
-                                        />
-                                    </td>
-                                    <td>
-                                        <a
-                                            href="/product/------20----65e6dc62df79a"
-                                            target="_blank"
-                                        >
-                                            ওয়াও স্টাফড ডেটস গিফট বক্স 20পিস
-                                            প্রিমিয়াম স্টাফড ডেটস
-                                        </a>
-                                    </td>
-                                    <td>1</td>
-                                    <td>Nagadhat</td>
-                                    <td>--</td>
-                                    <td>৳ 1500</td>
-                                    <td>
-                                        <b>--</b>
-                                    </td>
-                                </tr>
+                                {orderProduct.length > 0 ? (
+                                    orderProduct.map((items, index) => {
+                                        const {
+                                            id,
+                                            product_name,
+                                            product_discount,
+                                            quantity,
+                                            unit_price,
+                                        } = items;
+                                        const imageUrl = `${NagadhatPublicUrl}/${items?.product_thumbnail}`;
+                                        return (
+                                            <tr key={id}>
+                                                <td>{index + 1}</td>
+                                                <td>
+                                                    <Image
+                                                        className="rounded"
+                                                        src={imageUrl}
+                                                        width={60}
+                                                        height={60}
+                                                        alt={product_name}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Link href="#">
+                                                        {product_name}
+                                                    </Link>
+                                                </td>
+                                                <td>{Math.round(quantity)}</td>
+                                                <td>Nagadhat</td>
+                                                <td>--</td>
+                                                <td>৳ {unit_price}</td>
+                                                <td>
+                                                    <b>--</b>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                ) : (
+                                    <h1>Data not found</h1>
+                                )}
                             </tbody>
                         </table>
                     </div>
