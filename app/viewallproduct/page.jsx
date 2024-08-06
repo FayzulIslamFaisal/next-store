@@ -6,7 +6,8 @@ import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllProduct from "../components/viewAllProduct/ViewAllProduct";
-import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
+import { getHomeFlashSalesProduct } from "../services/getHomeFlashSalesProduct";
+import { getHomeJustForYouProduct } from "../services/getHomeJustForYouProduct";
 import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
 
@@ -47,7 +48,11 @@ const ViewAllProductPage = ({ searchParams }) => {
             try {
                
             if (searchParams && districtId) {
-                const justForYouProductData = await getHomeFlashAndJfyProduct(
+                const flashSaleProductData = await getHomeFlashSalesProduct(
+                    districtId
+                );
+
+                const justForYouProductData = await getHomeJustForYouProduct(
                     districtId
                 );
                 switch (searchParams.type) {
@@ -61,7 +66,7 @@ const ViewAllProductPage = ({ searchParams }) => {
 
                     case "flashSale":
                         setViewProductData(
-                            justForYouProductData?.results?.flash_sales_product
+                            flashSaleProductData?.results?.flash_sales_product
                         );
                         setSectionTitle("Flash Sale");
                         break;

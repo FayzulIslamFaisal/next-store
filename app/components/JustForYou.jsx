@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import SectionTitle from "./SectionTitle";
 import LoadMore from "./LoadMore";
 import ProductCard from "./ProductCard";
-import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
+import { getHomeJustForYouProduct } from "../services/getHomeJustForYouProduct";
 
 function JustForYou() {
     const [jfyProducts, setJfyProducts] = useState([]);
@@ -18,7 +18,7 @@ function JustForYou() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const justForYoutList = await getHomeFlashAndJfyProduct(
+                const justForYoutList = await getHomeJustForYouProduct(
                     districtId
                 );
                 let justForYouListProduct =
