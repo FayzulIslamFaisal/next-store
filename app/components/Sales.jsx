@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // import { getFlashSaleProduct } from "../services/getFlashSaleProduct";
 // import getAllSettings from "../services/getAllSettings";
-import { getHomeFlashAndJfyProduct } from "../services/getHomeFlashAndJfyProduct";
+import { getHomeFlashSalesProduct } from "../services/getHomeFlashSalesProduct";
 import { getFlashSlaeShowOnHomePage } from "../services/getFlashSlaeShowOnHomePage";
 import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
@@ -33,7 +33,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
 
     useEffect(() => {
         async function fetchData() {
-            const flashSale = await getHomeFlashAndJfyProduct(districtId);
+            const flashSale = await getHomeFlashSalesProduct(districtId);
             let flashProduct = flashSale?.results?.flash_sales_product;
             setFlashSaleProductList(flashProduct);
         }
