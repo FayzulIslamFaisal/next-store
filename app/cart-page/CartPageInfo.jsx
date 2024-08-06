@@ -33,11 +33,13 @@ const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
+    const [isRemoveOpen, setIsRemoveOpen] = useState([]);
     let price;
     let totalPrice = 0;
     let discountPrice;
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+
     //Update Add To Cart product after operation in localStore addToCart Item
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
@@ -51,19 +53,22 @@ const CartPage = () => {
      * @param {number} cart_id - The ID of the cart item to be deleted.
      */
     const handleDelete = async (cart_id) => {
+        const wantToDelete = await Swal.fire({
+            title: "Are you sure?",
+            text: "Remove the product from cart !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Remove",
+            backdrop: false,
+        });
+
         try {
-            setLoading(true);
-            const wantToDelete = await Swal.fire({
-                title: "Are you sure?",
-                text: "Remove the product from cart !",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Remove",
-            });
-            if (session) {
-                if (wantToDelete.isConfirmed) {
+            if (wantToDelete.isConfirmed) {
+                setLoading(true);
+
+                if (session) {
                     const deleteProduct = await deleteCartProduct(
                         cart_id,
                         session?.accessToken
@@ -83,9 +88,7 @@ const CartPage = () => {
                             })
                         );
                     }
-                }
-            } else {
-                if (wantToDelete.isConfirmed) {
+                } else {
                     const updatedItemsInCard = checkedProductCard.filter(
                         (item, i) => i !== cart_id
                     );
@@ -102,8 +105,8 @@ const CartPage = () => {
                         })
                     );
                 }
+                setLoading(false);
             }
-            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -115,19 +118,19 @@ const CartPage = () => {
      * If no session exists, it removes the selected items from the local state and updates local storage.
      */
     const handleSelectedItemDelete = async () => {
+        const wantToDelete = await Swal.fire({
+            title: "Are you sure?",
+            text: "Remove the product from cart !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Remove",
+        });
         try {
-            setLoading(true);
-            const wantToDelete = await Swal.fire({
-                title: "Are you sure?",
-                text: "Remove the product from cart !",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Remove",
-            });
-            if (session) {
-                if (wantToDelete.isConfirmed) {
+            if (wantToDelete.isConfirmed) {
+                setLoading(true);
+                if (session) {
                     const updatedItemsInCard = checkedProductCard
                         .filter((item) => item.isChecked)
                         .map((item) => ({
@@ -152,9 +155,7 @@ const CartPage = () => {
                             })
                         );
                     }
-                }
-            } else {
-                if (wantToDelete.isConfirmed) {
+                } else {
                     const updatedItemsInCard = checkedProductCard.filter(
                         (item) => !item.isChecked
                     );
@@ -171,8 +172,8 @@ const CartPage = () => {
                         })
                     );
                 }
+                setLoading(false);
             }
-            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -191,6 +192,7 @@ const CartPage = () => {
             let tempCard = checkedProductCard.map((checkCard) => {
                 return { ...checkCard, isChecked: checked };
             });
+
             setCheckedProductCard(tempCard);
             setSelected(tempCard);
         } else {
@@ -440,6 +442,21 @@ const CartPage = () => {
         handleCheckout();
     }, [session]);
 
+    function isAnyChecked(products) {
+        for (let product of products) {
+            if (product.isChecked) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    useEffect(() => {
+        const checkingProductIsCheck = isAnyChecked(checkedProductCard);
+        console.log("checkingProductIsCheck", checkingProductIsCheck);
+        setIsRemoveOpen(checkingProductIsCheck);
+    }, [checkedProductCard]);
+
     return (
         <section className="cart-section-area">
             <div className="container">
@@ -471,6 +488,15 @@ const CartPage = () => {
                                     <div className="cart-top-remove-btn">
                                         <button
                                             onClick={handleSelectedItemDelete}
+                                            disabled={!isRemoveOpen}
+                                            style={{
+                                                opacity: isRemoveOpen
+                                                    ? "100%"
+                                                    : 0.5,
+                                                cursor: isRemoveOpen
+                                                    ? "pointer"
+                                                    : "not-allowed",
+                                            }}
                                         >
                                             <FaTrashCan /> REMOVE
                                         </button>

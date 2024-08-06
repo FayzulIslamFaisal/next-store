@@ -258,9 +258,9 @@ const AddToCartProductShippingPage = () => {
 
         if (order.code == 200) {
             showToast(order.message);
-            setRedirectPath("/dashboard");
+            setRedirectPath("/thankyou");
 
-            router.push("/dashboard");
+            router.push("/thankyou");
             dispatch(
                 setAddToCart({
                     hasSession: true,
