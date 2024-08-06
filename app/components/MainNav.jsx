@@ -59,7 +59,7 @@ function MainNav({
 
     useEffect(() => {
         const location = localStorage.getItem("location");
-        setLoction(location);
+        setLoction(location?location:"Dhaka City, Dhaka");
     }, [districtId]);
 
     // Function to handle click outside the modal
