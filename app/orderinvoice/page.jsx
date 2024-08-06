@@ -11,17 +11,17 @@ import { useSession } from "next-auth/react";
 const OrderInvoicePage = ({ orderId }) => {
     const [orderInvoice, setOrderInvoice] = useState(null);
     const { data: session, status } = useSession();
-    const [outletId, setOutletId] = useState(0);
-    const [districtId, setDistrictId] = useState(0);
+    // const [outletId, setOutletId] = useState(0);
+    // const [districtId, setDistrictId] = useState(0);
 
-    useEffect(() => {
-        const initialOutletId = localStorage.getItem("outletId");
-        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
-    }, []);
-    useEffect(() => {
-        const initialDistrictId = localStorage.getItem("districtId");
-        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
-    }, []);
+    // useEffect(() => {
+    //     const initialOutletId = localStorage.getItem("outletId");
+    //     setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    // }, []);
+    // useEffect(() => {
+    //     const initialDistrictId = localStorage.getItem("districtId");
+    //     setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
+    // }, []);
 
     useEffect(() => {
         window.print();
@@ -32,8 +32,8 @@ const OrderInvoicePage = ({ orderId }) => {
             const fetchOrderInvoice = async () => {
                 try {
                     const invoiceData = await getProductOrderSummery(
-                        outletId,
-                        districtId,
+                        // outletId,
+                        // districtId,
                         orderId,
                         session?.accessToken
                     );
