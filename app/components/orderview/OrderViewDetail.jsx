@@ -30,13 +30,12 @@ const OrderViewDetail = ({ orderProduct }) => {
                                         const {
                                             id,
                                             product_name,
-                                            product_discount,
                                             quantity,
                                             unit_price,
                                         } = items;
                                         const imageUrl = `${NagadhatPublicUrl}/${items?.product_thumbnail}`;
                                         return (
-                                            <tr key={id}>
+                                            <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>
                                                     <Image
@@ -63,7 +62,11 @@ const OrderViewDetail = ({ orderProduct }) => {
                                         );
                                     })
                                 ) : (
-                                    <h1>Data not found</h1>
+                                    <tr>
+                                        <td>
+                                            <h1>Data not found</h1>
+                                        </td>
+                                    </tr>
                                 )}
                             </tbody>
                         </table>
