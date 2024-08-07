@@ -14,29 +14,15 @@ import { useSearchParams } from "next/navigation";
 const OrderViewWrapp = () => {
     const [orderSummary, setOrderSummary] = useState(null);
     const [orderStatus, setOrderStatus] = useState([]);
-    // const [outletId, setOutletId] = useState(0);
-    // const [districtId, setDistrictId] = useState(0);
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderid");
-    console.log("orderId======////>", orderId);
-
-    // useEffect(() => {
-    //     const initialOutletId = localStorage.getItem("outletId");
-    //     setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
-    // }, []);
-    // useEffect(() => {
-    //     const initialDistrictId = localStorage.getItem("districtId");
-    //     setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
-    // }, []);
 
     useEffect(() => {
         if (status === "authenticated") {
             const fetchOrderSummary = async () => {
                 try {
                     const orderData = await getProductOrderSummery(
-                        // outletId,
-                        // districtId,
                         orderId,
                         session?.accessToken
                     );

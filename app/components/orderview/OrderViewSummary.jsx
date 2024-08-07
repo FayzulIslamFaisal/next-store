@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 // import OrderViewProgressbar from "./OrderViewProgressbar";
 import { FaChevronLeft } from "react-icons/fa";
