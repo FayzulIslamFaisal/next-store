@@ -3,6 +3,8 @@ import { FaEye } from "react-icons/fa";
 import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 
 const CustomerRightsids = ({ customerOrders }) => {
+    console.log("customerOrders,,,,,---->", customerOrders);
+
     return (
         <div className="col-lg-9">
             <div className="customer-dashboard-order-history-area">
@@ -16,7 +18,7 @@ const CustomerRightsids = ({ customerOrders }) => {
                                 <tr>
                                     <th scope="col">Invoice ID</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Amount</th>
+                                    <th scope="col">Grand Total</th>
                                     <th scope="col">Order Status</th>
                                     <th scope="col">Payment Status</th>
                                     <th scope="col">Actions</th>
@@ -27,17 +29,18 @@ const CustomerRightsids = ({ customerOrders }) => {
                                     customerOrders.length > 0 &&
                                     customerOrders.map((orderItem) => {
                                         const {
+                                            order_id,
                                             invoice_id,
                                             order_date,
                                             order_status,
-                                            price_amount,
+                                            grand_total,
                                             payment_status,
                                         } = orderItem;
                                         return (
                                             <tr key={invoice_id}>
                                                 <td>{invoice_id}</td>
                                                 <td>{order_date}</td>
-                                                <td>{price_amount}</td>
+                                                <td>{grand_total}</td>
                                                 <td>{order_status}</td>
                                                 {payment_status === "Paid" ? (
                                                     <td className="paid">
@@ -58,7 +61,7 @@ const CustomerRightsids = ({ customerOrders }) => {
                                                     <div className="customer-dashboard-order-history-actions">
                                                         <button>
                                                             <Link
-                                                                href="/orderview"
+                                                                href={`/orderview?orderid=${order_id}`}
                                                                 style={{
                                                                     color: "white",
                                                                 }}

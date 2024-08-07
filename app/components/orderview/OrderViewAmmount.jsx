@@ -27,9 +27,9 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                         <td className="text-right">
                                             <span className="text-italic">
                                                 ৳{" "}
-                                                {orderSummary?.shipping_charge >
+                                                {orderSummary?.total_delivery_charge >
                                                 0
-                                                    ? orderSummary?.shipping_charge
+                                                    ? orderSummary?.total_delivery_charge
                                                     : 0}
                                             </span>
                                         </td>
@@ -41,8 +41,9 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                         <td className="text-right">
                                             <span className="text-italic">
                                                 - ৳{" "}
-                                                {orderSummary?.discount > 0
-                                                    ? orderSummary?.discount
+                                                {orderSummary?.discount_amount >
+                                                0
+                                                    ? orderSummary?.discount_amount
                                                     : 0}
                                             </span>
                                         </td>
@@ -52,7 +53,8 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                         <td className="text-right">
                                             <strong>
                                                 <span>
-                                                    ৳ {orderSummary?.total}
+                                                    ৳{" "}
+                                                    {orderSummary?.grand_total}
                                                 </span>
                                             </strong>
                                         </td>
