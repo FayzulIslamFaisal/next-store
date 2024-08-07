@@ -42,11 +42,8 @@ const ManageTakePhoto = () => {
         if (!file) return;
 
         try {
-            const formData = new FormData();
-            formData.append("profile_picture", file);
-
             const result = await postManageProfilePicture(
-                formData,
+                file,
                 session.accessToken
             );
 

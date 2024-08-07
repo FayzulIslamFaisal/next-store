@@ -2,14 +2,15 @@ import { apiBaseUrl } from "../utils";
 
 export const postManageProfilePicture = async (profilePicture, token) => {
     try {
+        const formData = new FormData();
+        formData.append('profile_picture', profilePicture);
+
         const response = await fetch(`${apiBaseUrl}/manage-profile-picture`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(profilePicture),
+            body: formData,
         });
 
         return await response.json();

@@ -10,8 +10,12 @@ const nextConfig = {
                 // For Localhost
                 // protocol: "http",
                 // hostname: "nagadhat-v3.test",
+                // hostname: "127.0.0.1:8000",
             },
         ],
+
+        //  For Localhost
+        // domains: ['127.0.0.1'],
     },
 };
 
