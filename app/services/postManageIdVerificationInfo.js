@@ -1,15 +1,18 @@
+
 import { apiBaseUrl } from "../utils";
 
 export const postManageIdVerificationInfo = async (idVerification, token) => {
     try {
+        const formData = new FormData();
+        formData.append('nid_no', idVerification.nid_no);
+        formData.append('nid_front', idVerification.nid_front);
+
         const response = await fetch(`${apiBaseUrl}/manage-id-verification-info`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(idVerification),
+            body: formData,
         });
 
         return await response.json();
