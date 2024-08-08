@@ -29,7 +29,7 @@ const ManageTakePhoto = () => {
             };
             fetchProfilePicture();
         }
-    }, [session, status]);
+    }, [session, status, profilePicture]);
 
     const handleFileChange = (event) => {
         if (event.target.files && event.target.files.length > 0) {
