@@ -37,7 +37,7 @@ const ProductImage = ({ productInfo, path_name, productGallery }) => {
                     socialLinkItem={socialLinkItem}
                     path_name={path_name}
                     product_name={productInfo?.product_name}
-                    product_thumbnail={productInfo?.product_name}
+                    product_thumbnail={productInfo?.product_thumbnail}
                 />
             </div>
         </div>

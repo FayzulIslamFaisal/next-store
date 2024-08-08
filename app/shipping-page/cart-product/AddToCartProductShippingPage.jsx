@@ -1407,9 +1407,13 @@ const AddToCartProductShippingPage = () => {
                                                                             <td>
                                                                                 <div>
                                                                                     <p className="product-cart-text">
-                                                                                        {
-                                                                                            item?.product_name
-                                                                                        }
+                                                                                        <Link
+                                                                                            href={`/products/get-product-details?outlet_id=${item?.outlet_id}&product_id=${item?.product_id}`}
+                                                                                        >
+                                                                                            {
+                                                                                                item.product_name
+                                                                                            }
+                                                                                        </Link>
                                                                                     </p>
                                                                                     <p className="cart-prodect-variants">
                                                                                         {item?.selectedVariants &&
@@ -1513,7 +1517,7 @@ const AddToCartProductShippingPage = () => {
                                                         </strong>
                                                     </div>
                                                     <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
-                                                        <p>discount</p>
+                                                        <p>Discount</p>
                                                         <strong>
                                                             ৳
                                                             {totalDiscountPrice}

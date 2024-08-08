@@ -1,16 +1,18 @@
 import SocialLinkItems from "./SocialLinkItems";
 
 const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
+    // https://nagadhat-dev.vercel.app/_next/i
+    console.log("this is social page ", product_thumbnail);
     const socialLinkItem = [
         {
             image: "/images/facbook.svg",
             alt: "Facebook",
-            path: `https://www.facebook.com/sharer/sharer.php?u=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=${product_thumbnail}`,
+            path: `https://www.facebook.com/sharer/sharer.php?u=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=https://v3.nagadhat.com/${product_thumbnail}`,
         },
         {
             image: "/images/twitter.svg",
             alt: "Twitter",
-            path: `https://twitter.com/intent/tweet?url=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=${product_thumbnail}`,
+            path: `https://twitter.com/intent/tweet?url=https://nagadhat-dev.vercel.app/products/get-product-details?${path_name}&title=${product_name}&picture=https://v3.nagadhat.com/${product_thumbnail}`,
         },
         {
             image: "/images/linkedin.svg",

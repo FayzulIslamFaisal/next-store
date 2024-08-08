@@ -577,9 +577,13 @@ const CartPage = () => {
                                                                         </div>
                                                                         <div>
                                                                             <h2 className="product-cart-text">
-                                                                                {
-                                                                                    item.product_name
-                                                                                }
+                                                                                <Link
+                                                                                    href={`/products/get-product-details?outlet_id=${item?.outlet_id}&product_id=${item?.product_id}`}
+                                                                                >
+                                                                                    {
+                                                                                        item.product_name
+                                                                                    }
+                                                                                </Link>
                                                                             </h2>
                                                                             <p className="cart-prodect-variants">
                                                                                 {Array.isArray(
@@ -770,6 +774,7 @@ const CartPage = () => {
                                             alt="discount-code"
                                         />
                                     </div>
+
                                     <h3 className="promo-code-title">
                                         I Have promo code
                                     </h3>
