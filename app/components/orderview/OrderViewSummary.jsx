@@ -1,9 +1,8 @@
-"use client";
 import Link from "next/link";
 // import OrderViewProgressbar from "./OrderViewProgressbar";
 import { FaChevronLeft } from "react-icons/fa";
 
-const OrderViewSummary = async ({ orderSummary }) => {
+const OrderViewSummary = ({ orderSummary }) => {
     return (
         <>
             <div className="row order-view-summary-area">

@@ -1,4 +1,6 @@
-const OrderViewPaymentHistory = () => {
+"use client";
+
+const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
     return (
         <>
             <div className="card mt-4">
@@ -10,19 +12,65 @@ const OrderViewPaymentHistory = () => {
                         <table className="table table-borderless table-responsive">
                             <thead>
                                 <tr>
-                                    <th style={{ width: "20%" }}>Paid On</th>
-                                    <th style={{ width: "30%" }}>
-                                        Payment Gateway
-                                    </th>
-                                    <th style={{ width: "20%" }}>
-                                        Payment Method
-                                    </th>
-                                    <th style={{ width: "20%" }}>Bank name</th>
-                                    <th style={{ width: "20%" }}>TxId/DC</th>
-                                    <th style={{ width: "20%" }}>Amount</th>
+                                    <th>Paid On</th>
+                                    <th>Payment Gateway</th>
+                                    <th>Payment Method</th>
+                                    <th>Bank name</th>
+                                    <th>TxId/DC</th>
+                                    <th>Amount</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                {orderPaymentHistory.length > 0 ? (
+                                    orderPaymentHistory.map((item) => {
+                                        const {
+                                            id,
+                                            bank_name,
+                                            date,
+                                            payment_getway,
+                                            payment_method,
+                                            transaction_amount,
+                                            transaction_id,
+                                        } = item;
+                                        return (
+                                            <tr key={id}>
+                                                <td>{date ? date : null}</td>
+                                                <td>
+                                                    {payment_getway
+                                                        ? payment_getway
+                                                        : null}
+                                                </td>
+                                                <td>
+                                                    {payment_method
+                                                        ? payment_method
+                                                        : null}
+                                                </td>
+                                                <td>
+                                                    {bank_name
+                                                        ? bank_name
+                                                        : null}
+                                                </td>
+                                                <td>
+                                                    {transaction_id
+                                                        ? transaction_id
+                                                        : null}
+                                                </td>
+                                                <td>
+                                                    {transaction_amount
+                                                        ? transaction_amount
+                                                        : null}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                ) : (
+                                    <tr>
+                                        <td>
+                                            <h6>No Data Found</h6>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
                         </table>
                     </div>
                 </div>
