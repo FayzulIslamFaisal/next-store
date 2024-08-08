@@ -22,25 +22,11 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                     </tr>
                                     <tr>
                                         <td className="w-50 fw-600">
-                                            Shipping
-                                        </td>
-                                        <td className="text-right">
-                                            <span className="text-italic">
-                                                ৳{" "}
-                                                {orderSummary?.total_delivery_charge >
-                                                0
-                                                    ? orderSummary?.total_delivery_charge
-                                                    : 0}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="w-50 fw-600">
                                             Discount
                                         </td>
                                         <td className="text-right">
                                             <span className="text-italic">
-                                                - ৳{" "}
+                                                ৳{" "}
                                                 {orderSummary?.discount_amount >
                                                 0
                                                     ? orderSummary?.discount_amount
@@ -54,7 +40,40 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                             <strong>
                                                 <span>
                                                     ৳{" "}
-                                                    {orderSummary?.grand_total}
+                                                    {orderSummary?.total_products_price >
+                                                    0
+                                                        ? orderSummary?.total_products_price
+                                                        : 0}
+                                                </span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="w-50 fw-600">
+                                            Shipping
+                                        </td>
+                                        <td className="text-right">
+                                            <span className="text-italic">
+                                                ৳{" "}
+                                                {orderSummary?.total_delivery_charge >
+                                                0
+                                                    ? orderSummary?.total_delivery_charge
+                                                    : 0}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr className="border-top">
+                                        <td className="w-50 fw-600">
+                                            Grand Total
+                                        </td>
+                                        <td className="text-right">
+                                            <strong>
+                                                <span>
+                                                    ৳{" "}
+                                                    {orderSummary?.grand_total >
+                                                    0
+                                                        ? orderSummary?.grand_total
+                                                        : 0}
                                                 </span>
                                             </strong>
                                         </td>
