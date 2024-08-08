@@ -1,8 +1,6 @@
 import SocialLinkItems from "./SocialLinkItems";
 
 const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
-    // https://nagadhat-dev.vercel.app/_next/i
-    console.log("this is social page ", product_thumbnail);
     const socialLinkItem = [
         {
             image: "/images/facbook.svg",
@@ -30,7 +28,6 @@ const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
             path: "https://www.instagram.com",
         },
     ];
-    console.log(socialLinkItem);
 
     return (
         <div className="nh-social-link d-flex align-items-center">

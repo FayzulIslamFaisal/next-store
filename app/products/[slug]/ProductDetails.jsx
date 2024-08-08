@@ -14,8 +14,8 @@ import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { useSession } from "next-auth/react";
 import { recentViewProductApi } from "@/app/services/postRecentViewProduct";
 import { fetchRecentViewProducts } from "@/app/services/getRecentViewProduct";
+
 const ProductSinglePage = ({ params }) => {
-    const { slug } = params;
     const { status, data: session } = useSession();
     const [productInfo, setProductInfo] = useState({});
     const searchParams = useSearchParams();
@@ -98,74 +98,12 @@ const ProductSinglePage = ({ params }) => {
         fetchData();
     }, [pathName, session]);
 
-    const metadata = {
-        openGraph: {
-            title: "Next.js",
-            description: "The React Framework for the Web",
-            url: "https://nextjs.org",
-            siteName: "Next.js",
-            images: [
-                {
-                    url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg",
-                    width: 800,
-                    height: 600,
-                },
-                {
-                    url: "https://static-01.daraz.com.bd/p/57703e043589d286263bb30487d44fd4.jpg",
-                    width: 1800,
-                    height: 1600,
-                    alt: "My custom alt",
-                },
-            ],
-            locale: "en_US",
-            type: "website",
-        },
-    };
-
     return (
         <>
             {successCode == 404 ? (
                 <NotFound></NotFound>
             ) : (
                 <section className="product-details-section">
-                    <Head>
-                        <title>{metadata.openGraph.title}</title>
-                        <meta
-                            name="description"
-                            content={metadata.openGraph.description}
-                        />
-                        <meta
-                            property="og:title"
-                            content={metadata.openGraph.title}
-                        />
-                        <meta
-                            property="og:description"
-                            content={metadata.openGraph.description}
-                        />
-                        <meta
-                            property="og:url"
-                            content={metadata.openGraph.url}
-                        />
-                        <meta
-                            property="og:site_name"
-                            content={metadata.openGraph.siteName}
-                        />
-                        <meta
-                            property="og:locale"
-                            content={metadata.openGraph.locale}
-                        />
-                        <meta
-                            property="og:type"
-                            content={metadata.openGraph.type}
-                        />
-                        {metadata.openGraph.images.map((image, index) => (
-                            <meta
-                                key={index}
-                                property="og:image"
-                                content={image.url}
-                            />
-                        ))}
-                    </Head>
                     <div className="container">
                         <Breadcrumb category={productInfo?.category} />
                         <Suspense fallback={<DefaultLoader />}>
