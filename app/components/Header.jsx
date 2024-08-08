@@ -111,7 +111,6 @@ function Header() {
         }
     };
 
-    console.log("updated cart length", addToCartProductLength);
     useEffect(() => {
         const setCartProductLength = async () => {
             if (session) {

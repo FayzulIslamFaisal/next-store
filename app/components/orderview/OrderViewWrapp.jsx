@@ -10,10 +10,12 @@ import { useSession } from "next-auth/react";
 import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
 import { getOrderStatusHistory } from "@/app/services/getOrderStatusHistory";
 import { useSearchParams } from "next/navigation";
+import { getOrderPaymentHistory } from "@/app/services/getOrderPaymentHistory";
 
 const OrderViewWrapp = () => {
     const [orderSummary, setOrderSummary] = useState(null);
     const [orderStatus, setOrderStatus] = useState([]);
+    const [orderPaymentHistory, setOrderPaymentHistory] = useState([]);
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderid");
@@ -33,6 +35,27 @@ const OrderViewWrapp = () => {
                 }
             };
             fetchOrderSummary();
+        }
+    }, [session, status, orderId]);
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchOrderPaymentHistory = async () => {
+                try {
+                    const orderPaymentData = await getOrderPaymentHistory(
+                        orderId,
+                        session?.accessToken
+                    );
+                    const orderPaymentResult = orderPaymentData?.results || {};
+                    setOrderPaymentHistory(orderPaymentResult);
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch Order Payment History:",
+                        error
+                    );
+                }
+            };
+            fetchOrderPaymentHistory();
         }
     }, [session, status, orderId]);
 
@@ -62,6 +85,7 @@ const OrderViewWrapp = () => {
         return <h2>Please log in to view your orders.</h2>;
     }
     const orderProduct = orderSummary?.products || [];
+
     return (
         <>
             <div className="order-view-wrapper">
@@ -72,7 +96,9 @@ const OrderViewWrapp = () => {
                     <div className="row order-view-payment-history">
                         <div className="col-lg-9">
                             <OrderViewDetail orderProduct={orderProduct} />
-                            <OrderViewPaymentHistory />
+                            <OrderViewPaymentHistory
+                                orderPaymentHistory={orderPaymentHistory}
+                            />
                         </div>
                         <OrderViewAmmount orderSummary={orderSummary} />
                     </div>
