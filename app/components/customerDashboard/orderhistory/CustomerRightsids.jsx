@@ -3,8 +3,6 @@ import { FaEye } from "react-icons/fa";
 import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 
 const CustomerRightsids = ({ customerOrders }) => {
-    console.log("customerOrders,,,,,---->", customerOrders);
-
     return (
         <div className="col-lg-9">
             <div className="customer-dashboard-order-history-area">

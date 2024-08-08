@@ -85,8 +85,8 @@ const OrderViewSummary = async ({ orderSummary }) => {
                                     </p>
                                     <p>
                                         ৳{" "}
-                                        {orderSummary?.total
-                                            ? orderSummary?.total
+                                        {orderSummary?.grand_total
+                                            ? orderSummary?.grand_total
                                             : null}
                                     </p>
                                     <p>--</p>
