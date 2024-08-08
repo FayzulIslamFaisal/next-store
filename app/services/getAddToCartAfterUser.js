@@ -1,7 +1,7 @@
-// utils/api.js
+import { apiBaseUrl } from "../utils";
 export async function addToCartProductAfterLog(cartItems) {
     const response = await fetch(
-        "https://v3.nagadhat.com/api/add-to-cart-product",
+        `${apiBaseUrl}/add-to-cart-product`,
         {
             method: "POST",
             headers: {

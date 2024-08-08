@@ -1,6 +1,7 @@
+import { apiBaseUrl } from "../utils";
 export const getCustomerAllShippingAddress = async (token) => {
     const res = await fetch(
-        "https://v3.nagadhat.com/api/get-shipping-address",
+        `${apiBaseUrl}/get-shipping-address`,
         {
             method: "GET",
             headers: {

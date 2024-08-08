@@ -15,36 +15,47 @@ const ProductOrderPriceSummary = ({ orderSummary }) => {
                         )}
                     </div>
                     <div className="d-flex gap-3 justify-content-between">
-                        <p>Shipping</p>
-                        {orderSummary?.shipping_charge && (
-                            <strong>
-                                ৳{" "}
-                                {orderSummary?.shipping_charge
-                                    ? orderSummary?.shipping_charge
-                                    : null}
-                            </strong>
-                        )}
-                    </div>
-                    <div className="d-flex gap-3 justify-content-between">
                         <p>Discount</p>
-                        {orderSummary?.discount > 0 && (
+                        {orderSummary?.discount_amount > 0 && (
                             <strong>
                                 ৳{" "}
-                                {orderSummary?.discount
-                                    ? orderSummary?.discount
+                                {orderSummary?.discount_amount
+                                    ? orderSummary?.discount_amount
                                     : null}
                             </strong>
                         )}
                     </div>
                 </div>
+                <div className="d-flex gap-3 justify-content-between">
+                    <p>Total</p>
+                    {orderSummary?.total_products_price && (
+                        <strong>
+                            ৳{" "}
+                            {orderSummary?.total_products_price
+                                ? orderSummary?.total_products_price
+                                : null}
+                        </strong>
+                    )}
+                </div>
+                <div className="d-flex gap-3 justify-content-between">
+                    <p>Shipping</p>
+                    {orderSummary?.total_delivery_charge && (
+                        <strong>
+                            ৳{" "}
+                            {orderSummary?.total_delivery_charge
+                                ? orderSummary?.total_delivery_charge
+                                : null}
+                        </strong>
+                    )}
+                </div>
                 <div className="shopping-price-area">
                     <div className="d-flex gap-3 justify-content-between align-items-center">
                         <strong>Total</strong>
-                        {orderSummary?.total && (
+                        {orderSummary?.grand_total && (
                             <p className="total-order-price">
                                 ৳{" "}
-                                {orderSummary?.total
-                                    ? orderSummary?.total
+                                {orderSummary?.grand_total
+                                    ? orderSummary?.grand_total
                                     : null}
                             </p>
                         )}
