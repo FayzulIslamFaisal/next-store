@@ -63,6 +63,10 @@ const ManageIDVerification = () => {
                 session?.accessToken
             );
             if (!response?.error) {
+                setIdVerification({
+                    nid_no: response?.results?.nid_no || "",
+                    nid_front: response?.results.nid_front || "",
+                });
                 toast.success(response?.message);
             } else {
                 console.error("Update failed:", response);
