@@ -29,7 +29,7 @@ const ManageTakePhoto = () => {
             };
             fetchProfilePicture();
         }
-    }, [session, status]);
+    }, [session, status, profilePicture]);
 
     const handleFileChange = (event) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -42,11 +42,8 @@ const ManageTakePhoto = () => {
         if (!file) return;
 
         try {
-            const formData = new FormData();
-            formData.append("profile_picture", file);
-
             const result = await postManageProfilePicture(
-                formData,
+                file,
                 session.accessToken
             );
 

@@ -9,30 +9,22 @@ import OrderViewTopBtn from "./OrderViewTopBtn";
 import { useSession } from "next-auth/react";
 import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
 import { getOrderStatusHistory } from "@/app/services/getOrderStatusHistory";
+import { useSearchParams } from "next/navigation";
+import { getOrderPaymentHistory } from "@/app/services/getOrderPaymentHistory";
 
-const OrderViewWrapp = ({ orderId }) => {
+const OrderViewWrapp = () => {
     const [orderSummary, setOrderSummary] = useState(null);
     const [orderStatus, setOrderStatus] = useState([]);
-    const [outletId, setOutletId] = useState(0);
-    const [districtId, setDistrictId] = useState(0);
+    const [orderPaymentHistory, setOrderPaymentHistory] = useState([]);
     const { data: session, status } = useSession();
-
-    useEffect(() => {
-        const initialOutletId = localStorage.getItem("outletId");
-        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
-    }, []);
-    useEffect(() => {
-        const initialDistrictId = localStorage.getItem("districtId");
-        setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
-    }, []);
+    const searchParams = useSearchParams();
+    const orderId = searchParams.get("orderid");
 
     useEffect(() => {
         if (status === "authenticated") {
             const fetchOrderSummary = async () => {
                 try {
                     const orderData = await getProductOrderSummery(
-                        outletId,
-                        districtId,
                         orderId,
                         session?.accessToken
                     );
@@ -43,6 +35,27 @@ const OrderViewWrapp = ({ orderId }) => {
                 }
             };
             fetchOrderSummary();
+        }
+    }, [session, status, orderId]);
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchOrderPaymentHistory = async () => {
+                try {
+                    const orderPaymentData = await getOrderPaymentHistory(
+                        orderId,
+                        session?.accessToken
+                    );
+                    const orderPaymentResult = orderPaymentData?.results || {};
+                    setOrderPaymentHistory(orderPaymentResult);
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch Order Payment History:",
+                        error
+                    );
+                }
+            };
+            fetchOrderPaymentHistory();
         }
     }, [session, status, orderId]);
 
@@ -72,6 +85,7 @@ const OrderViewWrapp = ({ orderId }) => {
         return <h2>Please log in to view your orders.</h2>;
     }
     const orderProduct = orderSummary?.products || [];
+
     return (
         <>
             <div className="order-view-wrapper">
@@ -82,7 +96,9 @@ const OrderViewWrapp = ({ orderId }) => {
                     <div className="row order-view-payment-history">
                         <div className="col-lg-9">
                             <OrderViewDetail orderProduct={orderProduct} />
-                            <OrderViewPaymentHistory />
+                            <OrderViewPaymentHistory
+                                orderPaymentHistory={orderPaymentHistory}
+                            />
                         </div>
                         <OrderViewAmmount orderSummary={orderSummary} />
                     </div>

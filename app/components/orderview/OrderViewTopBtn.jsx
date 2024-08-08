@@ -21,7 +21,7 @@ const OrderViewTopBtn = () => {
                             type="button"
                             className="border-0 btn btn-danger"
                         >
-                            Canseled
+                            cancelled
                         </button>
                     </div>
                 </div>

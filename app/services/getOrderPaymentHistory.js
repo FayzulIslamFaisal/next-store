@@ -1,14 +1,10 @@
 import { apiBaseUrl } from "../utils";
 
-export const getProductOrderSummery = async (
-    orderId,
-    token
-) => {
-
+export const getOrderPaymentHistory = async (orderId, token) => {
     orderId = orderId || 1;
     try {
         const response = await fetch(
-            `${apiBaseUrl}/get-order-summery/${orderId}`,
+            `${apiBaseUrl}/order-payment-history/${orderId}`,
             {
                 method: "GET",
                 headers: {
@@ -20,7 +16,7 @@ export const getProductOrderSummery = async (
         return await response.json();
     } catch (error) {
         console.error(
-            "Something went wrong fetching Product Order Summery data"
+            "Something went wrong fetching Product Order status history data"
         );
         console.info(error);
     }

@@ -2,7 +2,7 @@ import Link from "next/link";
 // import OrderViewProgressbar from "./OrderViewProgressbar";
 import { FaChevronLeft } from "react-icons/fa";
 
-const OrderViewSummary = async ({ orderSummary }) => {
+const OrderViewSummary = ({ orderSummary }) => {
     return (
         <>
             <div className="row order-view-summary-area">
@@ -84,8 +84,8 @@ const OrderViewSummary = async ({ orderSummary }) => {
                                     </p>
                                     <p>
                                         ৳{" "}
-                                        {orderSummary?.total
-                                            ? orderSummary?.total
+                                        {orderSummary?.grand_total
+                                            ? orderSummary?.grand_total
                                             : null}
                                     </p>
                                     <p>--</p>

@@ -11,9 +11,8 @@ import { toast } from "react-toastify";
 const ManageIDVerification = () => {
     const [idVerification, setIdVerification] = useState({
         nid_no: "",
-        nid_front: "",
+        nid_front: null,
     });
-    console.log("id Verification ------->>>>", idVerification);
 
     const { data: session, status } = useSession();
 
@@ -25,7 +24,6 @@ const ManageIDVerification = () => {
                 );
                 const nidDataResult = nidData?.results || {};
                 setIdVerification({
-                    ...idVerification,
                     nid_no: nidDataResult.nid_no || "",
                     nid_front: nidDataResult.nid_front || "",
                 });
@@ -34,33 +32,47 @@ const ManageIDVerification = () => {
         }
     }, [session, status]);
 
-    const handleChange = (event) => {
-        const { value, name } = event.target;
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
         setIdVerification((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
+    const handleFileChange = (event) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setIdVerification((prevData) => ({
+                ...prevData,
+                nid_front: event.target.files[0],
+            }));
+        }
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Check for  fields
+        // Check for required fields
         if (!idVerification.nid_no || !idVerification.nid_front) {
-            toast.error("Please fill out all  fields.");
+            toast.error("Please fill out all required fields.");
             return;
         }
+
         try {
             const response = await postManageIdVerificationInfo(
                 idVerification,
                 session?.accessToken
             );
             if (!response?.error) {
+                setIdVerification({
+                    nid_no: response?.results?.nid_no || "",
+                    nid_front: response?.results.nid_front || "",
+                });
                 toast.success(response?.message);
             } else {
                 console.error("Update failed:", response);
                 toast.error(
                     response?.message ||
-                        "Failed to update Id Verification Info."
+                        "Failed to update ID Verification Info."
                 );
             }
         } catch (error) {
@@ -101,9 +113,6 @@ const ManageIDVerification = () => {
                                 <label htmlFor="nid_no" className="form-label">
                                     NID/ Birth Certificate/ Passport/ Driving
                                     License No
-                                    {/* <span className="text-danger fw-bold">
-                                        *
-                                    </span> */}
                                 </label>
                                 <input
                                     className="form-control"
@@ -111,14 +120,14 @@ const ManageIDVerification = () => {
                                     id="nid_no"
                                     name="nid_no"
                                     value={idVerification.nid_no}
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
                                 />
                             </div>
 
                             {idVerification.nid_front && (
                                 <div className="mb-3">
                                     <Image
-                                        src={`${NagadhatPublicUrl}/${idVerification?.nid_front}`}
+                                        src={`${NagadhatPublicUrl}/${idVerification.nid_front}`}
                                         width={120}
                                         height={100}
                                         alt="NID Image"
@@ -127,12 +136,12 @@ const ManageIDVerification = () => {
                             )}
 
                             <div className="mb-3">
-                                <label htmlFor="nid" className="form-label">
-                                    Uplod NID/ Birth Certificate/ Passport/
+                                <label
+                                    htmlFor="nid_front"
+                                    className="form-label"
+                                >
+                                    Upload NID/ Birth Certificate/ Passport/
                                     Driving License Photo
-                                    {/* <span className="text-danger fw-bold">
-                                        *
-                                    </span> */}
                                 </label>
                                 <input
                                     className="form-control"
@@ -140,9 +149,8 @@ const ManageIDVerification = () => {
                                     id="nid_front"
                                     accept="image/*"
                                     name="nid_front"
-                                    // value={idVerification.nid_front}
                                     capture
-                                    onChange={handleChange}
+                                    onChange={handleFileChange}
                                 />
                             </div>
                             <div className="">
