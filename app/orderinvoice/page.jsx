@@ -7,21 +7,14 @@ import InvoicePaymentHistory from "../components/orderinvoice/InvoicePaymentHist
 import InvoiceFooter from "../components/orderinvoice/InvoiceFooter";
 import { getProductOrderSummery } from "../services/getProductOrderSummery";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from 'next/navigation'
 
-const OrderInvoicePage = ({ orderId }) => {
+const OrderInvoicePage = () => {
     const [orderInvoice, setOrderInvoice] = useState(null);
+    const [orderPaymentHistory, setOrderPaymentHistory] = useState([]);
     const { data: session, status } = useSession();
-    // const [outletId, setOutletId] = useState(0);
-    // const [districtId, setDistrictId] = useState(0);
-
-    // useEffect(() => {
-    //     const initialOutletId = localStorage.getItem("outletId");
-    //     setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
-    // }, []);
-    // useEffect(() => {
-    //     const initialDistrictId = localStorage.getItem("districtId");
-    //     setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
-    // }, []);
+    const searchParams = useSearchParams()
+    const orderId = searchParams.get('orderId')
 
     useEffect(() => {
         window.print();
@@ -32,8 +25,6 @@ const OrderInvoicePage = ({ orderId }) => {
             const fetchOrderInvoice = async () => {
                 try {
                     const invoiceData = await getProductOrderSummery(
-                        // outletId,
-                        // districtId,
                         orderId,
                         session?.accessToken
                     );
@@ -43,6 +34,23 @@ const OrderInvoicePage = ({ orderId }) => {
                 }
             };
             fetchOrderInvoice();
+
+            const fetchOrderPaymentHistory = async () => {
+                try {
+                    const orderPaymentData = await getOrderPaymentHistory(
+                        orderId,
+                        session?.accessToken
+                    );
+                    const orderPaymentResult = orderPaymentData?.results || {};
+                    setOrderPaymentHistory(orderPaymentResult);
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch Order Payment History:",
+                        error
+                    );
+                }
+            };
+            fetchOrderPaymentHistory();
         }
     }, [session, status]);
 
@@ -70,6 +78,7 @@ const OrderInvoicePage = ({ orderId }) => {
                                 />
                                 <InvoicePaymentHistory
                                     orderInvoice={orderInvoice}
+                                    orderPaymentHistory={orderPaymentHistory}
                                 />
                             </div>
                             <InvoiceFooter />

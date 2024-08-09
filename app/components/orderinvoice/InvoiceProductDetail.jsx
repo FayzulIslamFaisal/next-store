@@ -62,7 +62,7 @@ const InvoiceProductDetail = ({ invoiceProduct, orderInvoice }) => {
                             <th className="bg-lite-dark">Image</th>
                             <th className="bg-lite-dark">Product Name</th>
                             <th className="bg-lite-dark">Qty</th>
-                            <th className="bg-lite-dark">Discount</th>
+                            {/* <th className="bg-lite-dark">Discount</th> */}
                             <th className="bg-lite-dark">Price</th>
                             <th className="bg-lite-dark">Amount</th>
                         </tr>
@@ -102,7 +102,7 @@ const InvoiceProductDetail = ({ invoiceProduct, orderInvoice }) => {
                                         </td>
                                         <td className="lh-1">{product_name}</td>
                                         <td>{quantity}</td>
-                                        <td>
+                                        {/* <td>
                                             {product_discount !== null && (
                                                 <>
                                                     {discount_type === "Flat"
@@ -111,7 +111,7 @@ const InvoiceProductDetail = ({ invoiceProduct, orderInvoice }) => {
                                                     {product_discount}
                                                 </>
                                             )}
-                                        </td>
+                                        </td> */}
                                         <td>{unit_price}</td>
                                         <td>{quantity * unit_price}</td>
                                     </tr>
