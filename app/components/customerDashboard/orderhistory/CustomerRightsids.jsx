@@ -69,7 +69,7 @@ const CustomerRightsids = ({ customerOrders }) => {
                                                         </button>
                                                         <button>
                                                             <Link
-                                                                href="/orderinvoice"
+                                                                href={`/orderinvoice?orderId=${order_id}`}
                                                                 style={{
                                                                     color: "white",
                                                                 }}

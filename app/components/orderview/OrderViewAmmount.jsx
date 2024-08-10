@@ -12,7 +12,7 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                 <tbody>
                                     <tr>
                                         <td className="w-50 fw-600">
-                                            Subtotal
+                                            Sub Total
                                         </td>
                                         <td className="text-right">
                                             <span className="strong-600">

@@ -284,9 +284,9 @@ const BuyNowShippingProductPage = () => {
         const order = await placeOrder(payload, session?.accessToken);
         if (order.code == 200) {
             showToast(order.message);
-            setRedirectPath("/thankyou");
+            setRedirectPath(`/thankyou?orderId=${order?.results}`);
             deleteBuyNowProductData();
-            router.push("/thankyou");
+            router.push(`/thankyou?orderId=${order?.results}`);
         } else {
             setRedirectPath("#");
             showToast(order.message, "error");
