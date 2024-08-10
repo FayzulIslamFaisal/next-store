@@ -130,7 +130,7 @@ const CustomerDashboardRightSide = () => {
                     <div className="p-3 border-bottom">
                         <h2 className="mb-0 customer-dashboard-subtitle">Default Shipping Address</h2>
                     </div>
-                    {customerAddress ? (
+                    {customerAddress.length ? (
                         <div className="p-4 d-flex flex-column gap-3 customer-dashboard-address">
                             {customerAddress?.map((allAddress, index) => (
                                 <div key={index}>
