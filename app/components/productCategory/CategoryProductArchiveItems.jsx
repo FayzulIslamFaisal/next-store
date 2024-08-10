@@ -15,13 +15,8 @@ const CategoryProductArchiveItems = ({ productItem }) => {
     const [districtId, setDistrictId] = useState(initialDistrictId);
     const [searchDistrictId, setSearchDistrictId] = useState(null);
     let imageUrl = null;
-    const {
-        product_name: title,
-        slug: path,
-        mrp_price: price,
-        id,
-        discount_amount,
-    } = productItem;
+    const { product_name: title, id } = productItem;
+
     const slicedTitle =
         title?.length > 43 ? `${title.slice(0, 43)} ...` : title;
     if (productItem?.product_thumbnail) {
@@ -108,33 +103,71 @@ const CategoryProductArchiveItems = ({ productItem }) => {
             >
                 <div className="flash-sale-content-bg nh-hover-box-shadow">
                     <div className="product-category-image">
-                        <div className="flash-sale-content-img image-hover-effect">
-                            <Image
-                                fill={true}
-                                src={imageUrl}
-                                className="img-fluid"
-                                alt={title}
-                            />
-                        </div>
+                        {imageUrl ? (
+                            <div className="flash-sale-content-img image-hover-effect">
+                                <Image
+                                    fill={true}
+                                    src={imageUrl ? imageUrl : null}
+                                    className="img-fluid"
+                                    alt={title}
+                                />
+                            </div>
+                        ) : (
+                            "Image Not Found"
+                        )}
                     </div>
                     <div className="flash-sale-content-info text-hover-effect">
                         <h4>{slicedTitle}</h4>
-                        <div className="category-product-price d-flex align-items-center justify-content-between ">
-                            {price && (
+                        <div className="category-product-price  ">
+                            {productItem?.product_type === "variants" ? (
+                                productItem.variations?.map((variant_item) =>
+                                    variant_item?.variations_default === 1 ? (
+                                        <div key={variant_item.id}>
+                                            {variant_item?.price
+                                                ?.discount_amount > 0 ? (
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <strong>
+                                                        {
+                                                            variant_item?.price
+                                                                ?.discounted_price
+                                                        }
+                                                    </strong>
+                                                    <strong>
+                                                        <del>
+                                                            {
+                                                                variant_item
+                                                                    ?.price
+                                                                    ?.regular_price
+                                                            }
+                                                        </del>
+                                                    </strong>
+                                                </div>
+                                            ) : (
+                                                <strong>
+                                                    {
+                                                        variant_item?.price
+                                                            ?.regular_price
+                                                    }
+                                                </strong>
+                                            )}
+                                        </div>
+                                    ) : null
+                                )
+                            ) : productItem?.product_type === "single" &&
+                              productItem?.price?.discounted_price > 0 ? (
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <strong>
+                                        {productItem?.price?.discounted_price}
+                                    </strong>
+                                    <strong>
+                                        <del>
+                                            {productItem?.price?.regular_price}
+                                        </del>
+                                    </strong>
+                                </div>
+                            ) : (
                                 <strong>
-                                    ৳{" "}
-                                    {discount_amount
-                                        ? price - discount_amount
-                                        : price}
-                                </strong>
-                            )}
-
-                            {discount_amount && (
-                                <strong className="product-discount-price">
-                                    ৳{" "}
-                                    {discount_amount ? (
-                                        <del>{price}</del>
-                                    ) : null}
+                                    {productItem?.price?.regular_price}
                                 </strong>
                             )}
 
