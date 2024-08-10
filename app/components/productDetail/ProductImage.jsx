@@ -35,7 +35,7 @@ const ProductImage = ({ productInfo, path_name, productGallery }) => {
                 <p>Share:</p>
                 <SocialLink
                     socialLinkItem={socialLinkItem}
-                    path_name={path_name}
+                    path_name={`outlet_id=${productInfo?.outlet_id}&product_id=${productInfo?.id}`}
                     product_name={productInfo?.product_name}
                     product_thumbnail={productInfo?.product_thumbnail}
                 />
