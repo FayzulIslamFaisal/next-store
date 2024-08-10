@@ -4,9 +4,7 @@ const SubCategoryListItems = ({ categoryItem }) => {
     const { title, slug: path } = categoryItem;
     return (
         <>
-            <li>
-                <Link href={path ? path : "#"}>{title} </Link>
-            </li>
+            <Link href={path ? path : "#"}>{title} </Link>
         </>
     );
 };
