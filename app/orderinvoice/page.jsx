@@ -7,18 +7,15 @@ import InvoicePaymentHistory from "../components/orderinvoice/InvoicePaymentHist
 import InvoiceFooter from "../components/orderinvoice/InvoiceFooter";
 import { getProductOrderSummery } from "../services/getProductOrderSummery";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
+import { getOrderPaymentHistory } from "../services/getOrderPaymentHistory";
 
 const OrderInvoicePage = () => {
     const [orderInvoice, setOrderInvoice] = useState(null);
     const [orderPaymentHistory, setOrderPaymentHistory] = useState([]);
     const { data: session, status } = useSession();
-    const searchParams = useSearchParams()
-    const orderId = searchParams.get('orderId')
-
-    useEffect(() => {
-        window.print();
-    }, []);
+    const searchParams = useSearchParams();
+    const orderId = searchParams.get("orderId");
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -33,7 +30,6 @@ const OrderInvoicePage = () => {
                     console.error("Failed to fetch order summary:", error);
                 }
             };
-            fetchOrderInvoice();
 
             const fetchOrderPaymentHistory = async () => {
                 try {
@@ -50,7 +46,12 @@ const OrderInvoicePage = () => {
                     );
                 }
             };
-            fetchOrderPaymentHistory();
+
+            Promise.all([fetchOrderInvoice(), fetchOrderPaymentHistory()]).then(
+                () => {
+                    window.print();
+                }
+            );
         }
     }, [session, status]);
 

@@ -103,7 +103,9 @@ const ProductDetailsShows = ({ searchParams }) => {
                             `outlet_id=${outlet_id}&product_id=${product_id}`
                         )}
                 </Head>
-                <ProductSinglePage params={"hello"}></ProductSinglePage>
+                <ProductSinglePage
+                    params={`outlet_id=${outlet_id}&product_id=${product_id}`}
+                ></ProductSinglePage>
             </div>
         </>
     );

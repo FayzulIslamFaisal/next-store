@@ -48,7 +48,7 @@ const ProductSinglePage = ({ params }) => {
             subTitle: "Support System 24/7",
         },
     ];
-
+    console.log("params for product details", params);
     useEffect(() => {
         async function fetchData() {
             const productInfo = await getProductDetails(pathName);
@@ -112,7 +112,7 @@ const ProductSinglePage = ({ params }) => {
                                     <div className="row product-details-info">
                                         <ProductLeftSide
                                             productInfo={productInfo}
-                                            path_name={pathName}
+                                            path_name={params}
                                         />
                                         <ProductRightSide
                                             productInfo={productInfo}

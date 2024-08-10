@@ -40,9 +40,7 @@ const ViewAllProductPage = ({ searchParams }) => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId || 47);
     }, []);
-    console.log(districtId);
     
-    console.log(viewProductData);
     useEffect(() => {
         const fetchData = async () => {
             try {
