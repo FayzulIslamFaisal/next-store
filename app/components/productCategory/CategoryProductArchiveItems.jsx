@@ -10,10 +10,6 @@ import { useEffect, useState } from "react";
 import { getHomeSearchProduct } from "@/app/services/getHomeSearchProduct";
 
 const CategoryProductArchiveItems = ({ productItem }) => {
-    console.log(
-        "========================productItem=============================",
-        productItem
-    );
     const searchParams = useSearchParams();
     const initialDistrictId = searchParams.get("districtId") || 47;
     const [districtId, setDistrictId] = useState(initialDistrictId);
