@@ -5,7 +5,7 @@ import ProductCategories from "./ProductCategories";
 import JustForYou from "./JustForYou";
 import { getHomePageBodyBrand } from "../services/getHomePageBodyBrand";
 
-async function Category() {
+async function Category({ flashSaleEndTime, showOnHome }) {
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -37,8 +37,13 @@ async function Category() {
     const brandData = await getHomePageBodyBrand();
     const categoryProductData = categoryData;
     const categoryBrandData = brandData?.results?.brands;
+    
     return (
-        <section className="nh-categories-area">
+        <section
+            className={`nh-categories-area ${
+                !flashSaleEndTime ? "nh-categories-pt-remove" : ""
+            } ${!showOnHome ? "show-on-pt-remove" : ""}`}
+        >
             <div className="container">
                 <SectionTitle title="Categories" target="category" />
                 <ProductCategories categoryProductData={categoryProductData} />
@@ -49,9 +54,7 @@ async function Category() {
                         categoryProductData={categoryBrandData}
                     />
                 </div>
-
                 <JustForYou />
-
                 <Service serviceItems={serviceItems} />
             </div>
         </section>

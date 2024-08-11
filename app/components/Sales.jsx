@@ -16,16 +16,21 @@ import { useSession } from "next-auth/react";
 
 function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     const [flashSaleProductList, setFlashSaleProductList] = useState([]);
-    const [hasFlashSaleSettings, setHasFlashSaleSettings] = useState(false);
     const [flashSaleEndsTime, setFlashSaleEndsTime] = useState(null);
     const [recentViewProductList, setRecentViewProductList] = useState([]);
+    const [districtId, setDistrictId] = useState(null);
+    const [outletId, setOutletId] = useState(0);
+
     const { status, data: session } = useSession();
     const searchParams = useSearchParams();
-    const currentDate = new Date();
-    const toDay = currentDate.getDay();
-    const flashSaleEndDate = flashSaleEndsTime < toDay;
+    const flashSaleArrow = flashSaleProductList?.length > 6 ? true : false;
+    const recentArrow = recentViewProductList?.length > 6 ? true : false;
 
-    const [districtId, setDistrictId] = useState(null);
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    }, []);
+
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
@@ -42,23 +47,16 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
 
     useEffect(() => {
         let ignore = false;
-
         async function fetchSettingData() {
-            const settingData = await getFlashSlaeShowOnHomePage();
-            if (!ignore) {
-                const settingAllData = settingData?.results;
-                const showOnHome = settingAllData?.show_on_home;
-                const flashSaleEndsTime = settingAllData?.end_time;
-                if (showOnHome === 1) {
-                    setHasFlashSaleSettings(true);
-                    setFlashSaleEndsTime(flashSaleEndsTime);
-                } else {
-                    console.error(
-                        "settingAllData is not an array",
-                        settingAllData
-                    );
-                    setHasFlashSaleSettings(false);
+            try {
+                const settingData = await getFlashSlaeShowOnHomePage();
+                if (!ignore) {
+                    const settingAllData = settingData?.results;
+                    const flashSaleEndTime = settingAllData?.end_time;
+                    setFlashSaleEndsTime(flashSaleEndTime);
                 }
+            } catch (error) {
+                console.error("Failed to fetch setting data", error);
             }
         }
         fetchSettingData();
@@ -72,7 +70,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
             if (session) {
                 const recentViewProductFetch = await fetchRecentViewProducts(
                     session?.accessToken,
-                    3
+                    outletId
                 );
                 setRecentViewProductList(
                     recentViewProductFetch?.results?.for_you_products
@@ -97,7 +95,8 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 2,
-        arrows: flashSaleProductList?.length <= 6 ? false : true,
+        arrows: isHome ? flashSaleArrow : recentArrow,
+
         responsive: [
             {
                 breakpoint: 1500,
@@ -127,58 +126,47 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     };
 
     return (
-        hasFlashSaleSettings && (
-            // flashSaleEndDate &&
-            <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
-                <div className="container">
-                    <SectionTitle
-                        isSale={true}
-                        title={
-                            isHome
-                                ? `Flash Sale`
-                                : recentViewProductList?.length > 0 &&
-                                  `Recent View`
-                        }
-                        target={isHome ? "flashSale" : `recentview`}
-                        path="/viewallproduct"
-                    >
-                        {isHome && flashSaleEndsTime && (
-                            <FlipClock endsAt={flashSaleEndsTime} />
-                        )}
-                    </SectionTitle>
-                    <div className="row">
-                        <div className="col-md-12">
-                            {/* */}
-                            <div
-                                className={`${"flash-sale-content-area-grid "}`}
-                            >
-                                <Slider {...settings}>
-                                    {isHome && !isRecentView
-                                        ? flashSaleProductList?.length > 0 &&
-                                          flashSaleProductList?.map(
-                                              (product) => (
-                                                  <ProductCard
-                                                      key={product.id}
-                                                      item={product}
-                                                  />
-                                              )
-                                          )
-                                        : recentViewProductList?.length > 0 &&
-                                          recentViewProductList?.map(
-                                              (product) => (
-                                                  <ProductCard
-                                                      key={product.id}
-                                                      item={product}
-                                                  />
-                                              )
-                                          )}
-                                </Slider>
-                            </div>
+        <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
+            <div className="container">
+                <SectionTitle
+                    isSale={true}
+                    title={
+                        isHome
+                            ? `Flash Sale`
+                            : recentViewProductList?.length > 0 && `Recent View`
+                    }
+                    target={isHome ? "flashSale" : `recentview`}
+                    path="/viewallproduct"
+                >
+                    {isHome && flashSaleEndsTime && (
+                        <FlipClock endsAt={flashSaleEndsTime} />
+                    )}
+                </SectionTitle>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className={`${"flash-sale-content-area-grid "}`}>
+                            <Slider {...settings}>
+                                {isHome && !isRecentView
+                                    ? flashSaleProductList?.length > 0 &&
+                                      flashSaleProductList?.map((product) => (
+                                          <ProductCard
+                                              key={product.id}
+                                              item={product}
+                                          />
+                                      ))
+                                    : recentViewProductList?.length > 0 &&
+                                      recentViewProductList?.map((product) => (
+                                          <ProductCard
+                                              key={product.id}
+                                              item={product}
+                                          />
+                                      ))}
+                            </Slider>
                         </div>
                     </div>
                 </div>
-            </section>
-        )
+            </div>
+        </section>
     );
 }
 

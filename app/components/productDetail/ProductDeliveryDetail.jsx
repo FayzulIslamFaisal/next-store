@@ -401,7 +401,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
                             <div
                                 className="modal fade"
                                 id="exampleModal50"
-                                tabindex="-1"
+                                tabIndex="-1"
                                 aria-labelledby="exampleModalLabel"
                                 aria-hidden="true"
                             >
