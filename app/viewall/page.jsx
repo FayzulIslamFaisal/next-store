@@ -3,10 +3,10 @@ import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllCategories from "../components/viewAllProduct/ViewAllCategories";
-import Sales from "../components/Sales";
 import { getHomeCategory } from "../services/getHomeCategory";
 import { getHomeBrand } from "../services/getHomeBrand";
 import { NagadhatPublicUrl } from "../utils";
+import ViewAllFlashCheck from "../components/viewAllProduct/ViewAllFlashCheck";
 
 const ViewAllPage = async ({ searchParams }) => {
     const serviceItems = [
@@ -35,7 +35,7 @@ const ViewAllPage = async ({ searchParams }) => {
             subTitle: "Support System 24/7",
         },
     ];
-  
+
     let viewCategoryData = [];
     let sectionTitle = "View all";
     let bannerUrl = "/images/fashion.jpg";
@@ -43,12 +43,12 @@ const ViewAllPage = async ({ searchParams }) => {
         switch (searchParams.type) {
             case "category":
                 viewCategoryData = await getHomeCategory();
-                
+
                 if (
-                  viewCategoryData.length >= 1 &&
-                  viewCategoryData[1].banner_image
+                    viewCategoryData.length >= 1 &&
+                    viewCategoryData[1].banner_image
                 ) {
-                  bannerUrl = `${NagadhatPublicUrl}/${viewCategoryData[1].banner_image}`;
+                    bannerUrl = `${NagadhatPublicUrl}/${viewCategoryData[1].banner_image}`;
                 }
                 sectionTitle = "Categories";
                 break;
@@ -56,10 +56,10 @@ const ViewAllPage = async ({ searchParams }) => {
                 const data = await getHomeBrand();
                 viewCategoryData = data.results.brands;
                 if (
-                  viewCategoryData.length >= 1 &&
-                  viewCategoryData[1].banner
+                    viewCategoryData.length >= 1 &&
+                    viewCategoryData[1].banner
                 ) {
-                  bannerUrl = `${NagadhatPublicUrl}/${viewCategoryData[1].banner}`;
+                    bannerUrl = `${NagadhatPublicUrl}/${viewCategoryData[1].banner}`;
                 }
                 sectionTitle = "Brands";
                 break;
@@ -78,11 +78,7 @@ const ViewAllPage = async ({ searchParams }) => {
                     <Pagination />
                 </div>
             </div> */}
-            <Sales
-                isHome={false}
-                bgcolor="bg-white"
-                removePx={`removepadding-x`}
-            />
+            <ViewAllFlashCheck />
             <Service serviceItems={serviceItems} />
         </div>
     );

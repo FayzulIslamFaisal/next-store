@@ -142,7 +142,12 @@ body {
 .nh-categories-area {
     padding: 50px 0;
 }
-
+.nh-categories-pt-remove {
+    padding-top: 0;
+}
+.show-on-pt-remove {
+    padding-top: 0;
+}
 .nh-categories-holder {
     display: grid;
     display: -ms-grid;

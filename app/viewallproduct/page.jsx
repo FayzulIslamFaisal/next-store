@@ -13,64 +13,77 @@ import { useSession } from "next-auth/react";
 
 const ViewAllProductPage = ({ searchParams }) => {
     const [viewProductData, setViewProductData] = useState([]);
+    const [recentViewProductData, setRecentViewProductData] = useState([]);
+    const [flashSaleEndData, setFlashSaleEndData] = useState(null);
     const [sectionTitle, setSectionTitle] = useState("View All Product");
     const [bannerUrl, setBannerUrl] = useState("/images/fashion.jpg");
     const [districtId, setDistrictId] = useState(null);
     const { status, data: session } = useSession();
-    const recentViewConfigure = async () => {
-        if (session) {
-            const recentViewProductFetch = await fetchRecentViewProducts(
-                session?.accessToken,
-                3
-            );
-            setViewProductData(
-                recentViewProductFetch?.results?.for_you_products
-            );
-        } else {
-            if (typeof window !== "undefined") {
-                const storedProducts =
-                    JSON.parse(localStorage.getItem("recentlyViewProducts")) ||
-                    [];
-                setViewProductData(storedProducts);
-            }
-        }
-    };
+    const [outletId, setOutletId] = useState(0);
+
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    }, []);
 
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId || 47);
     }, []);
-    
+    useEffect(() => {
+        const recentViewConfigure = async () => {
+            if (session) {
+                const recentViewProductFetch = await fetchRecentViewProducts(
+                    session?.accessToken,
+                    outletId
+                );
+                setRecentViewProductData(
+                    recentViewProductFetch?.results?.for_you_products
+                );
+            } else {
+                if (typeof window !== "undefined") {
+                    const storedProducts =
+                        JSON.parse(
+                            localStorage.getItem("recentlyViewProducts")
+                        ) || [];
+                    setRecentViewProductData(storedProducts);
+                }
+            }
+        };
+        recentViewConfigure();
+    }, [session, outletId]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-               
-            if (searchParams && districtId) {
-                const flashSaleProductData = await getHomeFlashSalesProduct(
-                    districtId
-                );
+                if (searchParams && districtId) {
+                    const flashSaleProductData = await getHomeFlashSalesProduct(
+                        districtId
+                    );
+                    const flashSaleInfoTime =
+                        flashSaleProductData?.results?.flash_sale_info
+                            ?.end_time;
 
-                const justForYouProductData = await getHomeJustForYouProduct(
-                    districtId
-                );
-                switch (searchParams.type) {
-                    case "justForYou":
-                        setViewProductData(
-                            justForYouProductData?.results?.just_for_you
-                                ?.for_you_products
-                        );
-                        setSectionTitle("Just For You");
-                        break;
+                    const justForYouProductData =
+                        await getHomeJustForYouProduct(districtId);
 
-                    case "flashSale":
-                        setViewProductData(
-                            flashSaleProductData?.results?.flash_sales_product
-                        );
-                        setSectionTitle("Flash Sale");
-                        break;
-                    case "recentview":
-                        recentViewConfigure();
-                        setSectionTitle("Recent View Product");
+                    switch (searchParams.type) {
+                        case "justForYou":
+                            setViewProductData(
+                                justForYouProductData?.results?.just_for_you
+                                    ?.for_you_products
+                            );
+                            setSectionTitle("Just For You");
+                            break;
+
+                        case "flashSale":
+                            setViewProductData(
+                                flashSaleProductData?.results
+                                    ?.flash_sales_product
+                            );
+                            setFlashSaleEndData(flashSaleInfoTime);
+                            setSectionTitle("Flash Sale");
+                            break;
                         default:
                             setViewProductData(["No Data"]);
                             setSectionTitle("View All Product");
@@ -79,7 +92,6 @@ const ViewAllProductPage = ({ searchParams }) => {
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
-                
             }
         };
         fetchData();
@@ -118,6 +130,7 @@ const ViewAllProductPage = ({ searchParams }) => {
             <ViewAllCategoryTitle
                 title={sectionTitle}
                 isFlashSaleTimer={true}
+                flashSaleEndData={flashSaleEndData}
             />
             <ViewAllProduct viewProductData={viewProductData} />
             {/* Pagination code */}
@@ -126,11 +139,14 @@ const ViewAllProductPage = ({ searchParams }) => {
                     <Pagination />
                 </div>
             </div> */}
-            <Sales
-                isHome={false}
-                bgcolor="bg-white"
-                removePx={`removepadding-x`}
-            />
+            {recentViewProductData.length > 0 && (
+                <Sales
+                    isHome={false}
+                    bgcolor="bg-white"
+                    removePx={`removepadding-x`}
+                />
+            )}
+
             <Service serviceItems={serviceItems} />
         </div>
     );
