@@ -62,60 +62,69 @@ const ViewAllProductPage = ({ searchParams }) => {
                 if (searchParams && districtId) {
                     switch (searchParams.type) {
                         case "justForYou":
-                            const justForYouProductData =
-                                await getHomeJustForYouProduct(districtId);
-                            setViewProductData(
-                                justForYouProductData?.results?.just_for_you
-                                    ?.for_you_products
-                            );
-                            setSectionTitle("Just For You");
-                            recentViewConfigure();
+                            try {
+                                const justForYouProductData = await getHomeJustForYouProduct(districtId);
+                                console.log(justForYouProductData);
+                                setViewProductData(justForYouProductData?.results?.just_for_you?.for_you_products);
+                                setSectionTitle("Just For You");
+                                recentViewConfigure();
+                            } catch (error) {
+                                console.error("Error fetching 'Just For You' products:", error);
+                            }
                             break;
 
                         case "flashSale":
-                            const flashSaleProductData =
-                                await getHomeFlashSalesProduct(districtId);
-                            const flashSaleInfoTime =
-                                flashSaleProductData?.results?.flash_sale_info
-                                    ?.end_time;
-                            setViewProductData(
-                                flashSaleProductData?.results
-                                    ?.flash_sales_product
-                            );
+                            try {
+                                const flashSaleProductData =
+                                    await getHomeFlashSalesProduct(districtId);
+                                const flashSaleInfoTime =
+                                    flashSaleProductData?.results?.flash_sale_info
+                                        ?.end_time;
+                                setViewProductData(
+                                    flashSaleProductData?.results
+                                        ?.flash_sales_product
+                                );
 
-                            setFlashSaleEndData(flashSaleInfoTime);
-                            setSectionTitle("Flash Sale");
-                            recentViewConfigure();
+                                setFlashSaleEndData(flashSaleInfoTime);
+                                setSectionTitle("Flash Sale");
+                                recentViewConfigure();
+                            } catch (error) {
+                                console.error("Error fetching 'Just For You' products:", error);
+                            }
                             break;
                         case "recentview":
-                            setViewProductData([]); // Clear existing data
-                            setRecentViewProductData([]); // Clear recent view data
-                            if (session) {
-                                const recentViewProductFetch =
-                                    await fetchRecentViewProducts(
-                                        session?.accessToken,
-                                        outletId
+                            try {
+                                setViewProductData([]); // Clear existing data
+                                setRecentViewProductData([]); // Clear recent view data
+                                if (session) {
+                                    const recentViewProductFetch =
+                                        await fetchRecentViewProducts(
+                                            session?.accessToken,
+                                            outletId
+                                        );
+                                    setViewProductData(
+                                        recentViewProductFetch?.results
+                                            ?.for_you_products || []
                                     );
-                                setViewProductData(
-                                    recentViewProductFetch?.results
-                                        ?.for_you_products || []
-                                );
-                            } else {
-                                if (typeof window !== "undefined") {
-                                    const storedProducts =
-                                        JSON.parse(
-                                            localStorage.getItem(
-                                                "recentlyViewProducts"
-                                            )
-                                        ) || [];
-                                    setViewProductData(storedProducts);
+                                } else {
+                                    if (typeof window !== "undefined") {
+                                        const storedProducts =
+                                            JSON.parse(
+                                                localStorage.getItem(
+                                                    "recentlyViewProducts"
+                                                )
+                                            ) || [];
+                                        setViewProductData(storedProducts);
+                                    }
                                 }
+                                setSectionTitle("Recent View Product");
+                                setRecentViewProductData([]);
+                            } catch (error) {
+                                console.error("Error fetching 'Just For You' products:", error);
                             }
-                            setSectionTitle("Recent View Product");
-                            setRecentViewProductData([]);
                             break;
                         default:
-                            setViewProductData(["No Data"]);
+                            setViewProductData("No Data");
                             setSectionTitle("View All Product");
                             break;
                     }
@@ -126,6 +135,10 @@ const ViewAllProductPage = ({ searchParams }) => {
         };
         fetchData();
     }, [districtId, searchParams]);
+
+    console.log("Search Params:", searchParams);
+    console.log("District ID:", districtId);
+    console.log({viewProductData});
 
     const serviceItems = [
         {
