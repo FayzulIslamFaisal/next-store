@@ -10,8 +10,9 @@ import { getHomeFlashSalesProduct } from "../services/getHomeFlashSalesProduct";
 import { getHomeJustForYouProduct } from "../services/getHomeJustForYouProduct";
 import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
-const ViewAllProductPage = ({ searchParams }) => {
+const ViewAllProductPage = () => {
     const [viewProductData, setViewProductData] = useState([]);
     const [recentViewProductData, setRecentViewProductData] = useState([]);
     const [flashSaleEndData, setFlashSaleEndData] = useState(null);
@@ -20,6 +21,9 @@ const ViewAllProductPage = ({ searchParams }) => {
     const [districtId, setDistrictId] = useState(null);
     const { status, data: session } = useSession();
     const [outletId, setOutletId] = useState(0);
+
+    const searchParams = useSearchParams();
+    const type = searchParams.get('type');
 
     useEffect(() => {
         const initialOutletId = localStorage.getItem("outletId");
@@ -59,8 +63,8 @@ const ViewAllProductPage = ({ searchParams }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (searchParams && districtId) {
-                    switch (searchParams.type) {
+                if (type  && districtId) {
+                    switch (type) {
                         case "justForYou":
                             try {
                                 const justForYouProductData = await getHomeJustForYouProduct(districtId);
@@ -134,9 +138,9 @@ const ViewAllProductPage = ({ searchParams }) => {
             }
         };
         fetchData();
-    }, [districtId, searchParams]);
+    }, [districtId, type]);
 
-    console.log("Search Params:", searchParams);
+    console.log("Search Params:", type);
     console.log("District ID:", districtId);
     console.log({viewProductData});
 
