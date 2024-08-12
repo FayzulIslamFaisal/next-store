@@ -39,7 +39,7 @@ const ViewAllFlashCheck = () => {
 
     return (
         <>
-            {recentViewProductData.length > 0 && (
+            {recentViewProductData?.length > 0 && (
                 <Sales
                     isHome={false}
                     bgcolor="bg-white"

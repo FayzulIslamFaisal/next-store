@@ -169,7 +169,7 @@ const ViewAllProductPage = ({ searchParams }) => {
                     <Pagination />
                 </div>
             </div> */}
-            {recentViewProductData.length > 0 && (
+            {recentViewProductData?.length > 0 && (
                 <Sales
                     isHome={false}
                     bgcolor="bg-white"
