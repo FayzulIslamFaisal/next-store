@@ -24,65 +24,95 @@ const ViewAllProductPage = ({ searchParams }) => {
     useEffect(() => {
         const initialOutletId = localStorage.getItem("outletId");
         setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
-    }, []);
+    }, [session]);
 
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId || 47);
     }, []);
-    useEffect(() => {
-        const recentViewConfigure = async () => {
-            if (session) {
-                const recentViewProductFetch = await fetchRecentViewProducts(
-                    session?.accessToken,
-                    outletId
-                );
-                setRecentViewProductData(
-                    recentViewProductFetch?.results?.for_you_products
-                );
-            } else {
-                if (typeof window !== "undefined") {
-                    const storedProducts =
-                        JSON.parse(
-                            localStorage.getItem("recentlyViewProducts")
-                        ) || [];
-                    setRecentViewProductData(storedProducts);
-                }
+    // useEffect(() => {
+    const recentViewConfigure = async () => {
+        if (session) {
+            const recentViewProductFetch = await fetchRecentViewProducts(
+                session?.accessToken,
+                outletId
+            );
+            // setViewProductData(
+            //     recentViewProductFetch?.results?.for_you_products
+            // );
+            setRecentViewProductData(
+                recentViewProductFetch?.results?.for_you_products
+            );
+        } else {
+            if (typeof window !== "undefined") {
+                const storedProducts =
+                    JSON.parse(localStorage.getItem("recentlyViewProducts")) ||
+                    [];
+                // setViewProductData(storedProducts);
+                setRecentViewProductData(storedProducts);
             }
-        };
-        recentViewConfigure();
-    }, [session, outletId]);
+        }
+    };
+    //     recentViewConfigure();
+    // }, [session, outletId]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 if (searchParams && districtId) {
-                    const flashSaleProductData = await getHomeFlashSalesProduct(
-                        districtId
-                    );
-                    const flashSaleInfoTime =
-                        flashSaleProductData?.results?.flash_sale_info
-                            ?.end_time;
-
-                    const justForYouProductData =
-                        await getHomeJustForYouProduct(districtId);
-
                     switch (searchParams.type) {
                         case "justForYou":
+                            const justForYouProductData =
+                                await getHomeJustForYouProduct(districtId);
                             setViewProductData(
                                 justForYouProductData?.results?.just_for_you
                                     ?.for_you_products
                             );
                             setSectionTitle("Just For You");
+                            recentViewConfigure();
                             break;
 
                         case "flashSale":
+                            const flashSaleProductData =
+                                await getHomeFlashSalesProduct(districtId);
+                            const flashSaleInfoTime =
+                                flashSaleProductData?.results?.flash_sale_info
+                                    ?.end_time;
                             setViewProductData(
                                 flashSaleProductData?.results
                                     ?.flash_sales_product
                             );
+
                             setFlashSaleEndData(flashSaleInfoTime);
                             setSectionTitle("Flash Sale");
+                            recentViewConfigure();
+                            break;
+                        case "recentview":
+                            setViewProductData([]); // Clear existing data
+                            setRecentViewProductData([]); // Clear recent view data
+                            if (session) {
+                                const recentViewProductFetch =
+                                    await fetchRecentViewProducts(
+                                        session?.accessToken,
+                                        outletId
+                                    );
+                                setViewProductData(
+                                    recentViewProductFetch?.results
+                                        ?.for_you_products || []
+                                );
+                            } else {
+                                if (typeof window !== "undefined") {
+                                    const storedProducts =
+                                        JSON.parse(
+                                            localStorage.getItem(
+                                                "recentlyViewProducts"
+                                            )
+                                        ) || [];
+                                    setViewProductData(storedProducts);
+                                }
+                            }
+                            setSectionTitle("Recent View Product");
+                            setRecentViewProductData([]);
                             break;
                         default:
                             setViewProductData(["No Data"]);

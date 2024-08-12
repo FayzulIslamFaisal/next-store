@@ -36,7 +36,7 @@ const GoogleProfile = () => {
     useEffect(() => {
         async function fetchData() {
             if (session != undefined) {
-                console.log("=>>> fetch data...", session);
+                // console.log("=>>> fetch data...", session);
                 if (googleImage) {
                     const data = await checkUserExistByGoogleLogin(formData2);
                     if (
@@ -62,12 +62,12 @@ const GoogleProfile = () => {
         });
     }, [session?.user?.email]);
 
-    console.log("=>>> formdata before input changes", formData);
+    // console.log("=>>> formdata before input changes", formData);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
-        console.log("=>>> formdata after input changes", formData);
+        // console.log("=>>> formdata after input changes", formData);
     };
 
     const handleRegistration = async (e) => {
@@ -86,11 +86,11 @@ const GoogleProfile = () => {
         }
 
         try {
-            console.log("=>>> formdata before form submit", formData);
+            // console.log("=>>> formdata before form submit", formData);
 
             const res = await googleNewUser(formData);
 
-            console.log("=>>> res", res);
+            // console.log("=>>> res", res);
 
             if (res?.success != true) {
                 alert(res.message);

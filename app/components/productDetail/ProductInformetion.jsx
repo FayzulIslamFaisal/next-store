@@ -503,7 +503,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             defaultVariation();
         }
     }, [selectedVariants]);
-    console.log("variant item", productAllVariants);
+    // console.log("variant item", productAllVariants);
 
     return (
         <div className="col-md-6">

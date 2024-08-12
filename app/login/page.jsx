@@ -3,7 +3,7 @@ import Link from "next/link";
 import SigninBtn from "../components/SigninBtn";
 import React, { useEffect, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
     useEffect(() => {
         async function fetchData() {
             if (session != undefined) {
-                console.log("=>>> redirect to dashboard");
+                // console.log("=>>> redirect to dashboard");
                 router.push(`/dashboard`);
             }
         }
@@ -41,7 +41,7 @@ const Login = () => {
         const result = await signIn("credentials", {
             username: formData.username,
             password: formData.password,
-            redirect: false
+            redirect: false,
         });
 
         if (result.error) {

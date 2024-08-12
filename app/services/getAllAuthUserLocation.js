@@ -2,7 +2,7 @@ import { apiBaseUrl } from "../utils";
 
 export const fetchAllLocationAuthUser = async (accessToken) => {
     try {
-        console.log("get cart product ================", accessToken);
+        // console.log("get cart product ================", accessToken);
         const response = await fetch(`${apiBaseUrl}/get-shipping-address`, {
             method: "GET",
             headers: {

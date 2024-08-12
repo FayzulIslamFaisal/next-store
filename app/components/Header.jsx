@@ -115,7 +115,7 @@ function Header() {
         const setCartProductLength = async () => {
             if (session) {
                 const cartProduct = addToCartProductList();
-                console.log(cartProduct);
+                // console.log(cartProduct);
                 await addToCartProduct(cartProduct, session?.accessToken);
                 const updatedCartProducts = await fetchCartProducts(
                     session?.accessToken
@@ -126,7 +126,7 @@ function Header() {
                     const quantityTotal = getTotalQuantity(
                         updatedCartProducts?.data
                     );
-                    console.log(quantityTotal, "quantityTotal");
+                    // console.log(quantityTotal, "quantityTotal");
                     dispatch(
                         setAddToCart({
                             hasSession: true,

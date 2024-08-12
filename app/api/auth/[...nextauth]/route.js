@@ -34,10 +34,10 @@ export const authOptions = {
                         password: credentials?.password,
                     });
 
-                    console.log(
-                        "=>>> after credentials login successfully res from api auth route page",
-                        res
-                    );
+                    // console.log(
+                    //     "=>>> after credentials login successfully res from api auth route page",
+                    //     res
+                    // );
 
                     if (res.error) {
                         throw new Error("Email or Password is not correct");
@@ -74,7 +74,7 @@ export const authOptions = {
 
     callbacks: {
         async signIn({ user, account, profile }) {
-            console.log("=>>> signIn from api auth route page ...");
+            // console.log("=>>> signIn from api auth route page ...");
 
             // console.log(
             //     "=>>> signIn from api auth route page account",
@@ -208,7 +208,7 @@ export const authOptions = {
             }
         },
         async jwt({ token, user }) {
-            console.log("=>>> jwt...");
+            // console.log("=>>> jwt...");
 
             // console.log('=>>> jwt token from api auth route page', token)
             // console.log('=>>> jwt user from api auth route page', user)
@@ -224,7 +224,7 @@ export const authOptions = {
         },
 
         async session({ session, token }) {
-            console.log("=>>> session from api auth route page...");
+            // console.log("=>>> session from api auth route page...");
 
             // console.log('=>>> session session from api auth route page', session)
             // console.log('=>>> session token from api auth route page', token)
