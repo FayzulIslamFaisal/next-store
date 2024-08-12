@@ -4,11 +4,11 @@ import Head from "next/head";
 import { getProductDetails } from "@/app/services/getProductDetails";
 export async function generateMetadata(path) {
     try {
-        console.log("Generated pathName:", path); // Debugging line
-        console.log(
-            "Generated pathName:",
-            ` outlet_id=${path?.searchParams?.outlet_id}&product_id=${path?.searchParams?.product_id}`
-        ); // Debugging line
+        // console.log("Generated pathName:", path); // Debugging line
+        // console.log(
+        //     "Generated pathName:",
+        //     ` outlet_id=${path?.searchParams?.outlet_id}&product_id=${path?.searchParams?.product_id}`
+        // ); // Debugging line
 
         const productData = await getProductDetails(
             ` outlet_id=${path?.searchParams?.outlet_id}&product_id=${path?.searchParams?.product_id}`

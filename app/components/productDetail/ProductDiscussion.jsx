@@ -29,7 +29,7 @@ const ProductQuestions = ({ productInfo }) => {
                 }),
             });
 
-            console.log("this response come fom product  response", res);
+            // console.log("this response come fom product  response", res);
 
             if (!res.ok) {
                 const MySwal = withReactContent(Swal);
@@ -106,7 +106,7 @@ const ProductQuestions = ({ productInfo }) => {
                                 <div className="modal-body">
                                     <div className="mb-3">
                                         <label
-                                            for="message-text"
+                                            htmlFor="message-text"
                                             className="col-form-label"
                                         >
                                             Question:

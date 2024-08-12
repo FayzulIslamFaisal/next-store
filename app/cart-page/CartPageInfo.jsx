@@ -453,7 +453,7 @@ const CartPage = () => {
 
     useEffect(() => {
         const checkingProductIsCheck = isAnyChecked(checkedProductCard);
-        console.log("checkingProductIsCheck", checkingProductIsCheck);
+        // console.log("checkingProductIsCheck", checkingProductIsCheck);
         setIsRemoveOpen(checkingProductIsCheck);
     }, [checkedProductCard]);
 

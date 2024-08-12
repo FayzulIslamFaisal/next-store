@@ -280,7 +280,7 @@ const BuyNowShippingProductPage = () => {
             grand_total: totalPrice + parseInt(shippingPrice),
             cart_items: cartItems,
         };
-        console.log(shippingPrice);
+        // console.log(shippingPrice);
         const order = await placeOrder(payload, session?.accessToken);
         if (order.code == 200) {
             showToast(order.message);

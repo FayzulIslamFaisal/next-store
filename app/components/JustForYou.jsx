@@ -27,7 +27,7 @@ function JustForYou() {
                 const initialProducts = justForYouProductList.slice(0, offset);
 
                 setJfyProducts(initialProducts);
-                if (initialProducts.length === justForYouProductList.length) {
+                if (initialProducts.length > justForYouProductList.length) {
                     setShowLoadMore(false);
                 }
             } catch (error) {
@@ -41,6 +41,7 @@ function JustForYou() {
     const handleLoadMore = (e) => {
         e.preventDefault();
         setOffset((prev) => prev + 12);
+        setShowLoadMore(false);
     };
 
     return (
