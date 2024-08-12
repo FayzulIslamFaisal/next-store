@@ -14,7 +14,7 @@ const Registration = () => {
     useEffect(() => {
         async function fetchData() {
             if (session != undefined) {
-                console.log("=>>> redirect to dashboard");
+                // console.log("=>>> redirect to dashboard");
                 router.push(`/dashboard`);
             }
         }
@@ -32,7 +32,7 @@ const Registration = () => {
     });
 
     const handleInputChange = (e) => {
-        console.log('=>>> formdata', formData)
+        // console.log('=>>> formdata', formData)
         setFormData((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
@@ -98,7 +98,7 @@ const Registration = () => {
                     });
 
                     if (res?.message.includes("Already Exists")) {
-                        setFormData({...formData ,email:res.email})
+                        setFormData({ ...formData, email: res.email });
                         setErrorMessage(res?.message);
 
                         setExistsEmail(res.email);

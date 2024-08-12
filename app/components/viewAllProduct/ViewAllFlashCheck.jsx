@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Sales from "../Sales";
-// import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
 import { fetchRecentViewProducts } from "@/app/services/getRecentViewProduct";
 
@@ -37,7 +36,7 @@ const ViewAllFlashCheck = () => {
         };
         recentViewConfigure();
     }, [session, outletId]);
-    
+
     return (
         <>
             {recentViewProductData.length > 0 && (

@@ -1,7 +1,7 @@
 import SocialLinkItems from "./SocialLinkItems";
 
 const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
-    console.log("path_name ", path_name);
+    // console.log("path_name ", path_name);
 
     const socialLinkItem = [
         {
@@ -30,7 +30,7 @@ const SocialLink = ({ path_name, product_name, product_thumbnail }) => {
             path: "https://www.instagram.com",
         },
     ];
-    console.log("socialLinkItem final path path ", socialLinkItem);
+    // console.log("socialLinkItem final path path ", socialLinkItem);
     return (
         <div className="nh-social-link d-flex align-items-center">
             {socialLinkItem.map((item) => {

@@ -425,7 +425,7 @@ const ProductDeliveryDetail = ({ productInfo }) => {
                                             <form>
                                                 <div className="mb-3">
                                                     <label
-                                                        for="message-text"
+                                                        htmlFor="message-text"
                                                         className="col-form-label"
                                                     >
                                                         {productInfo?.warranty !==

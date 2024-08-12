@@ -63,7 +63,7 @@ const PayNowPaymentOption = () => {
                             />
                             <label
                                 className="form-check-label"
-                                for="exampleCheck1"
+                                htmlFor="exampleCheck1"
                             >
                                 I agree to the terms and conditions, return
                                 policy, and privacy policy

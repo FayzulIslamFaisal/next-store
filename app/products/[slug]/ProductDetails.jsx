@@ -48,7 +48,7 @@ const ProductSinglePage = ({ params }) => {
             subTitle: "Support System 24/7",
         },
     ];
-    console.log("params for product details", params);
+    // console.log("params for product details", params);
     useEffect(() => {
         async function fetchData() {
             const productInfo = await getProductDetails(pathName);
