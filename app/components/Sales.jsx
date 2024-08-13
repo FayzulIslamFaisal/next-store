@@ -39,7 +39,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     useEffect(() => {
         async function fetchData() {
             const flashSale = await getHomeFlashSalesProduct(districtId);
-            let flashProduct = flashSale?.results?.flash_sales_product;
+            let flashProduct = flashSale?.results?.flash_sales_product?.data;
             setFlashSaleProductList(flashProduct);
         }
         fetchData();

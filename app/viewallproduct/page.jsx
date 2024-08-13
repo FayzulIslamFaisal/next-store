@@ -11,6 +11,7 @@ import { getHomeJustForYouProduct } from "../services/getHomeJustForYouProduct";
 import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import CategoryPagination from "../components/productCategory/CategoryPagination";
 
 const ViewAllProductPage = () => {
     const [viewProductData, setViewProductData] = useState([]);
@@ -21,9 +22,19 @@ const ViewAllProductPage = () => {
     const [districtId, setDistrictId] = useState(null);
     const { status, data: session } = useSession();
     const [outletId, setOutletId] = useState(0);
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPages, setCurrentPages] = useState(1); // New state for current pages
 
     const searchParams = useSearchParams();
     const type = searchParams.get('type');
+
+    useEffect(() => {
+        const page = searchParams.get('page');
+        if (page && page !== currentPages) {
+            setCurrentPages( parseInt(page));
+        }
+    }, [searchParams, currentPages]);
+    const limit = 12; //Per Page Category
 
     useEffect(() => {
         const initialOutletId = localStorage.getItem("outletId");
@@ -63,13 +74,13 @@ const ViewAllProductPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (type  && districtId) {
+                if (type && districtId) {
                     switch (type) {
                         case "justForYou":
                             try {
-                                const justForYouProductData = await getHomeJustForYouProduct(districtId);
-                                console.log(justForYouProductData);
-                                setViewProductData(justForYouProductData?.results?.just_for_you?.for_you_products);
+                                const justForYouProductData = await getHomeJustForYouProduct(districtId, currentPages, limit);
+                                setViewProductData(justForYouProductData?.results?.just_for_you?.data);
+                                setLastPage(justForYouProductData?.results?.just_for_you?.last_page)
                                 setSectionTitle("Just For You");
                                 recentViewConfigure();
                             } catch (error) {
@@ -80,15 +91,16 @@ const ViewAllProductPage = () => {
                         case "flashSale":
                             try {
                                 const flashSaleProductData =
-                                    await getHomeFlashSalesProduct(districtId);
+                                    await getHomeFlashSalesProduct(districtId, currentPages, limit);
                                 const flashSaleInfoTime =
                                     flashSaleProductData?.results?.flash_sale_info
                                         ?.end_time;
                                 setViewProductData(
                                     flashSaleProductData?.results
-                                        ?.flash_sales_product
+                                        ?.flash_sales_product.data
                                 );
-
+                                setLastPage(flashSaleProductData?.results
+                                    ?.flash_sales_product.last_page)
                                 setFlashSaleEndData(flashSaleInfoTime);
                                 setSectionTitle("Flash Sale");
                                 recentViewConfigure();
@@ -140,10 +152,6 @@ const ViewAllProductPage = () => {
         fetchData();
     }, [districtId, type]);
 
-    console.log("Search Params:", type);
-    console.log("District ID:", districtId);
-    console.log({viewProductData});
-
     const serviceItems = [
         {
             imageurl: "/images/pickup.svg",
@@ -180,12 +188,10 @@ const ViewAllProductPage = () => {
                 flashSaleEndData={flashSaleEndData}
             />
             <ViewAllProduct viewProductData={viewProductData} />
-            {/* Pagination code */}
-            {/* <div className="row view-all-product-pagination-area">
-                <div className="col-md-12 text-center">
-                    <Pagination />
-                </div>
-            </div> */}
+            <CategoryPagination
+                currentPage={currentPages}
+                lastPage={lastPage}
+            />
             {recentViewProductData?.length > 0 && (
                 <Sales
                     isHome={false}

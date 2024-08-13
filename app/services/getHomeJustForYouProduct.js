@@ -1,10 +1,10 @@
 import { apiBaseUrl } from "../utils";
 
-export const getHomeJustForYouProduct = async (districtId) => {
+export const getHomeJustForYouProduct = async (districtId, page = 1, limit=0) => {
     if (districtId) {
         try {
             const response = await fetch(
-                `${apiBaseUrl}/get-outlet-product-by-district-id-v2-just-for-you/${districtId}`,
+                `${apiBaseUrl}/get-outlet-product-by-district-id-v2-just-for-you/${districtId}?page=${page}&limit=${limit}`,
                 { next: { revalidate: 10 } }
             );
             return await response.json();
