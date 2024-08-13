@@ -1,4 +1,4 @@
-const OrderViewAmmount = ({ orderSummary }) => {
+const OrderViewAmmount = ({ orderSummary, orderTotalPaid }) => {
     return (
         <>
             <div className="col-lg-3">
@@ -82,7 +82,12 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                         <td className="w-50 fw-600">PAID</td>
                                         <td className="text-right text-success">
                                             <strong>
-                                                <span> ৳ 0 </span>
+                                                <span>
+                                                    ৳{" "}
+                                                    {orderTotalPaid > 0
+                                                        ? orderTotalPaid
+                                                        : 0}
+                                                </span>
                                             </strong>
                                         </td>
                                     </tr>
@@ -91,8 +96,11 @@ const OrderViewAmmount = ({ orderSummary }) => {
                                         <td className="text-right text-danger">
                                             <strong>
                                                 <span id="dueAmount">
-                                                    {" "}
-                                                    ৳ 1200{" "}
+                                                    ৳{" "}
+                                                    {parseInt(
+                                                        orderSummary?.grand_total -
+                                                            orderTotalPaid
+                                                    )}
                                                 </span>
                                             </strong>
                                         </td>

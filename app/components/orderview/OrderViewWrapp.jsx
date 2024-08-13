@@ -16,6 +16,7 @@ const OrderViewWrapp = () => {
     const [orderSummary, setOrderSummary] = useState(null);
     const [orderStatus, setOrderStatus] = useState([]);
     const [orderPaymentHistory, setOrderPaymentHistory] = useState([]);
+    const [orderTotalPaid, setOrderTotalPaid] = useState(null);
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderid");
@@ -47,6 +48,8 @@ const OrderViewWrapp = () => {
                         session?.accessToken
                     );
                     const orderPaymentResult = orderPaymentData?.results || {};
+                    const totalPaid = orderPaymentResult?.total_paid;
+                    setOrderTotalPaid(totalPaid);
                     setOrderPaymentHistory(orderPaymentResult);
                 } catch (error) {
                     console.error(
@@ -100,7 +103,10 @@ const OrderViewWrapp = () => {
                                 orderPaymentHistory={orderPaymentHistory}
                             />
                         </div>
-                        <OrderViewAmmount orderSummary={orderSummary} />
+                        <OrderViewAmmount
+                            orderSummary={orderSummary}
+                            orderTotalPaid={orderTotalPaid}
+                        />
                     </div>
                 </div>
             </div>
