@@ -22,7 +22,7 @@ function JustForYou() {
                     districtId
                 );
                 let justForYouListProduct =
-                    justForYoutList?.results?.just_for_you?.for_you_products;
+                    justForYoutList?.results?.just_for_you?.data;
                 const justForYouProductList = justForYouListProduct || [];
                 const initialProducts = justForYouProductList.slice(0, offset);
 
@@ -55,7 +55,7 @@ function JustForYou() {
             <div className="row just-for-random-product">
                 <div className="col-md-12">
                     <div className="flash-sale-content-area">
-                        {jfyProducts.map((product, index) => (
+                        {jfyProducts?.map((product, index) => (
                             <ProductCard
                                 key={`${product.id}-${product.slug}-${index}`}
                                 item={product}
