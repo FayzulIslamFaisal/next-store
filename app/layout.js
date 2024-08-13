@@ -187,6 +187,11 @@ export default function RootLayout({ children, slug, option }) {
             />
             <link
                 rel="stylesheet"
+                href="/css/customer-password-setting.css"
+                precedence="default"
+            />
+            <link
+                rel="stylesheet"
                 href="/css/common.css"
                 precedence="default"
             />
