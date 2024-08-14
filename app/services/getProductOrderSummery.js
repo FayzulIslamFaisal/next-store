@@ -15,6 +15,7 @@ export const getProductOrderSummery = async (
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,
                 },
+                next: { revalidate: 1 },
             }
         );
         return await response.json();

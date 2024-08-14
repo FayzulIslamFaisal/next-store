@@ -88,7 +88,11 @@ const OrderViewSummary = ({ orderSummary }) => {
                                             ? orderSummary?.grand_total
                                             : null}
                                     </p>
-                                    <p>--</p>
+                                    <p>
+                                        {orderSummary?.delivery_note
+                                            ? orderSummary?.delivery_note
+                                            : "----"}
+                                    </p>
                                 </div>
                             </div>
                         </div>

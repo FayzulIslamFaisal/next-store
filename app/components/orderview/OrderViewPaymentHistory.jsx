@@ -21,48 +21,53 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {orderPaymentHistory.length > 0 ? (
-                                    orderPaymentHistory.map((item) => {
-                                        const {
-                                            id,
-                                            bank_name,
-                                            date,
-                                            payment_getway,
-                                            payment_method,
-                                            transaction_amount,
-                                            transaction_id,
-                                        } = item;
-                                        return (
-                                            <tr key={id}>
-                                                <td>{date ? date : null}</td>
-                                                <td>
-                                                    {payment_getway
-                                                        ? payment_getway
-                                                        : null}
-                                                </td>
-                                                <td>
-                                                    {payment_method
-                                                        ? payment_method
-                                                        : null}
-                                                </td>
-                                                <td>
-                                                    {bank_name
-                                                        ? bank_name
-                                                        : null}
-                                                </td>
-                                                <td>
-                                                    {transaction_id
-                                                        ? transaction_id
-                                                        : null}
-                                                </td>
-                                                <td>
-                                                    {transaction_amount
-                                                        ? transaction_amount
-                                                        : null}
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
+                                {orderPaymentHistory?.payment_history?.length >
+                                0 ? (
+                                    orderPaymentHistory?.payment_history.map(
+                                        (item) => {
+                                            const {
+                                                id,
+                                                bank_name,
+                                                date,
+                                                payment_getway,
+                                                payment_method,
+                                                transaction_amount,
+                                                transaction_id,
+                                            } = item;
+                                            return (
+                                                <tr key={id}>
+                                                    <td>
+                                                        {date ? date : null}
+                                                    </td>
+                                                    <td>
+                                                        {payment_getway
+                                                            ? payment_getway
+                                                            : null}
+                                                    </td>
+                                                    <td>
+                                                        {payment_method
+                                                            ? payment_method
+                                                            : null}
+                                                    </td>
+                                                    <td>
+                                                        {bank_name
+                                                            ? bank_name
+                                                            : null}
+                                                    </td>
+                                                    <td>
+                                                        {transaction_id
+                                                            ? transaction_id
+                                                            : null}
+                                                    </td>
+                                                    <td>
+                                                        {transaction_amount
+                                                            ? transaction_amount
+                                                            : null}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        }
+                                    )
                                 ) : (
                                     <tr>
                                         <td>

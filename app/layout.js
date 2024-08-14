@@ -6,8 +6,8 @@ import "./globals.css";
 import DistrictModal from "./components/DistrictModal";
 import AuthProvider from "./auth/Provider";
 import { Suspense } from "react";
-import { CategoryDetailProvider } from "./context/CategoryDetailContext";
-import { CategoryDetailProductProvider } from "./context/CategoryDetailProductContext";
+// import { CategoryDetailProvider } from "./context/CategoryDetailContext";
+// import { CategoryDetailProductProvider } from "./context/CategoryDetailProductContext";
 import { ReduxProvider } from "./ReduxProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -213,18 +213,18 @@ export default function RootLayout({ children, slug, option }) {
                 <Suspense>
                     <ReduxProvider>
                         <AuthProvider>
-                            <CategoryDetailProductProvider
+                            {/* <CategoryDetailProductProvider
                                 slug={slug}
                                 option={option}
-                            >
-                                <CategoryDetailProvider>
+                            > */}
+                                {/* <CategoryDetailProvider> */}
                                     <Header />
                                     <DistrictModal />
                                     {children}
                                     <Footer />
                                     <ToastContainer />
-                                </CategoryDetailProvider>
-                            </CategoryDetailProductProvider>
+                                {/* </CategoryDetailProvider> */}
+                            {/* </CategoryDetailProductProvider> */}
                         </AuthProvider>
                     </ReduxProvider>
                 </Suspense>
