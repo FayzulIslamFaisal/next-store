@@ -93,7 +93,7 @@ const OrderViewWrapp = () => {
         <>
             <div className="order-view-wrapper">
                 <div className=" container">
-                    <OrderViewTopBtn />
+                    <OrderViewTopBtn orderSummary={orderSummary} />
                     <OrderViewSummary orderSummary={orderSummary} />
                     <OrderViewTimeLine orderStatus={orderStatus} />
                     <div className="row order-view-payment-history">

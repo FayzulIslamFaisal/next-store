@@ -19,7 +19,7 @@ const OrderSummaryLeft = ({ orderSummary }) => {
                     <OrderShippingAddress orderSummary={orderSummary} />
                     <div className="billing-btn-area">
                         <TrackYourOrderBtn />
-                        <DownloadInvoiceBtn />
+                        <DownloadInvoiceBtn orderSummary={orderSummary} />
                     </div>
                 </div>
             </div>

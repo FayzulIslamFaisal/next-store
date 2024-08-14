@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const OrderViewTopBtn = () => {
+const OrderViewTopBtn = ({ orderSummary }) => {
     return (
         <>
             <div className="row order-view-top-btn-area">
@@ -11,17 +11,11 @@ const OrderViewTopBtn = () => {
                             className="border-0 btn order-invoce-btn"
                         >
                             <Link
-                                href="/orderinvoice"
+                                href={`/orderinvoice?orderId=${orderSummary?.order_id}`}
                                 style={{ color: "#fff" }}
                             >
                                 Invoice
                             </Link>
-                        </button>
-                        <button
-                            type="button"
-                            className="border-0 btn btn-danger"
-                        >
-                            cancelled
                         </button>
                     </div>
                 </div>

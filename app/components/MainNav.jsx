@@ -10,6 +10,8 @@ import ProductSearchResultMobile from "./ProductSearchResultMobile";
 import { getDivision } from "../services/getDivision";
 import { getDistrictByDivisionId } from "../services/getDistrict";
 import { useSelector } from "react-redux";
+import { FaUser } from "react-icons/fa";
+
 function MainNav({
     isObserverMenuVisible,
     isCategoryHoverMenu,
@@ -59,7 +61,7 @@ function MainNav({
 
     useEffect(() => {
         const location = localStorage.getItem("location");
-        setLoction(location?location:"Dhaka City, Dhaka");
+        setLoction(location ? location : "Dhaka City, Dhaka");
     }, [districtId]);
 
     // Function to handle click outside the modal
@@ -207,6 +209,21 @@ function MainNav({
                                         Cart ({addToCartProductLength})
                                     </Link>
                                 </li>
+                                {authStatus === "authenticated" && (
+                                    <li>
+                                        <Link
+                                            href="/dashboard"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <span className="bg-white d-flex align-items-center">
+                                                <FaUser
+                                                    style={{ color: "#44bc9d" }}
+                                                />
+                                            </span>
+                                            User
+                                        </Link>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>
@@ -362,6 +379,22 @@ function MainNav({
                                         Cart ({addToCartProductLength})
                                     </Link>
                                 </li>
+
+                                {authStatus === "authenticated" && (
+                                    <li>
+                                        <Link
+                                            href="/dashboard"
+                                            className="text-white text-capitalize d-flex align-items-center"
+                                        >
+                                            <span className="bg-white d-flex align-items-center">
+                                                <FaUser
+                                                    style={{ color: "#44bc9d" }}
+                                                />
+                                            </span>
+                                            User
+                                        </Link>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>
