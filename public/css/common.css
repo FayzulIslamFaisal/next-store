@@ -116,10 +116,13 @@ body {
 }
 
 .flash-sale-end-time-box {
-    width: 28px;
+    min-width: 28px;
     height: 28px;
     background: var(--color-44BC9D);
     border-radius: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    line-height: 28px;
 }
 
 .flash-sale-end-time-box span {
