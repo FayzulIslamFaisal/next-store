@@ -13,8 +13,13 @@ const OrderViewTimeLine = ({ orderStatus }) => {
                             <div className="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
                                 {orderStatus.length > 0 ? (
                                     orderStatus.map((statusItem) => {
-                                        const { id, status, time, date } =
-                                            statusItem;
+                                        const {
+                                            id,
+                                            status,
+                                            time,
+                                            date,
+                                            order_status_note,
+                                        } = statusItem;
                                         return (
                                             <div
                                                 key={id}
@@ -38,10 +43,9 @@ const OrderViewTimeLine = ({ orderStatus }) => {
                                                                 : null}
                                                         </h4>
                                                         <p>
-                                                            Please pay total
-                                                            amount within 74
-                                                            hours to confirm
-                                                            your order.
+                                                            {order_status_note
+                                                                ? order_status_note
+                                                                : null}
                                                         </p>
                                                         <span className="vertical-timeline-element-date">
                                                             {time ? time : null}

@@ -85,3 +85,8 @@
 .shopping-price-area.custom-shopping-price p  {
     font-weight: 400;
 }
+
+.cart-product-terms-condition .form-check-input:checked {
+    border-color: var(--color-44BC9D) !important;
+    background-color: var(--color-44BC9D) !important;
+}
