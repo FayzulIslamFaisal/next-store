@@ -1,19 +1,16 @@
 "use client";
-import Head from "next/head";
 import { Suspense, useEffect, useState } from "react";
 import Sales from "@/app/components/Sales";
-import Service from "@/app/components/Service";
 import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import ProductLeftSide from "@/app/components/productDetail/ProductLeftSide";
 import ProductRightSide from "@/app/components/productDetail/ProductRightSide";
 import { getProductDetails } from "@/app/services/getProductDetails";
-import { productDetailsPageMetaDataHandler, storeProduct } from "@/app/utils";
-import { usePathname, useSearchParams } from "next/navigation";
+import { storeProduct } from "@/app/utils";
+import { useSearchParams } from "next/navigation";
 import NotFound from "@/app/not-found";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { useSession } from "next-auth/react";
 import { recentViewProductApi } from "@/app/services/postRecentViewProduct";
-import { fetchRecentViewProducts } from "@/app/services/getRecentViewProduct";
 
 const ProductSinglePage = ({ params }) => {
     const { status, data: session } = useSession();
@@ -21,34 +18,6 @@ const ProductSinglePage = ({ params }) => {
     const searchParams = useSearchParams();
     const pathName = searchParams.toString();
     const [successCode, setSuccessCode] = useState(null);
-    const [recentViewProduct, setRecentViewProduct] = useState([]);
-    const serviceItems = [
-        {
-            imageurl: "/images/pickup.svg",
-            altText: "pickup image",
-            title: " Fast Delivery",
-            subTitle: "Free For All Type Order",
-        },
-        {
-            imageurl: "/images/gift-cart.svg",
-            altText: "gift cart",
-            title: " Best Quality",
-            subTitle: "Best Product Peices",
-        },
-        {
-            imageurl: "/images/gift-box.svg",
-            altText: "gift box",
-            title: " Exchange Offer",
-            subTitle: "One Day To Changes",
-        },
-        {
-            imageurl: "/images/headphone.svg",
-            altText: "headphone",
-            title: "  Help Center",
-            subTitle: "Support System 24/7",
-        },
-    ];
-    // console.log("params for product details", params);
     useEffect(() => {
         async function fetchData() {
             const productInfo = await getProductDetails(pathName);

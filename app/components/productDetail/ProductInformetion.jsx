@@ -258,17 +258,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
         });
     };
 
-    function filterBySelected(arr, selected) {
-        return arr.filter((item) => {
-            return selected.every((sel) => {
-                const selKey = Object.keys(sel)[0];
-                return (
-                    item?.hasOwnProperty(selKey) && item[selKey] === sel[selKey]
-                );
-            });
-        });
-    }
-
     const getColorBySize = (
         size,
         checkVariantName,
@@ -296,17 +285,6 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
             matched: Array.from(matchVariant),
             unmatched: Array.from(unmatchedValues),
         };
-    };
-
-    const getDifference = (selected, enable) => {
-        const selectedProperties = selected.flatMap(Object.keys);
-        return enable.map((obj) =>
-            Object.fromEntries(
-                Object.entries(obj).filter(
-                    ([key]) => !selectedProperties.includes(key)
-                )
-            )
-        );
     };
 
     useEffect(() => {

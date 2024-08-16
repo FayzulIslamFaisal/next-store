@@ -10,7 +10,6 @@ import {
     getTotalQuantity,
     setSelectedCardIds,
 } from "../utils";
-import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { deleteCartProduct } from "../services/getDeleteCartProduct";
 import { addToCartQuantityUpdate } from "../services/addToCartQuantityUpdate";
@@ -25,8 +24,6 @@ import {
     FaTrash,
     FaTrashCan,
 } from "react-icons/fa6";
-import { FaMagic } from "react-icons/fa";
-import DefaultLoader from "../components/defaultloader/DefaultLoader";
 import { RotatingLines } from "react-loader-spinner";
 import NoProductShows from "../components/NoProductShows";
 import Swal from "sweetalert2";

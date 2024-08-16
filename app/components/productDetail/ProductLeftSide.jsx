@@ -1,4 +1,3 @@
-import Head from "next/head";
 import ProductImage from "./ProductImage";
 import ProductInformetion from "./ProductInformetion";
 import ProductLongDescription from "./ProductLongDescription";

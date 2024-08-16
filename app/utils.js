@@ -286,13 +286,13 @@ export function getTotalQuantity(products) {
     return totalQuantity;
 }
 
-//selected Card id's
+//set selected Card id's
 export function setSelectedCardIds(cartIds) {
     if (typeof window !== "undefined") {
         localStorage.setItem("selectedCardIds", JSON.stringify(cartIds));
     }
 }
-
+//get selected card id's
 export const getSelectedCardIds = () => {
     if (typeof window !== "undefined") {
         const productData = localStorage.getItem("selectedCardIds");
