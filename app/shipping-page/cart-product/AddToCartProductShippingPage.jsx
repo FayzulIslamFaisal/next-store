@@ -4,7 +4,8 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../../services/getShippingCustomerAddresses";
-import { fetchCartProducts } from "../../services/getShowAddToCartProduct";
+import { fetchCartProducts } from "../../services/getShippingPageCartProduct";
+import { fetchCartProducts as fetchCartProductsLength } from "../../services/getShowAddToCartProduct";
 import { getTotalQuantity, NagadhatPublicUrl } from "../../utils";
 import { placeOrder } from "../../services/postPlaceOrder";
 import Link from "next/link";
@@ -16,7 +17,6 @@ import { getDistrictForShipping } from "../../services/getDistrictForShipping";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../../store/cartSlice";
 import { RotatingLines } from "react-loader-spinner";
-import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { showToast } from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
 function findObjectWithKey(array, key, value) {
@@ -39,7 +39,6 @@ const AddToCartProductShippingPage = () => {
     });
     const [editedAddressId, setEditAddressId] = useState(null);
     const [cartProduct, setCartProduct] = useState([]);
-    const [auth, setAuth] = useState(session?.user);
     const [validationErrors, setValidationErrors] = useState({});
     const [userEmail, setUserEmail] = useState("");
     const [tempEmail, setTempEmail] = useState("");
@@ -252,7 +251,9 @@ const AddToCartProductShippingPage = () => {
             cart_items: cartItems,
         };
         const order = await placeOrder(payload, session?.accessToken);
-        const cartProductsItem = await fetchCartProducts(session?.accessToken);
+        const cartProductsItem = await fetchCartProductsLength(
+            session?.accessToken
+        );
         const quantityTotal = getTotalQuantity(cartProductsItem?.data);
 
         setCartProduct(cartProductsItem?.data);
@@ -746,19 +747,25 @@ const AddToCartProductShippingPage = () => {
                                                                         htmlFor="delivery_note"
                                                                         className=" text-capitalize"
                                                                     >
-                                                                        
                                                                         note
                                                                     </label>
                                                                     <div className=" w-50">
-                                                                    <input
-                                                                        type="text"
-                                                                        name="delivery_note"
-                                                                        className=" form-control"
-                                                                        onChange={(e) => setDeliveryNote(e.target.value)}
-                                                                        placeholder="Enter Note"
-                                                                    />
+                                                                        <input
+                                                                            type="text"
+                                                                            name="delivery_note"
+                                                                            className=" form-control"
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                setDeliveryNote(
+                                                                                    e
+                                                                                        .target
+                                                                                        .value
+                                                                                )
+                                                                            }
+                                                                            placeholder="Enter Note"
+                                                                        />
                                                                     </div>
-                                                                    
                                                                 </div>
                                                             </div>
 

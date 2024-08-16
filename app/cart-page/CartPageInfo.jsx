@@ -6,7 +6,9 @@ import {
     NagadhatPublicUrl,
     addToCartProductList,
     apiBaseUrl,
+    getSelectedCardIds,
     getTotalQuantity,
+    setSelectedCardIds,
 } from "../utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -29,22 +31,40 @@ import { RotatingLines } from "react-loader-spinner";
 import NoProductShows from "../components/NoProductShows";
 import Swal from "sweetalert2";
 import { showToast } from "../components/Toast";
+import { useRouter } from "next/navigation";
+import { addToCartSelectedProduct } from "../services/postCartSelectedProducts";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
     const [isRemoveOpen, setIsRemoveOpen] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
     let price;
-    let totalPrice = 0;
     let discountPrice;
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-
+    const router = useRouter();
     //Update Add To Cart product after operation in localStore addToCart Item
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
     const [quanticUpdateLoader, setQuantityUpdateLoader] = useState(false);
+
+    function updateProductWithChecked(cartInfoIds, updateProduct) {
+        // Get an array of cart_ids from cartInfoIds
+        const cartIds = cartInfoIds.map((item) => item.cart_id);
+
+        // Iterate through updateProduct array
+        updateProduct.forEach((product) => {
+            // If the product's cart_id is in the cartIds array, add isChecked: true
+            if (cartIds.includes(product.cart_id)) {
+                product.isChecked = true;
+            }
+        });
+
+        return updateProduct;
+    }
+
     /**
      * Handles the deletion of a cart item.
      * If a session exists, it deletes the item from the server and updates the state accordingly.
@@ -69,6 +89,12 @@ const CartPage = () => {
                 setLoading(true);
 
                 if (session) {
+                    const checkingProductFilter =
+                        isAnyChecked(checkedProductCard);
+                    const cartIds = checkingProductFilter.map((item) => ({
+                        cart_id: item?.cart_id,
+                    }));
+                    setSelectedCardIds(cartIds);
                     const deleteProduct = await deleteCartProduct(
                         cart_id,
                         session?.accessToken
@@ -77,7 +103,14 @@ const CartPage = () => {
 
                     if (updatedCartProducts.success) {
                         showToast("Product delete successfully");
-                        setCheckedProductCard(updatedCartProducts?.data);
+                        const selectedProductIds = getSelectedCardIds();
+                        const updatedProducts = updateProductWithChecked(
+                            selectedProductIds,
+                            updatedCartProducts?.data
+                        );
+                        setCheckedProductCard(updatedProducts);
+                        // setCheckedProductCard(updatedCartProducts?.data);
+
                         const quantityTotal = getTotalQuantity(
                             updatedCartProducts?.data
                         );
@@ -131,11 +164,19 @@ const CartPage = () => {
             if (wantToDelete.isConfirmed) {
                 setLoading(true);
                 if (session) {
+                    const checkingProductFilter =
+                        isAnyChecked(checkedProductCard);
+                    const cartIds = checkingProductFilter.map((item) => ({
+                        cart_id: item?.cart_id,
+                    }));
+                    setSelectedCardIds(cartIds);
+
                     const updatedItemsInCard = checkedProductCard
                         .filter((item) => item.isChecked)
                         .map((item) => ({
                             cart_id: item?.cart_id,
                         }));
+
                     await deleteProductFromTheApi(
                         updatedItemsInCard,
                         session?.accessToken
@@ -143,7 +184,12 @@ const CartPage = () => {
                     const updatedCartProducts = await fetchCartProducts();
 
                     if (updatedCartProducts.success) {
-                        setCheckedProductCard(updatedCartProducts?.data);
+                        const selectedProductIds = getSelectedCardIds();
+                        const updatedProducts = updateProductWithChecked(
+                            selectedProductIds,
+                            updatedCartProducts?.data
+                        );
+                        setCheckedProductCard(updatedProducts);
                         const quantityTotal = getTotalQuantity(
                             updatedCartProducts?.data
                         );
@@ -175,7 +221,7 @@ const CartPage = () => {
                 setLoading(false);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
@@ -218,6 +264,11 @@ const CartPage = () => {
             setQuantityUpdateLoader(true);
 
             if (session) {
+                const checkingProductFilter = isAnyChecked(checkedProductCard);
+                const cartIds = checkingProductFilter.map((item) => ({
+                    cart_id: item?.cart_id,
+                }));
+                setSelectedCardIds(cartIds);
                 const quantityUpdateInfo = {
                     cart_id: indexId,
                     outlet_id: 3,
@@ -230,10 +281,12 @@ const CartPage = () => {
 
                 const updatedCartProducts = await fetchCartProducts();
                 if (updatedCartProducts.success) {
-                    const configMessage = decrementApi?.error
-                        ? showToast(decrementApi.message, "error")
-                        : showToast(decrementApi.message);
-                    setCheckedProductCard(updatedCartProducts?.data);
+                    const selectedProductIds = getSelectedCardIds();
+                    const updatedProducts = updateProductWithChecked(
+                        selectedProductIds,
+                        updatedCartProducts?.data
+                    );
+                    setCheckedProductCard(updatedProducts);
                     const quantityTotal = getTotalQuantity(
                         updatedCartProducts?.data
                     );
@@ -286,6 +339,11 @@ const CartPage = () => {
         try {
             setQuantityUpdateLoader(true);
             if (session) {
+                const checkingProductFilter = isAnyChecked(checkedProductCard);
+                const cartIds = checkingProductFilter.map((item) => ({
+                    cart_id: item?.cart_id,
+                }));
+                setSelectedCardIds(cartIds);
                 const quantityUpdateInfo = {
                     cart_id: indexId,
                     outlet_id: 3,
@@ -300,10 +358,13 @@ const CartPage = () => {
                 const updatedCartProducts = await fetchCartProducts();
 
                 if (updatedCartProducts.success) {
-                    const configMessage = incrementApi?.error
-                        ? showToast(incrementApi.message, "error")
-                        : showToast(incrementApi.message);
-                    setCheckedProductCard(updatedCartProducts?.data);
+                    const selectedProductIds = getSelectedCardIds();
+                    const updatedProducts = updateProductWithChecked(
+                        selectedProductIds,
+                        updatedCartProducts?.data
+                    );
+                    setCheckedProductCard(updatedProducts);
+
                     const quantityTotal = getTotalQuantity(
                         updatedCartProducts?.data
                     );
@@ -349,26 +410,6 @@ const CartPage = () => {
             setCheckedProductCard(cartProduct);
         }
     }, []);
-    /**
-     * Adds products to the cart by making a POST request to the API.
-     *
-     * @param {Array} cartItems - The items to be added to the cart.
-     * @returns {Promise<Object>} - The response from the API.
-     */
-    const addToCartProduct = async (cartItems) => {
-        const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
-            method: "POST",
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${session?.accessToken}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ cart_items: cartItems }),
-        });
-
-        return response.json();
-    };
-
     /**
      * Fetches the products in the cart by making a GET request to the API.
      *
@@ -419,17 +460,6 @@ const CartPage = () => {
                 const updatedCartProducts = await fetchCartProducts();
                 if (updatedCartProducts.success) {
                     setCheckedProductCard(updatedCartProducts?.data);
-
-                    /* const quantityTotal = getTotalQuantity(
-                        updatedCartProducts?.data
-                    );
-
-                    dispatch(
-                        setAddToCart({
-                            hasSession: true,
-                            length: quantityTotal,
-                        })
-                    ); */
                 }
             }
             setLoading(false);
@@ -443,19 +473,51 @@ const CartPage = () => {
     }, [session]);
 
     function isAnyChecked(products) {
+        const isCheckedProduct = [];
         for (let product of products) {
             if (product.isChecked) {
-                return true;
+                isCheckedProduct.push(product);
             }
         }
-        return false;
+        return isCheckedProduct;
     }
 
     useEffect(() => {
-        const checkingProductIsCheck = isAnyChecked(checkedProductCard);
-        // console.log("checkingProductIsCheck", checkingProductIsCheck);
-        setIsRemoveOpen(checkingProductIsCheck);
+        const checkingProductFilter = isAnyChecked(checkedProductCard);
+        const checkedProductTotalPrice = checkingProductFilter.reduce(
+            (sum, product) => {
+                console.log(product);
+                return sum + parseFloat(product.price) * product.quantity;
+            },
+            0
+        );
+        setTotalPrice(checkedProductTotalPrice);
+        setIsRemoveOpen(checkingProductFilter.length > 0 ? true : false);
     }, [checkedProductCard]);
+
+    const handleCheckoutNavigation = async () => {
+        const checkingProductFilter = isAnyChecked(checkedProductCard);
+        if (checkingProductFilter.length > 0) {
+            if (session) {
+                const updatedItemsInCard = checkingProductFilter.map(
+                    (item) => ({
+                        cart_id: item?.cart_id,
+                    })
+                );
+                console.log("updatedItemsInCard", updatedItemsInCard);
+                await addToCartSelectedProduct(
+                    updatedItemsInCard,
+                    session?.accessToken
+                );
+                router.push(`/shipping-page/cart-product`);
+            } else {
+                router.push(`/login`);
+                showToast("Log in to access shipping", "error");
+            }
+        } else {
+            showToast("Please select product first", "error");
+        }
+    };
 
     return (
         <section className="cart-section-area">
@@ -542,7 +604,7 @@ const CartPage = () => {
                                                             discountPrice =
                                                                 item.discountPrice *
                                                                 item.quantity;
-                                                            totalPrice += price;
+
                                                             return (
                                                                 <div
                                                                     className="d-flex justify-content-between gap-2 product-cart-details-item"
@@ -804,12 +866,14 @@ const CartPage = () => {
                                             ৳{totalPrice}
                                         </strong>
                                     </div>
-                                    <Link
-                                        href={"/shipping-page/cart-product"}
+                                    <button
+                                        onClick={(e) => {
+                                            handleCheckoutNavigation();
+                                        }}
                                         className="add-to-cart-link border border-0 w-100"
                                     >
                                         CHECKOUT
-                                    </Link>
+                                    </button>
                                     <Link
                                         href="/"
                                         className="shopping-back-btn"
