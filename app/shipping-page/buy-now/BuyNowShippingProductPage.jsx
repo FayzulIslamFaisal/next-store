@@ -36,7 +36,6 @@ const BuyNowShippingProductPage = () => {
     });
     const [editedAddressId, setEditAddressId] = useState(null);
     const [cartProduct, setCartProduct] = useState([]);
-    const [auth, setAuth] = useState(session?.user);
     const [validationErrors, setValidationErrors] = useState({});
     const [userEmail, setUserEmail] = useState("");
     const [tempEmail, setTempEmail] = useState("");
