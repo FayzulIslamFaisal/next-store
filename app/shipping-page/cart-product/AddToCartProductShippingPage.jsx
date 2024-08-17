@@ -1665,6 +1665,27 @@ const AddToCartProductShippingPage = () => {
                                                         </div>
                                                     </p>
                                                 </div>
+                                                <p>
+                                                    <div className="form-check cart-product-terms-condition">
+                                                        <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id="terms-condition"
+                                                            onChange={() =>
+                                                                setIsTermsChecked(
+                                                                    !isTermsChecked
+                                                                )
+                                                            }
+                                                        />
+                                                        <label
+                                                            className="form-check-label"
+                                                            htmlFor="terms-condition"
+                                                        >
+                                                            I agree to the terms
+                                                            and conditions.
+                                                        </label>
+                                                    </div>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
