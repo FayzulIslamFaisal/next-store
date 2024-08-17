@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../../store/cartSlice";
 import { RotatingLines } from "react-loader-spinner";
 import { showToast } from "@/app/components/Toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
@@ -53,6 +55,7 @@ const AddToCartProductShippingPage = () => {
     const [loading, setLoading] = useState(false);
     const [PicShowsTost, setPicShowsTost] = useState(false);
     const [redirectPath, setRedirectPath] = useState("#");
+    const [isTermsChecked, setIsTermsChecked] = useState(false);
     const router = useRouter();
     let price;
     let totalPrice = 0;
@@ -222,6 +225,10 @@ const AddToCartProductShippingPage = () => {
     }, [session]);
 
     const handlePlaceOrder = async () => {
+        if (!isTermsChecked) {
+            toast.error("You must agree to the terms and conditions.");
+            return;
+        }
         const cartItems = cartProduct?.map((item) => ({
             product_id: item.product_id,
             product_quantity: item.quantity,
@@ -393,6 +400,7 @@ const AddToCartProductShippingPage = () => {
 
     return (
         <PrivateRoute>
+            <ToastContainer />
             {loading ? (
                 <div
                     style={{
@@ -1624,9 +1632,25 @@ const AddToCartProductShippingPage = () => {
                                                     </Link>
                                                 </div>
                                                 <p>
-                                                    Lorem ipsum dolor sit amet
-                                                    consectetur adipisicing
-                                                    elit. Dolores, tenetur.
+                                                    <div className="form-check cart-product-terms-condition">
+                                                        <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id="terms-condition"
+                                                            onChange={() =>
+                                                                setIsTermsChecked(
+                                                                    !isTermsChecked
+                                                                )
+                                                            }
+                                                        />
+                                                        <label
+                                                            className="form-check-label"
+                                                            htmlFor="terms-condition"
+                                                        >
+                                                            I agree to the terms
+                                                            and conditions.
+                                                        </label>
+                                                    </div>
                                                 </p>
                                             </div>
                                         </div>
