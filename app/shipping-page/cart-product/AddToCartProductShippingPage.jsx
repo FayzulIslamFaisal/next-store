@@ -4,7 +4,8 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../../services/getShippingCustomerAddresses";
-import { fetchCartProducts } from "../../services/getShowAddToCartProduct";
+import { fetchCartProducts } from "../../services/getShippingPageCartProduct";
+import { fetchCartProducts as fetchCartProductsLength } from "../../services/getShowAddToCartProduct";
 import { getTotalQuantity, NagadhatPublicUrl } from "../../utils";
 import { placeOrder } from "../../services/postPlaceOrder";
 import Link from "next/link";
@@ -16,7 +17,6 @@ import { getDistrictForShipping } from "../../services/getDistrictForShipping";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddToCart } from "../../store/cartSlice";
 import { RotatingLines } from "react-loader-spinner";
-import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { showToast } from "@/app/components/Toast";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,7 +41,6 @@ const AddToCartProductShippingPage = () => {
     });
     const [editedAddressId, setEditAddressId] = useState(null);
     const [cartProduct, setCartProduct] = useState([]);
-    const [auth, setAuth] = useState(session?.user);
     const [validationErrors, setValidationErrors] = useState({});
     const [userEmail, setUserEmail] = useState("");
     const [tempEmail, setTempEmail] = useState("");
@@ -259,7 +258,9 @@ const AddToCartProductShippingPage = () => {
             cart_items: cartItems,
         };
         const order = await placeOrder(payload, session?.accessToken);
-        const cartProductsItem = await fetchCartProducts(session?.accessToken);
+        const cartProductsItem = await fetchCartProductsLength(
+            session?.accessToken
+        );
         const quantityTotal = getTotalQuantity(cartProductsItem?.data);
 
         setCartProduct(cartProductsItem?.data);
@@ -707,84 +708,75 @@ const AddToCartProductShippingPage = () => {
                                                                                                                         item?.open
                                                                                                                     }
 
-                                                                                                                    -{" "}
-                                                                                                                    {
-                                                                                                                        item?.close
-                                                                                                                    }
-                                                                                                                </p>
-                                                                                                            </div>
-                                                                                                            <p>
+                                                                                                                -{" "}
                                                                                                                 {
-                                                                                                                    item?.address
+                                                                                                                    item?.close
                                                                                                                 }
                                                                                                             </p>
                                                                                                         </div>
-                                                                                                    </label>
-                                                                                                </div>
+                                                                                                        <p>
+                                                                                                            {
+                                                                                                                item?.address
+                                                                                                            }
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </label>
                                                                                             </div>
-                                                                                        )
-                                                                                    )}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="modal-footer justify-content-center">
-                                                                                <button
-                                                                                    type="button"
-                                                                                    className="btn add-to-cart-link w-100"
-                                                                                    onClick={(
-                                                                                        e
-                                                                                    ) => {
-                                                                                        handlePickUpPoint();
-                                                                                    }}
-                                                                                >
-                                                                                    Confirm
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="nhn-shipping-deliver-edit-mail">
-                                                                    <p>
-                                                                        Email
-                                                                        to:{" "}
-                                                                        {
-                                                                            userEmail
-                                                                        }{" "}
-                                                                        <button
-                                                                            type="button"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#edit-mail-shipping-modal"
-                                                                        >
-                                                                            Edit
-                                                                        </button>
-                                                                    </p>
-                                                                </div>
-                                                                <div className="nhn-shipping-deliver-edit-mail">
-                                                                    <div className="py-3 d-flex align-items-center gap-3">
-                                                                        <label
-                                                                            htmlFor="delivery_note"
-                                                                            className=" text-capitalize"
-                                                                        >
-                                                                            note
-                                                                        </label>
-                                                                        <div className=" w-50">
-                                                                            <input
-                                                                                type="text"
-                                                                                name="delivery_note"
-                                                                                className=" form-control"
-                                                                                onChange={(
-                                                                                    e
-                                                                                ) =>
-                                                                                    setDeliveryNote(
-                                                                                        e
-                                                                                            .target
-                                                                                            .value
+                                                                                        </div>
                                                                                     )
-                                                                                }
-                                                                                placeholder="Enter Note"
-                                                                            />
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="modal-footer justify-content-center">
+                                                                            <button
+                                                                                type="button"
+                                                                                className="btn add-to-cart-link w-100"
+                                                                                onClick={(
+                                                                                    e
+                                                                                ) => {
+                                                                                    handlePickUpPoint();
+                                                                                }}
+                                                                            >
+                                                                                Confirm
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div className="nhn-shipping-deliver-edit-mail">
+                                                                <p>
+                                                                    Email to:{" "}
+                                                                    {userEmail}{" "}
+                                                                    <button
+                                                                        type="button"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#edit-mail-shipping-modal"
+                                                                    >
+                                                                        Edit
+                                                                    </button>
+                                                                </p>
+                                                            </div>
+                                                            <div className="nhn-shipping-deliver-edit-mail">
+                                                                <div className="py-3 d-flex align-items-center gap-3">
+                                                                    <label
+                                                                        htmlFor="delivery_note"
+                                                                        className=" text-capitalize"
+                                                                    >
+                                                                        
+                                                                        note
+                                                                    </label>
+                                                                    <div className=" w-50">
+                                                                    <input
+                                                                        type="text"
+                                                                        name="delivery_note"
+                                                                        className=" form-control"
+                                                                        onChange={(e) => setDeliveryNote(e.target.value)}
+                                                                        placeholder="Enter Note"
+                                                                    />
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
 
                                                                 <div
                                                                     className="modal fade nhn-shipping-deliver-edit-mail-modal"

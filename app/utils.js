@@ -285,3 +285,17 @@ export function getTotalQuantity(products) {
 
     return totalQuantity;
 }
+
+//selected Card id's
+export function setSelectedCardIds(cartIds) {
+    if (typeof window !== "undefined") {
+        localStorage.setItem("selectedCardIds", JSON.stringify(cartIds));
+    }
+}
+
+export const getSelectedCardIds = () => {
+    if (typeof window !== "undefined") {
+        const productData = localStorage.getItem("selectedCardIds");
+        return JSON.parse(productData);
+    }
+};
