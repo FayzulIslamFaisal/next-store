@@ -1,7 +1,11 @@
-import React from "react";
+import AffiliateTeamWrapp from "@/app/components/customerDashboard/affiliate/affiliatemyteam/AffiliateTeamWrapp";
 
 const AffiliateTeamPage = () => {
-    return <div>Affiliate Team Page</div>;
+    return (
+        <>
+            <AffiliateTeamWrapp />
+        </>
+    );
 };
 
 export default AffiliateTeamPage;

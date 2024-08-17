@@ -1,5 +1,11 @@
+import AffiliateDashboardWrapp from "@/app/components/customerDashboard/affiliate/affiliatedashboard/AffiliateDashboardWrapp";
+
 const AffiliateDashboardPage = () => {
-    return <div>page</div>;
+    return (
+        <>
+            <AffiliateDashboardWrapp />
+        </>
+    );
 };
 
 export default AffiliateDashboardPage;

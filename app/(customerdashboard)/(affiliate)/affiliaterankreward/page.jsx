@@ -1,5 +1,11 @@
+import AffiliateRankWrapp from "@/app/components/customerDashboard/affiliate/affiliaterankreward/AffiliateRankWrapp";
+
 const AffiliateRankRewardPage = () => {
-    return <div>AffiliateRankRewardPage</div>;
+    return (
+        <>
+            <AffiliateRankWrapp />
+        </>
+    );
 };
 
 export default AffiliateRankRewardPage;
