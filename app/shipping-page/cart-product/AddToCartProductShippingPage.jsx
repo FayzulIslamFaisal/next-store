@@ -402,32 +402,6 @@ const AddToCartProductShippingPage = () => {
         <>
             <ToastContainer />
             <PrivateRoute>
-                {loading ? (
-                    <div
-                        style={{
-                            textAlign: "center",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            color: "#fff",
-                            height: "100vh",
-                            width: "100%",
-                        }}
-                    >
-                        <RotatingLines
-                            visible={true}
-                            height="80"
-                            width="80"
-                            color="white"
-                            strokeColor="#44bc9d"
-                            strokeWidth="5"
-                            animationDuration="0.75"
-                            ariaLabel="rotating-lines-loading"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                        />
-                    </div>
-                ) : (
                     <>
                         <section className="shipping-section-area nh-new-shipping-wrapper">
                             <div className="container">
@@ -1699,7 +1673,6 @@ const AddToCartProductShippingPage = () => {
                             </div>
                         </section>
                     </>
-                )}
             </PrivateRoute>
         </>
     );
