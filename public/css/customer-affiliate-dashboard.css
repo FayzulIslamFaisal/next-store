@@ -1,0 +1,54 @@
+.affiliate-dashboard-refer-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px 10px;
+    flex-wrap: wrap;
+}
+.affiliate-dashboard-refer-item{
+    padding: 8px;
+    border: 1px solid var(--color-D8D8D8);
+    border-radius: 6px;
+    flex-grow: 1;
+}
+.affiliate-dashboard-refer-section button{
+    background: none;
+}
+.affiliate-dashboard-refer-section button:hover{
+    background: var(--color-44BC9D);
+    border: 1px solid var(--color-white);
+    color: var(--color-white);
+}
+.affiliate-user-rank-holder{
+    padding: 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px ;
+}
+.affiliate-user-avate{
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    position: relative;
+}
+.affiliate-user-avate img{
+    height: 60px;
+    width: 60px;
+}
+.affiliate-display-card{
+    padding: 16px !important;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.affiliate-display-card h4{
+    font-size: 20px !important;
+    color: var(--color-white);
+}
+.affiliate-display-card h3{
+    font-size: 16px !important;
+    padding-bottom: 8px;
+    text-align: center;
+}

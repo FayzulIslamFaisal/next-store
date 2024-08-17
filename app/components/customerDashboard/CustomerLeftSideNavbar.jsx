@@ -151,7 +151,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/affiliatedashboard"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Affiliate Dashboard
@@ -160,7 +160,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/affiliateteam"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     My Team
@@ -205,7 +205,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/affiliaterankreward"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Ranks & Rewards
