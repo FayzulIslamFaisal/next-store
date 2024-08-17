@@ -56,7 +56,9 @@ const OrderViewDetail = ({ orderProduct }) => {
                                                 <td>--</td>
                                                 <td>৳ {unit_price}</td>
                                                 <td>
-                                                    <b>--</b>
+                                                    <button className="btn btn-danger">
+                                                        Refund
+                                                    </button>
                                                 </td>
                                             </tr>
                                         );

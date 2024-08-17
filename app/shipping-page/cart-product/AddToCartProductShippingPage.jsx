@@ -682,81 +682,84 @@ const AddToCartProductShippingPage = () => {
                                                                                                                         item?.open
                                                                                                                     }
 
-                                                                                                                -{" "}
+                                                                                                                    -{" "}
+                                                                                                                    {
+                                                                                                                        item?.close
+                                                                                                                    }
+                                                                                                                </p>
+                                                                                                            </div>
+                                                                                                            <p>
                                                                                                                 {
-                                                                                                                    item?.close
+                                                                                                                    item?.address
                                                                                                                 }
                                                                                                             </p>
                                                                                                         </div>
-                                                                                                        <p>
-                                                                                                            {
-                                                                                                                item?.address
-                                                                                                            }
-                                                                                                        </p>
-                                                                                                    </div>
-                                                                                                </label>
+                                                                                                    </label>
+                                                                                                </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                    )
-                                                                                )}
+                                                                                        )
+                                                                                    )}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="modal-footer justify-content-center">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="btn add-to-cart-link w-100"
+                                                                                    onClick={(
+                                                                                        e
+                                                                                    ) => {
+                                                                                        handlePickUpPoint();
+                                                                                    }}
+                                                                                >
+                                                                                    Confirm
+                                                                                </button>
                                                                             </div>
                                                                         </div>
-                                                                        <div className="modal-footer justify-content-center">
-                                                                            <button
-                                                                                type="button"
-                                                                                className="btn add-to-cart-link w-100"
-                                                                                onClick={(
+                                                                    </div>
+                                                                </div>
+                                                                <div className="nhn-shipping-deliver-edit-mail">
+                                                                    <p>
+                                                                        Email
+                                                                        to:{" "}
+                                                                        {
+                                                                            userEmail
+                                                                        }{" "}
+                                                                        <button
+                                                                            type="button"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#edit-mail-shipping-modal"
+                                                                        >
+                                                                            Edit
+                                                                        </button>
+                                                                    </p>
+                                                                </div>
+                                                                <div className="nhn-shipping-deliver-edit-mail">
+                                                                    <div className="py-3 d-flex align-items-center gap-3">
+                                                                        <label
+                                                                            htmlFor="delivery_note"
+                                                                            className=" text-capitalize"
+                                                                        >
+                                                                            note
+                                                                        </label>
+                                                                        <div className=" w-50">
+                                                                            <input
+                                                                                type="text"
+                                                                                name="delivery_note"
+                                                                                className=" form-control"
+                                                                                onChange={(
                                                                                     e
-                                                                                ) => {
-                                                                                    handlePickUpPoint();
-                                                                                }}
-                                                                            >
-                                                                                Confirm
-                                                                            </button>
+                                                                                ) =>
+                                                                                    setDeliveryNote(
+                                                                                        e
+                                                                                            .target
+                                                                                            .value
+                                                                                    )
+                                                                                }
+                                                                                placeholder="Enter Note"
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div className="nhn-shipping-deliver-edit-mail">
-                                                                <p>
-                                                                    Email to:{" "}
-                                                                    {userEmail}{" "}
-                                                                    <button
-                                                                        type="button"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#edit-mail-shipping-modal"
-                                                                    >
-                                                                        Edit
-                                                                    </button>
-                                                                </p>
-                                                            </div>
-                                                            <div className="nhn-shipping-deliver-edit-mail">
-                                                                <div className="py-3 d-flex align-items-center gap-3">
-                                                                    <label
-                                                                        htmlFor="delivery_note"
-                                                                        className=" text-capitalize"
-                                                                    >
-                                                                        note
-                                                                    </label>
-                                                                    <div className=" w-50">
-                                                                        <input
-                                                                            type="text"
-                                                                            name="delivery_note"
-                                                                            className=" form-control"
-                                                                            onChange={(
-                                                                                e
-                                                                            ) =>
-                                                                                setDeliveryNote(
-                                                                                    e
-                                                                                        .target
-                                                                                        .value
-                                                                                )
-                                                                            }
-                                                                            placeholder="Enter Note"
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
 
                                                                 <div
                                                                     className="modal fade nhn-shipping-deliver-edit-mail-modal"
@@ -1645,27 +1648,6 @@ const AddToCartProductShippingPage = () => {
                                                         </div>
                                                     </p>
                                                 </div>
-                                                <p>
-                                                    <div className="form-check cart-product-terms-condition">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type="checkbox"
-                                                            id="terms-condition"
-                                                            onChange={() =>
-                                                                setIsTermsChecked(
-                                                                    !isTermsChecked
-                                                                )
-                                                            }
-                                                        />
-                                                        <label
-                                                            className="form-check-label"
-                                                            htmlFor="terms-condition"
-                                                        >
-                                                            I agree to the terms
-                                                            and conditions.
-                                                        </label>
-                                                    </div>
-                                                </p>
                                             </div>
                                         </div>
                                     </div>
