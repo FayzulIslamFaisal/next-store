@@ -1,8 +1,35 @@
+"use client";
+
+import { getAffiliateHomeDashboard } from "@/app/services/affiliate/getAffiliateHomeDashboard";
 import AffiliateDashboardInfo from "./AffiliateDashboardInfo";
 import AffiliateDashboardRank from "./AffiliateDashboardRank";
 import AffiliateReferFriend from "./AffiliateReferFriend";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const AffiliateDashboardWrapp = () => {
+    const [affiliateData, setAffiliateData] = useState({});
+    const { data: session, status } = useSession();
+    useEffect(() => {
+        if (status === "authenticated") {
+            const affiliateDashboard = async () => {
+                try {
+                    const affiliateInfo = await getAffiliateHomeDashboard(
+                        session?.accessToken
+                    );
+                    const affiliateResult = affiliateInfo?.results || {};
+                    setAffiliateData(affiliateResult);
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch affiliate dashboard data:",
+                        error
+                    );
+                }
+            };
+            affiliateDashboard();
+        }
+    }, [status, session]);
+
     return (
         <>
             <div className="col-lg-9 customer-dashboard-section">
@@ -17,9 +44,9 @@ const AffiliateDashboardWrapp = () => {
                             <i className="fa-solid fa-bell"></i>
                         </div>
                     </div>
-                    <AffiliateDashboardRank />
-                    <AffiliateReferFriend />
-                    <AffiliateDashboardInfo />
+                    <AffiliateDashboardRank affiliateData={affiliateData} />
+                    <AffiliateReferFriend affiliateData={affiliateData} />
+                    <AffiliateDashboardInfo affiliateData={affiliateData} />
                 </div>
             </div>
         </>

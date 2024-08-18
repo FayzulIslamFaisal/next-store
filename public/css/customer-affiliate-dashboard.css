@@ -20,6 +20,9 @@
     border: 1px solid var(--color-white);
     color: var(--color-white);
 }
+.affiliate-dashboard-refer-section button:focus {
+    border: 1px solid var(--color-D8D8D8);
+}
 .affiliate-user-rank-holder{
     padding: 24px 16px;
     display: flex;

@@ -13,7 +13,7 @@ const CustomerDashboardPage = () => {
         if (status === "authenticated") {
             const getOrderDataFetch = async () => {
                 const orderData = await getOrdersByUserId(session?.accessToken);
-                const orderResult = orderData?.results;
+                const orderResult = orderData?.results?.data;
                 setCustomerOrders(orderResult);
             };
             getOrderDataFetch();
