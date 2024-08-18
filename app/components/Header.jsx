@@ -24,6 +24,19 @@ function Header() {
     const [isObserverMenuVisible, setObserverMenuVisible] = useState(false);
     const [isCategoryHoverMenu, setCategoryHoverMenu] = useState(false);
     const [isResponsive, setResponsive] = useState(false);
+    const [outletId, setOutletId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("outletId") || 3;
+        }
+        return 3;
+    });
+
+    const [districtId, setDistrictId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("districtId") || 47;
+        }
+        return 47;
+    });
     const addToCartProductLength = useSelector(
         (state) => state.cart?.addToCartLength
     );
@@ -82,35 +95,6 @@ function Header() {
     }, []);
 
     const dispatch = useDispatch();
-    const handleCheckout = async () => {
-        try {
-            setLoading(true);
-            if (session) {
-                const cartProduct = addToCartProductList();
-                await addToCartProduct(cartProduct);
-                const updatedCartProducts = await fetchCartProducts();
-                localStorage.removeItem("addToCart");
-
-                if (updatedCartProducts.success) {
-                    setCheckedProductCard(updatedCartProducts?.data);
-                    const quantityTotal = getTotalQuantity(
-                        updatedCartProducts?.data
-                    );
-
-                    dispatch(
-                        setAddToCart({
-                            hasSession: true,
-                            length: quantityTotal,
-                        })
-                    );
-                }
-            }
-            setLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     useEffect(() => {
         const setCartProductLength = async () => {
             if (session) {
@@ -118,7 +102,9 @@ function Header() {
                 // console.log(cartProduct);
                 await addToCartProduct(cartProduct, session?.accessToken);
                 const updatedCartProducts = await fetchCartProducts(
-                    session?.accessToken
+                    session?.accessToken,
+                    outletId,
+                    districtId
                 );
                 localStorage.removeItem("addToCart");
 
@@ -156,9 +142,7 @@ function Header() {
         };
 
         setCartProductLength();
-    }, [session?.accessToken, dispatch]);
-
-    // console.log('=>>> get login token from header page', session?.accessToken);
+    }, [session?.accessToken, dispatch, outletId, districtId]);
 
     useEffect(() => {
         storeUserAgent();

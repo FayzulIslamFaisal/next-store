@@ -76,6 +76,19 @@ function AddToCartButton({
 }) {
     const { status, data: session } = useSession();
     const [loading, setLoading] = useState(false);
+    const [outletId, setOutletId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("outletId") || 3;
+        }
+        return 3;
+    });
+
+    const [districtId, setDistrictId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("districtId") || 47;
+        }
+        return 47;
+    });
     const dispatch = useDispatch();
     const router = useRouter();
     // Function to handle the "Add To Cart" button click event
@@ -114,8 +127,7 @@ function AddToCartButton({
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
                             selectedVariants: selectedVariants,
-                            outlet_id: 3,
-                            location_id: 47,
+                            location_id: districtId,
                             order_type: "Regular",
                             product_variation_id:
                                 selectedVariantProductInfo?.product_variation_id,
@@ -137,7 +149,9 @@ function AddToCartButton({
                                 );
                                 const updatedCartProducts =
                                     await fetchCartProducts(
-                                        session?.accessToken
+                                        session?.accessToken,
+                                        outletId,
+                                        districtId
                                     );
                                 if (
                                     productAdded.code == 200 &&
@@ -187,8 +201,7 @@ function AddToCartButton({
                         outlet_id: productInfo?.outlet_id,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
-                        outlet_id: 3,
-                        location_id: 47,
+                        location_id: districtId,
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
@@ -206,7 +219,9 @@ function AddToCartButton({
                                 session.accessToken
                             );
                             const updatedCartProducts = await fetchCartProducts(
-                                session?.accessToken
+                                session?.accessToken,
+                                outletId,
+                                districtId
                             );
 
                             if (
@@ -285,8 +300,7 @@ function AddToCartButton({
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
                             selectedVariants: selectedVariants,
-                            outlet_id: 3,
-                            location_id: 47,
+                            location_id: districtId,
                             order_type: "Regular",
                             product_variation_id:
                                 selectedVariantProductInfo?.product_variation_id,
@@ -311,8 +325,7 @@ function AddToCartButton({
                         outlet_id: productInfo?.outlet_id,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
-                        outlet_id: 3,
-                        location_id: 47,
+                        location_id: districtId,
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,

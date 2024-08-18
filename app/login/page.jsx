@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { getProviders, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { getRequestPath } from "../utils";
 
 const Login = () => {
     const router = useRouter();
@@ -14,7 +15,7 @@ const Login = () => {
         async function fetchData() {
             if (session != undefined) {
                 // console.log("=>>> redirect to dashboard");
-                router.push(`/dashboard`);
+                router.push(getRequestPath());
             }
         }
         fetchData();

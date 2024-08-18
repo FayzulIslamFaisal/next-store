@@ -53,6 +53,19 @@ const AddToCartProductShippingPage = () => {
     const [loading, setLoading] = useState(false);
     const [PicShowsTost, setPicShowsTost] = useState(false);
     const [redirectPath, setRedirectPath] = useState("#");
+    const [outletId, setOutletId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("outletId") || 3;
+        }
+        return 3;
+    });
+
+    const [districtId, setDistrictId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("districtId") || 47;
+        }
+        return 47;
+    });
     const router = useRouter();
     let price;
     let totalPrice = 0;
@@ -106,7 +119,11 @@ const AddToCartProductShippingPage = () => {
             1
         );
         setSelectedDefaultAddressId(defaultAddressInfo?.id);
-        const cartProduct = await fetchCartProducts(session?.accessToken);
+        const cartProduct = await fetchCartProducts(
+            session?.accessToken,
+            outletId,
+            districtId
+        );
         setCartProduct(cartProduct?.data);
         setShippingPrice(cartProduct?.shipping_charge);
         const modalElement = document.getElementById("addnewdeliveryaddress");
@@ -167,7 +184,11 @@ const AddToCartProductShippingPage = () => {
             1
         );
         setSelectedDefaultAddressId(defaultAddressInfo.id);
-        const cartProduct = await fetchCartProducts(session?.accessToken);
+        const cartProduct = await fetchCartProducts(
+            session?.accessToken,
+            outletId,
+            districtId
+        );
         setCartProduct(cartProduct?.data);
         setShippingPrice(cartProduct?.shipping_charge);
 
@@ -202,7 +223,9 @@ const AddToCartProductShippingPage = () => {
                     );
                     setSelectedDefaultAddressId(defaultAddressInfo?.id);
                     const cartProduct = await fetchCartProducts(
-                        session?.accessToken
+                        session?.accessToken,
+                        outletId,
+                        districtId
                     );
 
                     setCartProduct(cartProduct?.data);
@@ -235,8 +258,8 @@ const AddToCartProductShippingPage = () => {
             product_regular_price: item.discountPrice,
         }));
         const payload = {
-            outlet_id: 3,
-            location_id: 47,
+            outlet_id: outletId,
+            location_id: districtId,
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: deliveryNote,
             total_delivery_charge: shippingPrice,
@@ -246,13 +269,15 @@ const AddToCartProductShippingPage = () => {
             place_order_with: "add to cart",
             outlet_pickup_point_id: pickUpIdForOrder,
             sub_total: subTotal,
-            discount_amount: totalDiscountPrice,
+            discount_amount: subTotal - totalPrice,
             grand_total: totalPrice + parseInt(shippingPrice),
             cart_items: cartItems,
         };
         const order = await placeOrder(payload, session?.accessToken);
         const cartProductsItem = await fetchCartProductsLength(
-            session?.accessToken
+            session?.accessToken,
+            outletId,
+            districtId
         );
         const quantityTotal = getTotalQuantity(cartProductsItem?.data);
 
@@ -324,7 +349,11 @@ const AddToCartProductShippingPage = () => {
                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
                 modalInstance.hide();
             }
-            const cartProduct = await fetchCartProducts(session?.accessToken);
+            const cartProduct = await fetchCartProducts(
+                session?.accessToken,
+                outletId,
+                districtId
+            );
             setCartProduct(cartProduct?.data);
             setShippingPrice(cartProduct?.shipping_charge);
             showToast("Default Address Select Successfully");
@@ -1407,9 +1436,13 @@ const AddToCartProductShippingPage = () => {
                                                                         item.quantity;
                                                                     totalPrice +=
                                                                         price;
-
                                                                     subTotal +=
-                                                                        discountPrice;
+                                                                        item.discountPrice >
+                                                                        0
+                                                                            ? discountPrice
+                                                                            : discountPrice +
+                                                                              item?.price *
+                                                                                  item?.quantity;
 
                                                                     totalDiscountPrice +=
                                                                         item?.regular_price *
@@ -1549,7 +1582,8 @@ const AddToCartProductShippingPage = () => {
                                                         <p>Discount</p>
                                                         <strong>
                                                             ৳
-                                                            {totalDiscountPrice}
+                                                            {subTotal -
+                                                                totalPrice}
                                                         </strong>
                                                     </div>
                                                     <div className="d-flex gap-2 flex-column border-top pb-3">

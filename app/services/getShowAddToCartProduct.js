@@ -1,10 +1,10 @@
 import { apiBaseUrl } from "../utils";
 
-export const fetchCartProducts = async (accessToken) => {
+export const fetchCartProducts = async (accessToken, outletId, districtId) => {
     try {
         // console.log("get cart product ================", accessToken);
         const response = await fetch(
-            `${apiBaseUrl}/get-cart-products?outlet_id=3&location_id=47`,
+            `${apiBaseUrl}/get-cart-products?outlet_id=${outletId}&location_id=${districtId}`,
             {
                 method: "GET",
                 headers: {

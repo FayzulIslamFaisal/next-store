@@ -26,6 +26,7 @@ const SimilerProductItems = ({ item }) => {
                 item?.price?.discounted_price > 0 &&
                 item?.price?.regular_price);
     }
+    
     console.log(productPrice);
     return (
         <>

@@ -299,3 +299,28 @@ export const getSelectedCardIds = () => {
         return JSON.parse(productData);
     }
 };
+
+export function requestPage(route) {
+    if (typeof window !== "undefined") {
+        localStorage.setItem("requestPage", JSON.stringify(route));
+    }
+}
+
+//getUserAgent function retrieves the user agent from local storage.
+export function getRequestPath() {
+    if (typeof window !== "undefined") {
+        const requestRoute =
+            (localStorage.getItem("requestPage") &&
+                JSON.parse(localStorage.getItem("requestPage"))) ||
+            "/dashboard";
+        return requestRoute;
+    }
+    return null;
+}
+export function removeRequestPath() {
+    if (typeof window !== "undefined") {
+        const requestRoute = localStorage.removeItem("requestPage");
+        return requestRoute;
+    }
+    return null;
+}

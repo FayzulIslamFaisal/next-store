@@ -8,6 +8,7 @@ import {
     apiBaseUrl,
     getSelectedCardIds,
     getTotalQuantity,
+    requestPage,
     setSelectedCardIds,
 } from "../utils";
 import { useSession } from "next-auth/react";
@@ -42,6 +43,20 @@ const CartPage = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     //Update Add To Cart product after operation in localStore addToCart Item
+    const [outletId, setOutletId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("outletId") || 3;
+        }
+        return 3;
+    });
+
+    const [districtId, setDistrictId] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("districtId") || 47;
+        }
+        return 47;
+    });
+
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
     };
@@ -96,9 +111,12 @@ const CartPage = () => {
                         cart_id,
                         session?.accessToken
                     );
-                    const updatedCartProducts = await fetchCartProducts();
+                    const updatedCartProducts = await fetchCartProducts(
+                        outletId,
+                        districtId
+                    );
 
-                    if (updatedCartProducts.success) {
+                    if (updatedCartProducts?.success) {
                         showToast("Product delete successfully");
                         const selectedProductIds = getSelectedCardIds();
                         const updatedProducts = updateProductWithChecked(
@@ -178,9 +196,12 @@ const CartPage = () => {
                         updatedItemsInCard,
                         session?.accessToken
                     );
-                    const updatedCartProducts = await fetchCartProducts();
+                    const updatedCartProducts = await fetchCartProducts(
+                        outletId,
+                        districtId
+                    );
 
-                    if (updatedCartProducts.success) {
+                    if (updatedCartProducts?.success) {
                         const selectedProductIds = getSelectedCardIds();
                         const updatedProducts = updateProductWithChecked(
                             selectedProductIds,
@@ -268,7 +289,7 @@ const CartPage = () => {
                 setSelectedCardIds(cartIds);
                 const quantityUpdateInfo = {
                     cart_id: indexId,
-                    outlet_id: 3,
+                    outlet_id: outletId,
                     quantity: "decrement",
                 };
                 const decrementApi = await addToCartQuantityUpdate(
@@ -276,8 +297,11 @@ const CartPage = () => {
                     session?.accessToken
                 );
 
-                const updatedCartProducts = await fetchCartProducts();
-                if (updatedCartProducts.success) {
+                const updatedCartProducts = await fetchCartProducts(
+                    outletId,
+                    districtId
+                );
+                if (updatedCartProducts?.success) {
                     const selectedProductIds = getSelectedCardIds();
                     const updatedProducts = updateProductWithChecked(
                         selectedProductIds,
@@ -343,7 +367,7 @@ const CartPage = () => {
                 setSelectedCardIds(cartIds);
                 const quantityUpdateInfo = {
                     cart_id: indexId,
-                    outlet_id: 3,
+                    outlet_id: outletId,
                     quantity: "increment",
                 };
 
@@ -352,9 +376,12 @@ const CartPage = () => {
                     session?.accessToken
                 );
 
-                const updatedCartProducts = await fetchCartProducts();
+                const updatedCartProducts = await fetchCartProducts(
+                    outletId,
+                    districtId
+                );
 
-                if (updatedCartProducts.success) {
+                if (updatedCartProducts?.success) {
                     const selectedProductIds = getSelectedCardIds();
                     const updatedProducts = updateProductWithChecked(
                         selectedProductIds,
@@ -413,10 +440,10 @@ const CartPage = () => {
      * @returns {Promise<Object>} - The response from the API containing the cart products.
      */
 
-    const fetchCartProducts = async () => {
+    const fetchCartProducts = async (outletId, districtId) => {
         try {
             const response = await fetch(
-                `${apiBaseUrl}/get-cart-products?outlet_id=3&location_id=47`,
+                `${apiBaseUrl}/get-cart-products?outlet_id=${outletId}&location_id=${districtId}`,
                 {
                     method: "GET",
                     headers: {
@@ -426,9 +453,7 @@ const CartPage = () => {
                 }
             );
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch cart products");
-            }
+            console.log("s", response);
 
             return response.json();
         } catch (error) {
@@ -454,8 +479,13 @@ const CartPage = () => {
         try {
             setLoading(true);
             if (session) {
-                const updatedCartProducts = await fetchCartProducts();
-                if (updatedCartProducts.success) {
+                console.log("Hello wrold");
+                const updatedCartProducts = await fetchCartProducts(
+                    outletId,
+                    districtId
+                );
+                console.log("sjfhdufh", updatedCartProducts);
+                if (updatedCartProducts?.success) {
                     setCheckedProductCard(updatedCartProducts?.data);
                 }
             }
@@ -508,7 +538,8 @@ const CartPage = () => {
                 );
                 router.push(`/shipping-page/cart-product`);
             } else {
-                router.push(`/login`);
+                requestPage("cart-page");
+                router.push("/login");
                 showToast("Log in to access shipping", "error");
             }
         } else {

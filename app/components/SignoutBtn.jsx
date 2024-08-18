@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { removeRequestPath } from "../utils";
 
 const SignoutBtn = () => {
     const router = useRouter();
@@ -12,7 +13,8 @@ const SignoutBtn = () => {
             onClick={(e) => {
                 e.preventDefault();
                 signOut();
-                router.push("/")
+                router.push("/");
+                removeRequestPath();
             }}
             href={`#`}
         >

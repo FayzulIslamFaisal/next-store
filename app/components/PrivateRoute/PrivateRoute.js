@@ -1,16 +1,18 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import DefaultLoader from "../defaultloader/DefaultLoader";
+import { requestPage } from "@/app/utils";
 
 const PrivateRoute = ({ children }) => {
     const { status, data: session } = useSession();
     const router = useRouter();
-
+    const pathname = usePathname();
     useEffect(() => {
         if (status === "unauthenticated") {
+            requestPage(pathname);
             router.push("/login");
         }
     }, [status, router]);

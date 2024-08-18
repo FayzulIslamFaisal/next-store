@@ -1,3 +1,4 @@
+import { removeRequestPath } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -408,6 +409,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         <Link
                             className="nav-link customer-dashboard-nav-link"
                             href="#"
+                            onClick={(e) => {
+                                removeRequestPath();
+                            }}
                         >
                             <FaSignOutAlt className="nav-icon me-2" />
                             Logout
