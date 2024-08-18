@@ -101,6 +101,7 @@ function ProductCard({ item }) {
                                                     ?.discount_amount > 0 ? (
                                                     <div className="d-flex align-items-center justify-content-between">
                                                         <strong>
+                                                            ট {""}
                                                             {
                                                                 variant_item
                                                                     ?.price
@@ -109,6 +110,7 @@ function ProductCard({ item }) {
                                                         </strong>
                                                         <strong>
                                                             <del>
+                                                                ট {""}
                                                                 {
                                                                     variant_item
                                                                         ?.price
@@ -119,6 +121,7 @@ function ProductCard({ item }) {
                                                     </div>
                                                 ) : (
                                                     <strong>
+                                                        ট {""}
                                                         {
                                                             variant_item?.price
                                                                 ?.regular_price
@@ -132,17 +135,17 @@ function ProductCard({ item }) {
                                   item?.price?.discounted_price > 0 ? (
                                     <div className="d-flex align-items-center justify-content-between">
                                         <strong>
-                                            {item?.price?.discounted_price}
+                                            ট {item?.price?.discounted_price}
                                         </strong>
                                         <strong>
                                             <del>
-                                                {item?.price?.regular_price}
+                                                ট {item?.price?.regular_price}
                                             </del>
                                         </strong>
                                     </div>
                                 ) : (
                                     <strong>
-                                        {item?.price?.regular_price}
+                                        ট {item?.price?.regular_price}
                                     </strong>
                                 )}
                             </div>

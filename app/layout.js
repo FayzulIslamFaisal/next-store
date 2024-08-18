@@ -192,6 +192,17 @@ export default function RootLayout({ children, slug, option }) {
             />
             <link
                 rel="stylesheet"
+                href="/css/customer-affiliate-dashboard.css"
+                precedence="default"
+            />
+            <link
+                rel="stylesheet"
+                href="/css/affiliate-products-link.css"
+                precedence="default"
+            />
+
+            <link
+                rel="stylesheet"
                 href="/css/common.css"
                 precedence="default"
             />

@@ -155,7 +155,7 @@
 .customer-dashboard-section .in-cart-area{
     background-size: cover;
     background-repeat: no-repeat;
-    height: 120px;
+    min-height: 120px;
     padding: 32px;
     border-radius: 12px;
     color: var(--color-white);

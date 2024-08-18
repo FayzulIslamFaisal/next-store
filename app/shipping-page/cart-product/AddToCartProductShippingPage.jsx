@@ -230,7 +230,7 @@ const AddToCartProductShippingPage = () => {
 
                     setCartProduct(cartProduct?.data);
                     setShippingPrice(cartProduct?.shipping_charge);
-                    const pickUpPoint = await pickUpPontes(3);
+                    const pickUpPoint = await pickUpPontes(outletId);
 
                     setPickUpPoint(pickUpPoint);
                     const totalDistrict = await getDistrictForShipping();

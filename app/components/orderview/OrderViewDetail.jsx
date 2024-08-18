@@ -32,6 +32,7 @@ const OrderViewDetail = ({ orderProduct }) => {
                                             product_name,
                                             quantity,
                                             unit_price,
+                                            delivery_partner,
                                         } = items;
                                         const imageUrl = `${NagadhatPublicUrl}/${items?.product_thumbnail}`;
                                         return (
@@ -53,10 +54,16 @@ const OrderViewDetail = ({ orderProduct }) => {
                                                 </td>
                                                 <td>{Math.round(quantity)}</td>
                                                 <td>Nagadhat</td>
-                                                <td>--</td>
+                                                <td>
+                                                    {delivery_partner
+                                                        ? delivery_partner
+                                                        : "--"}
+                                                </td>
                                                 <td>৳ {unit_price}</td>
                                                 <td>
-                                                    <b>--</b>
+                                                    <button className="btn btn-danger">
+                                                        Refund
+                                                    </button>
                                                 </td>
                                             </tr>
                                         );

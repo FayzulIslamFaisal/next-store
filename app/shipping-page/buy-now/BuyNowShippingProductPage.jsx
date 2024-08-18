@@ -18,6 +18,7 @@ import { shippingChare } from "@/app/services/getShipping";
 import PrivateRoute from "@/app/components/PrivateRoute/PrivateRoute";
 import { showToast } from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
 }
@@ -61,6 +62,7 @@ const BuyNowShippingProductPage = () => {
     const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
         useState(null);
     const [redirectPath, setRedirectPath] = useState("#");
+    const [isTermsChecked, setIsTermsChecked] = useState(false);
     const router = useRouter();
     let price;
     let totalPrice = 0;
@@ -263,6 +265,10 @@ const BuyNowShippingProductPage = () => {
     }, [session]);
 
     const handlePlaceOrder = async () => {
+        if (!isTermsChecked) {
+            toast.error("You must agree to the terms and conditions.");
+            return;
+        }
         const cartItems = cartProduct?.map((item) => ({
             product_id: item.product_id,
             product_quantity: item.quantity,
@@ -1512,14 +1518,12 @@ const BuyNowShippingProductPage = () => {
                                                 </strong>
                                             </div>
 
-                                            <div className="d-flex gap-2 flex-column border-top pb-3">
+                                            <div className="d-flex gap-2 flex-column border-top pt-3">
                                                 <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
                                                     <strong>Total</strong>
                                                     <p className="total-order-price">
-                                                        <strong>
-                                                            {" "}
-                                                            ৳ {totalPrice}
-                                                        </strong>
+                                                        {" "}
+                                                        ৳ {totalPrice}
                                                     </p>
                                                 </div>
                                             </div>
@@ -1551,7 +1555,7 @@ const BuyNowShippingProductPage = () => {
                                                 href={
                                                     customerAddress?.length >
                                                         0 &&
-                                                    cartProduct?.length > 0
+                                                        cartProduct?.length > 0
                                                         ? redirectPath
                                                         : "#"
                                                 }
@@ -1559,15 +1563,15 @@ const BuyNowShippingProductPage = () => {
                                                 className="add-to-cart-link border border-0 w-100"
                                                 style={{
                                                     pointerEvents:
-                                                        customerAddress?.length >
-                                                            0 &&
-                                                        cartProduct?.length > 0
+                                                        customerAddress?.length > 0 &&
+                                                        cartProduct?.length > 0 &&
+                                                        isTermsChecked
                                                             ? "auto"
                                                             : "none",
                                                     opacity:
-                                                        customerAddress?.length >
-                                                            0 &&
-                                                        cartProduct?.length > 0
+                                                        customerAddress?.length > 0 &&
+                                                        cartProduct?.length > 0 &&
+                                                        isTermsChecked
                                                             ? 1
                                                             : 0.5,
                                                 }}
@@ -1576,9 +1580,26 @@ const BuyNowShippingProductPage = () => {
                                             </Link>
                                         </div>
                                         <p>
-                                            Lorem ipsum dolor sit amet
-                                            consectetur adipisicing elit.
-                                            Dolores, tenetur.
+                                            <div className="form-check cart-product-terms-condition">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="terms-condition"
+                                                    onChange={() =>
+                                                        setIsTermsChecked(
+                                                            !isTermsChecked
+                                                        )
+                                                    }
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="terms-condition"
+                                                >
+                                                    I agree to the
+                                                    terms and
+                                                    conditions.
+                                                </label>
+                                            </div>
                                         </p>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FaGlobe } from "react-icons/fa";
@@ -23,14 +24,16 @@ const OrderInvoiceTop = () => {
                 </div>
                 <div className="invoice-section-ph-logo col-6">
                     <div className="d-flex justify-content-end">
-                        <div className="invoice-logo ">
-                            <Image
-                                fill
-                                className="img-fluid"
-                                src="/images/nagadhat-logo.png"
-                                alt="logo"
-                            />
-                        </div>
+                        <Link href="/">
+                            <div className="invoice-logo ">
+                                <Image
+                                    fill
+                                    className="img-fluid"
+                                    src="/images/nagadhat-logo.png"
+                                    alt="logo"
+                                />
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
