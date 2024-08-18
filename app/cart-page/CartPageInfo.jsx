@@ -834,7 +834,7 @@ const CartPage = () => {
                                     <h3 className="shopping-title">
                                         Shopping Summary
                                     </h3>
-                                    <div className="d-flex gap-3 align-items-center justify-content-between shopping-price-area">
+                                    <div className="d-flex gap-3 align-items-center justify-content-between shopping-price-area py-1">
                                         <p className="">Total</p>
                                         <strong className="">
                                             ৳{totalPrice}
