@@ -101,6 +101,7 @@ const ViewAllProductitemss = ({ items }) => {
                                                 ?.discount_amount > 0 ? (
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <strong>
+                                                        ট {""}
                                                         {
                                                             variant_item?.price
                                                                 ?.discounted_price
@@ -108,6 +109,7 @@ const ViewAllProductitemss = ({ items }) => {
                                                     </strong>
                                                     <strong>
                                                         <del>
+                                                            ট {""}
                                                             {
                                                                 variant_item
                                                                     ?.price
@@ -118,6 +120,7 @@ const ViewAllProductitemss = ({ items }) => {
                                                 </div>
                                             ) : (
                                                 <strong>
+                                                    ট {""}
                                                     {
                                                         variant_item?.price
                                                             ?.regular_price
@@ -131,14 +134,19 @@ const ViewAllProductitemss = ({ items }) => {
                               items?.price?.discounted_price > 0 ? (
                                 <div className="d-flex align-items-center justify-content-between">
                                     <strong>
+                                        ট {""}
                                         {items?.price?.discounted_price}
                                     </strong>
                                     <strong>
+                                        ট {""}
                                         <del>{items?.price?.regular_price}</del>
                                     </strong>
                                 </div>
                             ) : (
-                                <strong>{items?.price?.regular_price}</strong>
+                                <strong>
+                                    ট {""}
+                                    {items?.price?.regular_price}
+                                </strong>
                             )}
                         </div>
                         <div className="add-to-cart-holder d-flex align-itemss-center justify-content-between ">
