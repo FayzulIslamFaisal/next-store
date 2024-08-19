@@ -2,7 +2,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { FaBan } from "react-icons/fa";
 import Link from "next/link";
 
-const MyTeamList = ({ teamListInfo }) => {
+const MyTeamList = ({ teamListInfo, teamGrandTotal }) => {
     // Filter members based on the conditions
     const generalMembers = teamListInfo.filter(
         (member) =>
@@ -74,6 +74,39 @@ const MyTeamList = ({ teamListInfo }) => {
                             </td>
                         </tr>
                     ))}
+
+                    <tr>
+                        <td scope="row"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <strong>
+                                ৳{" "}
+                                {teamGrandTotal?.grand_total_resell_amount
+                                    ? teamGrandTotal?.grand_total_resell_amount
+                                    : "0"}
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
+                                ৳{" "}
+                                {teamGrandTotal?.grand_total_retail_amount
+                                    ? teamGrandTotal?.grand_total_retail_amount
+                                    : "0"}
+                            </strong>
+                        </td>
+                        <td></td>
+                        <td>
+                            <strong>
+                                {teamGrandTotal?.grand_total_members
+                                    ? teamGrandTotal?.grand_total_members
+                                    : teamGrandTotal?.grand_total_members}
+                            </strong>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
