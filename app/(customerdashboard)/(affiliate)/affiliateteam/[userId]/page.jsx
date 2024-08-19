@@ -11,6 +11,8 @@ import Pagination from "@/app/components/productCategory/Pagination";
 const Page = ({ params }) => {
     const { userId } = params;
     const [teamData, setTeamData] = useState([]);
+    const [totalMember, settotalMember] = useState("");
+    const [teamGrandTotal, setTeamGrandTotal] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const { data: session, status } = useSession();
     const [lastPage, setLastPage] = useState(1); // New state for last page
@@ -18,7 +20,7 @@ const Page = ({ params }) => {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        const page = searchParams.get('page');
+        const page = searchParams.get("page");
         if (page && parseInt(page) !== currentPage) {
             setCurrentPage(parseInt(page));
         }
@@ -37,11 +39,15 @@ const Page = ({ params }) => {
                     const teamMember = await getAffiliateMembersTeam(
                         session?.accessToken,
                         userId,
-                        searchParams, 
+                        searchParams,
                         currentPage,
                         limit
                     );
                     const teamMemberData = teamMember?.results?.myTeam;
+                    const allMemberCount = teamMember?.results?.total_members;
+                    const grandTotal = teamMember?.results;
+                    setTeamGrandTotal(grandTotal);
+                    settotalMember(allMemberCount);
                     setTeamData(teamMemberData || []);
                     setLastPage(teamMemberData?.last_page); // Set the last page
                 } catch (error) {
@@ -67,12 +73,17 @@ const Page = ({ params }) => {
             <div className="col-lg-9">
                 <div className="customer-dashboard-order-history-area h-100">
                     <div className="customer-dashboard-order-history-title">
-                        <h1 className="customer-dashboard-title">My Team</h1>
+                        <h1 className="customer-dashboard-title">
+                            My Team ({totalMember})
+                        </h1>
                     </div>
                     <SearchMyTeam onSearch={handleSearch} />
                     <div className="customer-dashboard-order-history table-responsive">
                         {teamListInfo.length > 0 ? (
-                            <MyTeamList teamListInfo={teamListInfo} />
+                            <MyTeamList
+                                teamListInfo={teamListInfo}
+                                teamGrandTotal={teamGrandTotal}
+                            />
                         ) : (
                             <TeamListNotFound />
                         )}
