@@ -136,7 +136,7 @@ const GoogleProfile = () => {
     };
 
     setTimeout(() => {
-        console.log("=>>> This runs after 1 seconds.");
+        // console.log("=>>> This runs after 1 seconds.");
         // Add any additional code you want to execute here
         setLoading(true);
     }, 1000);

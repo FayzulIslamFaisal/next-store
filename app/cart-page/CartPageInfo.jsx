@@ -239,7 +239,7 @@ const CartPage = () => {
                 setLoading(false);
             }
         } catch (error) {
-            // console.log(error);
+            console.log(error);
         }
     };
 
@@ -453,7 +453,7 @@ const CartPage = () => {
                 }
             );
 
-            console.log("s", response);
+            // console.log("s", response);
 
             return response.json();
         } catch (error) {
@@ -479,12 +479,11 @@ const CartPage = () => {
         try {
             setLoading(true);
             if (session) {
-                console.log("Hello wrold");
                 const updatedCartProducts = await fetchCartProducts(
                     outletId,
                     districtId
                 );
-                console.log("sjfhdufh", updatedCartProducts);
+                // console.log("sjfhdufh", updatedCartProducts);
                 if (updatedCartProducts?.success) {
                     setCheckedProductCard(updatedCartProducts?.data);
                 }
@@ -513,7 +512,7 @@ const CartPage = () => {
         const checkingProductFilter = isAnyChecked(checkedProductCard);
         const checkedProductTotalPrice = checkingProductFilter.reduce(
             (sum, product) => {
-                console.log(product);
+                // console.log(product);
                 return sum + parseFloat(product.price) * product.quantity;
             },
             0
@@ -531,7 +530,7 @@ const CartPage = () => {
                         cart_id: item?.cart_id,
                     })
                 );
-                console.log("updatedItemsInCard", updatedItemsInCard);
+                // console.log("updatedItemsInCard", updatedItemsInCard);
                 await addToCartSelectedProduct(
                     updatedItemsInCard,
                     session?.accessToken
