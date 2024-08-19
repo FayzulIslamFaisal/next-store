@@ -875,8 +875,19 @@ const CartPage = () => {
                                             handleCheckoutNavigation();
                                         }}
                                         className="add-to-cart-link border border-0 w-100"
+                                        disabled={!totalPrice}
+                                        style={{
+                                            pointerEvents:
+                                                totalPrice
+                                                    ? "auto"
+                                                    : "none",
+                                            opacity:
+                                                totalPrice
+                                                    ? 1
+                                                    : 0.5,
+                                        }}
                                     >
-                                        CHECKOUT
+                                        {totalPrice?"CHECKOUT":"Select First"}
                                     </button>
                                     <Link
                                         href="/"
