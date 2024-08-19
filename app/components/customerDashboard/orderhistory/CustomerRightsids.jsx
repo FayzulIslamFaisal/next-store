@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
+import Pagination from "../../productCategory/Pagination";
 
-const CustomerRightsids = ({ customerOrders }) => {
+const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
     return (
         <div className="col-lg-9">
             <div className="customer-dashboard-order-history-area">
@@ -87,6 +88,10 @@ const CustomerRightsids = ({ customerOrders }) => {
                                     })}
                             </tbody>
                         </table>
+                        <Pagination 
+                            currentPage={currentPage}
+                            lastPage={lastPage}
+                        />
                     </div>
                 ) : (
                     <div className="d-flex justify-content-center align-items-center flex-column gap-3 p-4">

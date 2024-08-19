@@ -7,7 +7,7 @@ import ViewAllFlashCheck from "../components/viewAllProduct/ViewAllFlashCheck";
 import { getHomeCategory } from "../services/getHomeCategory";
 import { getHomeBrand } from "../services/getHomeBrand";
 import { NagadhatPublicUrl } from "../utils";
-import CategoryPagination from "../components/productCategory/CategoryPagination";
+import Pagination from "../components/productCategory/Pagination";
 
 const ViewAllPage = async ({ searchParams }) => {
     const page = parseInt(searchParams.page) || 1;
@@ -74,12 +74,10 @@ const ViewAllPage = async ({ searchParams }) => {
             <ViewAllCategoryTitle title={sectionTitle} />
             <ViewAllCategories viewCategoryData={viewCategoryData} />
             <div className="view-all-product-pagination-area ">
-                <div className="d-flex justify-content-center align-items-center">
-                    <CategoryPagination
-                        currentPage={page} 
-                        lastPage={lastPage} 
-                    />
-                </div>
+                <Pagination
+                    currentPage={page}
+                    lastPage={lastPage}
+                />
             </div>
             <ViewAllFlashCheck />
             <Service serviceItems={serviceItems} />

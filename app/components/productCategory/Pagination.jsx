@@ -1,8 +1,19 @@
 "use client";
-import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const Pagination = ({ currentPage, lastPage, onPageChange }) => {
-    // console.log(currentPage);
+const Pagination = ({ currentPage, lastPage}) => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    if (lastPage ==1) {
+        return
+    }
+
+    const handlePageChange = (page) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('page', page);
+        const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+        router.push(newUrl);
+    };
 
     const createPageLinks = () => {
         let pages = [];
@@ -12,7 +23,7 @@ const Pagination = ({ currentPage, lastPage, onPageChange }) => {
                     key={i}
                     className={`page-item ${i == currentPage ? "active" : ""}`}
                 >
-                    <p className="page-link" onClick={() => onPageChange(i)}>
+                    <p className="page-link" onClick={() => handlePageChange(i)}>
                         {i}
                     </p>
                 </li>
@@ -22,7 +33,7 @@ const Pagination = ({ currentPage, lastPage, onPageChange }) => {
     };
 
     return (
-        <div className="product-category-pagination-col">
+        <div className="product-category-pagination-col d-flex justify-content-center align-items-center">
             <nav aria-label="Page navigation example">
                 <ul className="pagination align-items-center">
                     <li
@@ -32,7 +43,7 @@ const Pagination = ({ currentPage, lastPage, onPageChange }) => {
                     >
                         <p
                             className="page-link"
-                            onClick={() => onPageChange(currentPage - 1)}
+                            onClick={() => handlePageChange(currentPage - 1)}
                             aria-label="Previous"
                         >
                             <span aria-hidden="true">&#60;</span>
@@ -46,7 +57,7 @@ const Pagination = ({ currentPage, lastPage, onPageChange }) => {
                     >
                         <p
                             className="page-link"
-                            onClick={() => onPageChange(currentPage + 1)}
+                            onClick={() => handlePageChange(currentPage + 1)}
                             aria-label="Next"
                         >
                             <span aria-hidden="true">&#62;</span>
