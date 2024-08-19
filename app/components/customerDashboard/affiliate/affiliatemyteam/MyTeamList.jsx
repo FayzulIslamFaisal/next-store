@@ -43,7 +43,7 @@ const MyTeamList = ({ teamListInfo }) => {
                     {displayMembers.map((member, index) => (
                         <tr key={member.id}>
                             <td scope="row">{index + 1}</td>
-                            <td>{member.user_name}</td>
+                            <td>{member.username}</td>
                             <td>{member.name}</td>
                             <td>{member.affiliate_user?.sponsor || ""}</td>
                             <td>
