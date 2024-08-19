@@ -8,7 +8,7 @@ import { postManageBasicInfo } from "@/app/services/postManageBasicInfo";
 
 const ManageBasicInfo = () => {
     const [formData, setFormData] = useState({
-        user_name: "",
+        username: "",
         mobile_number: "",
         email: "",
         date_of_birth: "",
@@ -28,7 +28,7 @@ const ManageBasicInfo = () => {
                     const basicInfoResult = basicInfo?.results || {};
                     setFormData({
                         ...formData,
-                        user_name: basicInfoResult.user_name || "",
+                        username: basicInfoResult.username || "",
                         mobile_number: basicInfoResult.mobile_number || "",
                         email: basicInfoResult.email || "",
                         date_of_birth: basicInfoResult.date_of_birth || "",
@@ -56,7 +56,7 @@ const ManageBasicInfo = () => {
 
         // Check for  fields
         if (
-            !formData.user_name ||
+            !formData.username ||
             !formData.mobile_number ||
             !formData.date_of_birth ||
             !formData.marital_status
@@ -114,17 +114,17 @@ const ManageBasicInfo = () => {
                         <form className="row" onSubmit={handleSubmit}>
                             <div className="col-md-6 pb-3">
                                 <label
-                                    htmlFor="user_name"
+                                    htmlFor="username"
                                     className="form-label"
                                 >
                                     Full Name
                                 </label>
                                 <input
                                     type="text"
-                                    name="user_name"
+                                    name="username"
                                     className="form-control"
-                                    id="user_name"
-                                    value={formData.user_name}
+                                    id="username"
+                                    value={formData.username}
                                     onChange={handleChange}
                                 />
                             </div>
