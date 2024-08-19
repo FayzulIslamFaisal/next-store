@@ -5,7 +5,31 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { getLoginToken } from "../../../services/getLoginToken";
 import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
 import { googleLoginAPI } from "@/app/services/googleLogin";
-import { getRequestPath } from "@/app/utils";
+function getRequestPath() {
+    if (typeof window !== "undefined") {
+        try {
+            const requestPage = localStorage.getItem("requestPage");
+
+            // Debugging: Check if the value is correctly retrieved
+            console.log("Retrieved requestPage:", requestPage);
+
+            // If the value exists, parse it; otherwise, default to "/dashboard"
+            const requestRoute = requestPage
+                ? JSON.parse(requestPage)
+                : "/dashboard";
+
+            // Debugging: Check the parsed value
+            console.log("Parsed requestRoute:", requestRoute);
+
+            return requestRoute;
+        } catch (error) {
+            // Handle any errors during retrieval or parsing
+            console.error("Error retrieving or parsing requestPage:", error);
+            return "/dashboard"; // Fallback in case of error
+        }
+    }
+    return "/dashboard"; // Fallback if window is undefined
+}
 
 let profileData = null;
 let userStatus = null;
