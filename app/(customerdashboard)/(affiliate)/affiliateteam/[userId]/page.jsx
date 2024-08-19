@@ -1,40 +1,43 @@
 "use client";
 import { useEffect, useState } from "react";
-import MyTeamList from "./MyTeamList";
-import SearchMyTeam from "./SearchMyTeam";
-import TeamListNotFound from "./TeamListNotFound";
 import { useSession } from "next-auth/react";
-import { getAffiliateTeam } from "@/app/services/affiliate/getAffiliateTeam";
+import SearchMyTeam from "@/app/components/customerDashboard/affiliate/affiliatemyteam/SearchMyTeam";
+import MyTeamList from "@/app/components/customerDashboard/affiliate/affiliatemyteam/MyTeamList";
+import TeamListNotFound from "@/app/components/customerDashboard/affiliate/affiliatemyteam/TeamListNotFound";
+import { getAffiliateMembersTeam } from "@/app/services/affiliate/getAffiliateMembersTeam";
 
-const AffiliateTeamWrapp = () => {
+const Page = ({ params }) => {
+    const { userId } = params;
     const [teamData, setTeamData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const { data: session, status } = useSession();
 
     useEffect(() => {
-        if (status === "authenticated" && session?.accessToken) {
-            const fetchTeamData = async () => {
+        const fetchTeamData = async () => {
+            if (status === "authenticated" && session?.accessToken) {
                 try {
                     let searchParams = {};
                     if (searchQuery.length >= 2) {
                         searchParams.search = searchQuery;
                     }
-                    const affiliateTeam = await getAffiliateTeam(
+                    const teamMember = await getAffiliateMembersTeam(
                         session?.accessToken,
+                        userId,
                         searchParams
                     );
-                    const affiliateTeamData = affiliateTeam?.results?.myTeam;
-                    setTeamData(affiliateTeamData);
+                    const teamMemberData = teamMember?.results?.myTeam;
+                    setTeamData(teamMemberData || []);
                 } catch (error) {
                     console.error(
-                        "Failed to fetch affiliate team data:",
+                        "Failed to fetch affiliate team member data:",
                         error
                     );
                 }
-            };
-            fetchTeamData();
-        }
-    }, [status, session, searchQuery]);
+            }
+        };
+
+        fetchTeamData();
+    }, [status, session, searchQuery, userId]);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -51,7 +54,7 @@ const AffiliateTeamWrapp = () => {
                     </div>
                     <SearchMyTeam onSearch={handleSearch} />
                     <div className="customer-dashboard-order-history table-responsive">
-                        {teamListInfo?.length > 0 ? (
+                        {teamListInfo.length > 0 ? (
                             <MyTeamList teamListInfo={teamListInfo} />
                         ) : (
                             <TeamListNotFound />
@@ -63,4 +66,4 @@ const AffiliateTeamWrapp = () => {
     );
 };
 
-export default AffiliateTeamWrapp;
+export default Page;
