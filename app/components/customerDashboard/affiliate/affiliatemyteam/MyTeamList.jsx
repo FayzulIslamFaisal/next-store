@@ -1,5 +1,6 @@
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaBan } from "react-icons/fa";
+import Link from "next/link";
 
 const MyTeamList = ({ teamListInfo }) => {
     // Filter members based on the conditions
@@ -13,14 +14,7 @@ const MyTeamList = ({ teamListInfo }) => {
             member.affiliate_user_status === "Affiliate" &&
             member.affiliate_user !== null
     );
-    console.log("generalMembers", generalMembers);
-
-    console.log("affiliateMembers", affiliateMembers);
-
-    // Combine both lists: show general members first, then affiliate members
     const displayMembers = [...generalMembers, ...affiliateMembers];
-
-    console.log(displayMembers);
 
     return (
         <div className="table-responsive">
@@ -44,7 +38,15 @@ const MyTeamList = ({ teamListInfo }) => {
                         <tr key={member.id}>
                             <td scope="row">{index + 1}</td>
                             <td>{member.username}</td>
-                            <td>{member.name}</td>
+                            <td>
+                                <Link
+                                    href={`/affiliateteam/${member.id}`}
+                                    className=" border-0 bg-transparent "
+                                    style={{ color: "green" }}
+                                >
+                                    {member.name}
+                                </Link>
+                            </td>
                             <td>{member.affiliate_user?.sponsor || ""}</td>
                             <td>
                                 {member.affiliate_user?.total_resell_amount ||
