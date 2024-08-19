@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { getLoginToken } from "../../../services/getLoginToken";
 import { checkUserExistByGoogleLogin } from "@/app/services/checkUserExistByGoogleLogin";
 import { googleLoginAPI } from "@/app/services/googleLogin";
+import { getRequestPath } from "@/app/utils";
 
 let profileData = null;
 let userStatus = null;
@@ -173,7 +174,7 @@ export const authOptions = {
                 // console.log("=>>> signInStatus 111", signInStatus);
                 // console.log("=>>> profileData.email 111", profileData.email);
                 // console.log("=>>> userStatus 111", userStatus);
-                
+
                 if (
                     signInStatus == "login" &&
                     profileData &&
@@ -184,7 +185,7 @@ export const authOptions = {
                     //     "=>>> profileData 3 email redirect ",
                     //     profileData.email
                     // );
-                    return `${baseUrl}/dashboard`;
+                    return `${baseUrl}/${getRequestPath()}`;
                 } else if (
                     signInStatus == null &&
                     profileData &&

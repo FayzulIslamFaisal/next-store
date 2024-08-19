@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { registerUser } from "../services/registerUser";
 import { validatePhoneNumber } from "../services/validatePhoneNumber";
+import { getRequestPath } from "../utils";
 
 const Registration = () => {
     const router = useRouter();
@@ -15,7 +16,7 @@ const Registration = () => {
         async function fetchData() {
             if (session != undefined) {
                 // console.log("=>>> redirect to dashboard");
-                router.push(`/dashboard`);
+                router.push(getRequestPath());
             }
         }
         fetchData();

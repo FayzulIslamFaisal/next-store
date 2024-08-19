@@ -6,6 +6,9 @@ const SimilerProductItems = ({ item }) => {
         prices: "",
         discountPrice: "",
     };
+    const defaultVariant = item?.variations?.find(
+        (variant) => variant.variations_default === 1
+    );
 
     if (item?.variations?.length > 0) {
         productPrice.prices =
@@ -19,14 +22,14 @@ const SimilerProductItems = ({ item }) => {
                 : "";
     } else {
         (productPrice.prices =
-            item?.price?.discounted_price !== 0
-                ? item?.price?.discounted_price
-                : item?.price?.regular_price),
+            item?.price?.original?.results.discounted_price !== 0
+                ? item?.price?.original?.results?.discounted_price
+                : item?.price?.original?.results?.regular_price),
             (productPrice.discountPrice =
-                item?.price?.discounted_price > 0 &&
-                item?.price?.regular_price);
+                item?.price?.original?.results.discounted_price > 0 &&
+                item?.price?.original?.results?.regular_price);
     }
-    
+
     console.log(productPrice);
     return (
         <>
