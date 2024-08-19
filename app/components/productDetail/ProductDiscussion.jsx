@@ -162,7 +162,7 @@ const ProductQuestions = ({ productInfo }) => {
                             <QuestionCard
                                 question={false}
                                 message={info?.answer?.answer}
-                                author={info?.answer?.user?.user_name}
+                                author={info?.answer?.user?.username}
                                 date={info?.answer?.created_at}
                             ></QuestionCard>
                         </div>

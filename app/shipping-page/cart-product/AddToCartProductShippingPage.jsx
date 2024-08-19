@@ -19,6 +19,9 @@ import { setAddToCart } from "../../store/cartSlice";
 import { RotatingLines } from "react-loader-spinner";
 import { showToast } from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
 }
@@ -53,6 +56,7 @@ const AddToCartProductShippingPage = () => {
     const [loading, setLoading] = useState(false);
     const [PicShowsTost, setPicShowsTost] = useState(false);
     const [redirectPath, setRedirectPath] = useState("#");
+    const [isTermsChecked, setIsTermsChecked] = useState(false);
     const [outletId, setOutletId] = useState(() => {
         if (typeof window !== "undefined") {
             return localStorage.getItem("outletId") || 3;
@@ -245,6 +249,10 @@ const AddToCartProductShippingPage = () => {
     }, [session]);
 
     const handlePlaceOrder = async () => {
+        if (!isTermsChecked) {
+            toast.error("You must agree to the terms and conditions.");
+            return;
+        }
         const cartItems = cartProduct?.map((item) => ({
             product_id: item.product_id,
             product_quantity: item.quantity,
@@ -1586,7 +1594,7 @@ const AddToCartProductShippingPage = () => {
                                                                 totalPrice}
                                                         </strong>
                                                     </div>
-                                                    <div className="d-flex gap-2 flex-column border-top pb-3">
+                                                    <div className="d-flex gap-2 flex-column border-top pt-3">
                                                         <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
                                                             <strong>
                                                                 Total
@@ -1639,17 +1647,15 @@ const AddToCartProductShippingPage = () => {
                                                         className="add-to-cart-link border border-0 w-100"
                                                         style={{
                                                             pointerEvents:
-                                                                customerAddress?.length >
-                                                                    0 &&
-                                                                cartProduct?.length >
-                                                                    0
+                                                                customerAddress?.length > 0 &&
+                                                                cartProduct?.length >0 &&
+                                                                isTermsChecked
                                                                     ? "auto"
                                                                     : "none",
                                                             opacity:
-                                                                customerAddress?.length >
-                                                                    0 &&
-                                                                cartProduct?.length >
-                                                                    0
+                                                                customerAddress?.length > 0 &&
+                                                                cartProduct?.length > 0 &&
+                                                                isTermsChecked
                                                                     ? 1
                                                                     : 0.5,
                                                         }}
@@ -1658,9 +1664,25 @@ const AddToCartProductShippingPage = () => {
                                                     </Link>
                                                 </div>
                                                 <p>
-                                                    Lorem ipsum dolor sit amet
-                                                    consectetur adipisicing
-                                                    elit. Dolores, tenetur.
+                                                    <div className="form-check cart-product-terms-condition">
+                                                        <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id="terms-condition"
+                                                            onChange={() =>
+                                                                setIsTermsChecked(
+                                                                    !isTermsChecked
+                                                                )
+                                                            }
+                                                        />
+                                                        <label
+                                                            className="form-check-label"
+                                                            htmlFor="terms-condition"
+                                                        >
+                                                            I agree to the terms
+                                                            and conditions.
+                                                        </label>
+                                                    </div>
                                                 </p>
                                             </div>
                                         </div>

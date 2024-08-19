@@ -46,6 +46,7 @@ const BuyNowShippingProductPage = () => {
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
+    const [deliveryNote, setDeliveryNote] = useState("");
     const [outletId, setOutletId] = useState(() => {
         if (typeof window !== "undefined") {
             return localStorage.getItem("outletId") || 3;
@@ -286,7 +287,7 @@ const BuyNowShippingProductPage = () => {
             outlet_id: outletId,
             location_id: districtId,
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
-            delivery_note: "",
+            delivery_note: deliveryNote,
             total_delivery_charge: shippingPrice,
             total_products_price: totalPrice,
             payment_type: "cash_on_delivery",
@@ -748,6 +749,33 @@ const BuyNowShippingProductPage = () => {
                                                             </button>
                                                         </p>
                                                     </div>
+                                                    <div className="nhn-shipping-deliver-edit-mail">
+                                                                <div className="py-3 d-flex align-items-center gap-3">
+                                                                    <label
+                                                                        htmlFor="delivery_note"
+                                                                        className=" text-capitalize"
+                                                                    >
+                                                                        note
+                                                                    </label>
+                                                                    <div className=" w-50">
+                                                                        <input
+                                                                            type="text"
+                                                                            name="delivery_note"
+                                                                            className=" form-control"
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                setDeliveryNote(
+                                                                                    e
+                                                                                        .target
+                                                                                        .value
+                                                                                )
+                                                                            }
+                                                                            placeholder="Enter Note"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
                                                     <div
                                                         className="modal fade nhn-shipping-deliver-edit-mail-modal"

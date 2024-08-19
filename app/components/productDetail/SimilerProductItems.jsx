@@ -30,7 +30,6 @@ const SimilerProductItems = ({ item }) => {
                 item?.price?.original?.results?.regular_price);
     }
 
-    console.log(productPrice);
     return (
         <>
             <div className="similer-product-box-item d-flex ">
