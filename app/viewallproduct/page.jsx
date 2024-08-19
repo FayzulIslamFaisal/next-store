@@ -11,7 +11,7 @@ import { getHomeJustForYouProduct } from "../services/getHomeJustForYouProduct";
 import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import CategoryPagination from "../components/productCategory/CategoryPagination";
+import Pagination from "../components/productCategory/Pagination";
 
 const ViewAllProductPage = () => {
     const [viewProductData, setViewProductData] = useState([]);
@@ -150,7 +150,7 @@ const ViewAllProductPage = () => {
             }
         };
         fetchData();
-    }, [districtId, type]);
+    }, [districtId, type, currentPages]);
 
     const serviceItems = [
         {
@@ -188,7 +188,7 @@ const ViewAllProductPage = () => {
                 flashSaleEndData={flashSaleEndData}
             />
             <ViewAllProduct viewProductData={viewProductData} />
-            <CategoryPagination
+            <Pagination
                 currentPage={currentPages}
                 lastPage={lastPage}
             />

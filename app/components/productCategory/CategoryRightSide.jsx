@@ -3,8 +3,8 @@
 // import FindLooking from "./FindLooking";
 import CategoryProductArchive from "./CategoryProductArchive";
 import ShotBy from "./ShotBy";
-import CategoryPagination from "./CategoryPagination";
 import NoDataFound from "../NoDataFound";
+import Pagination from "./Pagination";
 
 const CategoryRightSide = ({
     categoryByProduct,
@@ -47,7 +47,7 @@ const CategoryRightSide = ({
                     <div className="row product-category-pagination-row">
                         <div className="col-md-12">
                             <div className="product-category-pagination-area d-flex flex-wrap align-items-center justify-content-center">
-                                <CategoryPagination currentPage={currentPage} lastPage={lastPage} />
+                                <Pagination currentPage={currentPage} lastPage={lastPage} />
                             </div>
                         </div>
                     </div>

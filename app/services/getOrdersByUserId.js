@@ -1,8 +1,8 @@
 import {apiBaseUrl} from '../utils';
 
-export const getOrdersByUserId = async (token) => {
+export const getOrdersByUserId = async (token, page = 1, limit = 20) => {
     try {
-        const response = await fetch(`${apiBaseUrl}/get-orders-by-user-id`, {
+        const response = await fetch(`${apiBaseUrl}/get-orders-by-user-id?page=${page}&limit=${limit}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
