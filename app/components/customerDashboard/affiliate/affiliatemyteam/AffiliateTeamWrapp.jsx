@@ -5,11 +5,25 @@ import SearchMyTeam from "./SearchMyTeam";
 import TeamListNotFound from "./TeamListNotFound";
 import { useSession } from "next-auth/react";
 import { getAffiliateTeam } from "@/app/services/affiliate/getAffiliateTeam";
+import { useSearchParams } from "next/navigation";
+import Pagination from "@/app/components/productCategory/Pagination";
 
 const AffiliateTeamWrapp = () => {
     const [teamData, setTeamData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const { data: session, status } = useSession();
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPage, setCurrentPage] = useState(1); // New state for current page
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const page = searchParams.get('page');
+        if (page && parseInt(page) !== currentPage) {
+            setCurrentPage(parseInt(page));
+        }
+    }, [searchParams, currentPage]);
+
+    const limit = 20; //Per Page Category
 
     useEffect(() => {
         if (status === "authenticated" && session?.accessToken) {
@@ -21,10 +35,13 @@ const AffiliateTeamWrapp = () => {
                     }
                     const affiliateTeam = await getAffiliateTeam(
                         session?.accessToken,
-                        searchParams
+                        searchParams, 
+                        currentPage,
+                        limit
                     );
                     const affiliateTeamData = affiliateTeam?.results?.myTeam;
                     setTeamData(affiliateTeamData);
+                    setLastPage(affiliateTeamData.last_page || 1); // Set the last page
                 } catch (error) {
                     console.error(
                         "Failed to fetch affiliate team data:",
@@ -34,7 +51,7 @@ const AffiliateTeamWrapp = () => {
             };
             fetchTeamData();
         }
-    }, [status, session, searchQuery]);
+    }, [status, session, searchQuery, currentPage]);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -56,6 +73,10 @@ const AffiliateTeamWrapp = () => {
                         ) : (
                             <TeamListNotFound />
                         )}
+                        <Pagination
+                            currentPage={currentPage}
+                            lastPage={lastPage}
+                        />
                     </div>
                 </div>
             </div>
