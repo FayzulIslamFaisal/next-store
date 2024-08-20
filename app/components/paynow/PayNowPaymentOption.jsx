@@ -117,7 +117,7 @@ const PayNowPaymentOption = () => {
                 </div>
                 <div className="pay-now-return-shop d-flex align-items-center justify-content-between">
                     <div className="pay-now-return-shop-item">
-                        <Link href="/orderhistory">
+                        <Link href="/">
                             <FaChevronLeft />
                             Return to Shop
                         </Link>
@@ -142,9 +142,6 @@ const PayNowPaymentOption = () => {
                     </button>
                 </div>
             </div>
-            {selectedOption && (
-                <p className="text-success">Selected Payment Option: {selectedOption}</p>
-            )}
             <ToastContainer />
         </div>
     );

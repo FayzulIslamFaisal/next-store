@@ -86,7 +86,7 @@ const PayNowSummary = () => {
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
                         <strong>Total</strong>
-                        <p>৳ {orderSummary?.grand_total}</p>
+                        <strong>৳ {orderSummary?.grand_total}</strong>
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
                         <strong>Paid</strong>
@@ -94,7 +94,7 @@ const PayNowSummary = () => {
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
                         <strong>Due</strong>
-                        <p>৳ {orderSummary?.grand_total}</p>
+                        <strong>৳ {orderSummary?.grand_total}</strong>
                     </div>
                 </div>
             </div>
