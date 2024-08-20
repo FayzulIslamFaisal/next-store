@@ -32,7 +32,7 @@ const Registration = () => {
         email: "",
         password: "",
         gender: "",
-        referrer_id: referralId || "",
+        referrer_id: parseInt(referralId) || "",
         sponsor_id: "",
     });
 
