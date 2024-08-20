@@ -1,9 +1,9 @@
 import { apiBaseUrl } from "@/app/utils";
 
-export const getAffiliateMembersTeam = async (token, userId, params = {}, page = 1, limit = 20) => {
+export const getAffiliateMembersTeam = async (token, userId, params = {}) => {
     try {
         const queryString = new URLSearchParams(params).toString();
-        const url = `${apiBaseUrl}/affiliate-members-team/${userId}?${queryString}&page=${page}&limit=${limit}`;
+        const url = `${apiBaseUrl}/affiliate-members-team/${userId}?${queryString}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
