@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { registerUser } from "../services/registerUser";
 import { validatePhoneNumber } from "../services/validatePhoneNumber";
@@ -10,12 +10,14 @@ import { getRequestPath } from "../utils";
 
 const Registration = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const referralId = searchParams.get("id");
+    const refName = searchParams.get("ref_name");
     const { status, data: session } = useSession();
 
     useEffect(() => {
         async function fetchData() {
             if (session != undefined) {
-                // console.log("=>>> redirect to dashboard");
                 router.push(getRequestPath());
             }
         }
@@ -30,10 +32,11 @@ const Registration = () => {
         email: "",
         password: "",
         gender: "",
+        referrer_id: referralId || "",
+        sponsor_id: "",
     });
 
     const handleInputChange = (e) => {
-        // console.log('=>>> formdata', formData)
         setFormData((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
@@ -130,6 +133,14 @@ const Registration = () => {
                         )}
                         <div className="user-login-form">
                             <form onSubmit={handleSubmit}>
+                                {/* affiliate referral id */}
+                                <input
+                                    type="hidden"
+                                    name="referrer_id"
+                                    value={formData.referrer_id}
+                                    onChange={handleInputChange}
+                                />
+                                {/* affiliate referral id */}
                                 <div className="mb-3">
                                     <label
                                         htmlFor="name"
@@ -246,6 +257,14 @@ const Registration = () => {
                                         and <Link href="#">Privacy Policy</Link>
                                     </p>
                                 </div>
+                                {refName && (
+                                    <p
+                                        className="pb-2"
+                                        style={{ color: "#44bc9d" }}
+                                    >
+                                        * Referer:{refName}
+                                    </p>
+                                )}
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
