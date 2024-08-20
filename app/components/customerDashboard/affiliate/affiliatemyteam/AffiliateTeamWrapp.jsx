@@ -35,9 +35,9 @@ const AffiliateTeamWrapp = () => {
                     if (searchQuery.length >= 2) {
                         searchParams.search = searchQuery;
                     }
-                    searchParams.page=currentPage;
-                    searchParams.limit=limit;
-                    
+                    searchParams.page = currentPage;
+                    searchParams.limit = limit;
+
                     const affiliateTeam = await getAffiliateTeam(
                         session?.accessToken,
                         searchParams
