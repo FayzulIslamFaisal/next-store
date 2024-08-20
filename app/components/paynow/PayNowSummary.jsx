@@ -1,75 +1,104 @@
+"use client";
+import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 const PayNowSummary = () => {
+    const [orderSummary, setOrderSummary] = useState({});
+    const [orderProduct, setOrderProduct] = useState([]);
+    const { data: session, status } = useSession();
+    const searchParams = useSearchParams();
+    const orderId = searchParams.get('orderId');
+
+    useEffect(() => {
+        if (status === "authenticated" && orderId) {
+            const fetchOrderSummary = async () => {
+                try {
+                    const orderData = await getProductOrderSummery(
+                        orderId,
+                        session?.accessToken
+                    );
+                    setOrderSummary(orderData?.results);
+                    setOrderProduct(orderData?.results?.products);
+                } catch (error) {
+                    console.error("Failed to fetch order summary:", error);
+                }
+            };
+            fetchOrderSummary();
+        }
+    }, [session, status, orderId]);
+
     return (
-        <>
-            <div className="col-lg-4 col-md-12">
-                <div className="pay-now-payment-option-bg bg-white">
-                    <div className="pay-now-summary-title d-flex align-items-center justify-content-between">
-                        <h2 className="text-capitalize fw-medium">summary</h2>
-                        <span className="px-2 py-1 rounded-1 bg-danger text-white">
-                            - Items
-                        </span>
+        <div className="col-lg-4 col-md-12">
+            <div className="pay-now-payment-option-bg bg-white">
+                <div className="pay-now-summary-title d-flex align-items-center justify-content-between">
+                    <h2 className="text-capitalize fw-medium">Summary</h2>
+                    <span className="px-2 py-1 rounded-1 bg-praymary-color fs-6 text-white">
+                        {orderProduct.length} Items
+                    </span>
+                </div>
+                <div className="pay-now-summary-body">
+                    <div className="pay-now-summary-cash-on-bg">
+                        <p className="rounded-1">
+                            Only cash on delivery is available for these products
+                        </p>
                     </div>
-                    <div className="pay-now-summary-body">
-                        <div className="pay-now-summary-cash-on-bg">
-                            <p className="rounded-1">
-                                cash on delivery is not available for those
-                                products
-                            </p>
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Product</strong>
+                        <strong>Total</strong>
+                    </div>
+                    {orderProduct?.map((productItem) => (
+                        <div
+                            key={productItem?.id}
+                            className="pay-now-summary-info d-flex align-items-center justify-content-between"
+                        >
+                            <p>{productItem?.product_name}</p>
+                            <p>৳ {productItem?.unit_price}</p>
                         </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Product</strong>
-                            <strong>Total</strong>
+                    ))}
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Subtotal</strong>
+                        <strong>৳ {orderSummary?.sub_total}</strong>
+                    </div>
+                    {/* <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Have a coupon code?"
+                        />
+                        <button className="btn btn-dark">Apply</button>
+                    </div> */}
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Discount</strong>
+                        <p>৳ {orderSummary?.discount_amount}</p>
+                    </div>
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Shopping balance</strong>
+                        <div className="d-flex flex-column gap-2">
+                            <p>৳ 00</p>
+                            {/* <button className="btn btn-dark">Apply</button> */}
                         </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <p>xiaomi redmi note 13</p>
-                            <p>৳ 31,000</p>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Subtotal</strong>
-                            <strong>৳ 31,000</strong>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Have a coupon code?"
-                            />
-                            <button className="btn btn-dark">apply</button>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Discount</strong>
-                            <p>৳ 31,000</p>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Shopping balance</strong>
-                            <div className="d-flex flex-column gap-2">
-                                <p>৳ 31,000</p>
-                                <button className="btn btn-dark">apply</button>
-                            </div>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>
-                                Total Shipping <br />
-                                (*Applicable)
-                            </strong>
-                            <p>৳ 31,000</p>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Total </strong>
-                            <p>৳ 31,000</p>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Paid </strong>
-                            <p>৳ 21,000</p>
-                        </div>
-                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                            <strong>Due </strong>
-                            <p>৳ 0</p>
-                        </div>
+                    </div>
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Total Shipping <br /> (*Applicable)</strong>
+                        <p>৳ {orderSummary?.total_delivery_charge}</p>
+                    </div>
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Total</strong>
+                        <p>৳ {orderSummary?.grand_total}</p>
+                    </div>
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Paid</strong>
+                        <p>৳ 00</p>
+                    </div>
+                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                        <strong>Due</strong>
+                        <p>৳ {orderSummary?.grand_total}</p>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
