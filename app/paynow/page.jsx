@@ -1,6 +1,7 @@
 import PayNowTopIcon from "../components/paynow/PayNowTopIcon";
 import PayNowDetails from "../components/paynow/PayNowDetails";
 import Service from "../components/Service";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 const PayNowPage = () => {
     const serviceItems = [
@@ -31,13 +32,15 @@ const PayNowPage = () => {
     ];
     return (
         <>
-            <div className="pay-now-wrapper">
-                <div className="container">
-                    <PayNowTopIcon />
-                    <PayNowDetails />
-                    <Service serviceItems={serviceItems} />
+            <PrivateRoute>
+                <div className="pay-now-wrapper">
+                    <div className="container">
+                        <PayNowTopIcon />
+                        <PayNowDetails />
+                        <Service serviceItems={serviceItems} />
+                    </div>
                 </div>
-            </div>
+            </PrivateRoute>
         </>
     );
 };
