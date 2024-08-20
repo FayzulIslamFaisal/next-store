@@ -49,7 +49,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                     <td>
                                                         {payment_status}{" "}
                                                         <Link
-                                                            href={`/paynow/?orderId=${order_id}`}
+                                                            href={`/paynow?orderId=${order_id}`}
                                                             className="customer-dashboard-order-history-pay"
                                                         >
                                                             Pay Now
