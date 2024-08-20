@@ -36,12 +36,12 @@ const Page = ({ params }) => {
                     if (searchQuery.length >= 2) {
                         searchParams.search = searchQuery;
                     }
+                    searchParams.page=currentPage;
+                    searchParams.limit=limit;
                     const teamMember = await getAffiliateMembersTeam(
                         session?.accessToken,
                         userId,
-                        searchParams,
-                        currentPage,
-                        limit
+                        searchParams
                     );
                     const teamMemberData = teamMember?.results?.myTeam;
                     const allMemberCount = teamMember?.results?.total_members;
