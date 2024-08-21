@@ -529,7 +529,7 @@ const AddToCartProductShippingPage = () => {
                                                                                         allAddress,
                                                                                         index
                                                                                     ) => (
-                                                                                        <div className="col-md-6 col-sm-12">
+                                                                                        <div key={index} className="col-md-6 col-sm-12">
                                                                                             <div className="shipping-delivery-address-radiobox ">
                                                                                                 <input
                                                                                                     id={`radio${index}`}
@@ -698,6 +698,7 @@ const AddToCartProductShippingPage = () => {
                                                                                         id
                                                                                     ) => (
                                                                                         <div
+                                                                                            key={id}
                                                                                             className="col-md-6 col-sm-12"
                                                                                             onClick={(
                                                                                                 e
@@ -1446,11 +1447,11 @@ const AddToCartProductShippingPage = () => {
                                                                         price;
                                                                     subTotal +=
                                                                         item.discountPrice >
-                                                                        0
+                                                                            0
                                                                             ? discountPrice
                                                                             : discountPrice +
-                                                                              item?.price *
-                                                                                  item?.quantity;
+                                                                            item?.price *
+                                                                            item?.quantity;
 
                                                                     totalDiscountPrice +=
                                                                         item?.regular_price *
@@ -1485,7 +1486,7 @@ const AddToCartProductShippingPage = () => {
                                                                                             }
                                                                                         </Link>
                                                                                     </p>
-                                                                                    <p className="cart-prodect-variants">
+                                                                                    <div className="cart-prodect-variants">
                                                                                         {item?.selectedVariants &&
                                                                                             item.selectedVariants
                                                                                                 .slice(
@@ -1535,7 +1536,7 @@ const AddToCartProductShippingPage = () => {
                                                                                                         );
                                                                                                     }
                                                                                                 )}
-                                                                                    </p>
+                                                                                    </div>
                                                                                 </div>
                                                                             </td>
                                                                             <td>
@@ -1582,80 +1583,54 @@ const AddToCartProductShippingPage = () => {
                                                 <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                                     <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                         <p>Subtotal</p>
-                                                        <strong>
-                                                            ৳{subTotal}
-                                                        </strong>
+                                                        <strong>৳{subTotal}</strong>
                                                     </div>
                                                     <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                                         <p>Discount</p>
-                                                        <strong>
-                                                            ৳
-                                                            {subTotal -
-                                                                totalPrice}
-                                                        </strong>
+                                                        <strong>৳{subTotal - totalPrice}</strong>
                                                     </div>
                                                     <div className="d-flex gap-2 flex-column border-top pt-3">
                                                         <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
-                                                            <strong>
-                                                                Total
-                                                            </strong>
-                                                            <p className="total-order-price">
-                                                                ৳ {totalPrice}
-                                                            </p>
+                                                            <strong>Total</strong>
+                                                            <p className="total-order-price">৳ {totalPrice}</p>
                                                         </div>
                                                     </div>
 
                                                     <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
-                                                        <p>
-                                                            Shipping{" "}
-                                                            {/* <strong> (Free)</strong> */}
-                                                        </p>
+                                                        <p>Shipping</p>
                                                         <div className="d-flex gap-2 align-items-center">
-                                                            <strong>
-                                                                ৳{shippingPrice}
-                                                            </strong>
+                                                            <strong>৳{shippingPrice}</strong>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div className="d-flex gap-2 flex-column border-bottom pb-3">
                                                     <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
-                                                        <strong>
-                                                            Grand Total
-                                                        </strong>
-                                                        <p className="total-order-price">
-                                                            ৳{" "}
-                                                            {totalPrice +
-                                                                parseInt(
-                                                                    shippingPrice
-                                                                )}
-                                                        </p>
+                                                        <strong>Grand Total</strong>
+                                                        <p className="total-order-price">৳ {totalPrice + parseInt(shippingPrice)}</p>
                                                     </div>
                                                 </div>
+
                                                 <div className="place-order-btn">
                                                     <Link
                                                         href={
-                                                            customerAddress?.length >
-                                                                0 &&
-                                                            cartProduct?.length >
-                                                                0
+                                                            customerAddress?.length > 0 && cartProduct?.length > 0
                                                                 ? redirectPath
                                                                 : "#"
                                                         }
-                                                        onClick={
-                                                            handlePlaceOrder
-                                                        }
+                                                        onClick={handlePlaceOrder}
                                                         className="add-to-cart-link border border-0 w-100"
                                                         style={{
                                                             pointerEvents:
                                                                 customerAddress?.length > 0 &&
-                                                                cartProduct?.length >0 &&
-                                                                isTermsChecked
+                                                                    cartProduct?.length > 0 &&
+                                                                    isTermsChecked
                                                                     ? "auto"
                                                                     : "none",
                                                             opacity:
                                                                 customerAddress?.length > 0 &&
-                                                                cartProduct?.length > 0 &&
-                                                                isTermsChecked
+                                                                    cartProduct?.length > 0 &&
+                                                                    isTermsChecked
                                                                     ? 1
                                                                     : 0.5,
                                                         }}
@@ -1663,27 +1638,21 @@ const AddToCartProductShippingPage = () => {
                                                         PLACE ORDER
                                                     </Link>
                                                 </div>
-                                                <p>
-                                                    <div className="form-check cart-product-terms-condition">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type="checkbox"
-                                                            id="terms-condition"
-                                                            onChange={() =>
-                                                                setIsTermsChecked(
-                                                                    !isTermsChecked
-                                                                )
-                                                            }
-                                                        />
-                                                        <label
-                                                            className="form-check-label"
-                                                            htmlFor="terms-condition"
-                                                        >
-                                                            I agree to the terms
-                                                            and conditions.
-                                                        </label>
-                                                    </div>
-                                                </p>
+
+                                                <div className="form-check cart-product-terms-condition">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="checkbox"
+                                                        id="terms-condition"
+                                                        onChange={() => setIsTermsChecked(!isTermsChecked)}
+                                                    />
+                                                    <label
+                                                        className="form-check-label"
+                                                        htmlFor="terms-condition"
+                                                    >
+                                                        I agree to the terms and conditions.
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -10,14 +10,14 @@ function Like({ path = "#" }) {
     };
     return (
         <div className="add-to-cart-icon">
-            <Link href={path} onClick={(e) => onHandleLike(e)}>
+            <div onClick={(e) => onHandleLike(e)}>
                 <Image
                     width={28}
                     height={28}
                     src="/images/add-to-cart.svg"
                     alt="add to cart icon"
                 />
-            </Link>
+            </div>
         </div>
     );
 }
