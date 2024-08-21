@@ -19,9 +19,7 @@ import PrivateRoute from "@/app/components/PrivateRoute/PrivateRoute";
 import { showToast } from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-function findObjectWithKey(array, key, value) {
-    return array.find((obj) => obj[key] === value);
-}
+
 const BuyNowShippingProductPage = () => {
     const { status, data: session } = useSession();
     const [customerAddress, setCustomerAddress] = useState([]);
@@ -80,6 +78,10 @@ const BuyNowShippingProductPage = () => {
         if (!formData.address) errors.address = "Address is required";
         return errors;
     };
+    
+    function findObjectWithKey(array, key, value) {
+        return array.find((obj) => obj[key] === value);
+    }
 
     /**
      * Handles changes to form input fields.
@@ -252,7 +254,7 @@ const BuyNowShippingProductPage = () => {
                     setSelectedDefaultAddressId(defaultAddressInfo?.id);
                     // Fetch pick-up points
                     const pickUpPoint = await pickUpPontes(outletId);
-
+    
                     setPickUpPoint(pickUpPoint);
                     // Fetch total districts for shipping
                     const totalDistrict = await getDistrictForShipping();
@@ -730,7 +732,7 @@ const BuyNowShippingProductPage = () => {
                                                                         onClick={(
                                                                             e
                                                                         ) => {
-                                                                            handlePickUpPoint();
+                                                                            handlePickUpPoint(e);
                                                                         }}
                                                                     >
                                                                         Confirm
@@ -816,9 +818,7 @@ const BuyNowShippingProductPage = () => {
                                                                                 }
                                                                                 className="form-control"
                                                                                 id="edit-email"
-                                                                                onChange={
-                                                                                    handleEmailChange
-                                                                                }
+                                                                                onChange={(e)=>handleEmailChange(e)}
                                                                             />
                                                                             {mailError && (
                                                                                 <p
@@ -838,7 +838,7 @@ const BuyNowShippingProductPage = () => {
                                                                                 type="button"
                                                                                 className="btn add-to-cart-link w-100"
                                                                                 onClick={
-                                                                                    handleSaveEmail
+                                                                                    (e)=>handleSaveEmail(e)
                                                                                 }
                                                                             >
                                                                                 Confirm
@@ -920,7 +920,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.fullName
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             />
                                                             {validationErrors.fullName && (
@@ -950,7 +950,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.phone
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             />
                                                             {validationErrors.phone && (
@@ -979,7 +979,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.district
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             >
                                                                 <option value="">
@@ -1030,7 +1030,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.city
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             />
 
@@ -1058,7 +1058,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.address
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             ></textarea>
                                                             {validationErrors.address && (
@@ -1085,7 +1085,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.note
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             ></textarea>
                                                         </div>
@@ -1099,9 +1099,7 @@ const BuyNowShippingProductPage = () => {
                                                                     checked={
                                                                         formData.setDefault
                                                                     }
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
+                                                                    onChange={(e)=>handleChange(e)}
                                                                 />
                                                                 <label
                                                                     className="form-check-label text-capitalize"
@@ -1175,7 +1173,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.fullName
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             />
                                                             {validationErrors.fullName && (
@@ -1205,7 +1203,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.phone
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             />
                                                             {validationErrors.phone && (
@@ -1234,7 +1232,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.district
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             >
                                                                 <option value="">
@@ -1285,7 +1283,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.city
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             />
 
@@ -1313,7 +1311,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.address
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             ></textarea>
                                                             {validationErrors.address && (
@@ -1340,7 +1338,7 @@ const BuyNowShippingProductPage = () => {
                                                                     formData.note
                                                                 }
                                                                 onChange={
-                                                                    handleChange
+                                                                    (e)=>handleChange(e)
                                                                 }
                                                             ></textarea>
                                                         </div>
@@ -1354,9 +1352,7 @@ const BuyNowShippingProductPage = () => {
                                                                     checked={
                                                                         formData.setDefault
                                                                     }
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
+                                                                    onChange={(e)=>handleChange(e)}
                                                                 />
                                                                 <label
                                                                     className="form-check-label text-capitalize"
