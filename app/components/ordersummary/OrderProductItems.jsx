@@ -9,7 +9,7 @@ const OrderProductItems = ({ orderProduct }) => {
                     <tbody>
                         {orderProduct &&
                             orderProduct.length > 0 &&
-                            orderProduct.map((productItem) => {
+                            orderProduct.map((productItem, index) => {
                                 const {
                                     product_name,
                                     quantity,
@@ -18,11 +18,11 @@ const OrderProductItems = ({ orderProduct }) => {
                                 } = productItem;
                                 const imageUrl = `${NagadhatPublicUrl}/${product_thumbnail}`;
                                 return (
-                                    <tr key={productItem.id}>
+                                    <tr key={index}>
                                         <td>
                                             <div className="order-product-img">
                                                 <Image
-                                                    fill
+                                                    fill={true}
                                                     src={
                                                         imageUrl
                                                             ? imageUrl

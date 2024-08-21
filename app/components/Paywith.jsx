@@ -11,7 +11,7 @@ function Paywith({
                 <p>{title}</p>
                 <div className="payment-method-img">
                     <Image
-                        fill
+                        fill={true}
                         src={imaUrl}
                         className="img-fluid"
                         alt="payment-methods"

@@ -251,7 +251,7 @@ const BuyNowShippingProductPage = () => {
                     );
                     setSelectedDefaultAddressId(defaultAddressInfo?.id);
                     // Fetch pick-up points
-                    const pickUpPoint = await pickUpPontes(3);
+                    const pickUpPoint = await pickUpPontes(outletId);
 
                     setPickUpPoint(pickUpPoint);
                     // Fetch total districts for shipping
@@ -503,7 +503,9 @@ const BuyNowShippingProductPage = () => {
                                                                                 allAddress,
                                                                                 index
                                                                             ) => (
-                                                                                <div className="col-md-6 col-sm-12">
+                                                                                <div 
+                                                                                key={index}
+                                                                                className="col-md-6 col-sm-12">
                                                                                     <div className="shipping-delivery-address-radiobox ">
                                                                                         <input
                                                                                             id={`radio${index}`}
@@ -669,6 +671,7 @@ const BuyNowShippingProductPage = () => {
                                                                                 id
                                                                             ) => (
                                                                                 <div
+                                                                                    key={id}
                                                                                     className="col-md-6 col-sm-12"
                                                                                     onClick={(
                                                                                         e
@@ -1440,7 +1443,7 @@ const BuyNowShippingProductPage = () => {
                                                                                     }
                                                                                 </Link>
                                                                             </p>
-                                                                            <p className="cart-prodect-variants">
+                                                                            <div className="cart-prodect-variants">
                                                                                 {item?.selectedVariants &&
                                                                                     item.selectedVariants
                                                                                         .slice(
@@ -1490,7 +1493,7 @@ const BuyNowShippingProductPage = () => {
                                                                                                 );
                                                                                             }
                                                                                         )}
-                                                                            </p>
+                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -1607,7 +1610,7 @@ const BuyNowShippingProductPage = () => {
                                                 PLACE ORDER
                                             </Link>
                                         </div>
-                                        <p>
+                                        <div>
                                             <div className="form-check cart-product-terms-condition">
                                                 <input
                                                     className="form-check-input"
@@ -1628,7 +1631,7 @@ const BuyNowShippingProductPage = () => {
                                                     conditions.
                                                 </label>
                                             </div>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

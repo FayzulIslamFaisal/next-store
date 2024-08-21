@@ -83,7 +83,7 @@ const PayNowPaymentOption = () => {
                         >
                             <div className="pay-now-payment-option-img-item">
                                 <Image
-                                    fill
+                                    fill={true}
                                     src={option.src}
                                     className="img-fluid"
                                     alt={option.alt}

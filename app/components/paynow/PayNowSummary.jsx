@@ -35,7 +35,7 @@ const PayNowSummary = () => {
                 <div className="pay-now-summary-title d-flex align-items-center justify-content-between">
                     <h2 className="text-capitalize fw-medium">Summary</h2>
                     <span className="px-2 py-1 rounded-1 bg-praymary-color fs-6 text-white">
-                        {orderProduct.length} Items
+                        {orderProduct?.length} Items
                     </span>
                 </div>
                 <div className="pay-now-summary-body">
@@ -48,9 +48,9 @@ const PayNowSummary = () => {
                         <strong>Product</strong>
                         <strong>Total</strong>
                     </div>
-                    {orderProduct?.map((productItem) => (
+                    {orderProduct?.map((productItem, index) => (
                         <div
-                            key={productItem?.id}
+                            key={index}
                             className="pay-now-summary-info d-flex align-items-center justify-content-between"
                         >
                             <p>{productItem?.product_name}</p>

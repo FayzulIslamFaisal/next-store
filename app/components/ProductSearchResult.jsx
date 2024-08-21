@@ -24,7 +24,7 @@ const ProductSearchResult = ({ searchProduct, clearSearch }) => {
                                         <div className="search-modal-info-inner d-flex align-content-center gap-4">
                                             <div className="search-modal-info-img">
                                                 <Image
-                                                    fill
+                                                    fill={true}
                                                     src={`${NagadhatPublicUrl}/${product?.product_thumbnail}`}
                                                     alt={product?.product_name}
                                                 />
