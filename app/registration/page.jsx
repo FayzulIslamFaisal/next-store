@@ -17,12 +17,12 @@ const Registration = () => {
 
     useEffect(() => {
         async function fetchData() {
-            if (session != undefined) {
+            if (session != undefined && !referralId) {
                 router.push(getRequestPath());
             }
         }
         fetchData();
-    }, [session?.user?.email]);
+    }, [session?.user?.email, referralId]);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [existsEmail, setExistsEmail] = useState("");
