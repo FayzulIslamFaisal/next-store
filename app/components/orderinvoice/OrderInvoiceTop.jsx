@@ -27,7 +27,7 @@ const OrderInvoiceTop = () => {
                         <Link href="/">
                             <div className="invoice-logo ">
                                 <Image
-                                    fill
+                                    fill={true}
                                     className="img-fluid"
                                     src="/images/nagadhat-logo.png"
                                     alt="logo"

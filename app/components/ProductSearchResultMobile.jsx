@@ -23,7 +23,7 @@ const ProductSearchResultMobile = ({ searchProduct, clearSearch }) => {
                                         <div className="search-modal-info-inner d-flex align-content-center gap-4">
                                             <div className="search-modal-info-img">
                                                 <Image
-                                                    fill
+                                                    fill={true}
                                                     src={`${process.env.NEXT_PUBLIC_ROOT_URL}/${product?.product_thumbnail}`}
                                                     alt={product?.product_name}
                                                 />

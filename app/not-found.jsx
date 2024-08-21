@@ -15,7 +15,7 @@ function NotFound() {
                         </div>
                         <div className="not-found-page-img-area">
                           <div className="not-found-img">
-                            <Image fill className="img-fluid" src="/images/falling-man.gif" alt="not-found-page-img"/>
+                            <Image fill={true} className="img-fluid" src="/images/falling-man.gif" alt="not-found-page-img"/>
                           </div>
                         </div>
                     </div>

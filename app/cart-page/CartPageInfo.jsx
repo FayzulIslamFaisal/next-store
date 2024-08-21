@@ -633,7 +633,7 @@ const CartPage = () => {
                                                                     <div>
                                                                         <div className="product-cart-product-img">
                                                                             <Image
-                                                                                fill
+                                                                                fill={true}
                                                                                 src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
                                                                                 alt="black-friday"
                                                                             />
@@ -789,7 +789,7 @@ const CartPage = () => {
                                 <div className="d-flex gap-3 align-items-center">
                                     <div className="discount-code-img">
                                         <Image
-                                            fill
+                                            fill={true}
                                             src="/images/discount-code.png"
                                             alt="discount-code"
                                         />
