@@ -562,13 +562,13 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                    0 &&
+                                                0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
                                                 )
                                             }
-                                            onClick={handleChange}
+                                            onChange={handleChange}
                                         />
                                         <label htmlFor="select-all">
                                             Select All
@@ -612,9 +612,7 @@ const CartPage = () => {
                                                         return (
                                                             <div
                                                                 className="d-flex justify-content-between gap-2 product-cart-details-item"
-                                                                key={
-                                                                    item?.cart_id
-                                                                }
+                                                                key={index}
                                                             >
                                                                 <div className="d-flex gap-3">
                                                                     <div className="d-flex justify-content-center align-items-center">
@@ -651,71 +649,28 @@ const CartPage = () => {
                                                                                 }
                                                                             </Link>
                                                                         </h2>
-                                                                        <p className="cart-prodect-variants">
-                                                                            {Array.isArray(
-                                                                                item?.selectedVariants
-                                                                            ) &&
-                                                                                item.selectedVariants
-                                                                                    .slice(
-                                                                                        0,
-                                                                                        2
-                                                                                    )
-                                                                                    .map(
-                                                                                        (
-                                                                                            variant,
-                                                                                            inx
-                                                                                        ) => {
-                                                                                            if (
-                                                                                                variant &&
-                                                                                                typeof variant ===
-                                                                                                    "object" &&
-                                                                                                Object.entries(
-                                                                                                    variant
-                                                                                                )
-                                                                                                    .length >
-                                                                                                    0
-                                                                                            ) {
-                                                                                                const [
-                                                                                                    key,
-                                                                                                    value,
-                                                                                                ] =
-                                                                                                    Object.entries(
-                                                                                                        variant
-                                                                                                    )[0];
-                                                                                                const keyDisplay =
-                                                                                                    key.split(
-                                                                                                        "_"
-                                                                                                    )[1];
+                                                                        <div className="cart-prodect-variants">
+                                                                            {Array.isArray(item?.selectedVariants) &&
+                                                                                item.selectedVariants.slice(0, 2).map((variant, inx) => {
+                                                                                    if (variant && typeof variant === "object" && Object.entries(variant).length > 0) {
+                                                                                        const [key, value] = Object.entries(variant)[0];
+                                                                                        const keyDisplay = key.split("_")[1];
 
-                                                                                                return (
-                                                                                                    <React.Fragment
-                                                                                                        key={
-                                                                                                            inx
-                                                                                                        }
-                                                                                                    >
-                                                                                                        <p>
-                                                                                                            <span>
-                                                                                                                {
-                                                                                                                    keyDisplay
-                                                                                                                }
+                                                                                        return (
+                                                                                            <React.Fragment key={inx}>
+                                                                                                <p>
+                                                                                                    <span>{keyDisplay}: </span>
+                                                                                                    <span className="cart-prodect-variants-item">
+                                                                                                        <label>{value}</label>
+                                                                                                    </span>
+                                                                                                </p>
+                                                                                            </React.Fragment>
+                                                                                        );
+                                                                                    }
+                                                                                    return null;
+                                                                                })}
+                                                                        </div>
 
-                                                                                                                :
-                                                                                                            </span>
-                                                                                                            <span className="cart-prodect-variants-item">
-                                                                                                                <label>
-                                                                                                                    {
-                                                                                                                        value
-                                                                                                                    }
-                                                                                                                </label>
-                                                                                                            </span>
-                                                                                                        </p>
-                                                                                                    </React.Fragment>
-                                                                                                );
-                                                                                            }
-                                                                                            return null; // Return null if variant is not valid
-                                                                                        }
-                                                                                    )}
-                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                                 <div>
@@ -886,7 +841,7 @@ const CartPage = () => {
                                                     : 0.5,
                                         }}
                                     >
-                                        {totalPrice?"CHECKOUT":"Select First"}
+                                        {totalPrice ? "CHECKOUT" : "Select First"}
                                     </button>
                                     <Link
                                         href="/"

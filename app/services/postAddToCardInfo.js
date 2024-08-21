@@ -10,6 +10,8 @@ import { apiBaseUrl } from "../utils";
  */
 
 export const postAddToCardInfo = async (payload) => {
+    console.log({payload});
+    
     try {
         const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
             method: "POST",

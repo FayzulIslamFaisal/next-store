@@ -40,6 +40,7 @@ function Header() {
     const addToCartProductLength = useSelector(
         (state) => state.cart?.addToCartLength
     );
+
     useEffect(() => {
         const handleScrollPosition = () => {
             let scrollPosition = 0;
@@ -77,67 +78,78 @@ function Header() {
     };
 
     const addToCartProduct = async (cartItems, accessToken) => {
-        const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
-            method: "POST",
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ cart_items: cartItems }),
-        });
-
-        return response.json();
+        try {
+            if (cartItems.length > 0 && accessToken) {
+                const response = await fetch(`${apiBaseUrl}/add-to-cart-product`, {
+                    method: "POST",
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ cart_items: cartItems }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+    
+                return response.json();
+            } else {
+                console.warn("No items to add or missing access token.");
+                return null;
+            }
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            return null;
+        }
     };
+    
 
     useEffect(() => {
         storeUserAgent();
     }, []);
 
     const dispatch = useDispatch();
+
     useEffect(() => {
         const setCartProductLength = async () => {
-            if (session) {
-                const cartProduct = addToCartProductList();
-                // console.log(cartProduct);
-                await addToCartProduct(cartProduct, session?.accessToken);
-                const updatedCartProducts = await fetchCartProducts(
-                    session?.accessToken,
-                    outletId,
-                    districtId
-                );
-                localStorage.removeItem("addToCart");
+            try {
+                if (session) {
+                    const cartProduct = addToCartProductList();
+                    await addToCartProduct(cartProduct, session?.accessToken);
+                    const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
+                        outletId,
+                        districtId
+                    );
+                    localStorage.removeItem("addToCart");
 
-                if (updatedCartProducts?.success) {
-                    const quantityTotal = getTotalQuantity(
-                        updatedCartProducts?.data
-                    );
-                    // console.log(quantityTotal, "quantityTotal");
-                    dispatch(
-                        setAddToCart({
-                            hasSession: true,
-                            length: quantityTotal,
-                        })
-                    );
+                    if (updatedCartProducts?.success) {
+                        const quantityTotal = getTotalQuantity(
+                            updatedCartProducts?.data
+                        );
+                        dispatch(
+                            setAddToCart({
+                                hasSession: true,
+                                length: quantityTotal,
+                            })
+                        );
+                    }
+                } else {
+                    if (typeof window !== "undefined") {
+                        const addToCart = addToCartProductList();
+                        const quantityTotal = getTotalQuantity(addToCart);
+                        dispatch(
+                            setAddToCart({
+                                hasSession: false,
+                                length: quantityTotal,
+                            })
+                        );
+                    }
                 }
-            } else {
-                if (typeof window !== "undefined") {
-                    const addToCart = addToCartProductList();
-                    const quantityTotal = getTotalQuantity(addToCart);
-                    dispatch(
-                        setAddToCart({
-                            hasSession: false,
-                            length: quantityTotal,
-                        })
-                    );
-
-                    dispatch(
-                        setAddToCart({
-                            hasSession: false,
-                            length: quantityTotal,
-                        })
-                    );
-                }
+            } catch (error) {
+                console.error("Error setting cart product length:", error);
             }
         };
 

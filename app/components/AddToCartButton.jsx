@@ -344,9 +344,8 @@ function AddToCartButton({
 
     return (
         <div className="add-to-cart-btn">
-            <Link
-                href={path}
-                className={`add-to-cart-link ${buyNowBtn} ${fullWidth}`}
+            <button
+                className={`add-to-cart-link border-0 ${buyNowBtn} ${fullWidth}`}
                 onClick={(e) =>
                     productStoke > 0 &&
                     (title == "BUY NOW"
@@ -389,7 +388,7 @@ function AddToCartButton({
                 ) : (
                     title
                 )}
-            </Link>
+            </button>
         </div>
     );
 }
