@@ -1,9 +1,12 @@
 import OrderViewWrapp from "../components/orderview/OrderViewWrapp";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 const OrderViewPage = () => {
     return (
         <>
-            <OrderViewWrapp />
+            <PrivateRoute>
+                <OrderViewWrapp />
+            </PrivateRoute>
         </>
     );
 };
