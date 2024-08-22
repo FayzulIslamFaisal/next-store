@@ -4,26 +4,42 @@ import { getApplyForAffiliate } from "@/app/services/affiliate/getApplyForAffili
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const AffiliatePartnerStatus = ({ userDashboard }) => {
     const [affiliateStatus, setAffiliateStatus] = useState(null);
     const { data: session, status } = useSession();
 
-    const isAffiliate = userDashboard?.affiliate_user_status === "Affiliate";
+    useEffect(() => {
+        if (userDashboard?.affiliate_user_status === "Affiliate") {
+            setAffiliateStatus(1);
+        }
+    }, [userDashboard?.affiliate_user_status]);
 
     const fetchApplyAffiliate = async () => {
         if (!session?.accessToken) {
             console.error("No access token found.");
             return;
         }
-
         try {
             const applyStatus = await getApplyForAffiliate(
                 session?.accessToken
             );
             setAffiliateStatus(applyStatus?.results?.status);
+            if (applyStatus?.results?.status == 1) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "You are now an active affiliate partner.",
+                    icon: "success",
+                });
+            } else {
+                Swal.fire({
+                    title: "Application Failed!",
+                    text: "Unable to activate affiliate status.",
+                    icon: "error",
+                });
+            }
         } catch (error) {
             console.error("Failed to fetch apply for affiliate data:", error);
         }
@@ -41,19 +57,6 @@ const AffiliatePartnerStatus = ({ userDashboard }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 await fetchApplyAffiliate();
-                if (affiliateStatus === 1) {
-                    Swal.fire({
-                        title: "Success!",
-                        text: "You are now an active affiliate partner.",
-                        icon: "success",
-                    });
-                } else {
-                    Swal.fire({
-                        title: "Application Failed!",
-                        text: "Unable to activate affiliate status.",
-                        icon: "error",
-                    });
-                }
             }
         });
     };
@@ -82,7 +85,7 @@ const AffiliatePartnerStatus = ({ userDashboard }) => {
                     />
                 </Link>
 
-                {affiliateStatus !== 1 && !isAffiliate ? (
+                {affiliateStatus !== 1 ? (
                     <div className="affiliate-status-title">
                         <h4 className="mb-4">
                             Status: <span>Not Active</span>

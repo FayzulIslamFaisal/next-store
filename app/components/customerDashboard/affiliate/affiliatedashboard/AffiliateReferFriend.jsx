@@ -4,10 +4,14 @@ import { NagadhatPublicUrl, VercerUrl } from "@/app/utils";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Link from "next/link";
 
 const AffiliateReferFriend = ({ affiliateData }) => {
-    const referralLink = `http://localhost:3000/ref/${affiliateData?.reffer_a_friend_link}`;
-    // const referralLink = `${VercerUrl}/ref/${affiliateData?.reffer_a_friend_link}`;
+    // const referralLink = `http://localhost:3000/ref/${affiliateData?.reffer_a_friend_link}`;
+    const referralLink = `${VercerUrl}/ref/${affiliateData?.reffer_a_friend_link}`;
+
+    // console.log("affiliateData------+++++>>>>", affiliateData);
+
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
@@ -48,9 +52,12 @@ const AffiliateReferFriend = ({ affiliateData }) => {
                     {copied ? "Referral Link Copied!" : "Copy"}
                 </button>
             </CopyToClipboard>
-            <button className="affiliate-dashboard-refer-item focus-ring">
+            <Link
+                href={`/registration?sponsored=1`}
+                className="affiliate-dashboard-refer-item focus-ring"
+            >
                 New SignUp
-            </button>
+            </Link>
         </div>
     );
 };
