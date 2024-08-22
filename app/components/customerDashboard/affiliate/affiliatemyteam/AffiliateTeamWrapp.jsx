@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { getAffiliateTeam } from "@/app/services/affiliate/getAffiliateTeam";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/app/components/productCategory/Pagination";
+import NoDataFound from "@/app/components/NoDataFound";
 
 const AffiliateTeamWrapp = () => {
     const [teamData, setTeamData] = useState([]);
@@ -49,7 +50,7 @@ const AffiliateTeamWrapp = () => {
                     setTeamGrandTotal(grandTotal);
                     setTotalMember(allMemberCount);
                     setTeamData(affiliateTeamData);
-                    setLastPage(affiliateTeamData.last_page || 1); // Set the last page
+                    setLastPage(affiliateTeamData.last_page || 1);
                 } catch (error) {
                     console.error(
                         "Failed to fetch affiliate team data:",
@@ -71,12 +72,20 @@ const AffiliateTeamWrapp = () => {
         <>
             <div className="col-lg-9">
                 <div className="customer-dashboard-order-history-area h-100">
-                    <div className="customer-dashboard-order-history-title">
-                        <h1 className="customer-dashboard-title">
-                            My Team ({totalMember})
+                    <div className="customer-dashboard-order-history-title p-0 ">
+                        <h1 className="customer-dashboard-title m-0">
+                            <span
+                                className="px-3 d-inline-block py-1"
+                                style={{ background: "#414042", color: "#fff" }}
+                            >
+                                My Team ({totalMember})
+                            </span>
                         </h1>
                     </div>
-                    <SearchMyTeam onSearch={handleSearch} />
+                    {teamListInfo?.length > 0 && (
+                        <SearchMyTeam onSearch={handleSearch} />
+                    )}
+
                     <div className="customer-dashboard-order-history table-responsive">
                         {teamListInfo?.length > 0 ? (
                             <MyTeamList
@@ -84,7 +93,7 @@ const AffiliateTeamWrapp = () => {
                                 teamGrandTotal={teamGrandTotal}
                             />
                         ) : (
-                            <TeamListNotFound />
+                            <NoDataFound title="Team Member Not Found" />
                         )}
                         <Pagination
                             currentPage={currentPage}

@@ -12,12 +12,15 @@ const Registration = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const referralId = searchParams.get("id");
+    const sponsored = searchParams.get("sponsored");
     const refName = searchParams.get("ref_name");
     const { status, data: session } = useSession();
 
+    console.log(session, "session----->");
+
     useEffect(() => {
         async function fetchData() {
-            if (session != undefined && !referralId) {
+            if (session != undefined && !referralId && !sponsored) {
                 router.push(getRequestPath());
             }
         }
@@ -247,6 +250,62 @@ const Registration = () => {
                                         </label>
                                     </div>
                                 </div>
+                                {sponsored && (
+                                    <div className="mb-3 ">
+                                        <div className="form-check form-check-inline">
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="sponsored"
+                                                id="sponsored1"
+                                                value="self"
+                                                defaultChecked
+                                                onChange={handleInputChange}
+                                            />
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor="sponsored1"
+                                            >
+                                                Self
+                                            </label>
+                                        </div>
+                                        <div className="form-check form-check-inline">
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="sponsored"
+                                                id="sponsored12"
+                                                value="placement"
+                                                onChange={handleInputChange}
+                                            />
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor="sponsored12"
+                                            >
+                                                Placement
+                                            </label>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="placement"
+                                        className="form-label"
+                                    >
+                                        * Select a placement
+                                    </label>
+                                    <select
+                                        className="form-select"
+                                        aria-label="Default select example"
+                                        id="placement"
+                                    >
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
                                 <div className="mb-3">
                                     <p>
                                         By clicking "Continue", I agree to
@@ -265,6 +324,15 @@ const Registration = () => {
                                         * Referer:{refName}
                                     </p>
                                 )}
+                                {sponsored && (
+                                    <p
+                                        className="pb-2"
+                                        style={{ color: "#44bc9d" }}
+                                    >
+                                        * Referer: {session?.user?.name}
+                                    </p>
+                                )}
+
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
@@ -286,7 +354,7 @@ const Registration = () => {
                                             alt="google-img"
                                             src="/images/google-img.png"
                                         ></Image>{" "}
-                                        Sign in with Google
+                                        Sign Up with Google
                                     </button>
                                 </div>
                                 <p className="form-label">
