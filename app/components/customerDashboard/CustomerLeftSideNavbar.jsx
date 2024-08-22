@@ -1,8 +1,10 @@
+import { getUserDashboard } from "@/app/services/userdashboard/getUserDashboard";
 import { removeRequestPath } from "@/app/utils";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     FaAngleRight,
     FaCog,
@@ -20,6 +22,28 @@ import { FaBangladeshiTakaSign, FaTicket } from "react-icons/fa6";
 const CustomerLeftSideNavbar = ({ authSessionData }) => {
     const currentPath = usePathname();
     const [activeDropdown, setActiveDropdown] = useState(null);
+    const [isAffiliateUser, setIsAffiliateUser] = useState({});
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchUserDashboardInfo = async () => {
+                try {
+                    const userDashboardInfo = await getUserDashboard(
+                        session?.accessToken
+                    );
+                    const userDashboardResult = userDashboardInfo?.results;
+                    setIsAffiliateUser(userDashboardResult);
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch user dashboard info:",
+                        error
+                    );
+                }
+            };
+            fetchUserDashboardInfo();
+        }
+    }, [status, session]);
 
     const isActive = (href) => currentPath === href;
 
@@ -129,109 +153,113 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                         </ul>
                     </li>
-                    <li className="nav-item customer-dashboard-nav-item">
-                        <p
-                            className="nav-link customer-dashboard-nav-link dropdown-btn"
-                            onClick={() => toggleDropdown("affiliate")}
-                        >
-                            <FaWallet className="nav-icon me-2" />
-                            Affiliate
-                            <FaAngleRight
-                                className={`dropdown ${
-                                    activeDropdown === "affiliate"
-                                        ? "rotate"
-                                        : ""
+
+                    {isAffiliateUser?.affiliate_user_status == "Affiliate" && (
+                        <li className="nav-item customer-dashboard-nav-item">
+                            <p
+                                className="nav-link customer-dashboard-nav-link dropdown-btn"
+                                onClick={() => toggleDropdown("affiliate")}
+                            >
+                                <FaWallet className="nav-icon me-2" />
+                                Affiliate
+                                <FaAngleRight
+                                    className={`dropdown ${
+                                        activeDropdown === "affiliate"
+                                            ? "rotate"
+                                            : ""
+                                    }`}
+                                />
+                            </p>
+                            <ul
+                                className={`dropdown-conteiner ${
+                                    activeDropdown === "affiliate" ? "show" : ""
                                 }`}
-                            />
-                        </p>
-                        <ul
-                            className={`dropdown-conteiner ${
-                                activeDropdown === "affiliate" ? "show" : ""
-                            }`}
-                        >
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="/affiliatedashboard"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Affiliate Dashboard
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="/affiliateteam"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    My Team
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Affiliate Products Link
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Resell Products
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Resell Products Option
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Sell On Nagadhat
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="/affiliaterankreward"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Ranks & Rewards
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    My Challenges
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Terms & Condition
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
+                            >
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="/affiliatedashboard"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Affiliate Dashboard
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="/affiliateteam"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        My Team
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="#"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Affiliate Products Link
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="#"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Resell Products
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="#"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Resell Products Option
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="#"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Sell On Nagadhat
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="/affiliaterankreward"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Ranks & Rewards
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="#"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        My Challenges
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        href="#"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Terms & Condition
+                                    </Link>
+                                </li>
+                            </ul>
+                        </li>
+                    )}
+
                     <li className="nav-item customer-dashboard-nav-item">
                         <p
                             className="nav-link customer-dashboard-nav-link dropdown-btn"

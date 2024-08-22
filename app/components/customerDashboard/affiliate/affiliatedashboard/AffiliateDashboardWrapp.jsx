@@ -29,6 +29,7 @@ const AffiliateDashboardWrapp = () => {
             affiliateDashboard();
         }
     }, [status, session]);
+    
 
     return (
         <>

@@ -7,6 +7,8 @@ import TeamListNotFound from "@/app/components/customerDashboard/affiliate/affil
 import { getAffiliateMembersTeam } from "@/app/services/affiliate/getAffiliateMembersTeam";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/app/components/productCategory/Pagination";
+import Link from "next/link";
+import NoDataFound from "@/app/components/NoDataFound";
 
 const Page = ({ params }) => {
     const { userId } = params;
@@ -17,14 +19,15 @@ const Page = ({ params }) => {
     const { data: session, status } = useSession();
     const [lastPage, setLastPage] = useState(1); // New state for last page
     const [currentPage, setCurrentPage] = useState(1); // New state for current page
-    const searchParams = useSearchParams();
+    const searchParam = useSearchParams();
+    const affiliateUser = searchParam.get("member");
 
     useEffect(() => {
-        const page = searchParams.get("page");
+        const page = searchParam.get("page");
         if (page && parseInt(page) !== currentPage) {
             setCurrentPage(parseInt(page));
         }
-    }, [searchParams, currentPage]);
+    }, [searchParam, currentPage]);
 
     const limit = 20; //Per Page Category
 
@@ -32,16 +35,16 @@ const Page = ({ params }) => {
         const fetchTeamData = async () => {
             if (status === "authenticated" && session?.accessToken) {
                 try {
-                    let searchParams = {};
+                    let searchParam = {};
                     if (searchQuery.length >= 2) {
-                        searchParams.search = searchQuery;
+                        searchParam.search = searchQuery;
                     }
-                    searchParams.page=currentPage;
-                    searchParams.limit=limit;
+                    searchParam.page = currentPage;
+                    searchParam.limit = limit;
                     const teamMember = await getAffiliateMembersTeam(
                         session?.accessToken,
                         userId,
-                        searchParams
+                        searchParam
                     );
                     const teamMemberData = teamMember?.results?.myTeam;
                     const allMemberCount = teamMember?.results?.total_members;
@@ -72,12 +75,32 @@ const Page = ({ params }) => {
         <>
             <div className="col-lg-9">
                 <div className="customer-dashboard-order-history-area h-100">
-                    <div className="customer-dashboard-order-history-title">
-                        <h1 className="customer-dashboard-title">
-                            My Team ({totalMember})
+                    <div className="customer-dashboard-order-history-title p-0 ">
+                        <h1 className="customer-dashboard-title px-4 m-0">
+                            <Link
+                                href="/affiliateteam"
+                                className=" px-3 py-1 d-inline-block "
+                            >
+                                My Team ({totalMember})
+                            </Link>
+                            {affiliateUser && (
+                                <span
+                                    className=" px-3 py-1 d-inline-block"
+                                    style={{
+                                        background: "#414042",
+                                        color: "#fff",
+                                    }}
+                                >
+                                    {affiliateUser} (
+                                    {teamGrandTotal?.child_total_members})
+                                </span>
+                            )}
                         </h1>
                     </div>
-                    <SearchMyTeam onSearch={handleSearch} />
+                    {teamListInfo.length > 0 && (
+                        <SearchMyTeam onSearch={handleSearch} />
+                    )}
+
                     <div className="customer-dashboard-order-history table-responsive">
                         {teamListInfo.length > 0 ? (
                             <MyTeamList
@@ -85,7 +108,7 @@ const Page = ({ params }) => {
                                 teamGrandTotal={teamGrandTotal}
                             />
                         ) : (
-                            <TeamListNotFound />
+                            <NoDataFound title="Team Member Not Found" />
                         )}
                         <Pagination
                             currentPage={currentPage}

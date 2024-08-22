@@ -7,10 +7,7 @@ const SearchMyTeam = ({ onSearch }) => {
         e.preventDefault();
         onSearch(searchInput.toLowerCase());
     };
-    const handleReset = () => {
-        setSearchInput("");
-        onSearch("");
-    };
+
     useEffect(() => {
         if (!searchInput) {
             onSearch("");
@@ -24,7 +21,7 @@ const SearchMyTeam = ({ onSearch }) => {
             >
                 <div className="col-md-6 d-flex gap-2 align-items-center">
                     <input
-                        type="text"
+                        type="search"
                         name="search"
                         className="form-control"
                         id="search"
@@ -34,12 +31,6 @@ const SearchMyTeam = ({ onSearch }) => {
                     />
                     <button className="add-to-cart-link border-0">
                         Search
-                    </button>
-                    <button
-                        className="btn btn-danger border-0 rounded-0 "
-                        onClick={handleReset}
-                    >
-                        Reset
                     </button>
                 </div>
             </form>
