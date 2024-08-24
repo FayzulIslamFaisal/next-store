@@ -10,8 +10,8 @@ import { useSession } from "next-auth/react";
 
 const PayNowPaymentOption = () => {
     const [selectedOption, setSelectedOption] = useState(null);
-    const searchParams = useSearchParams()
-    const orderId = searchParams.get('orderId')
+    const searchParams = useSearchParams();
+    const orderId = searchParams.get("orderId");
     const { status, data: session } = useSession();
     const [isTermsChecked, setIsTermsChecked] = useState(false);
     const router = useRouter();
@@ -24,47 +24,47 @@ const PayNowPaymentOption = () => {
     ];
 
     const handleOptionClick = (optionId) => {
-        if (optionId =="cashOnDelivery") {
-            toast.success("Selected payment option is cash 0n deliver.")
+        if (optionId === "cashOnDelivery") {
+            toast.success("Selected payment option is cash on delivery.");
             setSelectedOption(optionId);
-        }
-        else{
-            toast.error("This Payment option is not available at the moment.")
+        } else {
+            toast.error("This payment option is not available at the moment.");
         }
     };
-    const paymentData={
-            order_id: orderId,
-            user_name: session?.user?.name|| "",
-            transaction_amount: 0,
-            payment_getway: selectedOption,
-            payment_method: "",
-            bank_name: "",
-            transaction_id: ""
-    }
+
+    const paymentData = {
+        order_id: orderId,
+        user_name: session?.user?.name || "",
+        transaction_amount: 0,
+        payment_getway: selectedOption,
+        payment_method: "",
+        bank_name: "",
+        transaction_id: "",
+    };
 
     const handleSubmit = async () => {
         if (!selectedOption) {
-            toast.error("Please select a payment option");
+            toast.error("Please select a payment option.");
             return;
         }
-        
-        if (!session && !orderId) {
-            toast.error("Order Not Found");
+
+        if (!session || !orderId) {
+            toast.error("Order not found.");
             return;
         }
-        
+
         try {
             const orderPayment = await postOderPayment(session?.accessToken, paymentData);
-            if (!orderPayment.error) {
+            if (!orderPayment?.error) {
                 router.push(`/thankyou?orderId=${orderId}`);
+            } else {
+                toast.error("Failed to process payment. Please try again.");
             }
         } catch (error) {
             console.error("Error submitting the order:", error);
             toast.error("Failed to process payment. Please try again.");
-            console.log({error})
         }
     };
-    
 
     return (
         <div className="col-lg-8 col-md-12">
@@ -76,8 +76,7 @@ const PayNowPaymentOption = () => {
                     {paymentOptions.map((option) => (
                         <div
                             key={option.id}
-                            className={`pay-now-payment-option-img-box rounded-3 ${selectedOption === option.id ? "selected" : ""
-                                }`}
+                            className={`pay-now-payment-option-img-box rounded-3 ${selectedOption === option.id ? "selected" : ""}`}
                             onClick={() => handleOptionClick(option.id)}
                             style={{ cursor: "pointer" }}
                         >
@@ -98,20 +97,12 @@ const PayNowPaymentOption = () => {
                     <div className="mb-3 form-check">
                         <input
                             type="checkbox"
-                            className="form-check-input "
+                            className="form-check-input"
                             id="exampleCheck1"
-                            onChange={() =>
-                                setIsTermsChecked(
-                                    !isTermsChecked
-                                )
-                            }
+                            onChange={() => setIsTermsChecked(!isTermsChecked)}
                         />
-                        <label
-                            className="form-check-label"
-                            htmlFor="exampleCheck1"
-                        >
-                            I agree to the terms and conditions, return
-                            policy, and privacy policy
+                        <label className="form-check-label" htmlFor="exampleCheck1">
+                            I agree to the terms and conditions, return policy, and privacy policy
                         </label>
                     </div>
                 </div>
@@ -126,16 +117,8 @@ const PayNowPaymentOption = () => {
                         className="add-to-cart-link border-0"
                         onClick={handleSubmit}
                         style={{
-                            pointerEvents:
-                            isTermsChecked &&
-                            selectedOption
-                                    ? "auto"
-                                    : "none",
-                            opacity:
-                            isTermsChecked &&
-                            selectedOption
-                                    ? 1
-                                    : 0.5,
+                            pointerEvents: isTermsChecked && selectedOption ? "auto" : "none",
+                            opacity: isTermsChecked && selectedOption ? 1 : 0.5,
                         }}
                     >
                         Complete order
