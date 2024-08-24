@@ -238,7 +238,9 @@ export default function RootLayout({ children, slug, option }) {
                                 {/* <CategoryDetailProvider> */}
                                 <Header />
                                 <DistrictModal />
-                                {children}
+                                <main className="main-body-pading">
+                                    {children}
+                                </main>
                                 <Footer />
                                 <ToastContainer />
                                 {/* </CategoryDetailProvider> */}
