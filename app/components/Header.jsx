@@ -162,7 +162,7 @@ function Header() {
 
     return (
         <>
-            <header className={`${isSticky ? "header-sticky" : ""}`}>
+            <header className={`header-sticky ${isSticky ? "header-sticky" : ""}`}>
                 <div className="header-wrapper">
                     <div className="container header-container">
                         {!isObserverMenuVisible && !isResponsive && <MiniNav />}
