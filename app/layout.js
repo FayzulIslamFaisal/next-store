@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import { ReduxProvider } from "./ReduxProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 const lato = Lato({
     subsets: ["latin"],
     display: "swap",
@@ -223,20 +224,22 @@ export default function RootLayout({ children, slug, option }) {
             <body>
                 <Suspense>
                     <ReduxProvider>
-                        <AuthProvider>
-                            {/* <CategoryDetailProductProvider
+                        <ErrorBoundary>
+                            <AuthProvider>
+                                {/* <CategoryDetailProductProvider
                                 slug={slug}
                                 option={option}
                             > */}
                                 {/* <CategoryDetailProvider> */}
-                                    <Header />
-                                    <DistrictModal />
-                                    {children}
-                                    <Footer />
-                                    <ToastContainer />
+                                <Header />
+                                <DistrictModal />
+                                {children}
+                                <Footer />
+                                <ToastContainer />
                                 {/* </CategoryDetailProvider> */}
-                            {/* </CategoryDetailProductProvider> */}
-                        </AuthProvider>
+                                {/* </CategoryDetailProductProvider> */}
+                            </AuthProvider>
+                        </ErrorBoundary>
                     </ReduxProvider>
                 </Suspense>
             </body>

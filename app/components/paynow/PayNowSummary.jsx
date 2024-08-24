@@ -15,12 +15,13 @@ const PayNowSummary = () => {
         if (status === "authenticated" && orderId) {
             const fetchOrderSummary = async () => {
                 try {
-                    const orderData = await getProductOrderSummery(
-                        orderId,
-                        session?.accessToken
-                    );
-                    setOrderSummary(orderData?.results);
-                    setOrderProduct(orderData?.results?.products);
+                    const orderData = await getProductOrderSummery(orderId, session?.accessToken);
+                    if (orderData && orderData.results) {
+                        setOrderSummary(orderData.results);
+                        setOrderProduct(orderData.results.products || []);
+                    } else {
+                        console.error("Invalid response format:", orderData);
+                    }
                 } catch (error) {
                     console.error("Failed to fetch order summary:", error);
                 }

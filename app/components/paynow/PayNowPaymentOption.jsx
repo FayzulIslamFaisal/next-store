@@ -9,7 +9,7 @@ import { postOderPayment } from "@/app/services/postOderPayment";
 import { useSession } from "next-auth/react";
 
 const PayNowPaymentOption = () => {
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState("");
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderId");
     const { status, data: session } = useSession();
