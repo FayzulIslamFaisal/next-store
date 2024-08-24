@@ -26,7 +26,7 @@ const ProductOrderPriceSummary = ({ orderSummary }) => {
                         )}
                     </div>
                 </div>
-                <div className="d-flex gap-3 justify-content-between">
+                <div className="d-flex gap-3 justify-content-between pt-3">
                     <p>Total</p>
                     {orderSummary?.total_products_price && (
                         <strong>

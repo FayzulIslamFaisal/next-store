@@ -6,7 +6,7 @@ import TrackYourOrderBtn from "./TrackYourOrderBtn";
 const OrderSummaryLeft = ({ orderSummary }) => {
     return (
         <>
-            <div className="col-lg-6">
+            <div className="col-lg-5">
                 <div className="order-billing-info">
                     <div className="thank-you">
                         <h1>Thank you for your purchase!</h1>

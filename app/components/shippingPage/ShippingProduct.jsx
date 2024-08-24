@@ -1,3 +1,4 @@
+"use client";
 import { NagadhatPublicUrl } from '@/app/utils';
 import Image from 'next/image';
 import Link from 'next/link';

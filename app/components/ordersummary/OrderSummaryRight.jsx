@@ -5,7 +5,7 @@ import OrderProductItems from "./OrderProductItems";
 const OrderSummaryRight = ({ orderProduct, orderSummary }) => {
     return (
         <>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
                 <div className="position-relative order-summary-row">
                     <div className="order-summary-area mx-3">
                         <div className="border-bottom order-summary-title">
