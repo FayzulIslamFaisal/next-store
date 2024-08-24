@@ -54,16 +54,9 @@ const BuyNowShippingProductPage = () => {
         const fetchData = async () => {
             if (session) {
                 try {
-                    // Fetch customer shipping addresses
-                    const data = await getCustomerAllShippingAddress(
-                        session?.accessToken
-                    );
+                    const data = await getCustomerAllShippingAddress(session?.accessToken);
                     setCustomerAddress(data.results);
-                    const defaultAddressInfo = findObjectWithKey(
-                        data.results,
-                        "set_default",
-                        1
-                    );
+                    const defaultAddressInfo = findObjectWithKey(data.results, "set_default", 1);
                     setSelectedDefaultAddressId(defaultAddressInfo?.id);
                 } catch (error) {
                     console.error("Error fetching data:", error);
@@ -148,11 +141,13 @@ const BuyNowShippingProductPage = () => {
                     <div className="row gy-5 gy-lg-0 gx-0 gx-lg-5">
                         <div className="col-lg-8">
 
-                            <CustomerAddress
-                                setPickUpIdForOrder={setPickUpIdForOrder}
-                                setShippingPrice={setShippingPrice}
-                                setDeliveryNote={setDeliveryNote}
-                            />
+                            {customerAddress.length > 0 && (
+                                <CustomerAddress
+                                    setPickUpIdForOrder={setPickUpIdForOrder}
+                                    setShippingPrice={setShippingPrice}
+                                    setDeliveryNote={setDeliveryNote}
+                                />
+                            )}
 
                             {/* shows add to card product */}
                             <ShippingProduct
@@ -215,14 +210,14 @@ const BuyNowShippingProductPage = () => {
                                             </div>
                                         </div>
                                         <div className="place-order-btn">
-                                            <Link
-                                                href={
-                                                    customerAddress?.length >
-                                                        0 &&
-                                                        cartProduct?.length > 0
-                                                        ? redirectPath
-                                                        : "#"
-                                                }
+                                            <button
+                                                // href={
+                                                //     customerAddress?.length >
+                                                //         0 &&
+                                                //         cartProduct?.length > 0
+                                                //         ? redirectPath
+                                                //         : "#"
+                                                // }
                                                 onClick={handlePlaceOrder}
                                                 className="add-to-cart-link border border-0 w-100"
                                                 style={{
@@ -241,7 +236,7 @@ const BuyNowShippingProductPage = () => {
                                                 }}
                                             >
                                                 PLACE ORDER
-                                            </Link>
+                                            </button>
                                         </div>
                                         <div>
                                             <div className="form-check cart-product-terms-condition">
