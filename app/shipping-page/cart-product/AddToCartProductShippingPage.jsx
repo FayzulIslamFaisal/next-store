@@ -288,7 +288,6 @@ const AddToCartProductShippingPage = () => {
         setCartProduct(cartProductsItem?.data);
 
         if (order.code == 200) {
-            showToast(order.message);
             setRedirectPath(`/paynow?orderId=${order?.results}`);
 
             router.push(`/paynow?orderId=${order?.results}`);
