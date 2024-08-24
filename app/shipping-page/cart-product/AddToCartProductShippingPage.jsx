@@ -220,11 +220,7 @@ const AddToCartProductShippingPage = () => {
                         session?.accessToken
                     );
                     setCustomerAddress(data.results);
-                    const defaultAddressInfo = findObjectWithKey(
-                        data.results,
-                        "set_default",
-                        1
-                    );
+                    const defaultAddressInfo = findObjectWithKey(data.results, "set_default", 1);
                     setSelectedDefaultAddressId(defaultAddressInfo?.id);
                     const cartProduct = await fetchCartProducts(
                         session?.accessToken,
@@ -1612,12 +1608,12 @@ const AddToCartProductShippingPage = () => {
                                                 </div>
 
                                                 <div className="place-order-btn">
-                                                    <Link
-                                                        href={
-                                                            customerAddress?.length > 0 && cartProduct?.length > 0
-                                                                ? redirectPath
-                                                                : "#"
-                                                        }
+                                                    <button
+                                                        // href={
+                                                        //     customerAddress?.length > 0 && cartProduct?.length > 0
+                                                        //         ? redirectPath
+                                                        //         : "#"
+                                                        // }
                                                         onClick={handlePlaceOrder}
                                                         className="add-to-cart-link border border-0 w-100"
                                                         style={{
@@ -1636,7 +1632,7 @@ const AddToCartProductShippingPage = () => {
                                                         }}
                                                     >
                                                         PLACE ORDER
-                                                    </Link>
+                                                    </button>
                                                 </div>
 
                                                 <div className="form-check cart-product-terms-condition">
