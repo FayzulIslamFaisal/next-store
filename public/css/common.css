@@ -313,3 +313,17 @@ body {
     padding: 50px 0;
     background: var(--color-F5F5F5);
 }
+
+
+.category-product-price .fpnh-resale-pricess {
+    padding-bottom: 3px;
+    font-size: 14px;
+    font-family: var(--philosopher);
+} 
+.category-product-price .fpnh-resale-pricess:last-child {
+    padding-bottom: 0;
+}
+.category-product-price .fpnh-resale-pricess del,
+.category-product-price .fpnh-resale-pricess span {
+    color: var(--color-44BC9D);
+}
