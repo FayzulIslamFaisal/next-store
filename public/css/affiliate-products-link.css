@@ -48,6 +48,8 @@
 }
 .affiliate-product-list-item{
     padding: 16px !important;
+    height: 100%;
+    min-height: auto !important;
 }
 .affiliate-product-list-item:hover{
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
