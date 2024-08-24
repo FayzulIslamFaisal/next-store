@@ -25,7 +25,6 @@ const PayNowPaymentOption = () => {
 
     const handleOptionClick = (optionId) => {
         if (optionId === "cashOnDelivery") {
-            toast.success("Selected payment option is cash on delivery.");
             setSelectedOption(optionId);
         } else {
             toast.error("This payment option is not available at the moment.");
@@ -43,11 +42,6 @@ const PayNowPaymentOption = () => {
     };
 
     const handleSubmit = async () => {
-        if (!selectedOption) {
-            toast.error("Please select a payment option.");
-            return;
-        }
-
         if (!session || !orderId) {
             toast.error("Order not found.");
             return;
