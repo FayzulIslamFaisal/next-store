@@ -10,7 +10,7 @@ const AffiliateReferFriend = ({ affiliateData }) => {
     // const referralLink = `http://localhost:3000/ref/${affiliateData?.reffer_a_friend_link}`;
     const referralLink = `${VercerUrl}/ref/${affiliateData?.reffer_a_friend_link}`;
 
-    // console.log("affiliateData------+++++>>>>", affiliateData);
+    console.log("affiliateData------+++++>>>>", affiliateData);
 
     const [copied, setCopied] = useState(false);
 
@@ -53,7 +53,7 @@ const AffiliateReferFriend = ({ affiliateData }) => {
                 </button>
             </CopyToClipboard>
             <Link
-                href={`/registration?sponsored=1`}
+                href={`/registration?sponsored=${affiliateData?.user_id}`}
                 className="affiliate-dashboard-refer-item focus-ring"
             >
                 New SignUp

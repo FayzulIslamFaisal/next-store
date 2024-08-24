@@ -196,13 +196,13 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
-                                        href="#"
+                                        href="/affiliateproductslink"
                                     >
                                         <span className="dropdown-item-circle"></span>
                                         Affiliate Products Link
                                     </Link>
                                 </li>
-                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                {/* <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
@@ -210,8 +210,8 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                         <span className="dropdown-item-circle"></span>
                                         Resell Products
                                     </Link>
-                                </li>
-                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                </li> */}
+                                {/* <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
                                         href="#"
@@ -219,7 +219,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                         <span className="dropdown-item-circle"></span>
                                         Resell Products Option
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
