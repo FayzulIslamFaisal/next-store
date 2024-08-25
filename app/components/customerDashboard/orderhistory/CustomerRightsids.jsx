@@ -5,7 +5,7 @@ import Pagination from "../../productCategory/Pagination";
 
 const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
     return (
-        <div className="col-lg-9">
+        <>
             <div className="customer-dashboard-order-history-area">
                 <div className="customer-dashboard-order-history-title">
                     <h1 className="customer-dashboard-title">Order History</h1>
@@ -100,7 +100,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                     </div>
                 )}
             </div>
-        </div>
+        </>
     );
 };
 

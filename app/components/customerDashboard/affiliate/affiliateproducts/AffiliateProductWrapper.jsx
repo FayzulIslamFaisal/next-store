@@ -9,12 +9,10 @@ import AffiliateProductBody from "./AffiliateProductBody";
 const AffiliateProductWrapper = () => {
     return (
         <>
-            <div className="col-lg-9">
-                <div className="customer-setting">
-                    <AffiliateTopTitle />
-                    <AffiliateTabTitle />
-                    <AffiliateProductBody />
-                </div>
+            <div className="customer-setting">
+                <AffiliateTopTitle />
+                <AffiliateTabTitle />
+                <AffiliateProductBody />
             </div>
         </>
     );

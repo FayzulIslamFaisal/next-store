@@ -7,7 +7,7 @@ import ManageNomineeInfo from "./ManageProfileItem.jsx/ManageNomineeInfo";
 
 const ManageProfile = () => {
     return (
-        <div className="col-lg-9">
+        <>
             <div className="customer-manage-profile-title">
                 <h1 className="customer-dashboard-title">Manage Profile/KYC</h1>
             </div>
@@ -36,7 +36,7 @@ const ManageProfile = () => {
                     </Suspense>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

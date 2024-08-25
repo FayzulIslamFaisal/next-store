@@ -13,13 +13,15 @@ export default function DashboardLayout({ children }) {
             <section className="customer-dashboard-section-area">
                 <div className="container">
                     <div className="row">
-                        <aside className="col-lg-3 d-none d-lg-block">
+                        <aside className="col-xl-3 d-none d-xl-block">
                             <CustomerLeftSideNavbar authSessionData={session} />
                         </aside>
 
                         {/* customer dashboard right side */}
-                        {children}
-
+                        <div className="col-xl-9">
+                           {children} 
+                        </div>
+                        
                     </div>
                 </div>
             </section>
