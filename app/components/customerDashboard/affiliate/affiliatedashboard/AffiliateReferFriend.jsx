@@ -9,9 +9,6 @@ import Link from "next/link";
 const AffiliateReferFriend = ({ affiliateData }) => {
     // const referralLink = `http://localhost:3000/ref/${affiliateData?.reffer_a_friend_link}`;
     const referralLink = `${VercerUrl}/ref/${affiliateData?.reffer_a_friend_link}`;
-
-    console.log("affiliateData------+++++>>>>", affiliateData);
-
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
@@ -53,7 +50,10 @@ const AffiliateReferFriend = ({ affiliateData }) => {
                 </button>
             </CopyToClipboard>
             <Link
-                href={`/registration?sponsored=${affiliateData?.user_id}`}
+                href={{
+                    pathname: "/registration",
+                    query: { sponsored: affiliateData?.user_id },
+                }}
                 className="affiliate-dashboard-refer-item focus-ring"
             >
                 New SignUp

@@ -1,5 +1,5 @@
 import { getUserDashboard } from "@/app/services/userdashboard/getUserDashboard";
-import { removeRequestPath } from "@/app/utils";
+import { NagadhatPublicUrl, removeRequestPath } from "@/app/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,6 +18,7 @@ import {
     FaWallet,
 } from "react-icons/fa";
 import { FaBangladeshiTakaSign, FaTicket } from "react-icons/fa6";
+import SignoutBtn from "../SignoutBtn";
 
 const CustomerLeftSideNavbar = ({ authSessionData }) => {
     const currentPath = usePathname();
@@ -51,13 +52,18 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
         setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
     };
 
+    let profilePicture;
+    if (isAffiliateUser?.profile_picture) {
+        profilePicture = `${NagadhatPublicUrl}/${isAffiliateUser?.profile_picture}`;
+    }
+
     return (
         <div className="customer-dashboard-side-nav">
             <div className="p-4 text-center customer-dashboard-profile">
                 <div className="mb-3 customer-dashboard-profile-avatar">
                     <Image
                         className="rounded-circle"
-                        src="/images/avatar-demo.png"
+                        src={profilePicture || "/images/avatar-demo.png"}
                         alt="avatar-demo"
                         width={60}
                         height={60}
@@ -67,7 +73,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                     {authSessionData?.user?.name}
                     <span>®</span>
                 </h2>
-                <p>{authSessionData?.user?.email}</p>
+                <p>{authSessionData?.phone}</p>
             </div>
             <nav className="customer-dashboard-side-navbar">
                 <ul className="nav flex-column">
@@ -196,10 +202,10 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
-                                        href="/affiliateproductslink"
+                                        href="/affiliateproducts"
                                     >
                                         <span className="dropdown-item-circle"></span>
-                                        Affiliate Products Link
+                                        Affiliate Products
                                     </Link>
                                 </li>
                                 {/* <li className="dropdown-item customer-dashboard-dropdown-item">
@@ -433,18 +439,12 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             Support
                         </Link>
                     </li>
-                    <li className="nav-item customer-dashboard-nav-item">
-                        <Link
-                            className="nav-link customer-dashboard-nav-link"
-                            href="#"
-                            onClick={(e) => {
-                                removeRequestPath();
-                            }}
-                        >
-                            <FaSignOutAlt className="nav-icon me-2" />
-                            Logout
-                        </Link>
-                    </li>
+
+                    {status === "authenticated" && (
+                        <li className="nav-item customer-dashboard-nav-item">
+                            <SignoutBtn />
+                        </li>
+                    )}
                 </ul>
             </nav>
             <Link className="w-100 add-to-cart-link" href="#">

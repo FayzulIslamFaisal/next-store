@@ -21,7 +21,7 @@ const OrderViewDetail = ({ orderProduct }) => {
                                     <th>Vendor Name</th>
                                     <th>Delivery Partner</th>
                                     <th>Price</th>
-                                    <th>Refund</th>
+                                    <th>Return</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,7 +62,7 @@ const OrderViewDetail = ({ orderProduct }) => {
                                                 <td>৳ {unit_price}</td>
                                                 <td>
                                                     <button className="btn btn-danger">
-                                                        Refund
+                                                        Return
                                                     </button>
                                                 </td>
                                             </tr>
