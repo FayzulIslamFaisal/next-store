@@ -158,10 +158,8 @@ function MainNav({
                         </div>
                         <div className="header-auth-area d-flex justify-content-end">
                             <ul className="d-flex align-items-center">
-                                <li>
-                                    {authStatus === "authenticated" ? (
-                                        <SignoutBtn />
-                                    ) : (
+                                {authStatus === "unauthenticated" && (
+                                    <li>
                                         <Link
                                             href="/login"
                                             className="text-white text-capitalize d-flex align-items-center"
@@ -174,8 +172,9 @@ function MainNav({
                                             />
                                             Login
                                         </Link>
-                                    )}
-                                </li>
+                                    </li>
+                                )}
+
                                 {authStatus === "unauthenticated" && (
                                     <li>
                                         <Link
@@ -328,10 +327,8 @@ function MainNav({
                         </div>
                         <div className="header-auth-area d-flex justify-content-end">
                             <ul className="d-flex align-items-center">
-                                <li>
-                                    {authStatus === "authenticated" ? (
-                                        <SignoutBtn />
-                                    ) : (
+                                {authStatus === "unauthenticated" && (
+                                    <li>
                                         <Link
                                             href="/login"
                                             className="text-white text-capitalize d-flex align-items-center"
@@ -344,8 +341,9 @@ function MainNav({
                                             />
                                             Login
                                         </Link>
-                                    )}
-                                </li>
+                                    </li>
+                                )}
+
                                 {authStatus === "unauthenticated" && (
                                     <li>
                                         <Link

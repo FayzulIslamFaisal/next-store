@@ -6,7 +6,7 @@ import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 export default function DashboardLayout({ children }) {
     const { data: session, status } = useSession();
     if (status === "loading") {
-        return <p>Loading....</p>;
+        return <h1 className="text-center">Loading......</h1>;
     }
     return (
         <PrivateRoute>
