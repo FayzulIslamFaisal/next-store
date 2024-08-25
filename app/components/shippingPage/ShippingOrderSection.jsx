@@ -34,7 +34,6 @@ const ShippingOrderSection = ({
                                     <p className="total-order-price">৳ {totalPrice}</p>
                                 </div>
                             </div>
-
                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                 <p>Shipping</p>
                                 <div className="d-flex gap-2 align-items-center">

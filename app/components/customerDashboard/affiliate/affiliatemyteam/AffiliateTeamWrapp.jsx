@@ -70,36 +70,34 @@ const AffiliateTeamWrapp = () => {
 
     return (
         <>
-            <div className="col-lg-9">
-                <div className="customer-dashboard-order-history-area h-100">
-                    <div className="customer-dashboard-order-history-title p-0 ">
-                        <h1 className="customer-dashboard-title m-0">
-                            <span
-                                className="px-3 d-inline-block py-1"
-                                style={{ background: "#414042", color: "#fff" }}
-                            >
-                                My Team ({totalMember})
-                            </span>
-                        </h1>
-                    </div>
-                    {teamListInfo?.length > 0 && (
-                        <SearchMyTeam onSearch={handleSearch} />
-                    )}
+            <div className="customer-dashboard-order-history-area h-100">
+                <div className="customer-dashboard-order-history-title p-0 ">
+                    <h1 className="customer-dashboard-title m-0">
+                        <span
+                            className="px-3 d-inline-block py-1"
+                            style={{ background: "#414042", color: "#fff" }}
+                        >
+                            My Team ({totalMember})
+                        </span>
+                    </h1>
+                </div>
+                {teamListInfo?.length > 0 && (
+                    <SearchMyTeam onSearch={handleSearch} />
+                )}
 
-                    <div className="customer-dashboard-order-history table-responsive">
-                        {teamListInfo?.length > 0 ? (
-                            <MyTeamList
-                                teamListInfo={teamListInfo}
-                                teamGrandTotal={teamGrandTotal}
-                            />
-                        ) : (
-                            <NoDataFound title="Team Member Not Found" />
-                        )}
-                        <Pagination
-                            currentPage={currentPage}
-                            lastPage={lastPage}
+                <div className="customer-dashboard-order-history table-responsive">
+                    {teamListInfo?.length > 0 ? (
+                        <MyTeamList
+                            teamListInfo={teamListInfo}
+                            teamGrandTotal={teamGrandTotal}
                         />
-                    </div>
+                    ) : (
+                        <NoDataFound title="Team Member Not Found" />
+                    )}
+                    <Pagination
+                        currentPage={currentPage}
+                        lastPage={lastPage}
+                    />
                 </div>
             </div>
         </>

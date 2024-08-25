@@ -6,23 +6,19 @@ import { FaBars, FaXmark } from "react-icons/fa6";
 import CustomerLeftSideNavbar from "./customerDashboard/CustomerLeftSideNavbar";
 import { useSession } from "next-auth/react";
 
-
 const MobileNav = () => {
     const [popupSearch, setPopupSearch] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to handle sidebar toggle
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const searchAreaRef = useRef(null);
+    const { data: session, status } = useSession();
 
     const toggleSearchField = () => {
         setPopupSearch(!popupSearch);
     };
 
     const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen); // Toggle the sidebar visibility
+        setIsSidebarOpen(!isSidebarOpen);
     };
-    const { data: session, status } = useSession();
-    if (status === "loading") {
-        return <p>Loading....</p>;
-    }
 
     useEffect(() => {
         const searchPopupClickOutsideHide = (event) => {
@@ -47,6 +43,10 @@ const MobileNav = () => {
             };
         }
     }, []);
+
+    if (status === "loading") {
+        return <p>Loading....</p>;
+    }
 
     return (
         <div className="row mobile-nav-row-area">
@@ -88,18 +88,20 @@ const MobileNav = () => {
                                     height={21}
                                 />
                             </div>
-                            <div
-                                className="fs-2 text-white dashboard-side-navbar-togol"
-                                onClick={toggleSidebar}
-                            >
-                                <FaBars />
-                            </div>
+                            {
+                                session &&
+                                <div
+                                    className="fs-2 text-white dashboard-side-navbar-togol"
+                                    onClick={toggleSidebar}
+                                >
+                                    <FaBars />
+                                </div>
+                            }
                         </div>
                     </div>
                     <div
-                        className={`mobile-popup-search-area ${
-                            popupSearch ? "active" : ""
-                        }`}
+                        className={`mobile-popup-search-area ${popupSearch ? "active" : ""
+                            }`}
                         ref={searchAreaRef}
                     >
                         <form action="#">
@@ -124,17 +126,18 @@ const MobileNav = () => {
                             </div>
                         </form>
                     </div>
-                    {isSidebarOpen && (
-                        <aside className="customer-dashboard-side-navbar-mobile d-xl-none shadow">
-                            <div
-                                className="fs-2 dashboard-side-navbar-togol-mobile"
-                                onClick={toggleSidebar}
-                            >
-                                <FaXmark />
-                            </div>
-                            <CustomerLeftSideNavbar authSessionData={session} />
-                        </aside>
-                    )}
+                    <aside
+                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${isSidebarOpen ? "start-0" : "left-100"
+                            } `}
+                    >
+                        <div
+                            className="fs-2 dashboard-side-navbar-togol-mobile"
+                            onClick={toggleSidebar}
+                        >
+                            <FaXmark />
+                        </div>
+                        <CustomerLeftSideNavbar authSessionData={session} />
+                    </aside>
                 </div>
             </div>
         </div>

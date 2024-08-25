@@ -73,48 +73,46 @@ const Page = ({ params }) => {
 
     return (
         <>
-            <div className="col-lg-9">
-                <div className="customer-dashboard-order-history-area h-100">
-                    <div className="customer-dashboard-order-history-title p-0 ">
-                        <h1 className="customer-dashboard-title px-4 m-0">
-                            <Link
-                                href="/affiliateteam"
-                                className=" px-3 py-1 d-inline-block "
+            <div className="customer-dashboard-order-history-area h-100">
+                <div className="customer-dashboard-order-history-title p-0 ">
+                    <h1 className="customer-dashboard-title px-4 m-0">
+                        <Link
+                            href="/affiliateteam"
+                            className=" px-3 py-1 d-inline-block "
+                        >
+                            My Team ({totalMember})
+                        </Link>
+                        {affiliateUser && (
+                            <span
+                                className=" px-3 py-1 d-inline-block"
+                                style={{
+                                    background: "#414042",
+                                    color: "#fff",
+                                }}
                             >
-                                My Team ({totalMember})
-                            </Link>
-                            {affiliateUser && (
-                                <span
-                                    className=" px-3 py-1 d-inline-block"
-                                    style={{
-                                        background: "#414042",
-                                        color: "#fff",
-                                    }}
-                                >
-                                    {affiliateUser} (
-                                    {teamGrandTotal?.child_total_members})
-                                </span>
-                            )}
-                        </h1>
-                    </div>
-                    {teamListInfo.length > 0 && (
-                        <SearchMyTeam onSearch={handleSearch} />
-                    )}
-
-                    <div className="customer-dashboard-order-history table-responsive">
-                        {teamListInfo.length > 0 ? (
-                            <MyTeamList
-                                teamListInfo={teamListInfo}
-                                teamGrandTotal={teamGrandTotal}
-                            />
-                        ) : (
-                            <NoDataFound title="Team Member Not Found" />
+                                {affiliateUser} (
+                                {teamGrandTotal?.child_total_members})
+                            </span>
                         )}
-                        <Pagination
-                            currentPage={currentPage}
-                            lastPage={lastPage}
+                    </h1>
+                </div>
+                {teamListInfo.length > 0 && (
+                    <SearchMyTeam onSearch={handleSearch} />
+                )}
+
+                <div className="customer-dashboard-order-history table-responsive">
+                    {teamListInfo.length > 0 ? (
+                        <MyTeamList
+                            teamListInfo={teamListInfo}
+                            teamGrandTotal={teamGrandTotal}
                         />
-                    </div>
+                    ) : (
+                        <NoDataFound title="Team Member Not Found" />
+                    )}
+                    <Pagination
+                        currentPage={currentPage}
+                        lastPage={lastPage}
+                    />
                 </div>
             </div>
         </>

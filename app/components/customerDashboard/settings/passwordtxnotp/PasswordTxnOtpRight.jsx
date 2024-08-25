@@ -4,7 +4,7 @@ import PasswordTopNav from "./PasswordTopNav";
 
 const PasswordTxnOtpRight = () => {
     return (
-        <div className="col-lg-9">
+        <>
             <div className="customer-setting">
                 <PasswordTopNav />
                 <div className="tab-content customer-setting-body">
@@ -12,7 +12,7 @@ const PasswordTxnOtpRight = () => {
                     <ChangeTransactionOtp />
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

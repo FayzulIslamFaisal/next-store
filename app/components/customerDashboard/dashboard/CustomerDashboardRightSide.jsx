@@ -126,7 +126,7 @@ const CustomerDashboardRightSide = () => {
     }, [status, session]);
 
     return (
-        <div className="col-lg-9 customer-dashboard-section">
+        <div className="customer-dashboard-section">
             <DashboardTopInfo userDashboard={userDashboard} />
             <div className="d-flex gap-3 flex-column flex-md-row">
                 <div className="customer-dashboard-card border-0 flex-1">

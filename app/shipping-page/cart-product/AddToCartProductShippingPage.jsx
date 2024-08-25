@@ -1,16 +1,12 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../../services/getShippingCustomerAddresses";
 import { fetchCartProducts } from "../../services/getShippingPageCartProduct";
 import { fetchCartProducts as fetchCartProductsLength } from "../../services/getShowAddToCartProduct";
 import { getTotalQuantity, NagadhatPublicUrl } from "../../utils";
 import { placeOrder } from "../../services/postPlaceOrder";
-import Link from "next/link";
-import { postShippingAddress } from "../../services/postShippingAddress";
-import { updateShippingAddress } from "../../services/updateShippingAddress";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { pickUpPontes } from "../../services/pickupPoint";
 import { getDistrictForShipping } from "../../services/getDistrictForShipping";
@@ -32,36 +28,21 @@ const AddToCartProductShippingPage = () => {
     const { status, data: session } = useSession();
     const [customerAddress, setCustomerAddress] = useState([]);
     const [deliveryNote, setDeliveryNote] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
-    const [formData, setFormData] = useState({
-        fullName: "",
-        phone: "",
-        district: "",
-        city: "",
-        address: "",
-        note: "",
-        setDefault: false,
-    });
-    const [editedAddressId, setEditAddressId] = useState(null);
     const [cartProduct, setCartProduct] = useState([]);
-    const [validationErrors, setValidationErrors] = useState({});
     const [userEmail, setUserEmail] = useState("");
-    const [tempEmail, setTempEmail] = useState("");
-    const [mailError, setMailError] = useState("");
     const [pickUpPoint, setPickUpPoint] = useState([]);
-    const [pickUpId, setPickUpPointId] = useState(null);
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
     const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
         useState(null);
     const [loading, setLoading] = useState(false);
-    const [PicShowsTost, setPicShowsTost] = useState(false);
     const [redirectPath, setRedirectPath] = useState("#");
     const [isTermsChecked, setIsTermsChecked] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
+    
     const [outletId, setOutletId] = useState(() => {
         if (typeof window !== "undefined") {
             return localStorage.getItem("outletId") || 3;
@@ -79,15 +60,6 @@ const AddToCartProductShippingPage = () => {
     let price;
     let discountPrice;
     let totalDiscountPrice = 0;
-    const validate = () => {
-        const errors = {};
-        if (!formData.fullName) errors.fullName = "Full Name is required";
-        if (!formData.phone) errors.phone = "Phone number is required";
-        if (!formData.district) errors.district = "District is required";
-        if (!formData.city) errors.city = "City is required";
-        if (!formData.address) errors.address = "Address is required";
-        return errors;
-    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -192,10 +164,9 @@ const AddToCartProductShippingPage = () => {
         }
     }, [session]);
 
-
     return (
         <>
-        // <PrivateRoute>
+            <PrivateRoute>
                 {loading ? (
                     <div
                         style={{
@@ -261,7 +232,7 @@ const AddToCartProductShippingPage = () => {
                         </section>
                     </>
                 )}
-        // </PrivateRoute>
+            </PrivateRoute>
         </>
     );
 };
