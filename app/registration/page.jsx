@@ -7,8 +7,11 @@ import { useSession } from "next-auth/react";
 import { registerUser } from "../services/registerUser";
 import { validatePhoneNumber } from "../services/validatePhoneNumber";
 import { getRequestPath } from "../utils";
+import { getAffiliateNewSignup } from "../services/affiliate/getAffiliateNewSignup";
 
 const Registration = () => {
+    const [toggleSponsored, setToggleSponsored] = useState("self");
+    const [affiliateSignup, setAffiliateSignup] = useState([]);
     const router = useRouter();
     const searchParams = useSearchParams();
     const referralId = searchParams.get("id");
@@ -16,7 +19,7 @@ const Registration = () => {
     const refName = searchParams.get("ref_name");
     const { status, data: session } = useSession();
 
-    console.log(session, "session----->");
+    console.log(sponsored, affiliateSignup, "<-----sponsored----->");
 
     useEffect(() => {
         async function fetchData() {
@@ -25,7 +28,7 @@ const Registration = () => {
             }
         }
         fetchData();
-    }, [session?.user?.email, referralId]);
+    }, [session?.user?.email, referralId, sponsored]);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [existsEmail, setExistsEmail] = useState("");
@@ -43,7 +46,41 @@ const Registration = () => {
         setFormData((prevState) => {
             return { ...prevState, [e.target.name]: e.target.value };
         });
+        if (e.target.name == "sponsored") {
+            setToggleSponsored(e.target.value);
+            fetchAffiliateNewSignup();
+        }
     };
+
+    const handleSelectChange = (e) => {
+        const selectedPlacementId = e.target.value;
+        console.log("selected user id", selectedPlacementId);
+
+        setFormData((prevState) => ({
+            ...prevState,
+            referrer_id: parseInt(selectedPlacementId) || "",
+            sponsor_id: toggleSponsored === "self" ? "" : sponsored,
+        }));
+    };
+
+    const fetchAffiliateNewSignup = async () => {
+        if (status === "authenticated") {
+            try {
+                const newSignupData = await getAffiliateNewSignup(
+                    session?.accessToken
+                );
+                const newSignupResult = newSignupData?.results?.placement;
+                setAffiliateSignup(newSignupResult);
+            } catch (error) {
+                console.error("Failed to fetch new signup data:", error);
+            }
+        }
+    };
+    useEffect(() => {
+        if (toggleSponsored) {
+            fetchAffiliateNewSignup();
+        }
+    }, [toggleSponsored, status, session]);
 
     const valideateInput = (formValue) => {
         for (const input in formValue) {
@@ -287,24 +324,35 @@ const Registration = () => {
                                         </div>
                                     </div>
                                 )}
-
-                                <div className="mb-3">
-                                    <label
-                                        htmlFor="placement"
-                                        className="form-label"
-                                    >
-                                        * Select a placement
-                                    </label>
-                                    <select
-                                        className="form-select"
-                                        aria-label="Default select example"
-                                        id="placement"
-                                    >
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
+                                {toggleSponsored != "self" && (
+                                    <div className="mb-3">
+                                        <label
+                                            htmlFor="placement"
+                                            className="form-label"
+                                        >
+                                            * Select a Team
+                                        </label>
+                                        <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            id="placement"
+                                            onChange={handleSelectChange}
+                                        >
+                                            {affiliateSignup.length > 0 &&
+                                                affiliateSignup.map((user) => {
+                                                    return (
+                                                        <option
+                                                            key={user.id}
+                                                            value={user.id}
+                                                        >
+                                                            {user?.name} (
+                                                            {user?.username})
+                                                        </option>
+                                                    );
+                                                })}
+                                        </select>
+                                    </div>
+                                )}
 
                                 <div className="mb-3">
                                     <p>

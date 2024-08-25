@@ -4,12 +4,13 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { removeRequestPath } from "../utils";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const SignoutBtn = () => {
     const router = useRouter();
     return (
         <Link
-            className=" text-white text-capitalize d-flex align-items-center"
+            className="text-capitalize d-flex align-items-center"
             onClick={(e) => {
                 e.preventDefault();
                 signOut();
@@ -17,13 +18,9 @@ const SignoutBtn = () => {
                 removeRequestPath();
             }}
             href={`#`}
+            style={{ padding: "10px 28px" }}
         >
-            <Image
-                src={`/images/login-icon.svg`}
-                alt="login-icon"
-                width={13}
-                height={19}
-            />
+            <FaSignOutAlt className="nav-icon me-2" />
             Logout
         </Link>
     );
