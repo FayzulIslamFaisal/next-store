@@ -4,7 +4,7 @@ import Image from "next/image";
 const AffiliateDashboardRank = ({ affiliateData }) => {
     const imageUrl = affiliateData?.profile_picture
         ? `${NagadhatPublicUrl}/${affiliateData?.profile_picture}`
-        : `${NagadhatPublicUrl}/images/men222222.png`;
+        : `/images/men222222.png`;
 
     return (
         <>

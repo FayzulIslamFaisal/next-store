@@ -12,15 +12,14 @@ import { getAffiliateNewSignup } from "../services/affiliate/getAffiliateNewSign
 const Registration = () => {
     const [toggleSponsored, setToggleSponsored] = useState("self");
     const [affiliateSignup, setAffiliateSignup] = useState([]);
+    const [selectedChildName, setSelectedChildName] = useState("");
+    const [selectedPlacementId, setSelectedPlacementId] = useState(0);
     const router = useRouter();
     const searchParams = useSearchParams();
     const referralId = searchParams.get("id");
     const sponsored = searchParams.get("sponsored");
     const refName = searchParams.get("ref_name");
     const { status, data: session } = useSession();
-
-    console.log(sponsored, affiliateSignup, "<-----sponsored----->");
-
     useEffect(() => {
         async function fetchData() {
             if (session != undefined && !referralId && !sponsored) {
@@ -38,30 +37,41 @@ const Registration = () => {
         email: "",
         password: "",
         gender: "",
-        referrer_id: parseInt(referralId) || "",
+        referrer_id: "",
         sponsor_id: "",
     });
 
+    useEffect(() => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            referrer_id:
+                parseInt(selectedPlacementId) || parseInt(referralId) || "",
+            sponsor_id: selectedPlacementId ? parseInt(sponsored) : "",
+        }));
+    }, [selectedPlacementId, referralId, sponsored]);
+
     const handleInputChange = (e) => {
-        setFormData((prevState) => {
-            return { ...prevState, [e.target.name]: e.target.value };
-        });
-        if (e.target.name == "sponsored") {
-            setToggleSponsored(e.target.value);
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+    const handleSponsoreChange = (e) => {
+        const { name, value } = e.target;
+        if (name === "sponsored") {
+            setToggleSponsored(value);
             fetchAffiliateNewSignup();
         }
     };
-
-    const handleSelectChange = (e) => {
-        const selectedPlacementId = e.target.value;
-        console.log("selected user id", selectedPlacementId);
-
-        setFormData((prevState) => ({
-            ...prevState,
-            referrer_id: parseInt(selectedPlacementId) || "",
-            sponsor_id: toggleSponsored === "self" ? "" : sponsored,
-        }));
-    };
+    useEffect(() => {
+        if (affiliateSignup && selectedPlacementId) {
+            let selectedUser = affiliateSignup.find(
+                (user) => user.child.id === parseInt(selectedPlacementId)
+            );
+            setSelectedChildName(selectedUser?.child);
+        }
+    }, [selectedPlacementId]);
 
     const fetchAffiliateNewSignup = async () => {
         if (status === "authenticated") {
@@ -78,6 +88,11 @@ const Registration = () => {
     };
     useEffect(() => {
         if (toggleSponsored) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                referrer_id: parseInt(sponsored),
+                sponsor_id: "",
+            }));
             fetchAffiliateNewSignup();
         }
     }, [toggleSponsored, status, session]);
@@ -90,7 +105,6 @@ const Registration = () => {
                 }
             }
         }
-
         return true;
     };
 
@@ -181,6 +195,15 @@ const Registration = () => {
                                     onChange={handleInputChange}
                                 />
                                 {/* affiliate referral id */}
+                                {/* affiliate sponsor id */}
+                                <input
+                                    type="hidden"
+                                    name="sponsor_id"
+                                    value={formData.sponsor_id}
+                                    onChange={handleInputChange}
+                                />
+                                {/* affiliate sponsor id */}
+
                                 <div className="mb-3">
                                     <label
                                         htmlFor="name"
@@ -297,7 +320,7 @@ const Registration = () => {
                                                 id="sponsored1"
                                                 value="self"
                                                 defaultChecked
-                                                onChange={handleInputChange}
+                                                onChange={handleSponsoreChange}
                                             />
                                             <label
                                                 className="form-check-label"
@@ -313,7 +336,7 @@ const Registration = () => {
                                                 name="sponsored"
                                                 id="sponsored12"
                                                 value="placement"
-                                                onChange={handleInputChange}
+                                                onChange={handleSponsoreChange}
                                             />
                                             <label
                                                 className="form-check-label"
@@ -336,14 +359,20 @@ const Registration = () => {
                                             className="form-select"
                                             aria-label="Default select example"
                                             id="placement"
-                                            onChange={handleSelectChange}
+                                            onChange={(e) =>
+                                                setSelectedPlacementId(
+                                                    e.target.value
+                                                )
+                                            }
                                         >
                                             {affiliateSignup.length > 0 &&
                                                 affiliateSignup.map((user) => {
                                                     return (
                                                         <option
                                                             key={user.id}
-                                                            value={user.id}
+                                                            value={
+                                                                user?.child?.id
+                                                            }
                                                         >
                                                             {user?.name} (
                                                             {user?.username})
@@ -352,6 +381,12 @@ const Registration = () => {
                                                 })}
                                         </select>
                                     </div>
+                                )}
+                                {selectedChildName && (
+                                    <p className="pb-2 text-capitalize">
+                                        {selectedChildName?.name} (
+                                        {selectedChildName?.username})
+                                    </p>
                                 )}
 
                                 <div className="mb-3">
