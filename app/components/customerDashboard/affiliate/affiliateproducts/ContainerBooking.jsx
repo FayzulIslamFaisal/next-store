@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import { FaMinus, FaPlus } from "react-icons/fa6";
+=======
+import ContainerBookingProduct from "./ContainerBookingProduct";
+import ContainerOrderDetails from "./ContainerOrderDetails";
+import ContainerTopInfo from "./ContainerTopInfo";
+>>>>>>> bd37ce3b039f338d525df295b4e6bd6099a809b7
 
 const ContainerBooking = () => {
     return (
@@ -8,6 +14,7 @@ const ContainerBooking = () => {
                 id="container-booking"
                 role="tabpanel"
             >
+<<<<<<< HEAD
                 <div className=" d-flex justify-content-between container-booking-section-headr flex-column flex-md-row gap-3 align-items-center">
                     <div className="container-booking-banner">
                         <img src="/images/Contener.png" alt="hello" />
@@ -240,6 +247,11 @@ const ContainerBooking = () => {
                         </div>
                     </div>
                 </div>
+=======
+                <ContainerTopInfo />
+                <ContainerBookingProduct />
+                <ContainerOrderDetails />
+>>>>>>> bd37ce3b039f338d525df295b4e6bd6099a809b7
             </div>
         </>
     );
