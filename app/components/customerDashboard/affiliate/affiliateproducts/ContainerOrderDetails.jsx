@@ -7,11 +7,11 @@ const ContainerOrderDetails = () => {
                         className="container-booking-oder-table "
                         style={{ minWidth: "400px" }}
                     >
-                        <h3>Oder Details</h3>
+                        <h3>Order Details</h3>
                         <table className="table table-borderless">
                             <thead>
                                 <tr>
-                                    <th>Prodect</th>
+                                    <th>Product</th>
                                     <th>Details</th>
                                     <th>Quantity</th>
                                     <th>Price</th>

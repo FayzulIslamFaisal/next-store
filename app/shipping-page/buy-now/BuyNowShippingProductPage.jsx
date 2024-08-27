@@ -141,13 +141,12 @@ const BuyNowShippingProductPage = () => {
                     <div className="row gy-5 gy-lg-0 gx-0 gx-lg-5">
                         <div className="col-lg-8">
 
-                            {customerAddress.length > 0 && (
-                                <CustomerAddress
-                                    setPickUpIdForOrder={setPickUpIdForOrder}
-                                    setShippingPrice={setShippingPrice}
-                                    setDeliveryNote={setDeliveryNote}
-                                />
-                            )}
+                            <CustomerAddress
+                                setPickUpIdForOrder={setPickUpIdForOrder}
+                                setShippingPrice={setShippingPrice}
+                                setDeliveryNote={setDeliveryNote}
+                                customerAddress={customerAddress} setCustomerAddress={setCustomerAddress}
+                            />
 
                             {/* shows add to card product */}
                             <ShippingProduct

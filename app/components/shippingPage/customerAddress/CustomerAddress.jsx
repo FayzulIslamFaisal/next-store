@@ -20,12 +20,13 @@ const CustomerAddress = ({
   setPickUpIdForOrder,
   setShippingPrice,
   setDeliveryNote,
+  customerAddress, 
+  setCustomerAddress
 }) => {
 
   const { status, data: session } = useSession();
 
   // State variables
-  const [customerAddress, setCustomerAddress] = useState([]);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
