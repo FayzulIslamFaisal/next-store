@@ -1,4 +1,5 @@
 // components/ProductQuestions.js
+"use client"
 import React, { useEffect, useState } from "react";
 import { MdAddToPhotos } from "react-icons/md";
 import { RiMessage2Line } from "react-icons/ri";

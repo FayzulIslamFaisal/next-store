@@ -228,9 +228,9 @@ export default function RootLayout({ children, slug, option }) {
 
             <body>
                 <Suspense>
-                    <ReduxProvider>
-                        <ErrorBoundary>
-                            <AuthProvider>
+                    <AuthProvider>
+                        <ReduxProvider>
+                            <ErrorBoundary>
                                 {/* <CategoryDetailProductProvider
                                 slug={slug}
                                 option={option}
@@ -245,9 +245,9 @@ export default function RootLayout({ children, slug, option }) {
                                 <ToastContainer />
                                 {/* </CategoryDetailProvider> */}
                                 {/* </CategoryDetailProductProvider> */}
-                            </AuthProvider>
-                        </ErrorBoundary>
-                    </ReduxProvider>
+                            </ErrorBoundary>
+                        </ReduxProvider>
+                    </AuthProvider>
                 </Suspense>
             </body>
         </html>

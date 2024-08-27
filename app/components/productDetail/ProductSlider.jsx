@@ -22,7 +22,7 @@ function ProductSlider({ sliderItems, productGallery }) {
                 arrows={false}
                 asNavFor={nav2}
                 ref={sliderRef1}
-                infinite={productGallery?.length > 1 ? true : false}
+                infinite={productGallery?.length > 4 ? true : false}
             >
                 {productGallery?.map((sliderItem) => (
                     <div
@@ -47,7 +47,7 @@ function ProductSlider({ sliderItems, productGallery }) {
                     slidesToShow={4}
                     swipeToSlide={true}
                     focusOnSelect={true}
-                    infinite={productGallery?.length > 1 ? true : false}
+                    infinite={productGallery?.length > 4 ? true : false}
                     pauseOnFocus={true}
                     pauseOnHover={true}
                     responsive={[

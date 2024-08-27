@@ -69,9 +69,9 @@ const ProductLongDescription = ({ productInfo }) => {
                 role="tabpanel"
               >
                 <div
-                  dangerouslySetInnerHTML={{
-                    __html: productInfo?.specifications,
-                  }}
+                  // dangerouslySetInnerHTML={{
+                  //   __html: productInfo?.specifications,
+                  // }}
                 />
               </div>
             </div>
@@ -80,9 +80,9 @@ const ProductLongDescription = ({ productInfo }) => {
             {/* Start tab-panel-item */}
             <div className="tab-pane fade" id="nav-details" role="tabpanel">
               <div
-                dangerouslySetInnerHTML={{
-                  __html: productInfo?.full_description,
-                }}
+                // dangerouslySetInnerHTML={{
+                //   __html: productInfo?.full_description,
+                // }}
               />
             </div>
             {/* End tab-panel-item */}
