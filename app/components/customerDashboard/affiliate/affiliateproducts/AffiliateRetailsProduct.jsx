@@ -3,14 +3,46 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import AffiliateToggleButton from "./AffiliateToggleButton";
 import AffiliateRetailsProductInfo from "./AffiliateRetailsProductInfo";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import RetailListViewProductInfo from "./RetailListViewProductInfo";
+import { useSession } from "next-auth/react";
+import { getAffiliateRetailProduct } from "@/app/services/affiliate/affiliateproducts/getAffiliateRetailProduct";
 
 const AffiliateRetailsProduct = () => {
     const [isGridView, setIsGridView] = useState(true);
+    const [retailProduct, setRetailProduct] = useState([]);
+    const [outletId, setOutletId] = useState(0);
+    const { data: session, status } = useSession();
+
     const handleToggle = (view) => {
         setIsGridView(view === "grid");
     };
+
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    }, []);
+
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken && outletId) {
+            const fetchRetailProducts = async () => {
+                try {
+                    const retailProductInfo = await getAffiliateRetailProduct(
+                        session.accessToken,
+                        outletId
+                    );
+                    const retailProductData =
+                        retailProductInfo?.results?.affiliate_retail_products
+                            ?.data || [];
+                    setRetailProduct(retailProductData);
+                } catch (error) {
+                    console.error("Failed to fetch retail products:", error);
+                }
+            };
+            fetchRetailProducts();
+        }
+    }, [status, session, outletId]);
+
     return (
         <>
             <div
@@ -45,25 +77,6 @@ const AffiliateRetailsProduct = () => {
                             <option defaultValue="mens-fashion">
                                 Men's Fashion
                             </option>
-                            <option defaultValue="women-fashion">
-                                Women's Fashion
-                            </option>
-                            <option defaultValue="panjabi">Panjabi</option>
-                            <option defaultValue="electronics">
-                                Electronics
-                            </option>
-                            <option defaultValue="safety-products">
-                                Safety Products
-                            </option>
-                            <option defaultValue="groceries">Groceries</option>
-                            <option defaultValue="cosmetics">Cosmetics</option>
-                            <option defaultValue="home-appliances">
-                                Home Appliances
-                            </option>
-                            <option defaultValue="stationery">
-                                Stationery
-                            </option>
-                            <option defaultValue="covid-19">Covid 19</option>
                         </select>
                     </div>
                     <AffiliateToggleButton
@@ -72,11 +85,17 @@ const AffiliateRetailsProduct = () => {
                     />
                 </div>
                 {/* <AffiliateRetailsProductInfo /> */}
-                {isGridView ? (
-                    <AffiliateRetailsProductInfo />
-                ) : (
-                    <RetailListViewProductInfo />
-                )}
+                <Suspense fallback={<h1>Retail Products Loading...</h1>}>
+                    {isGridView ? (
+                        <AffiliateRetailsProductInfo
+                            retailProduct={retailProduct}
+                        />
+                    ) : (
+                        <RetailListViewProductInfo
+                            retailProduct={retailProduct}
+                        />
+                    )}
+                </Suspense>
             </div>
         </>
     );
