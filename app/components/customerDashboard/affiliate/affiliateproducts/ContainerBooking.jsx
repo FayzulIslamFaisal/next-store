@@ -1,3 +1,5 @@
+import { FaMinus, FaPlus } from "react-icons/fa6";
+
 const ContainerBooking = () => {
     return (
         <>
@@ -180,6 +182,7 @@ const ContainerBooking = () => {
                                                     className="quantity-increase"
                                                 >
                                                     <i className="fa-solid fa-minus"></i>
+                                                    <FaMinus/>
                                                 </button>
                                                 <input
                                                     className="quantity-fild"
@@ -196,7 +199,7 @@ const ContainerBooking = () => {
                                                     className="quantity-decrease"
                                                     type="button"
                                                 >
-                                                    <i className="fa-solid fa-plus"></i>
+                                                    <FaPlus/>
                                                 </button>
                                             </div>
                                         </td>
