@@ -1,18 +1,34 @@
 "use client";
 
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import AffiliateToggleButton from "./AffiliateToggleButton";
-import AffiliateRetailsProductInfo from "./AffiliateRetailsProductInfo";
+import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import RetailListViewProductInfo from "./RetailListViewProductInfo";
 import { useSession } from "next-auth/react";
+// import dynamic from "next/dynamic";
 import { getAffiliateRetailProduct } from "@/app/services/affiliate/affiliateproducts/getAffiliateRetailProduct";
+import { getHomeCategory } from "@/app/services/getHomeCategory";
+import AffiliateRetailsProductInfo from "./AffiliateRetailsProductInfo";
+import RetailListViewProductInfo from "./RetailListViewProductInfo";
+import AffiliateToggleButton from "./AffiliateToggleButton";
+
+// const AffiliateToggleButton = dynamic(() => import("./AffiliateToggleButton"));
+// const AffiliateRetailsProductInfo = dynamic(() =>
+//     import("./AffiliateRetailsProductInfo")
+// );
+// const RetailListViewProductInfo = dynamic(() =>
+//     import("./RetailListViewProductInfo")
+// );
 
 const AffiliateRetailsProduct = () => {
     const [isGridView, setIsGridView] = useState(true);
     const [retailProduct, setRetailProduct] = useState([]);
     const [outletId, setOutletId] = useState(0);
+    const [allCategories, setAllCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [searchProduct, setSearchProduct] = useState("");
+    const [tempSearchProduct, setTempSearchProduct] = useState("");
     const { data: session, status } = useSession();
+    const searchParams = useSearchParams();
 
     const handleToggle = (view) => {
         setIsGridView(view === "grid");
@@ -24,12 +40,39 @@ const AffiliateRetailsProduct = () => {
     }, []);
 
     useEffect(() => {
+        const categoryId = searchParams.get("categoryId") || "";
+        const searchInfo = searchParams.get("search") || "";
+        setSelectedCategory(categoryId);
+        setSearchProduct(searchInfo);
+        setTempSearchProduct(searchInfo);
+    }, [searchParams]);
+
+    useEffect(() => {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        if (selectedCategory) {
+            newSearchParams.set("categoryId", selectedCategory);
+        } else {
+            newSearchParams.delete("categoryId");
+        }
+        if (searchProduct) {
+            newSearchParams.set("search", searchProduct);
+        } else {
+            newSearchParams.delete("search");
+        }
+        window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
+    }, [selectedCategory, searchProduct]);
+
+    useEffect(() => {
         if (status === "authenticated" && session?.accessToken && outletId) {
             const fetchRetailProducts = async () => {
                 try {
+                    let params = {};
+                    if (selectedCategory) params.categoryId = selectedCategory;
+                    if (searchProduct) params.search = searchProduct;
                     const retailProductInfo = await getAffiliateRetailProduct(
                         session.accessToken,
-                        outletId
+                        outletId,
+                        params
                     );
                     const retailProductData =
                         retailProductInfo?.results?.affiliate_retail_products
@@ -41,7 +84,42 @@ const AffiliateRetailsProduct = () => {
             };
             fetchRetailProducts();
         }
-    }, [status, session, outletId]);
+    }, [status, session, outletId, selectedCategory, searchProduct]);
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchCategories = async () => {
+                try {
+                    const categoryList = await getHomeCategory();
+                    const categoryListData = categoryList?.data || [];
+                    setAllCategories(categoryListData);
+                } catch (error) {
+                    console.error("Error fetching categories:", error);
+                }
+            };
+
+            fetchCategories();
+        }
+    }, [status]);
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+    };
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setTempSearchProduct(value);
+        if (value.length < 3) {
+            setSearchProduct("");
+        }
+    };
+
+    const handleSearchClick = () => {
+        if (tempSearchProduct.length >= 3) {
+            setSearchProduct(tempSearchProduct);
+            setTempSearchProduct("");
+        }
+    };
 
     return (
         <>
@@ -53,30 +131,52 @@ const AffiliateRetailsProduct = () => {
                 <div className="justify-content-end d-flex align-content-end flex-sm-nowrap flex-wrap gap-2 gap-md-3 pb-4">
                     <div className="input-group affiliate-products-search">
                         <input
-                            type="text"
+                            type="search"
                             className="form-control"
-                            placeholder="Search"
+                            placeholder="Search..."
+                            name="search"
+                            value={tempSearchProduct}
+                            onChange={handleInputChange}
                         />
-                        <button className="input-group-text" id="search">
+                        <button
+                            onClick={handleSearchClick}
+                            className="input-group-text"
+                            id="search"
+                        >
                             <FaMagnifyingGlass />
                         </button>
                     </div>
                     <div>
-                        <label htmlFor="show" className="form-label" hidden>
+                        <label
+                            htmlFor="categoryid"
+                            className="form-label"
+                            hidden
+                        >
                             Show
                         </label>
                         <select
                             className="form-select district-list"
-                            name="show"
-                            id="show"
+                            name="categoryId"
+                            id="categoryid"
+                            value={selectedCategory || ""}
+                            onChange={handleCategoryChange}
                         >
-                            <option className="selected" defaultValue="all">
-                                Select Category
-                            </option>
-                            <option defaultValue="organic">Organic</option>
-                            <option defaultValue="mens-fashion">
-                                Men's Fashion
-                            </option>
+                            <option value="">Select Category</option>
+                            {Array.isArray(allCategories) &&
+                            allCategories.length > 0 ? (
+                                allCategories.map((category) => (
+                                    <option
+                                        key={category.id}
+                                        value={category.id}
+                                    >
+                                        {category.title}
+                                    </option>
+                                ))
+                            ) : (
+                                <option disabled>
+                                    No categories available
+                                </option>
+                            )}
                         </select>
                     </div>
                     <AffiliateToggleButton
@@ -84,7 +184,6 @@ const AffiliateRetailsProduct = () => {
                         isGridView={isGridView}
                     />
                 </div>
-                {/* <AffiliateRetailsProductInfo /> */}
                 <Suspense fallback={<h1>Retail Products Loading...</h1>}>
                     {isGridView ? (
                         <AffiliateRetailsProductInfo
