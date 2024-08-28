@@ -15,7 +15,7 @@ p {
 }
 
 .praymary-color {
-    color: #48B193;
+    color: #48B193 !important;
 }
 .order-invoice-section-area {
     padding-left: 100px !important;
