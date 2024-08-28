@@ -1,8 +1,37 @@
+"use client"
+import { getAffiliateContainer } from "@/app/services/affiliate/affiliateproducts/getAffiliateContainer";
 import ContainerBookingProduct from "./ContainerBookingProduct";
 import ContainerOrderDetails from "./ContainerOrderDetails";
 import ContainerTopInfo from "./ContainerTopInfo";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const ContainerBooking = () => {
+    const [containerData, setContainerData] = useState({});
+    const [containerProduct, setContainerProduct] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        const fetchRetailProducts = async () => {
+            try {
+                const containerResponse = await getAffiliateContainer(
+                    session.accessToken
+                );
+                if (containerResponse.code === 200) {
+                    setContainerData(containerResponse.results);
+                    setContainerProduct(containerResponse?.results?.products);
+                }
+                else {
+                    console.log(containerResponse.message);
+                }
+            } catch (error) {
+                console.error("Failed to fetch container data:", error);
+            }
+        };
+        fetchRetailProducts();
+    }, [session]);
+
     return (
         <>
             <div
@@ -10,9 +39,17 @@ const ContainerBooking = () => {
                 id="container-booking"
                 role="tabpanel"
             >
-                <ContainerTopInfo />
-                <ContainerBookingProduct />
-                <ContainerOrderDetails />
+                <ContainerTopInfo containerData={containerData} />
+                <ContainerBookingProduct
+                    containerProduct={containerProduct}
+                    selectedProducts={selectedProducts}
+                    setSelectedProducts={setSelectedProducts}
+                />
+                
+                <ContainerOrderDetails
+                    selectedProducts={selectedProducts}
+                    setSelectedProducts={setSelectedProducts}
+                />
             </div>
         </>
     );

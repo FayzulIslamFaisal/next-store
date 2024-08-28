@@ -42,7 +42,7 @@ const AddToCartProductShippingPage = () => {
     const [isTermsChecked, setIsTermsChecked] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
-    
+
     const [outletId, setOutletId] = useState(() => {
         if (typeof window !== "undefined") {
             return localStorage.getItem("outletId") || 3;
@@ -199,13 +199,12 @@ const AddToCartProductShippingPage = () => {
                                 <div className="row gy-5 gy-lg-0 gx-0 gx-lg-5">
                                     <div className="col-lg-8">
 
-                                        {customerAddress.length > 0 && (
-                                            <CustomerAddress
-                                                setPickUpIdForOrder={setPickUpIdForOrder}
-                                                setShippingPrice={setShippingPrice}
-                                                setDeliveryNote={setDeliveryNote}
-                                            />
-                                        )}
+                                        <CustomerAddress
+                                            setPickUpIdForOrder={setPickUpIdForOrder}
+                                            setShippingPrice={setShippingPrice}
+                                            setDeliveryNote={setDeliveryNote}
+                                            customerAddress={customerAddress} setCustomerAddress={setCustomerAddress}
+                                        />
 
                                         {/* shows add to card product */}
                                         <ShippingProduct
@@ -216,15 +215,15 @@ const AddToCartProductShippingPage = () => {
 
                                     </div>
                                     <div className="col-lg-4">
-                                        <ShippingOrderSection 
-                                        subTotal={subTotal} 
-                                        totalPrice={totalPrice} 
-                                        shippingPrice={shippingPrice}
-                                        handlePlaceOrder={handlePlaceOrder}
-                                        isTermsChecked={isTermsChecked}
-                                        setIsTermsChecked={setIsTermsChecked}
-                                        customerAddress={customerAddress}
-                                        cartProduct={cartProduct}
+                                        <ShippingOrderSection
+                                            subTotal={subTotal}
+                                            totalPrice={totalPrice}
+                                            shippingPrice={shippingPrice}
+                                            handlePlaceOrder={handlePlaceOrder}
+                                            isTermsChecked={isTermsChecked}
+                                            setIsTermsChecked={setIsTermsChecked}
+                                            customerAddress={customerAddress}
+                                            cartProduct={cartProduct}
                                         />
                                     </div>
                                 </div>
