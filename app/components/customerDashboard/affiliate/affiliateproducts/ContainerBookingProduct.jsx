@@ -19,12 +19,12 @@ const ContainerBookingProduct = ({ containerProduct, selectedProducts, setSelect
             <div className="px-4 pt-4">
                 <div className="progress">
                     <div
-                        className="progress-bar"
+                        className="progress-bar bg-praymary-color"
                         role="progressbar"
                         aria-valuenow="70"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                        style={{ width: "70%" }}
+                        style={{ width: "70%", fontSize:"12px" }}
                     >
                         <span className="sr-only">70% Complete</span>
                     </div>
@@ -41,7 +41,7 @@ const ContainerBookingProduct = ({ containerProduct, selectedProducts, setSelect
                             <div className="flash-sale-content-img image-hover-effect">
                                 <Image
                                     width={200}
-                                    height={270}
+                                    height={250}
                                     src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
                                     className="img-fluid"
                                     alt={product.product_name}
