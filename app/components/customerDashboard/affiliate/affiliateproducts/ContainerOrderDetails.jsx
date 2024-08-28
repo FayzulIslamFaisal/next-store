@@ -1,12 +1,8 @@
-"use client"
 import { NagadhatPublicUrl } from "@/app/utils";
-import { useEffect, useState } from "react";
+import Image from "next/image";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 
 const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
-    // Initialize state with selectedProducts and default quantity
-    
-    console.log({ selectedProducts });
 
     const handleIncrease = (productId) => {
         setSelectedProducts(prevProducts =>
@@ -38,7 +34,7 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
 
     const handleDeleteSelectedProducts = (productId) => {
         const updatedProducts = selectedProducts.filter(product => product.id !== productId);
-        setSelectedProducts(updatedProducts); // Update the local state
+        setSelectedProducts(updatedProducts);
     };
 
 
@@ -76,8 +72,9 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
                                 {selectedProducts.map((product) => (
                                     <tr key={product.id}>
                                         <td>
-                                            <img
-                                                style={{ height: "50px" }}
+                                            <Image
+                                                height={50}
+                                                width={50}
                                                 src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
                                                 alt={product.product_name}
                                             />
@@ -119,7 +116,7 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
                                             </div>
                                         </td>
                                         <td className="align-middle">
-                                            <strong>{product.pivot.mrp_price * product.quantity}</strong>
+                                            <strong>{product.pivot.mrp_price * product.quantity}৳</strong>
                                         </td>
                                         <td className="align-middle">
                                             <p
@@ -144,16 +141,16 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
                             <tbody>
                                 <tr>
                                     <td>Sub Total</td>
-                                    <td>{totalPrice}</td>
+                                    <td className="text-end">{totalPrice}৳</td>
                                 </tr>
                                 <tr>
                                     <td>Discount</td>
-                                    <td>{discount}</td>
+                                    <td className="text-end">{discount}৳</td>
                                 </tr>
                                 <tr>
                                     <td>Total</td>
-                                    <td>
-                                        <strong>{finalTotal}</strong>
+                                    <td className="text-end">
+                                        <strong>{finalTotal}৳</strong>
                                     </td>
                                 </tr>
                             </tbody>
