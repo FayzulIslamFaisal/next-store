@@ -26,7 +26,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                             <tbody>
                                 {customerOrders &&
                                     customerOrders.length > 0 &&
-                                    customerOrders.map((orderItem) => {
+                                    customerOrders.map((orderItem, index) => {
                                         const {
                                             order_id,
                                             invoice_id,
@@ -36,7 +36,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                             payment_status,
                                         } = orderItem;
                                         return (
-                                            <tr key={invoice_id}>
+                                            <tr key={index}>
                                                 <td>{invoice_id}</td>
                                                 <td>{order_date}</td>
                                                 <td>{grand_total}</td>

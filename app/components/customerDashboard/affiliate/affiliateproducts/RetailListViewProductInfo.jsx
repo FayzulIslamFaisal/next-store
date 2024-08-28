@@ -1,3 +1,4 @@
+import NoDataFound from "@/app/components/NoDataFound";
 import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -96,7 +97,11 @@ const RetailListViewProductInfo = ({ retailProduct }) => {
                         );
                     })
                 ) : (
-                    <p>No data available</p>
+                    <div className=" w-100">
+                        <NoDataFound
+                            title={`Affiliate retail products not found.`}
+                        />
+                    </div>
                 )}
             </div>
         </div>
