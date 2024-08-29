@@ -105,8 +105,8 @@
     min-width: 80px !important;
     max-width: 100px !important;
 }
-.flash-sale-content-item.selected .flash-sale-content-bg {
-    border: 2px solid #007bff; /* Blue border color */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow */
-    transition: border 0.3s ease, box-shadow 0.3s ease;
+.selected-container-item {
+    border: 1px solid var(--color-44BC9D) !important; /* Blue border color */
+    box-shadow: 0 0 6px 4px rgba(0, 0, 0, 0.4) !important; /* Box shadow */
+    transition: border 0.3s ease, box-shadow 0.3s ease !important;
 }

@@ -32,6 +32,9 @@ const ContainerBooking = () => {
         fetchRetailProducts();
     }, [session]);
 
+    const availableQuantity = containerData?.quantity - containerData?.booked_quantity;
+    const availableValue = containerData?.container_value - containerData?.booked_value;
+    
     return (
         <>
             <div
@@ -49,6 +52,8 @@ const ContainerBooking = () => {
                 <ContainerOrderDetails
                     selectedProducts={selectedProducts}
                     setSelectedProducts={setSelectedProducts}
+                    availableQuantity={availableQuantity}
+                    availableValue={availableValue}
                 />
             </div>
         </>

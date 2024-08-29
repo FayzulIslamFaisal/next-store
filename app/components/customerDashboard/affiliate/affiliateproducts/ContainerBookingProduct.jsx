@@ -37,13 +37,13 @@ const ContainerBookingProduct = ({ containerProduct, selectedProducts, setSelect
                         className="flash-sale-content-item col"
                         onClick={() => handleSelectProduct(product)}
                     >
-                        <div className={`flash-sale-content-bg nh-hover-box-shadow ${selectedProducts.some(p => p.id === product.id) ? 'selected shadow  border-2' : ''}`}>
-                            <div className="flash-sale-content-img image-hover-effect">
+                        <div className={`flash-sale-content-bg nh-hover-box-shadow ${selectedProducts.some(p => p.id === product.id) ? 'selected-container-item' : ''}`}>
+                            <div className="image-hover-effect mx-auto">
                                 <Image
                                     width={200}
                                     height={250}
                                     src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
-                                    className="img-fluid"
+                                    className="img-fluid mx-auto"
                                     alt={product.product_name}
                                 />
                             </div>
