@@ -1,34 +1,59 @@
 import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
+const ContainerOrderDetails = ({ 
+    selectedProducts, 
+    setSelectedProducts, 
+    availableQuantity,
+    availableValue
+}) => {
+
+    const getTotalQuantity = () => {
+        return selectedProducts.reduce((acc, product) => acc + product.quantity, 0);
+    };
 
     const handleIncrease = (productId) => {
-        setSelectedProducts(prevProducts =>
-            prevProducts.map(product =>
-                product.id === productId ? { ...product, quantity: product.quantity + 1 } : product
-            )
-        );
+        const totalQuantity = getTotalQuantity();
+        if (totalQuantity < availableQuantity) {
+            setSelectedProducts(prevProducts =>
+                prevProducts.map(product =>
+                    product.id === productId 
+                        ? { ...product, quantity: product.quantity + 1 }
+                        : product
+                )
+            );
+        } else {
+            toast.error('Booked quantity cannot exceed the total quantity.')
+        }
     };
 
     const handleDecrease = (productId) => {
         setSelectedProducts(prevProducts =>
             prevProducts.map(product =>
-                product.id === productId && product.quantity > 1 ? { ...product, quantity: product.quantity - 1 } : product
+                product.id === productId && product.quantity > 1 
+                    ? { ...product, quantity: product.quantity - 1 }
+                    : product
             )
         );
     };
 
     const handleQuantityChange = (productId, event) => {
         const newQuantity = parseInt(event.target.value, 10);
+        const totalQuantity = getTotalQuantity();
+        const currentProduct = selectedProducts.find(product => product.id === productId);
+        const remainingQuantity = availableQuantity - (totalQuantity - currentProduct.quantity);
 
-        if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= 500) {
+        if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= remainingQuantity) {
             setSelectedProducts(prevProducts =>
                 prevProducts.map(product =>
                     product.id === productId ? { ...product, quantity: newQuantity } : product
                 )
             );
+        } else {
+            toast.error('Booked quantity cannot exceed the total quantity.')
         }
     };
 
@@ -37,10 +62,10 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
         setSelectedProducts(updatedProducts);
     };
 
-
     const calculateTotalPrice = () => {
         return selectedProducts.reduce((acc, product) => acc + product.pivot.mrp_price * product.quantity, 0);
     };
+
     const calculateDiscount = () => {
         return selectedProducts.reduce((acc, product) => acc + product.pivot.profit * product.quantity, 0);
     };
@@ -49,8 +74,13 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
     const discount = calculateDiscount();
     const finalTotal = totalPrice - discount;
 
+    if (availableValue < finalTotal) {
+        toast.error('Booked Pricr cannot exceed the total value.')
+    }
+
     return (
         <>
+            <ToastContainer />
             <div className="row gy-3 p-4">
                 <div className="col-md-8 overflow-x-auto">
                     <div
@@ -104,12 +134,15 @@ const ContainerOrderDetails = ({ selectedProducts, setSelectedProducts }) => {
                                                     style={{ width: "36px" }}
                                                     value={product.quantity}
                                                     onChange={(e) => handleQuantityChange(product.id, e)}
+                                                    disabled={availableValue < finalTotal}
+                                                    readOnly={availableValue < finalTotal ? true : false}
                                                 />
                                                 <button
                                                     className="quantity-increase"
                                                     type="button"
                                                     onClick={() => handleIncrease(product.id)}
                                                     style={{ fontSize: "16px" }}
+                                                    disabled={availableValue < finalTotal}
                                                 >
                                                     <FaPlus />
                                                 </button>
