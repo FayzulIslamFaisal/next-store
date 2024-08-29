@@ -21,3 +21,20 @@
 .users-registration-otp-back-btn{
     color: var(--color-44BC9D);
 }
+.users-registration-otp.one-time-pass {
+    width: 450px;
+    max-width: 100%;
+}
+
+@media (max-width:460px){
+    .users-registration-otp.one-time-pass {
+        width: 100%;
+    }
+    .users-registration-otp-section {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .users-registration-otp {
+        padding: 28px 15px;
+    }
+}

@@ -17,17 +17,17 @@ const Registration = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const referralId = searchParams.get("id");
-    const sponsored = searchParams.get("sponsored");
+    const referral = searchParams.get("referral");
     const refName = searchParams.get("ref_name");
     const { status, data: session } = useSession();
     useEffect(() => {
         async function fetchData() {
-            if (session != undefined && !referralId && !sponsored) {
+            if (session != undefined && !referralId && !referral) {
                 router.push(getRequestPath());
             }
         }
         fetchData();
-    }, [session?.user?.email, referralId, sponsored]);
+    }, [session?.user?.email, referralId, referral]);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [existsEmail, setExistsEmail] = useState("");
@@ -38,17 +38,25 @@ const Registration = () => {
         password: "",
         gender: "",
         referrer_id: "",
-        sponsor_id: "",
+        placement_user_id: "",
     });
+
+    useEffect(() => {
+        console.log("formData========>", { formData });
+    }, [formData]);
 
     useEffect(() => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-            referrer_id:
-                parseInt(selectedPlacementId) || parseInt(referralId) || "",
-            sponsor_id: selectedPlacementId ? parseInt(sponsored) : "",
+
+            referrer_id: parseInt(referral) || parseInt(referralId) || "",
+            placement_user_id: selectedPlacementId
+                ? parseInt(selectedPlacementId)
+                : "",
         }));
-    }, [selectedPlacementId, referralId, sponsored]);
+        console.log({ referralId });
+        console.log({ formData });
+    }, [selectedPlacementId, referralId, referral]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -59,7 +67,7 @@ const Registration = () => {
     };
     const handleSponsoreChange = (e) => {
         const { name, value } = e.target;
-        if (name === "sponsored") {
+        if (name === "referral") {
             setToggleSponsored(value);
             fetchAffiliateNewSignup();
         }
@@ -90,8 +98,8 @@ const Registration = () => {
         if (toggleSponsored) {
             setFormData((prevFormData) => ({
                 ...prevFormData,
-                referrer_id: parseInt(sponsored),
-                sponsor_id: "",
+                referrer_id: parseInt(referral) || referralId,
+                placement_user_id: "",
             }));
             fetchAffiliateNewSignup();
         }
@@ -198,8 +206,8 @@ const Registration = () => {
                                 {/* affiliate sponsor id */}
                                 <input
                                     type="hidden"
-                                    name="sponsor_id"
-                                    value={formData.sponsor_id}
+                                    name="placement_user_id"
+                                    value={formData.placement_user_id}
                                     onChange={handleInputChange}
                                 />
                                 {/* affiliate sponsor id */}
@@ -310,21 +318,21 @@ const Registration = () => {
                                         </label>
                                     </div>
                                 </div>
-                                {sponsored && (
+                                {referral && (
                                     <div className="mb-3 ">
                                         <div className="form-check form-check-inline">
                                             <input
                                                 className="form-check-input"
                                                 type="radio"
-                                                name="sponsored"
-                                                id="sponsored1"
+                                                name="referral"
+                                                id="referral1"
                                                 value="self"
                                                 defaultChecked
                                                 onChange={handleSponsoreChange}
                                             />
                                             <label
                                                 className="form-check-label"
-                                                htmlFor="sponsored1"
+                                                htmlFor="referral1"
                                             >
                                                 Self
                                             </label>
@@ -333,14 +341,14 @@ const Registration = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="radio"
-                                                name="sponsored"
-                                                id="sponsored12"
+                                                name="referral"
+                                                id="referral12"
                                                 value="placement"
                                                 onChange={handleSponsoreChange}
                                             />
                                             <label
                                                 className="form-check-label"
-                                                htmlFor="sponsored12"
+                                                htmlFor="referral12"
                                             >
                                                 Placement
                                             </label>
@@ -407,7 +415,7 @@ const Registration = () => {
                                         * Referer:{refName}
                                     </p>
                                 )}
-                                {sponsored && (
+                                {referral && (
                                     <p
                                         className="pb-2"
                                         style={{ color: "#44bc9d" }}

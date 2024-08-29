@@ -2,6 +2,7 @@
 export const apiBaseUrl = "https://v3.nagadhat.com/api";
 export const NagadhatPublicUrl = "https://v3.nagadhat.com";
 export const VercerUrl = "https://nagadhat-dev.vercel.app";
+export const frontendLocalUrl = "http://localhost:3000";
 
 // For Localhost 1 way
 // export const apiBaseUrl = "http://nagadhat-v3.test/api";
