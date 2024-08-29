@@ -1,14 +1,47 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AffiliateToggleButton from "./AffiliateToggleButton";
 import ResaleListViewProductInfo from "./ResaleListViewProductInfo";
 import ResaleProductsInfo from "./ResaleProductsInfo";
+import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { getAffiliateResaleProduct } from "@/app/services/affiliate/affiliateproducts/getAffiliateResaleProduct";
 
 const ResaleProducts = () => {
     const [isGridView, setIsGridView] = useState(true);
+    const [resaleProduct, setResaleProduct] = useState([]);
+    const [outletId, setOutletId] = useState(0);
+    const { data: session, status } = useSession();
+    const searchParams = useSearchParams();
+
     const handleToggle = (view) => {
         setIsGridView(view === "grid");
     };
+    
+    useEffect(() => {
+        const initialOutletId = localStorage.getItem("outletId");
+        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
+    }, []);
+
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken && outletId) {
+            const fetchRetailProducts = async () => {
+                try {
+                    let params = {};
+                    const resaleProductInfo = await getAffiliateResaleProduct(
+                        session.accessToken,
+                        outletId,
+                        params
+                    );
+                    const resaleProductData = resaleProductInfo?.results?.affiliate_fast_moving_products;
+                    setResaleProduct(resaleProductData);
+                } catch (error) {
+                    console.error("Failed to fetch retail products:", error);
+                }
+            };
+            fetchRetailProducts();
+        }
+    }, [session, outletId]);
     return (
         <>
             <div
@@ -29,7 +62,9 @@ const ResaleProducts = () => {
                             <option className="selected" defaultValue="all">
                                 Select
                             </option>
-                            <option defaultValue="ascending">Ascending</option>
+                            <option defaultValue="ascending">
+                                Ascending
+                            </option>
                             <option defaultValue="descending">
                                 Descending
                             </option>
@@ -60,10 +95,11 @@ const ResaleProducts = () => {
                         isGridView={isGridView}
                     />
                 </div>
+
                 {isGridView ? (
-                    <ResaleProductsInfo />
+                    <ResaleProductsInfo resaleProduct={resaleProduct}/>
                 ) : (
-                    <ResaleListViewProductInfo />
+                    <ResaleListViewProductInfo resaleProduct={resaleProduct}/>
                 )}
             </div>
         </>
