@@ -70,7 +70,13 @@ const AffiliateRetailsProductInfo = ({ retailProduct }) => {
 
                                     <p className="affiliate-commission">
                                         Commission:{" "}
-                                        {`৳ ${product?.commission || "0"}`}
+                                        {`৳ ${
+                                            product?.calculated_commission ||
+                                            "0"
+                                        }`}{" "}
+                                        <span className="ms-1">
+                                            ({product?.level_commission})
+                                        </span>
                                     </p>
                                     <button className="copy-link-btn">
                                         Copy Link

@@ -80,8 +80,15 @@ const RetailListViewProductInfo = ({ retailProduct }) => {
                                                 )}
                                             </div>
                                             <p className="affiliate-commission">
-                                                Commission: ৳10
-                                                <span>(5%)</span>
+                                                Commission:{" "}
+                                                {`৳ ${
+                                                    product?.calculated_commission ||
+                                                    "0"
+                                                }`}{" "}
+                                                <span className="ms-1">
+                                                    ({product?.level_commission}
+                                                    )
+                                                </span>
                                             </p>
                                         </div>
                                     </div>
