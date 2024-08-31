@@ -1,4 +1,5 @@
 import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
+import Image from "next/image";
 
 const ResaleProductsInfo = ({ resaleProduct }) => {
     return (
@@ -7,9 +8,11 @@ const ResaleProductsInfo = ({ resaleProduct }) => {
                 <div key={product.id} className="flash-sale-content-item col">
                     <div className="flash-sale-content-bg nh-hover-box-shadow">
                         <div className="flash-sale-content-img image-hover-effect">
-                            <img
+                            <Image
+                                height={200}
+                                width={200}
                                 src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
-                                className="img-fluid"
+                                className="img-fluid h-100 w-100"
                                 alt={product.product_name}
                             />
                         </div>
@@ -19,19 +22,19 @@ const ResaleProductsInfo = ({ resaleProduct }) => {
                             </h4>
                             <div className="category-product-price d-flex flex-column justify-content-between">
                                 <p className="fpnh-resale-pricess">
-                                    Price (MRP){" "}
+                                    Price (MRP):{" "}
                                     <del className="fw-bold">৳ {product.mrp_price}</del>
                                 </p>
                                 <p className="fpnh-resale-pricess">
-                                    Price (Offer)
+                                    Price (Offer):{" "}
                                     <span className="fw-bold">৳ {product.after_discount_mrp_price}</span>
                                 </p>
                                 <p className="fpnh-resale-pricess">
-                                    Minimum Quantity:
+                                    Minimum Quantity:{" "}
                                     <span className="fw-bold">{product.min_quantity || "N/A"}</span>
                                 </p>
                                 <p className="fpnh-resale-pricess">
-                                    Duration:
+                                    Duration:{" "}
                                     <span className="fw-bold">
                                         {`After ${product.fast_moving_duration} Months`}
                                     </span>

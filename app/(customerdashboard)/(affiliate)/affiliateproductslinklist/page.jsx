@@ -117,7 +117,7 @@ const AffiliateProductsLinkListPage = () => {
                                     htmlFor="sort-pric"
                                     className="form-label"
                                 >
-                                    Sort by pric
+                                    Sort By Price
                                 </label>
                                 <select
                                     className="form-select district-list"
@@ -143,7 +143,6 @@ const AffiliateProductsLinkListPage = () => {
                                     href="/affiliateproductslink"
                                     className="btn grid-list-toggol-btn"
                                 >
-                                    {/* <i className="fa-solid fa-table-cells"></i> */}
                                     <FaTableCells />
                                 </Link>
                                 <Link
@@ -439,7 +438,6 @@ const AffiliateProductsLinkListPage = () => {
                                     className="btn grid-list-toggol-btn"
                                     aria-current="page"
                                 >
-                                    {/* <i className="fa-solid fa-table-cells"></i> */}
                                     <FaTableCells />
                                 </Link>
                                 <Link
