@@ -3,21 +3,43 @@ import { useEffect, useState } from "react";
 import AffiliateToggleButton from "./AffiliateToggleButton";
 import ResaleListViewProductInfo from "./ResaleListViewProductInfo";
 import ResaleProductsInfo from "./ResaleProductsInfo";
-import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { getAffiliateResaleProduct } from "@/app/services/affiliate/affiliateproducts/getAffiliateResaleProduct";
+import Pagination from "@/app/components/productCategory/Pagination";
+import { useSearchParams } from "next/navigation";
 
 const ResaleProducts = () => {
     const [isGridView, setIsGridView] = useState(true);
     const [resaleProduct, setResaleProduct] = useState([]);
     const [outletId, setOutletId] = useState(0);
+    const [sortDuration, setSortDuration] = useState("");
+    const [sortPrice, setSortPrice] = useState("");
     const { data: session, status } = useSession();
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPage, setCurrentPage] = useState(1); // New state for current page
     const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const page = searchParams.get("page");
+        if (page && parseInt(page) !== currentPage) {
+            setCurrentPage(parseInt(page));
+        }
+    }, [searchParams, currentPage]);
+
+    const limit = 12; //Per Page Category
 
     const handleToggle = (view) => {
         setIsGridView(view === "grid");
     };
-    
+
+    const handleSortDurationChange = (event) => {
+        setSortDuration(event.target.value);
+    };
+
+    const handleSortPriceChange = (event) => {
+        setSortPrice(event.target.value);
+    };
+
     useEffect(() => {
         const initialOutletId = localStorage.getItem("outletId");
         setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
@@ -27,7 +49,12 @@ const ResaleProducts = () => {
         if (status === "authenticated" && session?.accessToken && outletId) {
             const fetchRetailProducts = async () => {
                 try {
-                    let params = {};
+                    let params = {
+                        orderByPrice: sortPrice,
+                        orderByDuration: sortDuration,
+                        page: currentPage,
+                        limit
+                    };
                     const resaleProductInfo = await getAffiliateResaleProduct(
                         session.accessToken,
                         outletId,
@@ -35,13 +62,15 @@ const ResaleProducts = () => {
                     );
                     const resaleProductData = resaleProductInfo?.results?.affiliate_fast_moving_products;
                     setResaleProduct(resaleProductData);
+                    setLastPage(resaleProductData.last_page || 1)
                 } catch (error) {
                     console.error("Failed to fetch retail products:", error);
                 }
             };
             fetchRetailProducts();
         }
-    }, [session, outletId]);
+    }, [session, outletId, sortDuration, sortPrice]);
+
     return (
         <>
             <div
@@ -51,43 +80,35 @@ const ResaleProducts = () => {
             >
                 <div className="justify-content-end d-flex align-items-end flex-sm-nowrap flex-wrap gap-2 gap-md-3 pb-4">
                     <div>
-                        <label htmlFor="sort-ascending" className="form-label">
+                        <label htmlFor="sort-duration" className="form-label">
                             Sort By Duration
                         </label>
                         <select
                             className="form-select district-list"
-                            name="sort-ascending"
-                            id="sort-ascending"
+                            name="sort-duration"
+                            id="sort-duration"
+                            value={sortDuration}
+                            onChange={handleSortDurationChange}
                         >
-                            <option className="selected" defaultValue="all">
-                                Select
-                            </option>
-                            <option defaultValue="ascending">
-                                Ascending
-                            </option>
-                            <option defaultValue="descending">
-                                Descending
-                            </option>
+                            <option className="selected" defaultValue="">Select</option>
+                            <option value="desc">Descending</option>
+                            <option value="asc">Ascending</option>
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="sort-pric" className="form-label">
+                        <label htmlFor="sort-price" className="form-label">
                             Sort By Price
                         </label>
                         <select
                             className="form-select district-list"
-                            name="sort-pric"
-                            id="sort-pric"
+                            name="sort-price"
+                            id="sort-price"
+                            value={sortPrice}
+                            onChange={handleSortPriceChange}
                         >
-                            <option className="selected" defaultValue="all">
-                                Select
-                            </option>
-                            <option defaultValue="high-to-low">
-                                High to low
-                            </option>
-                            <option defaultValue="low-to-high">
-                                Low to high
-                            </option>
+                            <option className="selected" defaultValue="">Select</option>
+                            <option value="asc">Low to High</option>
+                            <option value="desc">High to Low</option>
                         </select>
                     </div>
                     <AffiliateToggleButton
@@ -97,10 +118,15 @@ const ResaleProducts = () => {
                 </div>
 
                 {isGridView ? (
-                    <ResaleProductsInfo resaleProduct={resaleProduct}/>
+                    <ResaleProductsInfo resaleProduct={resaleProduct} />
                 ) : (
-                    <ResaleListViewProductInfo resaleProduct={resaleProduct}/>
+                    <ResaleListViewProductInfo resaleProduct={resaleProduct} />
                 )}
+
+                <Pagination
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                />
             </div>
         </>
     );
