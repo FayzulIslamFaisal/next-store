@@ -3,7 +3,7 @@ import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-const AffiliateRetailsProductInfo = ({ retailProduct }) => {
+const AffiliateRetailsProductInfo = ({ retailProduct, outletId }) => {
     return (
         <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 g-3">
             {retailProduct.length > 0 ? (
@@ -17,7 +17,7 @@ const AffiliateRetailsProductInfo = ({ retailProduct }) => {
                             <div className="flash-sale-content-bg nh-hover-box-shadow">
                                 <div className="flash-sale-content-img image-hover-effect">
                                     <Link
-                                        href="#"
+                                        href={`/affiliate-product-details/${product.slug}`}
                                         style={{ cursor: "pointer" }}
                                         className="cursor-pointer "
                                     >
@@ -43,7 +43,9 @@ const AffiliateRetailsProductInfo = ({ retailProduct }) => {
                                 </div>
                                 <div className="flash-sale-content-info text-hover-effect">
                                     <h4>
-                                        <Link href={product?.link || "#"}>
+                                        <Link
+                                            href={`/affiliate-product-details/${product.slug}`}
+                                        >
                                             {product?.product_name ||
                                                 "Product Name"}
                                         </Link>

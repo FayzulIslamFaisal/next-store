@@ -3,18 +3,18 @@ import React from "react";
 const Collapse = () => {
   return (
     <div>
-      <section class="faq">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12 col-lg-12">
-              <div class="accordion" id="accordionExample">
-                <div class="row">
-                  <div class="col-xl-12">
-                    <div class="card">
-                      <div class="card-header">
-                        <h5 class="mb-0">
+      <section className="faq">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-12 col-lg-12">
+              <div className="accordion" id="accordionExample">
+                <div className="row">
+                  <div className="col-xl-12">
+                    <div className="card">
+                      <div className="card-header">
+                        <h5 className="mb-0">
                           <button
-                            class="btn btn-link collapsed"
+                            className="btn btn-link collapsed"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#collapseExample"
@@ -26,8 +26,8 @@ const Collapse = () => {
                         </h5>
                       </div>
 
-                      <div id="collapseExample" class="collapse">
-                        <div class="card-body">
+                      <div id="collapseExample" className="collapse">
+                        <div className="card-body">
                           Lorem Ipsum is simply dummy text of the printing and
                           typesetting industry. Lorem Ipsum has been the
                           industry's standard dummy text ever since the 1500s,

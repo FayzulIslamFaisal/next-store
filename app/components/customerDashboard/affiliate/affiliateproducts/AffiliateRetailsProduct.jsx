@@ -188,10 +188,12 @@ const AffiliateRetailsProduct = () => {
                     {isGridView ? (
                         <AffiliateRetailsProductInfo
                             retailProduct={retailProduct}
+                            outletId={outletId}
                         />
                     ) : (
                         <RetailListViewProductInfo
                             retailProduct={retailProduct}
+                            outletId={outletId}
                         />
                     )}
                 </Suspense>
