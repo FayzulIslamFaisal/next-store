@@ -3,7 +3,7 @@ import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-const RetailListViewProductInfo = ({ retailProduct }) => {
+const RetailListViewProductInfo = ({ retailProduct, outletId }) => {
     return (
         <div className="table-responsive-xl">
             <div
@@ -52,7 +52,9 @@ const RetailListViewProductInfo = ({ retailProduct }) => {
                                                 minWidth: "80px",
                                             }}
                                         >
-                                            <Link href={product?.link || "#"}>
+                                            <Link
+                                                href={`/affiliate-product-details/${product.slug}`}
+                                            >
                                                 {product?.product_name ||
                                                     "Product Name"}
                                             </Link>
