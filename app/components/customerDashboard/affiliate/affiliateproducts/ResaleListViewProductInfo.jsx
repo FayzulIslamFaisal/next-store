@@ -7,7 +7,7 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
             <div className="table-responsive-xl">
                 <div
                     className="d-flex flex-column gap-3 "
-                    style={{ minWidth: "700px" }}
+                    style={{ minWidth: "640px" }}
                 >
                     {resaleProduct?.map(product => (
                         <div key={product.id} className="flash-sale-content-item flash-sale-content-bg affiliate-product-list-item">
