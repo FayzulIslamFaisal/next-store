@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import AffiliateToggleButton from "./AffiliateToggleButton";
 import ResaleListViewProductInfo from "./ResaleListViewProductInfo";
 import ResaleProductsInfo from "./ResaleProductsInfo";
@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { getAffiliateResaleProduct } from "@/app/services/affiliate/affiliateproducts/getAffiliateResaleProduct";
 import Pagination from "@/app/components/productCategory/Pagination";
 import { useSearchParams } from "next/navigation";
+import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
+import NoDataFound from "@/app/components/NoDataFound";
 
 const ResaleProducts = () => {
     const [isGridView, setIsGridView] = useState(true);
@@ -53,7 +55,7 @@ const ResaleProducts = () => {
                         orderByPrice: sortPrice,
                         orderByDuration: sortDuration,
                         page: currentPage,
-                        limit
+                        limit: limit
                     };
                     const resaleProductInfo = await getAffiliateResaleProduct(
                         session.accessToken,
@@ -116,17 +118,26 @@ const ResaleProducts = () => {
                         isGridView={isGridView}
                     />
                 </div>
+                <Suspense fallback={<DefaultLoader />}>
+                    {
+                        // resaleProduct.length > 0
+                        //     ?
+                            <>
+                                {isGridView ? (
+                                    <ResaleProductsInfo resaleProduct={resaleProduct} />
+                                ) : (
+                                    <ResaleListViewProductInfo resaleProduct={resaleProduct} />
+                                )}
+                            </>
+                            // :
+                            // <NoDataFound />
+                    }
 
-                {isGridView ? (
-                    <ResaleProductsInfo resaleProduct={resaleProduct} />
-                ) : (
-                    <ResaleListViewProductInfo resaleProduct={resaleProduct} />
-                )}
-
-                <Pagination
-                    currentPage={currentPage}
-                    lastPage={lastPage}
-                />
+                    <Pagination
+                        currentPage={currentPage}
+                        lastPage={lastPage}
+                    />
+                </Suspense>
             </div>
         </>
     );
