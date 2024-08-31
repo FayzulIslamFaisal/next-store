@@ -72,7 +72,7 @@ const ResaleProducts = () => {
                     </div>
                     <div>
                         <label htmlFor="sort-pric" className="form-label">
-                            Sort by pric
+                            Sort By Price
                         </label>
                         <select
                             className="form-select district-list"
