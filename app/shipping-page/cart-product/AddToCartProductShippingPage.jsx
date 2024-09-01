@@ -112,7 +112,6 @@ const AddToCartProductShippingPage = () => {
             product_regular_price: item.discountPrice,
         }));
         const payload = {
-            user_referral_link:"",
             outlet_id: outletId,
             location_id: districtId,
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable

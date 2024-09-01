@@ -91,7 +91,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     const settings = {
         centerPadding: "60px",
         dots: false,
-        infinite: isHome ? false : false,
+        // infinite: isHome ? false : false, 
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 2,
