@@ -1,15 +1,16 @@
-
 "use client";
 import { useState, useEffect } from "react";
 import { getOTPVerify } from "../services/getOTPVerify";
 import { getResendOTP } from "../services/getResendOTP";
 import { getBackRegistration } from "../services/getBackRegistration";
 import { useSearchParams, useRouter } from "next/navigation";
+import { postCheckForgetPassword } from "../services/forgetpassword/postCheckForgetPassword";
 
 const OTP = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
-    let phone = searchParams.get("phone") ? searchParams.get("phone") : '';
+    let phone = searchParams.get("phone") ? searchParams.get("phone") : "";
+    let forgetPassword = searchParams.get("forget_password") || "";
     const [otp, setOtp] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -37,10 +38,25 @@ const OTP = () => {
                     return;
                 }
 
-                //alert(res.message);
-                
-                router.push("/login");
+                // Forget Password Checking
+                if (forgetPassword) {
+                    const forgetPasswordRes = await postCheckForgetPassword({
+                        phone,
+                        otp,
+                    });
 
+                    if (forgetPasswordRes?.error) {
+                        setErrorMessage(forgetPasswordRes?.message);
+                    } else {
+                        const userId = forgetPasswordRes?.results?.user_id;
+                        router.push(`/setforgotpassword?user_id=${userId}`);
+                    }
+                } else {
+                    setSuccessMessage(res.message);
+                    router.push("/login");
+                }
+
+                // router.push("/login");
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
             }
@@ -59,7 +75,7 @@ const OTP = () => {
 
             try {
                 const res = await getResendOTP({
-                    phone: phone
+                    phone: phone,
                 });
 
                 if (!res?.success) {
@@ -68,7 +84,6 @@ const OTP = () => {
                 }
 
                 setSuccessMessage(res.message);
-
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
             }
@@ -91,7 +106,7 @@ const OTP = () => {
 
             try {
                 const res = await getBackRegistration({
-                    phone: phone
+                    phone: phone,
                 });
 
                 if (!res?.success) {
@@ -100,7 +115,6 @@ const OTP = () => {
                 }
 
                 router.push("/registration");
-
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
             }
@@ -121,9 +135,15 @@ const OTP = () => {
                             <h3 style={{ color: "#f00" }}>{errorMessage}</h3>
                         )}
                         {successMessage && (
-                            <h3 style={{ color: "#008000" }}>{successMessage}</h3>
+                            <h3 style={{ color: "#008000" }}>
+                                {successMessage}
+                            </h3>
                         )}
-                        <form className="d-flex flex-column gap-4" role="form" onSubmit={handleSubmit}>
+                        <form
+                            className="d-flex flex-column gap-4"
+                            role="form"
+                            onSubmit={handleSubmit}
+                        >
                             <div>
                                 <label
                                     className="form-label"
@@ -180,4 +200,3 @@ const OTP = () => {
 };
 
 export default OTP;
-

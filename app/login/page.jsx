@@ -114,7 +114,9 @@ const Login = () => {
                                         </label>
                                     </div>
                                     <div className="inner-field">
-                                        <Link href="#">Forgot Password ?</Link>
+                                        <Link href="/forgotpassword">
+                                            Forgot Password ?
+                                        </Link>
                                     </div>
                                 </div>
                                 <button

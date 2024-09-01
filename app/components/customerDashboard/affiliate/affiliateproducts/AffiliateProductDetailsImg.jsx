@@ -1,14 +1,16 @@
 "use client";
 
+import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Slider from "react-slick";
-// import React, { useState, useEffect, useRef } from "react";
 
-function AffiliateProductDetailsImg() {
+function AffiliateProductDetailsImg({ productGallery }) {
     var settings = {
-        dots: true,
-        infinite: true,
+        dots: false,
+        infinite: false,
         speed: 500,
+        fade: true,
+        arrows: productGallery && productGallery.length > 1,
         slidesToShow: 1,
         slidesToScroll: 1,
     };
@@ -16,42 +18,31 @@ function AffiliateProductDetailsImg() {
         <>
             <div>
                 <Slider {...settings}>
-                    <div className="product-details-info-photo">
-                        <div className="product-details-info-img">
+                    {productGallery && productGallery.length > 0 ? (
+                        productGallery.map((item, index) => {
+                            const imageUrl = `${NagadhatPublicUrl}/${item.path}`;
+                            return (
+                                <div
+                                    key={item.id}
+                                    className="product-details-info-img"
+                                >
+                                    <Image
+                                        fill
+                                        src={imageUrl}
+                                        alt={`Product image ${index + 1}`}
+                                    />
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <div className="product-details-info-img d-flex align-items-center justify-content-center">
                             <Image
                                 fill
                                 src="/images/flash-img1.jpg"
-                                alt="image"
+                                alt="default image"
                             />
                         </div>
-                    </div>
-                    <div className="product-details-info-photo">
-                        <div className="product-details-info-img">
-                            <Image
-                                fill
-                                src="/images/flash-img2.jpg"
-                                alt="image"
-                            />
-                        </div>
-                    </div>
-                    <div className="product-details-info-photo">
-                        <div className="product-details-info-img">
-                            <Image
-                                fill
-                                src="/images/flash-img3.jpg"
-                                alt="image"
-                            />
-                        </div>
-                    </div>
-                    <div className="product-details-info-photo">
-                        <div className="product-details-info-img">
-                            <Image
-                                fill
-                                src="/images/flash-img4.jpg"
-                                alt="image"
-                            />
-                        </div>
-                    </div>
+                    )}
                 </Slider>
             </div>
         </>

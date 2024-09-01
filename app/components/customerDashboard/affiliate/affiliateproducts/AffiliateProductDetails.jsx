@@ -2,12 +2,13 @@
 import AffiliateProductDetailsImg from "./AffiliateProductDetailsImg";
 import ProductLongDescription from "@/app/components/productDetail/ProductLongDescription";
 import ProductDetailsContent from "./ProductDetailsContent";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getProductDetails } from "@/app/services/getProductDetails";
 
 const AffiliateProductDetails = ({ slug }) => {
     const [outletId, setOutletId] = useState(0);
     const [productInfo, setProductInfo] = useState(null);
+    const [productGallery, setProductGallery] = useState([]);
     console.log("pathName------>>>", slug, outletId);
 
     useEffect(() => {
@@ -21,32 +22,37 @@ const AffiliateProductDetails = ({ slug }) => {
         async function fetchData() {
             try {
                 const pathName = `outlet_id=${outletId}&slug=${slug}`;
-                console.log("{{ {pathName} }}", pathName);
-
                 const fetchedProductInfo = await getProductDetails(pathName);
-                setProductInfo(fetchedProductInfo);
+                const productResult = fetchedProductInfo?.results;
+                setProductInfo(productResult);
+                setProductGallery(productResult?.gallery);
             } catch (error) {
                 console.error("Failed to fetch product details:", error);
             }
         }
-
         fetchData();
     }, [outletId, slug]);
-
-    console.log("productInfo------", productInfo);
 
     return (
         <div className="container py-5">
             <div className="row g-5">
                 <div className="col-lg-6 px-5">
-                    <AffiliateProductDetailsImg />
+                    <Suspense fallback={<h1>Loading....</h1>}>
+                        <AffiliateProductDetailsImg
+                            productGallery={productGallery}
+                        />
+                    </Suspense>
                 </div>
                 <div className="col-lg-6">
-                    <ProductDetailsContent />
+                    <Suspense fallback={<h1>Loading....</h1>}>
+                        <ProductDetailsContent productInfo={productInfo} />
+                    </Suspense>
                 </div>
             </div>
             <div>
-                <ProductLongDescription />
+                <Suspense fallback={<h1>Loading....</h1>}>
+                    <ProductLongDescription productInfo={productInfo} />
+                </Suspense>
             </div>
         </div>
     );
