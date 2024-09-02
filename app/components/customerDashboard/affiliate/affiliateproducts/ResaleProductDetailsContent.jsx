@@ -1,11 +1,10 @@
-
 import { FaCheck, FaRegEye, FaRegStar, FaStar } from "react-icons/fa6";
 
-const ResaleProductDetailsContent = () => {
+const ResaleProductDetailsContent = ({ productDetails }) => {
     return (
         <>
             <div className="product-details-content">
-                <h1>Pilot Metropolitan Ballpoint Pen</h1>
+                <h1>{productDetails?.product_name}</h1>
                 <div className="product-details-rating-area d-flex align-items-center justify-content-between flex-wrap">
                     <div className="product-details-rating-item d-flex">
                         <div className="rating-star d-flex text-warning">
@@ -49,9 +48,9 @@ const ResaleProductDetailsContent = () => {
                 <div className="product-details-price-area align-items-center d-flex">
                     <strong>
                         <span>৳ </span>
-                        442
+                        {productDetails?.after_discount_mrp_price}
                     </strong>
-                    <del>৳ 562.00</del>
+                    <del>৳ {productDetails?.mrp_price}</del>
                 </div>
 
                 <div class="product-info-rtk-content pt-4">
@@ -61,8 +60,14 @@ const ResaleProductDetailsContent = () => {
                                 <div>
                                     <div class="product-details-variant-holder d-flex align-items-center mb-4">
                                         <p class="variantName">Color</p>
-                                        <div class="product-details-inner-color product-details-variant-item" style={{ backgroundColor: "red" }}></div>
-                                        <div class="product-details-inner-color product-details-variant-item" style={{ backgroundColor: "green" }}></div>
+                                        <div
+                                            class="product-details-inner-color product-details-variant-item"
+                                            style={{ backgroundColor: "red" }}
+                                        ></div>
+                                        <div
+                                            class="product-details-inner-color product-details-variant-item"
+                                            style={{ backgroundColor: "green" }}
+                                        ></div>
                                     </div>
                                 </div>
                             </div>
@@ -82,8 +87,7 @@ const ResaleProductDetailsContent = () => {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                        </div>
+                        <div></div>
                         <div class="product-details-quantity-area d-flex align-items-center justify-content-start">
                             <div class="product-details-quantity d-flex align-items-center">
                                 <div class="product-details-inner-quantity d-flex align-items-center">
@@ -94,9 +98,7 @@ const ResaleProductDetailsContent = () => {
                                         -
                                     </button>
                                     <input readonly="" type="text" value="1" />
-                                    <button type="button">
-                                        +
-                                    </button>
+                                    <button type="button">+</button>
                                 </div>
                             </div>
                         </div>
@@ -121,15 +123,7 @@ const ResaleProductDetailsContent = () => {
                 <div className="product-short-description-area pb-0">
                     <div>
                         <p>
-                            <span>
-                                Contrary to popular belief, Lorem Ipsum is not
-                                simply random text. It has roots in a piece of
-                                classical Latin literature from 45 BC, making it
-                                over 2000 years old. Richard McClintock, a Latin
-                                professor at Hampden-Sydney College in Virginia,
-                                looked up one of the more obscure Latin words,
-                                consectetur, from a Lorem Ipsum passage,
-                            </span>
+                            <span>{productDetails?.short_description}</span>
                         </p>
                     </div>
                 </div>

@@ -4,7 +4,8 @@ import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Slider from "react-slick";
 
-function AffiliateProductDetailsImg({ productGallery }) {
+function AffiliateProductDetailsImg({ productGallery, productDetails }) {
+    const defaultImageUrl = `${NagadhatPublicUrl}/${productDetails?.product_thumbnail}`;
     var settings = {
         dots: false,
         infinite: false,
@@ -38,7 +39,7 @@ function AffiliateProductDetailsImg({ productGallery }) {
                         <div className="product-details-info-img d-flex align-items-center justify-content-center">
                             <Image
                                 fill
-                                src="/images/flash-img1.jpg"
+                                src={defaultImageUrl}
                                 alt="default image"
                             />
                         </div>
