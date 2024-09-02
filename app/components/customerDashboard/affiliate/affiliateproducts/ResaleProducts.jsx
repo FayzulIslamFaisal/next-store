@@ -55,16 +55,18 @@ const ResaleProducts = () => {
                         orderByPrice: sortPrice,
                         orderByDuration: sortDuration,
                         page: currentPage,
-                        limit: limit
+                        limit: limit,
                     };
                     const resaleProductInfo = await getAffiliateResaleProduct(
                         session.accessToken,
                         outletId,
                         params
                     );
-                    const resaleProductData = resaleProductInfo?.results?.affiliate_fast_moving_products;
+                    const resaleProductData =
+                        resaleProductInfo?.results
+                            ?.affiliate_fast_moving_products;
                     setResaleProduct(resaleProductData);
-                    setLastPage(resaleProductData.last_page || 1)
+                    setLastPage(resaleProductData.last_page || 1);
                 } catch (error) {
                     console.error("Failed to fetch retail products:", error);
                 }
@@ -92,7 +94,9 @@ const ResaleProducts = () => {
                             value={sortDuration}
                             onChange={handleSortDurationChange}
                         >
-                            <option className="selected" defaultValue="">Select</option>
+                            <option className="selected" defaultValue="">
+                                Select
+                            </option>
                             <option value="desc">Descending</option>
                             <option value="asc">Ascending</option>
                         </select>
@@ -108,7 +112,9 @@ const ResaleProducts = () => {
                             value={sortPrice}
                             onChange={handleSortPriceChange}
                         >
-                            <option className="selected" defaultValue="">Select</option>
+                            <option className="selected" defaultValue="">
+                                Select
+                            </option>
                             <option value="asc">Low to High</option>
                             <option value="desc">High to Low</option>
                         </select>
@@ -122,21 +128,24 @@ const ResaleProducts = () => {
                     {
                         // resaleProduct.length > 0
                         //     ?
-                            <>
-                                {isGridView ? (
-                                    <ResaleProductsInfo resaleProduct={resaleProduct} />
-                                ) : (
-                                    <ResaleListViewProductInfo resaleProduct={resaleProduct} />
-                                )}
-                            </>
-                            // :
-                            // <NoDataFound />
+                        <>
+                            {isGridView ? (
+                                <ResaleProductsInfo
+                                    resaleProduct={resaleProduct}
+                                    outletId={outletId}
+                                />
+                            ) : (
+                                <ResaleListViewProductInfo
+                                    resaleProduct={resaleProduct}
+                                    outletId={outletId}
+                                />
+                            )}
+                        </>
+                        // :
+                        // <NoDataFound />
                     }
 
-                    <Pagination
-                        currentPage={currentPage}
-                        lastPage={lastPage}
-                    />
+                    <Pagination currentPage={currentPage} lastPage={lastPage} />
                 </Suspense>
             </div>
         </>

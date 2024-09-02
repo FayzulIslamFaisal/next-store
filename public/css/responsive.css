@@ -432,7 +432,8 @@
     .flash-sale-content-area {
         -ms-grid-columns: 1fr 10px 1fr;
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 0;
+        row-gap: 10px;
     }
 
     .hero-slider-content {
@@ -488,11 +489,11 @@
     }
 
     .flash-sale-content-area-grid .slick-list {
-        margin: 0 -5px !important;
+        margin: 0 0 !important;
     }
 
     .flash-sale-content-area-grid .slick-slide > div {
-        padding: 0 5px !important;
+        padding: 0 0 !important;
     }
 
     .tab-panel-info-details h6 {

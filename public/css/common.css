@@ -226,12 +226,16 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
-    z-index: 1000;
+    z-index: 1;
 }
 
 .nh-hover-box-shadow:hover .image-hover-effect::before {
     opacity: 1;
     visibility: visible;
+}
+.flash-sale-content-img a {
+    position: relative;
+    z-index: 2; 
 }
 
 .image-hover-effect img {

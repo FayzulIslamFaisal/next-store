@@ -89,9 +89,10 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     }, [session]);
 
     const settings = {
-        centerPadding: "60px",
+        // centerPadding: "60px",
         dots: false,
-        // infinite: isHome ? false : false, 
+        // infinite: false,
+        initialSlide: 0,
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 2,
@@ -104,6 +105,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
                     slidesToShow: 4,
                     slidesToScroll: 2,
                     arrows: false,
+                    initialSlide: 0,
                 },
             },
             {
@@ -111,7 +113,8 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 2,
-                    arrows: true,
+                    arrows: isHome ? flashSaleArrow : recentArrow,
+                    initialSlide: 0,
                 },
             },
             {
@@ -119,7 +122,8 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
-                    arrows: true,
+                    arrows: isHome ? flashSaleArrow : recentArrow,
+                    initialSlide: 0,
                 },
             },
         ],

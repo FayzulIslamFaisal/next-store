@@ -1,10 +1,16 @@
 import NoDataFound from "@/app/components/NoDataFound";
-import { NagadhatPublicUrl } from "@/app/utils";
+import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 import CopyToClipboard from "react-copy-to-clipboard";
 
-const AffiliateRetailsProductInfo = ({ retailProduct, outletId, handleCopy, referralLink, copied }) => {
+const AffiliateRetailsProductInfo = ({
+    retailProduct,
+    outletId,
+    handleCopy,
+    referralLink,
+    copied,
+}) => {
     return (
         <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 g-3">
             {retailProduct.length > 0 ? (
@@ -18,13 +24,17 @@ const AffiliateRetailsProductInfo = ({ retailProduct, outletId, handleCopy, refe
                             <div className="flash-sale-content-bg nh-hover-box-shadow">
                                 <div className="flash-sale-content-img image-hover-effect">
                                     <Link
-                                        href={`/affiliate-product-details/${product.slug}`}
-                                        style={{ cursor: "pointer" }}
-                                        className="cursor-pointer "
+                                        // href={`/affiliate-product-details/${product.slug}`}
+                                        href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}`}
+                                        style={{
+                                            width: "100%",
+                                            height: "150px",
+                                            position: "relative",
+                                            display: "inline-block",
+                                        }}
                                     >
                                         <Image
-                                            width={162}
-                                            height={150}
+                                            fill
                                             src={
                                                 imageUrl ||
                                                 "/images/flash-img1.jpg"
@@ -43,17 +53,19 @@ const AffiliateRetailsProductInfo = ({ retailProduct, outletId, handleCopy, refe
                                     </Link>
                                 </div>
                                 <div className="flash-sale-content-info text-hover-effect">
-                                    <h4>
+                                    <h4 title={product.product_name}>
                                         <Link
-                                            href={`/affiliate-product-details/${product.slug}`}
+                                            href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}`}
                                         >
-                                            {product?.product_name ||
-                                                "Product Name"}
+                                            {truncateTitle(
+                                                product.product_name,
+                                                36
+                                            )}
                                         </Link>
                                     </h4>
                                     <div className=" d-flex align-items-center justify-content-between ">
                                         {product?.after_discount_mrp_price ==
-                                            product?.mrp_price ? (
+                                        product?.mrp_price ? (
                                             <strong>
                                                 {`৳ ${product?.mrp_price}`}
                                             </strong>
@@ -73,7 +85,10 @@ const AffiliateRetailsProductInfo = ({ retailProduct, outletId, handleCopy, refe
 
                                     <p className="affiliate-commission">
                                         Commission:{" "}
-                                        {`৳ ${product?.calculated_commission || "0"}`}{" "}
+                                        {`৳ ${
+                                            product?.calculated_commission ||
+                                            "0"
+                                        }`}{" "}
                                         <span className="ms-1">
                                             ({product?.level_commission})
                                         </span>
@@ -83,7 +98,9 @@ const AffiliateRetailsProductInfo = ({ retailProduct, outletId, handleCopy, refe
                                         onCopy={handleCopy}
                                     >
                                         <button className="copy-link-btn">
-                                            {copied ? "Link Copied" : "Copy Link"}
+                                            {copied
+                                                ? "Link Copied"
+                                                : "Copy Link"}
                                         </button>
                                     </CopyToClipboard>
                                 </div>
