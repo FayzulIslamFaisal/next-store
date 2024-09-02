@@ -9,9 +9,8 @@ const RefProduct = ({ params }) => {
     const router = useRouter();
 
     useEffect(() => {
-        // Set userId and productId in localStorage
+        // Set userId in localStorage
         localStorage.setItem('referrerID', userId);
-        localStorage.setItem('referrerProduct', productId);
 
         // Redirect to the specified route
         router.push(`/products/get-product-details?outlet_id=${outletId}&product_id=${productId}`);
