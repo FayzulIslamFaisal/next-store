@@ -2,8 +2,9 @@ import NoDataFound from "@/app/components/NoDataFound";
 import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
+import CopyToClipboard from "react-copy-to-clipboard";
 
-const AffiliateRetailsProductInfo = ({ retailProduct, outletId }) => {
+const AffiliateRetailsProductInfo = ({ retailProduct, outletId, handleCopy, referralLink, copied }) => {
     return (
         <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 g-3">
             {retailProduct.length > 0 ? (
@@ -52,7 +53,7 @@ const AffiliateRetailsProductInfo = ({ retailProduct, outletId }) => {
                                     </h4>
                                     <div className=" d-flex align-items-center justify-content-between ">
                                         {product?.after_discount_mrp_price ==
-                                        product?.mrp_price ? (
+                                            product?.mrp_price ? (
                                             <strong>
                                                 {`৳ ${product?.mrp_price}`}
                                             </strong>
@@ -72,17 +73,19 @@ const AffiliateRetailsProductInfo = ({ retailProduct, outletId }) => {
 
                                     <p className="affiliate-commission">
                                         Commission:{" "}
-                                        {`৳ ${
-                                            product?.calculated_commission ||
-                                            "0"
-                                        }`}{" "}
+                                        {`৳ ${product?.calculated_commission || "0"}`}{" "}
                                         <span className="ms-1">
                                             ({product?.level_commission})
                                         </span>
                                     </p>
-                                    <button className="copy-link-btn">
-                                        Copy Link
-                                    </button>
+                                    <CopyToClipboard
+                                        text={`${referralLink}/${product.affiliate_product_copy_link}`}
+                                        onCopy={handleCopy}
+                                    >
+                                        <button className="copy-link-btn">
+                                            {copied ? "Link Copied" : "Copy Link"}
+                                        </button>
+                                    </CopyToClipboard>
                                 </div>
                             </div>
                         </div>

@@ -2,8 +2,9 @@ import NoDataFound from "@/app/components/NoDataFound";
 import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
+import CopyToClipboard from "react-copy-to-clipboard";
 
-const RetailListViewProductInfo = ({ retailProduct, outletId }) => {
+const RetailListViewProductInfo = ({ retailProduct, outletId, handleCopy, referralLink, copied }) => {
     return (
         <div className="table-responsive-xl">
             <div
@@ -64,7 +65,7 @@ const RetailListViewProductInfo = ({ retailProduct, outletId }) => {
                                         <div className="d-flex flex-column justify-content-center">
                                             <div className="d-flex align-items-center gap-2">
                                                 {product?.after_discount_mrp_price ===
-                                                product?.mrp_price ? (
+                                                    product?.mrp_price ? (
                                                     <strong>
                                                         {`৳ ${product?.mrp_price}`}
                                                     </strong>
@@ -83,10 +84,7 @@ const RetailListViewProductInfo = ({ retailProduct, outletId }) => {
                                             </div>
                                             <p className="affiliate-commission">
                                                 Commission:{" "}
-                                                {`৳ ${
-                                                    product?.calculated_commission ||
-                                                    "0"
-                                                }`}{" "}
+                                                {`৳ ${product?.calculated_commission || "0"}`}{" "}
                                                 <span className="ms-1">
                                                     ({product?.level_commission}
                                                     )
@@ -94,11 +92,16 @@ const RetailListViewProductInfo = ({ retailProduct, outletId }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="flex-1 d-inline-flex justify-content-end flex-shrink-0">
+                                    <div className="flex-1 d-inline-flex justify-content-end flex-shrink-0 ">
                                         <div>
-                                            <button className=" copy-link-btn mt-0 px-3">
-                                                Copy Link
-                                            </button>
+                                            <CopyToClipboard
+                                                text={`${referralLink}/${product.affiliate_product_copy_link}`}
+                                                onCopy={handleCopy}
+                                            >
+                                                <button className="copy-link-btn mt-0 px-3">
+                                                    Copy Link
+                                                </button>
+                                            </CopyToClipboard>
                                         </div>
                                     </div>
                                 </div>
