@@ -20,6 +20,14 @@ const Registration = () => {
     const referral = searchParams.get("referral");
     const refName = searchParams.get("ref_name");
     const { status, data: session } = useSession();
+
+    const [referrerID, setReferrerID] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("referrerID") || "";
+        }
+        return '';
+    });
+
     useEffect(() => {
         async function fetchData() {
             if (session != undefined && !referralId && !referral) {
@@ -42,21 +50,17 @@ const Registration = () => {
     });
 
     useEffect(() => {
-        console.log("formData========>", { formData });
-    }, [formData]);
-
-    useEffect(() => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-
-            referrer_id: parseInt(referral) || parseInt(referralId) || "",
-            placement_user_id: selectedPlacementId
-                ? parseInt(selectedPlacementId)
-                : "",
+            referrer_id: parseInt(referral) || parseInt(referralId) || referrerID || "",
+            placement_user_id: parseInt(selectedPlacementId) || "",
         }));
-        console.log({ referralId });
-        console.log({ formData });
-    }, [selectedPlacementId, referralId, referral]);
+    }, [selectedPlacementId, referralId, referral, referrerID]);
+
+    useEffect(() => {
+        console.log("formData========>", { formData });
+        console.log("referrerID========>", { referrerID });
+    }, [formData, referrerID]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -98,7 +102,7 @@ const Registration = () => {
         if (toggleSponsored) {
             setFormData((prevFormData) => ({
                 ...prevFormData,
-                referrer_id: parseInt(referral) || referralId,
+                referrer_id: parseInt(referral) || parseInt(referralId) || referrerID || "",
                 placement_user_id: "",
             }));
             fetchAffiliateNewSignup();
@@ -136,6 +140,8 @@ const Registration = () => {
                     alert(res.message);
                     return;
                 }
+
+                localStorage.removeItem("referrerID");
 
                 router.push(`/otp?phone=${formData.phone}`);
             } catch (error) {
@@ -373,7 +379,9 @@ const Registration = () => {
                                                 )
                                             }
                                         >
-                                            {affiliateSignup.length > 0 &&
+                                            <option>Select</option>
+
+                                            { affiliateSignup.length > 0 &&
                                                 affiliateSignup.map((user) => {
                                                     return (
                                                         <option
