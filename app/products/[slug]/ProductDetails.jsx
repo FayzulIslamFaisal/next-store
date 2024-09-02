@@ -11,10 +11,12 @@ import NotFound from "@/app/not-found";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { useSession } from "next-auth/react";
 import { recentViewProductApi } from "@/app/services/postRecentViewProduct";
+import NoDataFound from "@/app/components/NoDataFound";
 
 const ProductSinglePage = ({ params }) => {
     const { status, data: session } = useSession();
     const [productInfo, setProductInfo] = useState({});
+    const [outletInfo, setOutletInfo] = useState([]);
     const searchParams = useSearchParams();
     const pathName = searchParams.toString();
     const [successCode, setSuccessCode] = useState(null);
@@ -22,7 +24,12 @@ const ProductSinglePage = ({ params }) => {
         async function fetchData() {
             const productInfo = await getProductDetails(pathName);
             setSuccessCode(productInfo?.code);
-            if (productInfo?.results) {
+            if (productInfo.message === "Product Found Other Outlet") {
+                setOutletInfo(productInfo?.results?.outlets)
+                console.log("Product Found Other Outlet");
+
+            }
+            if (productInfo?.results && productInfo.message != "Product Found Other Outlet") {
                 const productDetails = productInfo.results;
                 const {
                     id,
@@ -76,7 +83,7 @@ const ProductSinglePage = ({ params }) => {
                     <div className="container">
                         <Breadcrumb category={productInfo?.category} />
                         <Suspense fallback={<DefaultLoader />}>
-                            {Object.keys(productInfo).length ? (
+                            {Object.keys(productInfo).length > 0 && (
                                 <>
                                     <div className="row product-details-info">
                                         <ProductLeftSide
@@ -95,9 +102,30 @@ const ProductSinglePage = ({ params }) => {
                                     />
                                     {/* <Service serviceItems={serviceItems} /> */}
                                 </>
-                            ) : (
-                                <DefaultLoader />
-                            )}
+                            )
+                                // : (
+                                //     <DefaultLoader />
+                                //     // <NoDataFound/>
+                                // )
+                            }
+                            {
+                                outletInfo.length > 0 && (
+                                    <>
+                                        <div>
+                                            <h5>This product not available your location</h5>
+                                            <h6>Available location:</h6>
+                                            <ul>
+                                                {
+                                                    outletInfo?.map((item) => (
+                                                        <li key={item.id}>{item.name}</li>
+                                                    ))
+                                                }
+                                            </ul>
+                                        </div>
+                                    </>
+                                )
+                            }
+
                         </Suspense>
                     </div>
                 </section>
