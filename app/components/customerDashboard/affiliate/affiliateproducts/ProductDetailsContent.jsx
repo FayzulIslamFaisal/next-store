@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 
-const ProductDetailsContent = () => {
+const ProductDetailsContent = ({ productInfo }) => {
     return (
         <>
             <div className="product-details-content">
-                <h1>Pilot Metropolitan Ballpoint Pen</h1>
+                <h1>{productInfo?.product_name}</h1>
                 <div className="product-details-rating-area d-flex align-items-center justify-content-between flex-wrap">
                     <div className="product-details-rating-item d-flex">
                         <div className="rating-star d-flex text-warning">
@@ -26,14 +26,14 @@ const ProductDetailsContent = () => {
                             </div>
                         </div>
                         <div className="rating-star">
-                            <p>10 Ratings</p>
+                            <p>{productInfo?.ratings} Ratings</p>
                         </div>
                     </div>
                     <div className="product-details-rating-item d-flex align-items-center">
                         <div className="product-Sold-img">
                             <Image
-                                width={10}
-                                height={10}
+                                width={20}
+                                height={20}
                                 alt="sold"
                                 className="img-fluid"
                                 src="/images/sold.svg"
@@ -47,8 +47,8 @@ const ProductDetailsContent = () => {
                         <div className="product-Sold-img">
                             <Image
                                 alt="Viewe image"
-                                width={10}
-                                height={10}
+                                width={40}
+                                height={40}
                                 className="img-fluid"
                                 src="/images/product-view.svg"
                             />
@@ -61,22 +61,14 @@ const ProductDetailsContent = () => {
                 <div className="product-details-price-area d-flex align-items-center">
                     <strong>
                         <span>৳</span>
-                        442
+                        {productInfo?.after_discount_mrp_price}
                     </strong>
-                    <del>৳ 562.00</del>
+                    <del>৳ {productInfo?.mrp_price}</del>
                 </div>
                 <div className="product-short-description-area">
                     <div>
                         <p>
-                            <span>
-                                Contrary to popular belief, Lorem Ipsum is not
-                                simply random text. It has roots in a piece of
-                                classical Latin literature from 45 BC, making it
-                                over 2000 years old. Richard McClintock, a Latin
-                                professor at Hampden-Sydney College in Virginia,
-                                looked up one of the more obscure Latin words,
-                                consectetur, from a Lorem Ipsum passage,
-                            </span>
+                            <span>{productInfo?.short_description}</span>
                         </p>
                     </div>
                 </div>
