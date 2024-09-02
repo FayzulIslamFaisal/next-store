@@ -10,6 +10,7 @@ import { getHomeCategory } from "@/app/services/getHomeCategory";
 import AffiliateRetailsProductInfo from "./AffiliateRetailsProductInfo";
 import RetailListViewProductInfo from "./RetailListViewProductInfo";
 import AffiliateToggleButton from "./AffiliateToggleButton";
+import Swal from "sweetalert2";
 
 // const AffiliateToggleButton = dynamic(() => import("./AffiliateToggleButton"));
 // const AffiliateRetailsProductInfo = dynamic(() =>
@@ -29,6 +30,34 @@ const AffiliateRetailsProduct = () => {
     const [tempSearchProduct, setTempSearchProduct] = useState("");
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
+    const baseUrl = window?.location?.origin;
+    let referralLink=baseUrl
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        setCopied(true);
+        
+        let timerInterval;
+        Swal.fire({
+            title: "Referral Link Copied!",
+            html: `Closing in <b></b> milliseconds.<br>${referralLink}`,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = Swal.getTimerLeft();
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            },
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+            }
+        });
+    };
 
     const handleToggle = (view) => {
         setIsGridView(view === "grid");
@@ -163,7 +192,7 @@ const AffiliateRetailsProduct = () => {
                         >
                             <option value="">Select Category</option>
                             {Array.isArray(allCategories) &&
-                            allCategories.length > 0 ? (
+                                allCategories.length > 0 ? (
                                 allCategories.map((category) => (
                                     <option
                                         key={category.id}
@@ -189,11 +218,17 @@ const AffiliateRetailsProduct = () => {
                         <AffiliateRetailsProductInfo
                             retailProduct={retailProduct}
                             outletId={outletId}
+                            handleCopy={handleCopy}
+                            referralLink={referralLink}
+                            copied={copied}
                         />
                     ) : (
                         <RetailListViewProductInfo
                             retailProduct={retailProduct}
                             outletId={outletId}
+                            handleCopy={handleCopy}
+                            referralLink={referralLink}
+                            copied={copied}
                         />
                     )}
                 </Suspense>

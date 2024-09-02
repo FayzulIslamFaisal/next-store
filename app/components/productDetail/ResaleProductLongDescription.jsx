@@ -17,6 +17,17 @@ const ResaleProductLongDescription = ({ productInfo }) => {
             >
               <CustomButton
                 className="nav-link active"
+                id="nav-resale-condition-tab"
+                dataBsToggle="tab"
+                dataBsTarget="#nav-resale-condition"
+                type="button"
+                role="tab"
+              >
+                Resale Condition
+              </CustomButton>
+
+              <CustomButton
+                className="nav-link"
                 id="nav-specification-tab"
                 dataBsToggle="tab"
                 dataBsTarget="#nav-specification"
@@ -56,22 +67,21 @@ const ResaleProductLongDescription = ({ productInfo }) => {
                 Reviews <span>(240)</span>{" "}
               </CustomButton>
 
-              <CustomButton
-                className="nav-link"
-                id="nav-resale-condition-tab"
-                dataBsToggle="tab"
-                dataBsTarget="#nav-resale-condition"
-                type="button"
-                role="tab"
-              >
-                Resale Condition
-              </CustomButton>
             </div>
           </nav>
           <div className="tab-content " id="nav-tabContent">
-            {/* Start tab-panel-item */}
             <div
               className="tab-pane fade active show"
+              id="nav-resale-condition"
+              role="tabpanel"
+              aria-labelledby="nav-resale-condition-tab"
+            >
+              <ResaleCondition />
+            </div>
+
+            {/* Start tab-panel-item */}
+            <div
+              className="tab-pane fade"
               id="nav-specification"
               role="tabpanel"
             >
@@ -81,9 +91,9 @@ const ResaleProductLongDescription = ({ productInfo }) => {
                 role="tabpanel"
               >
                 <div
-                  // dangerouslySetInnerHTML={{
-                  //   __html: productInfo?.specifications,
-                  // }}
+                // dangerouslySetInnerHTML={{
+                //   __html: productInfo?.specifications,
+                // }}
                 />
               </div>
             </div>
@@ -92,9 +102,9 @@ const ResaleProductLongDescription = ({ productInfo }) => {
             {/* Start tab-panel-item */}
             <div className="tab-pane fade" id="nav-details" role="tabpanel">
               <div
-                // dangerouslySetInnerHTML={{
-                //   __html: productInfo?.full_description,
-                // }}
+              // dangerouslySetInnerHTML={{
+              //   __html: productInfo?.full_description,
+              // }}
               />
             </div>
             {/* End tab-panel-item */}
@@ -113,17 +123,6 @@ const ResaleProductLongDescription = ({ productInfo }) => {
               aria-labelledby="nav-reviews-tab"
             >
               <ProductReview></ProductReview>
-            </div>
-            {/* End tab-panel-item */}
-
-            {/* Start tab-panel-item */}
-            <div
-              className="tab-pane fade"
-              id="nav-resale-condition"
-              role="tabpanel"
-              aria-labelledby="nav-resale-condition-tab"
-            >
-              <ResaleCondition/>
             </div>
             {/* End tab-panel-item */}
           </div>

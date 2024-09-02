@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import { FaCheck, FaRegEye, FaRegStar, FaStar } from "react-icons/fa6";
 
 const ResaleProductDetailsContent = () => {
@@ -46,9 +46,9 @@ const ResaleProductDetailsContent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="product-details-price-area flex-column-reverse gap-0 d-flex">
+                <div className="product-details-price-area align-items-center d-flex">
                     <strong>
-                        <span>৳</span>
+                        <span>৳ </span>
                         442
                     </strong>
                     <del>৳ 562.00</del>
@@ -98,7 +98,6 @@ const ResaleProductDetailsContent = () => {
                                         +
                                     </button>
                                 </div>
-                                <div>74 pieces available</div>
                             </div>
                         </div>
                         <div class="product-details-add-cart-area d-flex align-items-center">
