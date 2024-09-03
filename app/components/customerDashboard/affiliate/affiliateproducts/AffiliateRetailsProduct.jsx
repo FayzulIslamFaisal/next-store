@@ -11,6 +11,7 @@ import AffiliateRetailsProductInfo from "./AffiliateRetailsProductInfo";
 import RetailListViewProductInfo from "./RetailListViewProductInfo";
 import AffiliateToggleButton from "./AffiliateToggleButton";
 import Swal from "sweetalert2";
+import Pagination from "@/app/components/productCategory/Pagination";
 
 // const AffiliateToggleButton = dynamic(() => import("./AffiliateToggleButton"));
 // const AffiliateRetailsProductInfo = dynamic(() =>
@@ -31,12 +32,23 @@ const AffiliateRetailsProduct = () => {
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
     const baseUrl = window?.location?.origin;
-    let referralLink=baseUrl
+    let referralLink = baseUrl
     const [copied, setCopied] = useState(false);
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPage, setCurrentPage] = useState(1); // New state for current page
+
+    useEffect(() => {
+        const page = searchParams.get("page");
+        if (page && parseInt(page) !== currentPage) {
+            setCurrentPage(parseInt(page));
+        }
+    }, [searchParams, currentPage]);
+
+    const limit = 12; //Per Page Category
 
     const handleCopy = () => {
         setCopied(true);
-        
+
         let timerInterval;
         Swal.fire({
             title: "Referral Link Copied!",
@@ -95,25 +107,29 @@ const AffiliateRetailsProduct = () => {
         if (status === "authenticated" && session?.accessToken && outletId) {
             const fetchRetailProducts = async () => {
                 try {
-                    let params = {};
+                    let params = {
+                        page: currentPage,
+                    };
                     if (selectedCategory) params.categoryId = selectedCategory;
                     if (searchProduct) params.search = searchProduct;
                     const retailProductInfo = await getAffiliateRetailProduct(
                         session.accessToken,
                         outletId,
-                        params
+                        params, 
+                        limit
                     );
-                    const retailProductData =
-                        retailProductInfo?.results?.affiliate_retail_products
-                            ?.data || [];
-                    setRetailProduct(retailProductData);
+                    const retailProductData = retailProductInfo?.results?.affiliate_retail_products;
+                    setRetailProduct(retailProductData?.data);
+                    setLastPage(retailProductData?.last_page || 1);
+                    console.log({retailProductData});
+                    
                 } catch (error) {
                     console.error("Failed to fetch retail products:", error);
                 }
             };
             fetchRetailProducts();
         }
-    }, [status, session, outletId, selectedCategory, searchProduct]);
+    }, [status, session, outletId, selectedCategory, searchProduct, currentPage, limit]);
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -232,6 +248,9 @@ const AffiliateRetailsProduct = () => {
                         />
                     )}
                 </Suspense>
+                <div className=" pt-3">
+                    <Pagination currentPage={currentPage} lastPage={lastPage} />
+                </div>
             </div>
         </>
     );

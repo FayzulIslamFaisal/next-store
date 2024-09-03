@@ -76,7 +76,7 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                                 opacity: 1,
                                             }}
                                         >
-                                            ADD TO CART
+                                            Buy Now
                                         </a>
                                     </div>
                                 </div>
