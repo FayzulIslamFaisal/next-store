@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { getAffiliateContainer } from "@/app/services/affiliate/affiliateproducts/getAffiliateContainer";
 import ContainerBookingProduct from "./ContainerBookingProduct";
 import ContainerOrderDetails from "./ContainerOrderDetails";
@@ -21,8 +21,7 @@ const ContainerBooking = () => {
                 if (containerResponse.code === 200) {
                     setContainerData(containerResponse.results);
                     setContainerProduct(containerResponse?.results?.products);
-                }
-                else {
+                } else {
                     console.log(containerResponse.message);
                 }
             } catch (error) {
@@ -32,9 +31,11 @@ const ContainerBooking = () => {
         fetchRetailProducts();
     }, [session]);
 
-    const availableQuantity = containerData?.quantity - containerData?.booked_quantity;
-    const availableValue = containerData?.container_value - containerData?.booked_value;
-    
+    const availableQuantity =
+        containerData?.quantity - containerData?.booked_quantity;
+    const availableValue =
+        containerData?.container_value - containerData?.booked_value;
+
     return (
         <>
             <div
@@ -47,8 +48,9 @@ const ContainerBooking = () => {
                     containerProduct={containerProduct}
                     selectedProducts={selectedProducts}
                     setSelectedProducts={setSelectedProducts}
+                    containerId={containerData.id}
                 />
-                
+
                 <ContainerOrderDetails
                     selectedProducts={selectedProducts}
                     setSelectedProducts={setSelectedProducts}

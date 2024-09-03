@@ -2,8 +2,9 @@ import Image from "next/image";
 import CustomButton from "../CustomButton";
 import ProductQuestions from "./ProductDiscussion";
 import ProductReview from "./ProductReview";
+import ResaleCondition from "./ResaleCondition";
 
-const ProductLongDescription = ({ productInfo }) => {
+const ContainerProductLongDescription = ({ productInfo }) => {
     return (
         <div className="row product-long-discription-area">
             <div className="col-md-12">
@@ -16,6 +17,16 @@ const ProductLongDescription = ({ productInfo }) => {
                         >
                             <CustomButton
                                 className="nav-link active"
+                                id="nav-resale-condition-tab"
+                                dataBsToggle="tab"
+                                dataBsTarget="#nav-resale-condition"
+                                type="button"
+                                role="tab"
+                            >
+                                Container Condition
+                            </CustomButton>
+                            <CustomButton
+                                className="nav-link"
                                 id="nav-specification-tab"
                                 dataBsToggle="tab"
                                 dataBsTarget="#nav-specification"
@@ -59,20 +70,25 @@ const ProductLongDescription = ({ productInfo }) => {
                     <div className="tab-content " id="nav-tabContent">
                         <div
                             className="tab-pane fade active show"
+                            id="nav-resale-condition"
+                            role="tabpanel"
+                            aria-labelledby="nav-resale-condition-tab"
+                        >
+                            <div>
+                                <h2>Coming Soon</h2>
+                            </div>
+                        </div>
+
+                        <div
+                            className="tab-pane fade"
                             id="nav-specification"
                             role="tabpanel"
                         >
                             <div
-                                className="tab-pane fade active show"
-                                id="nav-specification"
-                                role="tabpanel"
-                            >
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: productInfo?.specification,
-                                    }}
-                                />
-                            </div>
+                                dangerouslySetInnerHTML={{
+                                    __html: productInfo?.specification,
+                                }}
+                            />
                         </div>
 
                         <div
@@ -112,4 +128,4 @@ const ProductLongDescription = ({ productInfo }) => {
     );
 };
 
-export default ProductLongDescription;
+export default ContainerProductLongDescription;
