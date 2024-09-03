@@ -59,11 +59,8 @@ const ProductDetailsContent = ({ productInfo }) => {
                     </div>
                 </div>
                 <div className="product-details-price-area d-flex align-items-center">
-                    <strong>
-                        <span>৳</span>
-                        {productInfo?.after_discount_mrp_price}
-                    </strong>
-                    <del>৳ {productInfo?.mrp_price}</del>
+                    <strong>{`৳ ${productInfo?.trade_price}`}</strong>
+                    <del>{`৳ ${productInfo?.mrp_price}`}</del>
                 </div>
                 <div className="product-short-description-area">
                     <div>

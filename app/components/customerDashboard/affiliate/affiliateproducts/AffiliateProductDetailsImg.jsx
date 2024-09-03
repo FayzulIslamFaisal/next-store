@@ -6,6 +6,8 @@ import Slider from "react-slick";
 
 function AffiliateProductDetailsImg({ productGallery, productDetails }) {
     const defaultImageUrl = `${NagadhatPublicUrl}/${productDetails?.product_thumbnail}`;
+    const productGalleryPath = productGallery?.path;
+
     var settings = {
         dots: false,
         infinite: false,

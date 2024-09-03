@@ -69,7 +69,9 @@ const ResaleProductDetailsPage = ({ params }) => {
             </div>
             <div>
                 <Suspense fallback={<h1>Loading...</h1>}>
-                    <ResaleProductLongDescription />
+                    <ResaleProductLongDescription
+                        productInfo={productDetails}
+                    />
                 </Suspense>
             </div>
         </div>

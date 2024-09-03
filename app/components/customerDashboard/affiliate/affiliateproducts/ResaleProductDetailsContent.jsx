@@ -120,13 +120,6 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
                         </div>
                     </form>
                 </div>
-                <div className="product-short-description-area pb-0">
-                    <div>
-                        <p>
-                            <span>{productDetails?.short_description}</span>
-                        </p>
-                    </div>
-                </div>
             </div>
         </>
     );
