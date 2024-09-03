@@ -1,9 +1,9 @@
 import { apiBaseUrl } from "@/app/utils";
 
-export const getAffiliateRetailProduct = async (token, outletId, params = {}) => {
+export const getAffiliateRetailProduct = async (token, outletId, params = {}, limit = 12) => {
     try {
         const queryString = new URLSearchParams(params).toString();
-        const url = `${apiBaseUrl}/affiliate-retail-products/${outletId}?${queryString}`;
+        const url = `${apiBaseUrl}/affiliate-retail-products/${outletId}?${queryString}&limit=${limit}`;
 
         const response = await fetch(url, {
             method: "GET",
