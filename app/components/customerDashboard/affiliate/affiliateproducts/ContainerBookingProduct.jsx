@@ -1,11 +1,9 @@
 "use client";
-import { useState } from "react";
+
 import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import AffiliateProductDetails from "./AffiliateProductDetails";
-import { getAffiliateContainerDetails } from "@/app/services/affiliate/affiliateproducts/getAffiliateContainerDetails";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const ContainerBookingProduct = ({
     containerProduct,
@@ -13,6 +11,8 @@ const ContainerBookingProduct = ({
     setSelectedProducts,
     containerId,
 }) => {
+    const searchParams = useSearchParams();
+    const tab = searchParams.get("tab") || "retails-tab";
     // Toggle product selection
     const handleSelectProduct = (product) => {
         if (selectedProducts.some((p) => p.id === product.id)) {
@@ -80,7 +80,7 @@ const ContainerBookingProduct = ({
                                     <h4>{product.product_name}</h4>
                                     <div className="add-to-cart-btn">
                                         <Link
-                                            href={`/container-product-details/${product?.id}/${containerId}`}
+                                            href={`/container-product-details/${product?.id}/${containerId}/${tab}`}
                                             className="add-to-cart-link "
                                         >
                                             View Details
