@@ -57,7 +57,11 @@ const OrderInvoicePage = () => {
     }, [session, status]);
 
     if (status === "loading") {
-        return <h1>Loading...</h1>;
+        return (
+            <div className=" d-flex align-items-center justify-content-center vh-100">
+                <h1 className="text-center">Loading... </h1>;
+            </div>
+        );
     }
     const invoiceProduct = orderInvoice?.products;
 

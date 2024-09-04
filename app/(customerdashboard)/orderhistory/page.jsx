@@ -15,9 +15,9 @@ const CustomerDashboardPage = () => {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        const page = searchParams.get('page');
+        const page = searchParams.get("page");
         if (page && page !== currentPage) {
-            setCurrentPage( parseInt(page));
+            setCurrentPage(parseInt(page));
         }
     }, [searchParams, currentPage]);
     const limit = 20; //Per Page Category
@@ -25,17 +25,25 @@ const CustomerDashboardPage = () => {
     useEffect(() => {
         if (status === "authenticated") {
             const getOrderDataFetch = async () => {
-                const orderData = await getOrdersByUserId(session?.accessToken, currentPage, limit);
+                const orderData = await getOrdersByUserId(
+                    session?.accessToken,
+                    currentPage,
+                    limit
+                );
                 const orderResult = orderData?.results?.data;
                 setCustomerOrders(orderResult);
-                setLastPage(orderData?.results?.last_page)
+                setLastPage(orderData?.results?.last_page);
             };
             getOrderDataFetch();
         }
     }, [status, session, currentPage]);
 
     if (status === "loading") {
-        return <div>Loading...</div>;
+        return (
+            <div className=" d-flex align-items-center justify-content-center vh-100">
+                <h1 className="text-center">Loading... </h1>;
+            </div>
+        );
     }
 
     if (status === "unauthenticated") {
@@ -43,7 +51,11 @@ const CustomerDashboardPage = () => {
     }
     return (
         <>
-            <CustomerRightsids customerOrders={customerOrders} lastPage={lastPage} currentPage={currentPage}/>
+            <CustomerRightsids
+                customerOrders={customerOrders}
+                lastPage={lastPage}
+                currentPage={currentPage}
+            />
         </>
     );
 };

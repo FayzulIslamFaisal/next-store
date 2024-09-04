@@ -81,7 +81,11 @@ const OrderViewWrapp = () => {
     }, [session, status, orderId]);
 
     if (status === "loading") {
-        return <h1>Loading...</h1>;
+        return (
+            <div className=" d-flex align-items-center justify-content-center vh-100">
+                <h1 className="text-center">Loading... </h1>;
+            </div>
+        );
     }
 
     if (status === "unauthenticated") {

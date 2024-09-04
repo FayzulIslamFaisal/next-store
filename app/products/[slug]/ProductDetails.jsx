@@ -24,7 +24,7 @@ const ProductSinglePage = ({ params }) => {
         async function fetchData() {
             const productInfo = await getProductDetails(pathName);
             setSuccessCode(productInfo?.code);
-            if (productInfo.message === "Product Found Other Outlet") {
+            if (productInfo?.message === "Product Found Other Outlet") {
                 setOutletInfo(productInfo?.results?.outlets)
                 console.log("Product Found Other Outlet");
 

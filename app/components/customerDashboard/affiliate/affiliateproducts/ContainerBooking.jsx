@@ -4,7 +4,8 @@ import ContainerBookingProduct from "./ContainerBookingProduct";
 import ContainerOrderDetails from "./ContainerOrderDetails";
 import ContainerTopInfo from "./ContainerTopInfo";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 
 const ContainerBooking = () => {
     const [containerData, setContainerData] = useState({});
@@ -43,20 +44,22 @@ const ContainerBooking = () => {
                 id="container-booking"
                 role="tabpanel"
             >
-                <ContainerTopInfo containerData={containerData} />
-                <ContainerBookingProduct
-                    containerProduct={containerProduct}
-                    selectedProducts={selectedProducts}
-                    setSelectedProducts={setSelectedProducts}
-                    containerId={containerData.id}
-                />
+                <Suspense fallback={<DefaultLoader />}>
+                    <ContainerTopInfo containerData={containerData} />
+                    <ContainerBookingProduct
+                        containerProduct={containerProduct}
+                        selectedProducts={selectedProducts}
+                        setSelectedProducts={setSelectedProducts}
+                        containerId={containerData.id}
+                    />
 
-                <ContainerOrderDetails
-                    selectedProducts={selectedProducts}
-                    setSelectedProducts={setSelectedProducts}
-                    availableQuantity={availableQuantity}
-                    availableValue={availableValue}
-                />
+                    <ContainerOrderDetails
+                        selectedProducts={selectedProducts}
+                        setSelectedProducts={setSelectedProducts}
+                        availableQuantity={availableQuantity}
+                        availableValue={availableValue}
+                    />
+                </Suspense>
             </div>
         </>
     );
