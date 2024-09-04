@@ -6,6 +6,7 @@ import AffiliateDashboardRank from "./AffiliateDashboardRank";
 import AffiliateReferFriend from "./AffiliateReferFriend";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import ApexChart from "./ApexChart";
 
 const AffiliateDashboardWrapp = () => {
     const [affiliateData, setAffiliateData] = useState({});
@@ -29,7 +30,7 @@ const AffiliateDashboardWrapp = () => {
             affiliateDashboard();
         }
     }, [status, session]);
-    
+
 
     return (
         <>
@@ -48,6 +49,12 @@ const AffiliateDashboardWrapp = () => {
                     <AffiliateDashboardRank affiliateData={affiliateData} />
                     <AffiliateReferFriend affiliateData={affiliateData} />
                     <AffiliateDashboardInfo affiliateData={affiliateData} />
+
+                    <div className="row px-4 pb-4">
+                        <div className=" pt-3 col-6 border rounded">
+                            <ApexChart />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
