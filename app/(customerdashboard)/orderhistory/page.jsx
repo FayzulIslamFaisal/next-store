@@ -46,9 +46,7 @@ const CustomerDashboardPage = () => {
         );
     }
 
-    if (status === "unauthenticated") {
-        return <div>Please log in to view your orders.</div>;
-    }
+    
     return (
         <>
             <CustomerRightsids

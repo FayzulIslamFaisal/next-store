@@ -58,7 +58,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                 )}
                                                 <td>
                                                     <div className="customer-dashboard-order-history-actions">
-                                                        <button>
+                                                        <button title="Order View">
                                                             <Link
                                                                 href={`/orderview?orderid=${order_id}`}
                                                                 style={{
@@ -68,7 +68,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaEye />
                                                             </Link>
                                                         </button>
-                                                        <button>
+                                                        <button title="Order invoice">
                                                             <Link
                                                                 href={`/orderinvoice?orderId=${order_id}`}
                                                                 style={{
@@ -78,7 +78,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaDownload />
                                                             </Link>
                                                         </button>
-                                                        <button>
+                                                        <button title="Order Cancel">
                                                             <FaXmark />
                                                         </button>
                                                     </div>
