@@ -91,6 +91,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     const settings = {
         // centerPadding: "60px",
         dots: false,
+        infinite: flashSaleProductList?.length > 2 ? true : false,
         // infinite: false,
         initialSlide: 0,
         speed: 500,

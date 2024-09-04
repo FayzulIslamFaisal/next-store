@@ -42,7 +42,7 @@ const AffiliateRetailsProduct = () => {
         if (page && parseInt(page) !== currentPage) {
             setCurrentPage(parseInt(page));
         }
-    }, [searchParams, currentPage]);
+    }, [searchParams]);
 
     const limit = 12; //Per Page Category
 
@@ -92,11 +92,13 @@ const AffiliateRetailsProduct = () => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         if (selectedCategory) {
             newSearchParams.set("categoryId", selectedCategory);
+            newSearchParams.set("page", 1);
         } else {
             newSearchParams.delete("categoryId");
         }
         if (searchProduct) {
             newSearchParams.set("search", searchProduct);
+            newSearchParams.set("page", 1);
         } else {
             newSearchParams.delete("search");
         }
