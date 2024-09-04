@@ -202,6 +202,7 @@ function AddToCartButton({
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
                         location_id: districtId,
+                        outlet_id: productInfo?.outlet_id,
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
