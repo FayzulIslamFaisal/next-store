@@ -16,15 +16,18 @@ const ContainerBookingProduct = ({
     // Toggle product selection
     const handleSelectProduct = (product) => {
         if (selectedProducts.some((p) => p.id === product.id)) {
-            setSelectedProducts(
-                selectedProducts.filter((p) => p.id !== product.id)
-            );
+            setSelectedProducts(selectedProducts.filter(p => p.id !== product.id));
         } else {
             setSelectedProducts([
                 ...selectedProducts,
                 { ...product, quantity: 1 },
             ]);
         }
+    };
+
+    // Handle Link click event
+    const handleLinkClick = (event) => {
+        event.stopPropagation();
     };
 
     return (
@@ -82,6 +85,8 @@ const ContainerBookingProduct = ({
                                         <Link
                                             href={`/container-product-details/${product?.id}/${containerId}/${tab}`}
                                             className="add-to-cart-link "
+                                            target="_blank"
+                                            onClick={handleLinkClick} // Stop event propagation
                                         >
                                             View Details
                                         </Link>
