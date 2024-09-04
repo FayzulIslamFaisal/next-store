@@ -12,6 +12,7 @@ import RetailListViewProductInfo from "./RetailListViewProductInfo";
 import AffiliateToggleButton from "./AffiliateToggleButton";
 import Swal from "sweetalert2";
 import Pagination from "@/app/components/productCategory/Pagination";
+import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 
 // const AffiliateToggleButton = dynamic(() => import("./AffiliateToggleButton"));
 // const AffiliateRetailsProductInfo = dynamic(() =>
@@ -32,7 +33,7 @@ const AffiliateRetailsProduct = () => {
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
     const baseUrl = window?.location?.origin;
-    let referralLink = baseUrl
+    let referralLink = baseUrl;
     const [copied, setCopied] = useState(false);
     const [lastPage, setLastPage] = useState(1); // New state for last page
     const [currentPage, setCurrentPage] = useState(1); // New state for current page
@@ -117,21 +118,29 @@ const AffiliateRetailsProduct = () => {
                     const retailProductInfo = await getAffiliateRetailProduct(
                         session.accessToken,
                         outletId,
-                        params, 
+                        params,
                         limit
                     );
-                    const retailProductData = retailProductInfo?.results?.affiliate_retail_products;
+                    const retailProductData =
+                        retailProductInfo?.results?.affiliate_retail_products;
                     setRetailProduct(retailProductData?.data);
                     setLastPage(retailProductData?.last_page || 1);
-                    console.log({retailProductData});
-                    
+                    console.log({ retailProductData });
                 } catch (error) {
                     console.error("Failed to fetch retail products:", error);
                 }
             };
             fetchRetailProducts();
         }
-    }, [status, session, outletId, selectedCategory, searchProduct, currentPage, limit]);
+    }, [
+        status,
+        session,
+        outletId,
+        selectedCategory,
+        searchProduct,
+        currentPage,
+        limit,
+    ]);
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -210,7 +219,7 @@ const AffiliateRetailsProduct = () => {
                         >
                             <option value="">Select Category</option>
                             {Array.isArray(allCategories) &&
-                                allCategories.length > 0 ? (
+                            allCategories.length > 0 ? (
                                 allCategories.map((category) => (
                                     <option
                                         key={category.id}
@@ -231,7 +240,7 @@ const AffiliateRetailsProduct = () => {
                         isGridView={isGridView}
                     />
                 </div>
-                <Suspense fallback={<h1>Retail Products Loading...</h1>}>
+                <Suspense fallback={<DefaultLoader />}>
                     {isGridView ? (
                         <AffiliateRetailsProductInfo
                             retailProduct={retailProduct}

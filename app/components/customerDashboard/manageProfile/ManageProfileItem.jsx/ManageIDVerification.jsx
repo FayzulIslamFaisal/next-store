@@ -84,7 +84,11 @@ const ManageIDVerification = () => {
     };
 
     if (status === "loading") {
-        return <div>Loading...</div>;
+        return (
+            <div className=" d-flex align-items-center justify-content-center vh-100">
+                <h1 className="text-center">Loading... </h1>;
+            </div>
+        );
     }
 
     return (

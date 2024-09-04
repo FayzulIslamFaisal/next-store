@@ -45,7 +45,11 @@ const MobileNav = () => {
     }, []);
 
     if (status === "loading") {
-        return <p>Loading....</p>;
+        return (
+            <div className=" d-flex align-items-center justify-content-center vh-100">
+                <h1 className="text-center">Loading... </h1>;
+            </div>
+        );
     }
 
     return (
@@ -88,20 +92,20 @@ const MobileNav = () => {
                                     height={21}
                                 />
                             </div>
-                            {
-                                session &&
+                            {session && (
                                 <div
                                     className="fs-2 text-white dashboard-side-navbar-togol"
                                     onClick={toggleSidebar}
                                 >
                                     <FaBars />
                                 </div>
-                            }
+                            )}
                         </div>
                     </div>
                     <div
-                        className={`mobile-popup-search-area ${popupSearch ? "active" : ""
-                            }`}
+                        className={`mobile-popup-search-area ${
+                            popupSearch ? "active" : ""
+                        }`}
                         ref={searchAreaRef}
                     >
                         <form action="#">
@@ -127,8 +131,9 @@ const MobileNav = () => {
                         </form>
                     </div>
                     <aside
-                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${isSidebarOpen ? "start-0" : "left-100"
-                            } `}
+                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${
+                            isSidebarOpen ? "start-0" : "left-100"
+                        } `}
                     >
                         <div
                             className="fs-2 dashboard-side-navbar-togol-mobile"

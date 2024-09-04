@@ -22,7 +22,11 @@ const CustomerDashboardRightSide = () => {
     const { data: session, status } = useSession();
 
     if (status === "loading") {
-        return <p>Loading....</p>;
+        return (
+            <div className=" d-flex align-items-center justify-content-center vh-100">
+                <h1 className="text-center">Loading... </h1>;
+            </div>
+        );
     }
 
     const handleToggleMenu = (event, index, address) => {
