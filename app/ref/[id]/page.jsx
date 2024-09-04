@@ -53,7 +53,11 @@ const ReferralPage = ({ params }) => {
         <div className="container">
             <div className="d-flex align-items-center justify-content-center vh-100  ">
                 <div className="d-flex align-items-center justify-content-center">
-                    {loading && <h1>Loading....</h1>}
+                    {loading && (
+                        <div className=" d-flex align-items-center justify-content-center vh-100">
+                            <h1 className="text-center">Loading... </h1>;
+                        </div>
+                    )}
                     {error && (
                         <p className="text-center text-danger">{error}</p>
                     )}

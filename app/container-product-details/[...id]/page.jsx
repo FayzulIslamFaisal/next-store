@@ -24,7 +24,7 @@ const AffiliateProductDetailsPage = ({ params }) => {
             }
         };
         containerDetailHandle();
-    }, [status, Id, containerId]);
+    }, [status, Id, containerId, session?.accessToken]);
 
     return (
         <PrivateRoute>
@@ -33,7 +33,7 @@ const AffiliateProductDetailsPage = ({ params }) => {
                     fallback={
                         <div className="d-flex align-items-center justify-content-center vh-100 ">
                             <h1 className="d-flex align-items-center justify-content-center">
-                                Loading....
+                                Loading Container Product....
                             </h1>
                         </div>
                     }
