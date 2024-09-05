@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import NoDataFound from "@/app/components/NoDataFound";
 
-const ResaleProducts = () => {
+const ResaleProducts = ({ isActive }) => {
     const [isGridView, setIsGridView] = useState(true);
     const [resaleProduct, setResaleProduct] = useState([]);
     const [outletId, setOutletId] = useState(0);
@@ -78,7 +78,9 @@ const ResaleProducts = () => {
     return (
         <>
             <div
-                className="tab-pane fade container-booking-body-tab"
+                className={`tab-pane fade ${
+                    isActive ? "show active" : ""
+                } container-booking-body-tab`}
                 id="resale"
                 role="tabpanel"
             >

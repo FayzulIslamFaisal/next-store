@@ -1,7 +1,9 @@
+"use client";
 import NoDataFound from "@/app/components/NoDataFound";
 import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import CopyToClipboard from "react-copy-to-clipboard";
 
 const AffiliateRetailsProductInfo = ({
@@ -11,6 +13,8 @@ const AffiliateRetailsProductInfo = ({
     referralLink,
     copied,
 }) => {
+    const searchParams = useSearchParams();
+    const tab = searchParams.get("tab") || "retails-tab";
     return (
         <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 g-3">
             {retailProduct.length > 0 ? (
@@ -25,7 +29,7 @@ const AffiliateRetailsProductInfo = ({
                                 <div className="flash-sale-content-img image-hover-effect">
                                     <Link
                                         // href={`/affiliate-product-details/${product.slug}`}
-                                        href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}`}
+                                        href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
                                         style={{
                                             width: "100%",
                                             height: "150px",
@@ -55,7 +59,7 @@ const AffiliateRetailsProductInfo = ({
                                 <div className="flash-sale-content-info text-hover-effect">
                                     <h4 title={product.product_name}>
                                         <Link
-                                            href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}`}
+                                            href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
                                         >
                                             {truncateTitle(
                                                 product.product_name,

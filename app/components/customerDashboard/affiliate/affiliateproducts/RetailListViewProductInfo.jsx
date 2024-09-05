@@ -1,7 +1,9 @@
+"use client";
 import NoDataFound from "@/app/components/NoDataFound";
 import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import CopyToClipboard from "react-copy-to-clipboard";
 
 const RetailListViewProductInfo = ({
@@ -11,6 +13,8 @@ const RetailListViewProductInfo = ({
     referralLink,
     copied,
 }) => {
+    const searchParams = useSearchParams();
+    const tab = searchParams.get("tab") || "retails-tab";
     return (
         <div className="table-responsive-xl">
             <div
@@ -36,7 +40,7 @@ const RetailListViewProductInfo = ({
                                             }}
                                         >
                                             <Link
-                                                href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}`}
+                                                href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
                                             >
                                                 <Image
                                                     fill
@@ -67,7 +71,7 @@ const RetailListViewProductInfo = ({
                                             }}
                                         >
                                             <Link
-                                                href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}`}
+                                                href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
                                             >
                                                 {truncateTitle(
                                                     product.product_name,

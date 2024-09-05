@@ -1,9 +1,17 @@
+"use client";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 import Pagination from "../../productCategory/Pagination";
 
-const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
+const CustomerRightsids = ({
+    customerOrders,
+    lastPage,
+    currentPage,
+    session,
+}) => {
+    const handleOrderCanceled = (orderID) => {};
+
     return (
         <>
             <div className="customer-dashboard-order-history-area">
@@ -58,7 +66,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                 )}
                                                 <td>
                                                     <div className="customer-dashboard-order-history-actions">
-                                                        <button>
+                                                        <button title="Order View">
                                                             <Link
                                                                 href={`/orderview?orderid=${order_id}`}
                                                                 style={{
@@ -68,7 +76,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaEye />
                                                             </Link>
                                                         </button>
-                                                        <button>
+                                                        <button title="Order invoice">
                                                             <Link
                                                                 href={`/orderinvoice?orderId=${order_id}`}
                                                                 style={{
@@ -78,7 +86,14 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaDownload />
                                                             </Link>
                                                         </button>
-                                                        <button>
+                                                        <button
+                                                            title="Order Cancel"
+                                                            onClick={() =>
+                                                                handleOrderCanceled(
+                                                                    order_id
+                                                                )
+                                                            }
+                                                        >
                                                             <FaXmark />
                                                         </button>
                                                     </div>
