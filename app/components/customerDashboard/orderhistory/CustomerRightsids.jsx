@@ -1,9 +1,46 @@
+"use client";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 import Pagination from "../../productCategory/Pagination";
+import { postOrderCancel } from "@/app/services/userdashboard/postOrderCancel";
+import { toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 
-const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
+const CustomerRightsids = ({
+    customerOrders,
+    lastPage,
+    currentPage,
+    session,
+    setOrderCancel,
+    orderCancel,
+}) => {
+    const handleOrderCanceled = async (orderID) => {
+        try {
+            const token = session?.accessToken;
+            if (!token) {
+                toast.error("Authorization token is missing.");
+                return;
+            }
+
+            const response = await postOrderCancel(orderID, token);
+
+            if (response.code === 200 && !response?.error) {
+                setOrderCancel(!orderCancel);
+                toast.success(response?.message?.message);
+            } else {
+                console.error("Error response:", response);
+                toast.error(
+                    response?.message?.message || "Something went wrong"
+                );
+            }
+        } catch (error) {
+            console.error("Error occurred while canceling the order:", error);
+            toast.error("An error occurred while canceling the order.");
+        }
+    };
+
     return (
         <>
             <div className="customer-dashboard-order-history-area">
@@ -41,24 +78,27 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                 <td>{order_date}</td>
                                                 <td>{grand_total}</td>
                                                 <td>{order_status}</td>
-                                                {payment_status === "Paid" ? (
-                                                    <td className="paid">
-                                                        {payment_status}
-                                                    </td>
-                                                ) : (
-                                                    <td>
-                                                        {payment_status}{" "}
-                                                        <Link
-                                                            href={`/paynow?orderId=${order_id}`}
-                                                            className="customer-dashboard-order-history-pay"
-                                                        >
-                                                            Pay Now
-                                                        </Link>
-                                                    </td>
-                                                )}
+
+                                                <td className="paid">
+                                                    {order_status !==
+                                                        "Canceled" &&
+                                                        payment_status ===
+                                                            "Unpaid" && (
+                                                            <>
+                                                                {payment_status}
+                                                                <Link
+                                                                    href={`/paynow?orderId=${order_id}`}
+                                                                    className="customer-dashboard-order-history-pay"
+                                                                >
+                                                                    Pay Now
+                                                                </Link>
+                                                            </>
+                                                        )}
+                                                </td>
+
                                                 <td>
                                                     <div className="customer-dashboard-order-history-actions">
-                                                        <button>
+                                                        <button title="Order View">
                                                             <Link
                                                                 href={`/orderview?orderid=${order_id}`}
                                                                 style={{
@@ -68,7 +108,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaEye />
                                                             </Link>
                                                         </button>
-                                                        <button>
+                                                        <button title="Order invoice">
                                                             <Link
                                                                 href={`/orderinvoice?orderId=${order_id}`}
                                                                 style={{
@@ -78,9 +118,21 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaDownload />
                                                             </Link>
                                                         </button>
-                                                        <button>
-                                                            <FaXmark />
-                                                        </button>
+                                                        {order_status ===
+                                                        "Canceled" ? (
+                                                            ""
+                                                        ) : (
+                                                            <button
+                                                                title="Order Cancel"
+                                                                onClick={() =>
+                                                                    handleOrderCanceled(
+                                                                        order_id
+                                                                    )
+                                                                }
+                                                            >
+                                                                <FaXmark />
+                                                            </button>
+                                                        )}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -96,7 +148,7 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                 ) : (
                     <div className="d-flex justify-content-center align-items-center flex-column gap-3 p-4">
                         <FaRegFaceFrown className="fs-2" />
-                        <p className="fs-5">Nothing Found</p>
+                        <p className="fs-5">Nothing Found </p>
                     </div>
                 )}
             </div>

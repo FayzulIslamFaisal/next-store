@@ -22,7 +22,7 @@ import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 //     import("./RetailListViewProductInfo")
 // );
 
-const AffiliateRetailsProduct = () => {
+const AffiliateRetailsProduct = ({ isActive }) => {
     const [isGridView, setIsGridView] = useState(true);
     const [retailProduct, setRetailProduct] = useState([]);
     const [outletId, setOutletId] = useState(0);
@@ -125,7 +125,7 @@ const AffiliateRetailsProduct = () => {
                         retailProductInfo?.results?.affiliate_retail_products;
                     setRetailProduct(retailProductData?.data);
                     setLastPage(retailProductData?.last_page || 1);
-                    console.log({ retailProductData });
+                    // console.log({ retailProductData });
                 } catch (error) {
                     console.error("Failed to fetch retail products:", error);
                 }
@@ -180,7 +180,9 @@ const AffiliateRetailsProduct = () => {
     return (
         <>
             <div
-                className="tab-pane fade show active container-booking-body-tab"
+                className={`tab-pane fade ${
+                    isActive ? "show active" : ""
+                } container-booking-body-tab`}
                 id="retails"
                 role="tabpanel"
             >

@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { Suspense, useEffect, useState } from "react";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 
-const ContainerBooking = () => {
+const ContainerBooking = ({ isActive }) => {
     const [containerData, setContainerData] = useState({});
     const [containerProduct, setContainerProduct] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -40,7 +40,7 @@ const ContainerBooking = () => {
     return (
         <>
             <div
-                className="tab-pane fade"
+                className={`tab-pane fade ${isActive ? "show active" : ""}`}
                 id="container-booking"
                 role="tabpanel"
             >

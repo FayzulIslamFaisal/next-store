@@ -1,8 +1,12 @@
+"use client";
 import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const ResaleProductsInfo = ({ resaleProduct, outletId }) => {
+    const searchParams = useSearchParams();
+    const tab = searchParams.get("tab") || "retails-tab";
     return (
         <div className="row row-cols-auto row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 g-3">
             {resaleProduct?.map((product) => (
@@ -10,7 +14,7 @@ const ResaleProductsInfo = ({ resaleProduct, outletId }) => {
                     <div className="flash-sale-content-bg nh-hover-box-shadow">
                         <div className="flash-sale-content-img image-hover-effect">
                             <Link
-                                href={`/resale-product-details/${product.id}`}
+                                href={`/resale-product-details/${product.id}/${tab}`}
                             >
                                 <Image
                                     height={200}
@@ -24,7 +28,7 @@ const ResaleProductsInfo = ({ resaleProduct, outletId }) => {
                         <div className="flash-sale-content-info text-hover-effect">
                             <h4 title={product.product_name}>
                                 <Link
-                                    href={`/resale-product-details/${product.id}`}
+                                    href={`/resale-product-details/${product.id}/${tab}`}
                                 >
                                     {truncateTitle(product.product_name, 50)}
                                 </Link>

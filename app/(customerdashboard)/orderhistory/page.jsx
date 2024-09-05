@@ -9,8 +9,10 @@ import { useSearchParams } from "next/navigation";
 const CustomerDashboardPage = () => {
     const [customerOrders, setCustomerOrders] = useState([]);
     const { data: session, status } = useSession();
-    const [lastPage, setLastPage] = useState(1); // New state for last page
-    const [currentPage, setCurrentPage] = useState(1); // New state for current pages
+    const [lastPage, setLastPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [orderCancel, setOrderCancel] = useState(true);
 
     const searchParams = useSearchParams();
 
@@ -36,7 +38,7 @@ const CustomerDashboardPage = () => {
             };
             getOrderDataFetch();
         }
-    }, [status, session, currentPage]);
+    }, [status, session, currentPage, orderCancel]);
 
     if (status === "loading") {
         return (
@@ -46,15 +48,15 @@ const CustomerDashboardPage = () => {
         );
     }
 
-    if (status === "unauthenticated") {
-        return <div>Please log in to view your orders.</div>;
-    }
     return (
         <>
             <CustomerRightsids
                 customerOrders={customerOrders}
                 lastPage={lastPage}
                 currentPage={currentPage}
+                session={session}
+                setOrderCancel={setOrderCancel}
+                orderCancel={orderCancel}
             />
         </>
     );
