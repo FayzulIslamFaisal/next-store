@@ -5,8 +5,6 @@ import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 import Pagination from "../../productCategory/Pagination";
 import { postOrderCancel } from "@/app/services/userdashboard/postOrderCancel";
 import { toast } from "react-toastify"; // Import Toastify
-import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
 
 const CustomerRightsids = ({
     customerOrders,
@@ -23,9 +21,7 @@ const CustomerRightsids = ({
                 toast.error("Authorization token is missing.");
                 return;
             }
-
             const response = await postOrderCancel(orderID, token);
-
             if (response.code === 200 && !response?.error) {
                 setOrderCancel(!orderCancel);
                 toast.success(response?.message?.message);
