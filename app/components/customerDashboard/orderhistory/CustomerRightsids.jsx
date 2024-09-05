@@ -1,9 +1,17 @@
+"use client";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 import Pagination from "../../productCategory/Pagination";
 
-const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
+const CustomerRightsids = ({
+    customerOrders,
+    lastPage,
+    currentPage,
+    session,
+}) => {
+    const handleOrderCanceled = (orderID) => {};
+
     return (
         <>
             <div className="customer-dashboard-order-history-area">
@@ -78,7 +86,14 @@ const CustomerRightsids = ({ customerOrders, lastPage, currentPage }) => {
                                                                 <FaDownload />
                                                             </Link>
                                                         </button>
-                                                        <button title="Order Cancel">
+                                                        <button
+                                                            title="Order Cancel"
+                                                            onClick={() =>
+                                                                handleOrderCanceled(
+                                                                    order_id
+                                                                )
+                                                            }
+                                                        >
                                                             <FaXmark />
                                                         </button>
                                                     </div>

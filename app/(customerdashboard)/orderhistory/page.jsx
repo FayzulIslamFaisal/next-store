@@ -46,13 +46,13 @@ const CustomerDashboardPage = () => {
         );
     }
 
-    
     return (
         <>
             <CustomerRightsids
                 customerOrders={customerOrders}
                 lastPage={lastPage}
                 currentPage={currentPage}
+                session={session}
             />
         </>
     );
