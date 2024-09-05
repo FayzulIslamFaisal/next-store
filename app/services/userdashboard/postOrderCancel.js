@@ -1,8 +1,10 @@
 
 
-import { apiBaseUrl } from "../utils";
+// import { apiBaseUrl } from "../utils";
 
-export const postOrderCancel = async (formData, token) => {
+import { apiBaseUrl } from "@/app/utils";
+
+export const postOrderCancel = async (orderID, token) => {
     try {
         const response = await fetch(`${apiBaseUrl}/order-cancel`, {
             method: "POST",
@@ -11,7 +13,7 @@ export const postOrderCancel = async (formData, token) => {
                 Accept: "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify({ order_id: orderID }),
         });
 
         return await response.json();
