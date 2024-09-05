@@ -49,10 +49,62 @@ const AffiliateDashboardWrapp = () => {
                     <AffiliateDashboardRank affiliateData={affiliateData} />
                     <AffiliateReferFriend affiliateData={affiliateData} />
                     <AffiliateDashboardInfo affiliateData={affiliateData} />
-
-                    <div className="row px-4 pb-4">
-                        <div className=" pt-3 col-6 border rounded">
-                            <ApexChart />
+                    <div className="p-3">
+                        <div className="row g-3 mb-4">
+                            <div className="col-lg-6">
+                                <div className="border rounded pt-3">
+                                    <div>
+                                        <ApexChart />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="border rounded">
+                                    <h3 className="px-2 pt-3 fs-6 fw-bold">Affiliate Bonus</h3>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">From us</th>
+                                                <th scope="col">Purpose</th>
+                                                <th scope="col">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>50 ৳</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>60 ৳</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>Larry the Bird</td>
+                                                <td>Thornton</td>
+                                                <td>50 ৳</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">4</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>60 ৳</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">5</th>
+                                                <td>Larry the Bird</td>
+                                                <td>Thornton</td>
+                                                <td>50 ৳</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

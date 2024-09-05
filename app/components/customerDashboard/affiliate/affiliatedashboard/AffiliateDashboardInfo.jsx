@@ -11,7 +11,7 @@ const AffiliateDashboardInfo = ({ affiliateData }) => {
     } = affiliateData;
     return (
         <>
-            <div className="row g-3 mb-4 customer-dashboard-display-area">
+            <div className="row g-3 customer-dashboard-display-area">
                 <div className="col-12 col-xl-3 col-md-6">
                     <div className="balance-area affiliate-display-card">
                         <h3>Wallet</h3>
