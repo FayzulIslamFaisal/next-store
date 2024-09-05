@@ -3,21 +3,23 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { getCustomerAllShippingAddress } from "@/app/services/getShippingCustomerAddresses";
 import { updateShippingAddress } from "@/app/services/updateShippingAddress";
 import ShippingAddressModal from "./ShippingAddressModal";
 import DashboardTopInfo from "./DashboardTopInfo";
 import AffiliatePartnerStatus from "./AffiliatePartnerStatus";
 import { getUserDashboard } from "@/app/services/userdashboard/getUserDashboard";
+import { deleteShippingAddress } from "@/app/services/userdashboard/deleteShippingAddress";
 
 const CustomerDashboardRightSide = () => {
     const [menuStates, setMenuStates] = useState({});
     const menuRefs = useRef([]);
     const [defaultAddress, setDefaultAddress] = useState(null);
     const [customerAddress, setCustomerAddress] = useState([]);
-    const [currentAddress, setCurrentAddress] = useState(null); // New state
+    const [currentAddress, setCurrentAddress] = useState(null);
     const [userDashboard, setUserDashboard] = useState({});
+    const [liveUpdate, setLiveUpdate] = useState(true);
 
     const { data: session, status } = useSession();
 
@@ -37,7 +39,7 @@ const CustomerDashboardRightSide = () => {
         }));
 
         if (!menuStates[index]) {
-            setCurrentAddress(address); // Set the current address for editing
+            setCurrentAddress(address);
         }
     };
 
@@ -87,7 +89,7 @@ const CustomerDashboardRightSide = () => {
             }
         };
         if (session) handleGetShippingAddress();
-    }, [session]);
+    }, [session, liveUpdate]);
 
     const handleSetDefaultAddress = async (id) => {
         const addAddressInfo = {
@@ -101,7 +103,6 @@ const CustomerDashboardRightSide = () => {
             );
             if (response) {
                 toast(response.message);
-                // Optionally refresh addresses or update state here
             }
         } catch (error) {
             console.error("Failed to update shipping address:", error);
@@ -129,114 +130,152 @@ const CustomerDashboardRightSide = () => {
         }
     }, [status, session]);
 
+    const handleDeleteAddress = async (addressID) => {
+        try {
+            const token = session?.accessToken;
+            if (!token) {
+                toast.error("Authorization token is missing.");
+                return;
+            }
+            const response = await deleteShippingAddress(addressID, token);
+            if (!response?.error) {
+                setLiveUpdate(!liveUpdate);
+                toast.success(response?.message);
+            } else {
+                toast.error(response?.message);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            toast.error(error.message || "Something went wrong");
+        }
+    };
+
     return (
-        <div className="customer-dashboard-section">
-            <DashboardTopInfo userDashboard={userDashboard} />
-            <div className="d-flex gap-3 flex-column flex-md-row">
-                <div className="customer-dashboard-card border-0 flex-1">
-                    <div className="p-3 border-bottom">
-                        <h2 className="mb-0 customer-dashboard-subtitle">
-                            Default Shipping Address
-                        </h2>
-                    </div>
-                    {customerAddress.length ? (
-                        <div className="p-4 d-flex flex-column gap-3 customer-dashboard-address">
-                            {customerAddress?.map((allAddress, index) => (
-                                <div key={index}>
-                                    <div className="shipping-delivery-address-radiobox">
-                                        <input
-                                            id={`radio${index}`}
-                                            type="radio"
-                                            name="license-radios"
-                                            className="shipping-delivery-address-radio"
-                                            defaultChecked={
-                                                allAddress.set_default === 1
-                                            }
-                                            onChange={() =>
-                                                handleSetDefaultAddress(
-                                                    allAddress?.id
-                                                )
-                                            }
-                                        />
-                                        <label htmlFor={`radio${index}`}>
-                                            <span className="license_type_circle">
-                                                {" "}
-                                            </span>
-                                            <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <p>
-                                                        {allAddress?.full_name}
-                                                    </p>
-                                                    <button className="customer-address-action-btn text-black">
-                                                        <div
-                                                            className="p-1"
-                                                            onClick={(event) =>
-                                                                handleToggleMenu(
-                                                                    event,
-                                                                    index,
-                                                                    allAddress
-                                                                )
-                                                            }
-                                                        >
-                                                            <FaEllipsisVertical />
-                                                        </div>
-                                                        {menuStates[index] && (
-                                                            <div
-                                                                ref={(el) =>
-                                                                    (menuRefs.current[
-                                                                        index
-                                                                    ] = el)
-                                                                }
-                                                                className="customer-address-action-container"
-                                                            >
-                                                                <div
-                                                                    className="customer-address-action-item"
-                                                                    type="button"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#exampleModal"
-                                                                >
-                                                                    Edit
-                                                                </div>
-                                                                <div className="customer-address-action-item">
-                                                                    Delete
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </button>
-                                                </div>
-                                                <span>{allAddress?.phone}</span>
-                                                <p>{allAddress?.address}</p>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            ))}
+        <>
+            <ToastContainer />
+            <div className="customer-dashboard-section">
+                <DashboardTopInfo userDashboard={userDashboard} />
+                <div className="d-flex gap-3 flex-column flex-md-row">
+                    <div className="customer-dashboard-card border-0 flex-1">
+                        <div className="p-3 border-bottom">
+                            <h2 className="mb-0 customer-dashboard-subtitle">
+                                Default Shipping Address
+                            </h2>
                         </div>
-                    ) : (
-                        <div className="p-4">
-                            <div
-                                className="mx-auto"
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                            >
-                                <div className="add-new-address-bar">
-                                    <FaPlus />
-                                    <div className="alpha-7">
-                                        Add New Address
+                        {customerAddress.length ? (
+                            <div className="p-4 d-flex flex-column gap-3 customer-dashboard-address">
+                                {customerAddress?.map((allAddress, index) => (
+                                    <div key={index}>
+                                        <div className="shipping-delivery-address-radiobox">
+                                            <input
+                                                id={`radio${index}`}
+                                                type="radio"
+                                                name="license-radios"
+                                                className="shipping-delivery-address-radio"
+                                                defaultChecked={
+                                                    allAddress.set_default === 1
+                                                }
+                                                onChange={() =>
+                                                    handleSetDefaultAddress(
+                                                        allAddress?.id
+                                                    )
+                                                }
+                                            />
+                                            <label htmlFor={`radio${index}`}>
+                                                <span className="license_type_circle">
+                                                    {" "}
+                                                </span>
+                                                <div className="shipping-delivery-radio-info d-flex flex-column gap-2">
+                                                    <div className="d-flex align-items-center justify-content-between">
+                                                        <p>
+                                                            {
+                                                                allAddress?.full_name
+                                                            }
+                                                        </p>
+                                                        <button className="customer-address-action-btn text-black">
+                                                            <div
+                                                                className="p-1"
+                                                                onClick={(
+                                                                    event
+                                                                ) =>
+                                                                    handleToggleMenu(
+                                                                        event,
+                                                                        index,
+                                                                        allAddress
+                                                                    )
+                                                                }
+                                                            >
+                                                                <FaEllipsisVertical />
+                                                            </div>
+                                                            {menuStates[
+                                                                index
+                                                            ] && (
+                                                                <div
+                                                                    ref={(el) =>
+                                                                        (menuRefs.current[
+                                                                            index
+                                                                        ] = el)
+                                                                    }
+                                                                    className="customer-address-action-container"
+                                                                >
+                                                                    <div
+                                                                        className="customer-address-action-item"
+                                                                        type="button"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal"
+                                                                    >
+                                                                        Edit
+                                                                    </div>
+                                                                    <div
+                                                                        onClick={() =>
+                                                                            handleDeleteAddress(
+                                                                                allAddress.id
+                                                                            )
+                                                                        }
+                                                                        className="customer-address-action-item"
+                                                                    >
+                                                                        Delete
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                    <span>
+                                                        {allAddress?.phone}
+                                                    </span>
+                                                    <p>{allAddress?.address}</p>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="p-4">
+                                <div
+                                    className="mx-auto"
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                >
+                                    <div className="add-new-address-bar">
+                                        <FaPlus />
+                                        <div className="alpha-7">
+                                            Add New Address
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
-                    <ShippingAddressModal
-                        currentAddress={currentAddress}
-                        session={session}
-                    />
+                        )}
+                        <ShippingAddressModal
+                            currentAddress={currentAddress}
+                            session={session}
+                        />
+                    </div>
+                    <AffiliatePartnerStatus userDashboard={userDashboard} />
                 </div>
-                <AffiliatePartnerStatus userDashboard={userDashboard} />
             </div>
-        </div>
+        </>
     );
 };
 
