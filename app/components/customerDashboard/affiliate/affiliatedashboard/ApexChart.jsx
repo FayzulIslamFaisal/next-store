@@ -1,11 +1,10 @@
 "use client "
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { FaFilter } from 'react-icons/fa6';
 
 const ApexChart = () => {
   const [filterShow, setFilterShow] = useState(false);
-  const selectRef = useRef(null);
 
   const [series] = useState([{
     name: "STOCK ABC",
@@ -50,18 +49,6 @@ const ApexChart = () => {
     }
   });
 
-  const toggleFilter = () => {
-    setFilterShow(prevState => !prevState); // Toggle the filter visibility
-    console.log('Filter toggled:', !filterShow); // Debug to see if it works
-  };
-
-  // Focus on the select when filterShow is true
-  useEffect(() => {
-    if (filterShow && selectRef.current) {
-      selectRef.current.focus();
-    }
-  }, [filterShow]);
-
 
   return (
     <div>
@@ -70,7 +57,7 @@ const ApexChart = () => {
           {/* Simple div to ensure clickable area */}
           <div
             className="filter-icon p-1"
-            onClick={toggleFilter}
+            onClick={setFilterShow(!filterShow)}
             style={{ cursor: 'pointer', color: "#6e8192", position: "absolute", right: "30px", top: "-2px", zIndex: "10" }}
           >
             <FaFilter />
@@ -79,7 +66,7 @@ const ApexChart = () => {
             <ul
               className='bg-white border py-2 d-flex flex-column gap-1'
               style={{ position: "absolute", right: "25px", zIndex: "20", top: "25px", width: "130px" }}>
-                
+
               <li><a className='w-100 p-3' href="#">Last Day</a></li>
               <li><a className='w-100 p-3' href="#">Last Week</a></li>
               <li><a className='w-100 p-3' href="#">Last Month</a></li>
