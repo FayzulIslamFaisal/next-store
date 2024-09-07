@@ -291,6 +291,10 @@ const CartPage = () => {
             setSelected(tempCard);
         }
     };
+    // selected checked product item
+    const selectedCount = checkedProductCard.filter(
+        (card) => card.isChecked
+    ).length;
 
     /**
      * Handles decrementing the quantity of a cart item.
@@ -568,6 +572,9 @@ const CartPage = () => {
         }
     };
 
+ 
+    
+
     return (
         <section className="cart-section-area">
             <div className="container">
@@ -584,7 +591,7 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                0 &&
+                                                    0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
@@ -655,7 +662,9 @@ const CartPage = () => {
                                                                     <div>
                                                                         <div className="product-cart-product-img">
                                                                             <Image
-                                                                                fill={true}
+                                                                                fill={
+                                                                                    true
+                                                                                }
                                                                                 src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
                                                                                 alt="black-friday"
                                                                             />
@@ -672,27 +681,70 @@ const CartPage = () => {
                                                                             </Link>
                                                                         </h2>
                                                                         <div className="cart-prodect-variants">
-                                                                            {Array.isArray(item?.selectedVariants) &&
-                                                                                item.selectedVariants.slice(0, 2).map((variant, inx) => {
-                                                                                    if (variant && typeof variant === "object" && Object.entries(variant).length > 0) {
-                                                                                        const [key, value] = Object.entries(variant)[0];
-                                                                                        const keyDisplay = key.split("_")[1];
+                                                                            {Array.isArray(
+                                                                                item?.selectedVariants
+                                                                            ) &&
+                                                                                item.selectedVariants
+                                                                                    .slice(
+                                                                                        0,
+                                                                                        2
+                                                                                    )
+                                                                                    .map(
+                                                                                        (
+                                                                                            variant,
+                                                                                            inx
+                                                                                        ) => {
+                                                                                            if (
+                                                                                                variant &&
+                                                                                                typeof variant ===
+                                                                                                    "object" &&
+                                                                                                Object.entries(
+                                                                                                    variant
+                                                                                                )
+                                                                                                    .length >
+                                                                                                    0
+                                                                                            ) {
+                                                                                                const [
+                                                                                                    key,
+                                                                                                    value,
+                                                                                                ] =
+                                                                                                    Object.entries(
+                                                                                                        variant
+                                                                                                    )[0];
+                                                                                                const keyDisplay =
+                                                                                                    key.split(
+                                                                                                        "_"
+                                                                                                    )[1];
 
-                                                                                        return (
-                                                                                            <React.Fragment key={inx}>
-                                                                                                <p>
-                                                                                                    <span>{keyDisplay}: </span>
-                                                                                                    <span className="cart-prodect-variants-item">
-                                                                                                        <label>{value}</label>
-                                                                                                    </span>
-                                                                                                </p>
-                                                                                            </React.Fragment>
-                                                                                        );
-                                                                                    }
-                                                                                    return null;
-                                                                                })}
+                                                                                                return (
+                                                                                                    <React.Fragment
+                                                                                                        key={
+                                                                                                            inx
+                                                                                                        }
+                                                                                                    >
+                                                                                                        <p>
+                                                                                                            <span>
+                                                                                                                {
+                                                                                                                    keyDisplay
+                                                                                                                }
+
+                                                                                                                :{" "}
+                                                                                                            </span>
+                                                                                                            <span className="cart-prodect-variants-item">
+                                                                                                                <label>
+                                                                                                                    {
+                                                                                                                        value
+                                                                                                                    }
+                                                                                                                </label>
+                                                                                                            </span>
+                                                                                                        </p>
+                                                                                                    </React.Fragment>
+                                                                                                );
+                                                                                            }
+                                                                                            return null;
+                                                                                        }
+                                                                                    )}
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                                 <div>
@@ -841,7 +893,19 @@ const CartPage = () => {
                                         Shopping Summary
                                     </h3>
                                     <div className="d-flex gap-3 align-items-center justify-content-between shopping-price-area py-1">
-                                        <p className="">Total</p>
+                                        <p className="">
+                                            Sub Total{" "}
+                                            {checkedProductCard.length > 0 &&
+                                                totalPrice > 0 && (
+                                                    <span
+                                                        style={{
+                                                            color: "#414241",
+                                                        }}
+                                                    >
+                                                        (Items {selectedCount})
+                                                    </span>
+                                                )}
+                                        </p>
                                         <strong className="">
                                             ৳{totalPrice}
                                         </strong>
@@ -865,7 +929,9 @@ const CartPage = () => {
                                                     : 0.5,
                                         }}
                                     >
-                                        {totalPrice ? "CHECKOUT" : "Select First"}
+                                        {totalPrice
+                                            ? "CHECKOUT"
+                                            : "Select First"}
                                     </button>
                                     <Link
                                         href="/"
