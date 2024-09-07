@@ -16,24 +16,11 @@ const ManageProfile = () => {
                     className="accordion accordion-flush rounded-bottom"
                     id="accordionFlushExample"
                 >
-                    <Suspense fallback={<h2>Loading Basic Info...</h2>}>
-                        <ManageBasicInfo />
-                    </Suspense>
-                    <Suspense fallback={<h2>Loading Shipping Address...</h2>}>
-                        <ManageShippingAddress />
-                    </Suspense>
-
-                    <Suspense fallback={<h2>Loading Take Photo...</h2>}>
-                        <ManageTakePhoto />
-                    </Suspense>
-
-                    <Suspense fallback={<h2>Loading ID Verification...</h2>}>
-                        <ManageIDVerification />
-                    </Suspense>
-
-                    <Suspense fallback={<h2>Loading Nominee Info...</h2>}>
-                        <ManageNomineeInfo />
-                    </Suspense>
+                    <ManageBasicInfo />
+                    <ManageShippingAddress />
+                    <ManageTakePhoto />
+                    <ManageIDVerification />
+                    <ManageNomineeInfo />
                 </div>
             </div>
         </>
