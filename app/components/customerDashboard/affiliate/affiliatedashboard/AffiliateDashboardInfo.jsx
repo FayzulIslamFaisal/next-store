@@ -34,8 +34,8 @@ const AffiliateDashboardInfo = ({ affiliateData }) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-12 col-xl-3 col-md-6">
-                    <div className="shopping-alance-area affiliate-display-card">
+                <div className="col-12 col-xl-3 col-md-6 h-100">
+                    <div className="shopping-alance-area affiliate-display-card h-100">
                         <h3>Team member</h3>
                         <div className="d-flex">
                             <div className="flex-1 pe-3 border-end">
@@ -55,8 +55,8 @@ const AffiliateDashboardInfo = ({ affiliateData }) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-12 col-xl-3 col-md-6">
-                    <div className="ordered-area affiliate-display-card">
+                <div className="col-12 col-xl-3 col-md-6 h-100">
+                    <div className="ordered-area affiliate-display-card h-100">
                         <h3>Sell Amount</h3>
                         <div className="d-flex">
                             <div className="flex-1 pe-3 border-end">
@@ -80,8 +80,8 @@ const AffiliateDashboardInfo = ({ affiliateData }) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-12 col-xl-3 col-md-6">
-                    <div className="in-cart-area affiliate-display-card">
+                <div className="col-12 col-xl-3 col-md-6 h-100">
+                    <div className="in-cart-area affiliate-display-card h-100">
                         <h3>Earning Info</h3>
                         <div className="d-flex">
                             <div className="flex-1 pe-3 border-end">
