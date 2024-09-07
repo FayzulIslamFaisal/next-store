@@ -8,7 +8,7 @@ const AffiliateDashboardBonusDataTable = () => {
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">From us</th>
+                        <th scope="col">From user</th>
                         <th scope="col">Purpose</th>
                         <th scope="col">Amount</th>
                     </tr>

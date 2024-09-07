@@ -31,6 +31,7 @@ import Swal from "sweetalert2";
 import { showToast } from "../components/Toast";
 import { useRouter } from "next/navigation";
 import { addToCartSelectedProduct } from "../services/postCartSelectedProducts";
+import { toast } from "react-toastify";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -56,6 +57,48 @@ const CartPage = () => {
         }
         return 47;
     });
+
+    // useEffect(() => {
+    //     const checkedProducts = checkedProductCard.filter(product => product.isChecked);
+
+    //     if (checkedProducts.length > 1) {
+    //         const firstProductType = checkedProducts[0].cart_product_type;
+    //         const hasDifferentType = checkedProducts.some(product => product.cart_product_type != firstProductType);
+
+    //         if (hasDifferentType) {
+    //             toast.error("Different product types selected!"); // Show toast message
+    //             console.log("Different product types selected!", hasDifferentType);
+                
+    //             // setHasDifferentType(hasDifferentType);
+    //         }
+        
+    //     }
+    //     console.log(checkedProductCard);
+        
+
+    // }, [checkedProductCard])
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    // Check if any product has isChecked true and different cart_product_type
+    const checkedProducts = checkedProductCard.filter(product => product.isChecked);
+
+    if (checkedProducts.length > 1) {
+      const firstProductType = checkedProducts[0].cart_product_type;
+      const hasDifferentType = checkedProducts.some(product => product.cart_product_type !== firstProductType);
+
+      // Show toast and disable/enable button
+      if (hasDifferentType) {
+        toast.error("Different product types selected!"); // Show toast message
+        setIsButtonDisabled(true); // Disable the button if different product types are selected
+      } else {
+        setIsButtonDisabled(false); // Enable the button if all product types are the same
+      }
+    } else {
+      setIsButtonDisabled(false); // Enable the button if only one product or none is selected
+    }
+  }, [checkedProductCard]);
 
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
@@ -878,6 +921,8 @@ const CartPage = () => {
                                                     <span
                                                         style={{
                                                             color: "#414241",
+                                                            fontSize: "14px",
+                                                            fontWeight: "400"
                                                         }}
                                                     >
                                                         (Items {selectedCount})
@@ -895,10 +940,16 @@ const CartPage = () => {
                                         className="add-to-cart-link border border-0 w-100"
                                         disabled={!totalPrice}
                                         style={{
-                                            pointerEvents: totalPrice
-                                                ? "auto"
-                                                : "none",
-                                            opacity: totalPrice ? 1 : 0.5,
+                                            pointerEvents:
+                                                totalPrice &&
+                                                !isButtonDisabled
+                                                    ? "auto"
+                                                    : "none",
+                                            opacity:
+                                                totalPrice &&
+                                                !isButtonDisabled
+                                                    ? 1
+                                                    : 0.5,
                                         }}
                                     >
                                         {totalPrice
