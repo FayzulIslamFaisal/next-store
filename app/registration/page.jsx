@@ -25,7 +25,7 @@ const Registration = () => {
         if (typeof window !== "undefined") {
             return localStorage.getItem("referrerID") || "";
         }
-        return '';
+        return "";
     });
 
     useEffect(() => {
@@ -52,14 +52,15 @@ const Registration = () => {
     useEffect(() => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-            referrer_id: parseInt(referral) || parseInt(referralId) || referrerID || "",
+            referrer_id:
+                parseInt(referral) || parseInt(referralId) || referrerID || "",
             placement_user_id: parseInt(selectedPlacementId) || "",
         }));
     }, [selectedPlacementId, referralId, referral, referrerID]);
 
     useEffect(() => {
-        console.log("formData========>", { formData });
-        console.log("referrerID========>", { referrerID });
+        // console.log("formData========>", { formData });
+        // console.log("referrerID========>", { referrerID });
     }, [formData, referrerID]);
 
     const handleInputChange = (e) => {
@@ -102,7 +103,11 @@ const Registration = () => {
         if (toggleSponsored) {
             setFormData((prevFormData) => ({
                 ...prevFormData,
-                referrer_id: parseInt(referral) || parseInt(referralId) || referrerID || "",
+                referrer_id:
+                    parseInt(referral) ||
+                    parseInt(referralId) ||
+                    referrerID ||
+                    "",
                 placement_user_id: "",
             }));
             fetchAffiliateNewSignup();
@@ -381,7 +386,7 @@ const Registration = () => {
                                         >
                                             <option>Select</option>
 
-                                            { affiliateSignup.length > 0 &&
+                                            {affiliateSignup.length > 0 &&
                                                 affiliateSignup.map((user) => {
                                                     return (
                                                         <option
