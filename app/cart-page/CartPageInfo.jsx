@@ -37,7 +37,6 @@ const CartPage = () => {
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
     const [isRemoveOpen, setIsRemoveOpen] = useState([]);
-    const [hasDifferentType, setHasDifferentType] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     let price;
     let discountPrice;
@@ -59,25 +58,47 @@ const CartPage = () => {
         return 47;
     });
 
-    useEffect(() => {
-        const checkedProducts = checkedProductCard.filter(product => product.isChecked);
+    // useEffect(() => {
+    //     const checkedProducts = checkedProductCard.filter(product => product.isChecked);
 
-        if (checkedProducts.length > 1) {
-            const firstProductType = checkedProducts[0].cart_product_type;
-            const hasDifferentType = checkedProducts.some(product => product.cart_product_type != firstProductType);
+    //     if (checkedProducts.length > 1) {
+    //         const firstProductType = checkedProducts[0].cart_product_type;
+    //         const hasDifferentType = checkedProducts.some(product => product.cart_product_type != firstProductType);
 
-            if (hasDifferentType) {
-                toast.error("Different product types selected!"); // Show toast message
-                // setHasDifferentType(true);
-            }
-            // else{
-            //     setHasDifferentType(false);
-            // }
-        }
-        console.log(checkedProductCard);
+    //         if (hasDifferentType) {
+    //             toast.error("Different product types selected!"); // Show toast message
+    //             console.log("Different product types selected!", hasDifferentType);
+                
+    //             // setHasDifferentType(hasDifferentType);
+    //         }
+        
+    //     }
+    //     console.log(checkedProductCard);
         
 
-    }, [checkedProductCard])
+    // }, [checkedProductCard])
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    // Check if any product has isChecked true and different cart_product_type
+    const checkedProducts = checkedProductCard.filter(product => product.isChecked);
+
+    if (checkedProducts.length > 1) {
+      const firstProductType = checkedProducts[0].cart_product_type;
+      const hasDifferentType = checkedProducts.some(product => product.cart_product_type !== firstProductType);
+
+      // Show toast and disable/enable button
+      if (hasDifferentType) {
+        toast.error("Different product types selected!"); // Show toast message
+        setIsButtonDisabled(true); // Disable the button if different product types are selected
+      } else {
+        setIsButtonDisabled(false); // Enable the button if all product types are the same
+      }
+    } else {
+      setIsButtonDisabled(false); // Enable the button if only one product or none is selected
+    }
+  }, [checkedProductCard]);
 
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
@@ -900,6 +921,8 @@ const CartPage = () => {
                                                     <span
                                                         style={{
                                                             color: "#414241",
+                                                            fontSize: "14px",
+                                                            fontWeight: "400"
                                                         }}
                                                     >
                                                         (Items {selectedCount})
@@ -919,12 +942,12 @@ const CartPage = () => {
                                         style={{
                                             pointerEvents:
                                                 totalPrice &&
-                                                !hasDifferentType
+                                                !isButtonDisabled
                                                     ? "auto"
                                                     : "none",
                                             opacity:
                                                 totalPrice &&
-                                                !hasDifferentType
+                                                !isButtonDisabled
                                                     ? 1
                                                     : 0.5,
                                         }}
