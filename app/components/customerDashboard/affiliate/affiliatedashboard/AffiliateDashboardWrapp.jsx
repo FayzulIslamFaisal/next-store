@@ -59,7 +59,7 @@ const AffiliateDashboardWrapp = () => {
                                 </div>
                             </div>
                             <div className="col-lg-6">
-                                <div className="border rounded">
+                                <div className="border rounded table-responsive">
                                     <h3 className="px-2 pt-3 fs-6 fw-bold">Affiliate Bonus</h3>
                                     <table class="table">
                                         <thead>
