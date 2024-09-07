@@ -31,11 +31,13 @@ import Swal from "sweetalert2";
 import { showToast } from "../components/Toast";
 import { useRouter } from "next/navigation";
 import { addToCartSelectedProduct } from "../services/postCartSelectedProducts";
+import { toast } from "react-toastify";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
     const [isRemoveOpen, setIsRemoveOpen] = useState([]);
+    const [hasDifferentType, setHasDifferentType] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     let price;
     let discountPrice;
@@ -56,6 +58,26 @@ const CartPage = () => {
         }
         return 47;
     });
+
+    useEffect(() => {
+        const checkedProducts = checkedProductCard.filter(product => product.isChecked);
+
+        if (checkedProducts.length > 1) {
+            const firstProductType = checkedProducts[0].cart_product_type;
+            const hasDifferentType = checkedProducts.some(product => product.cart_product_type != firstProductType);
+
+            if (hasDifferentType) {
+                toast.error("Different product types selected!"); // Show toast message
+                // setHasDifferentType(true);
+            }
+            // else{
+            //     setHasDifferentType(false);
+            // }
+        }
+        console.log(checkedProductCard);
+        
+
+    }, [checkedProductCard])
 
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
@@ -832,11 +854,13 @@ const CartPage = () => {
                                         disabled={!totalPrice}
                                         style={{
                                             pointerEvents:
-                                                totalPrice
+                                                totalPrice &&
+                                                !hasDifferentType
                                                     ? "auto"
                                                     : "none",
                                             opacity:
-                                                totalPrice
+                                                totalPrice &&
+                                                !hasDifferentType
                                                     ? 1
                                                     : 0.5,
                                         }}
