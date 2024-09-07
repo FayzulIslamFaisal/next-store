@@ -57,7 +57,7 @@ const ApexChart = () => {
           {/* Simple div to ensure clickable area */}
           <div
             className="filter-icon p-1"
-            onClick={setFilterShow(!filterShow)}
+            onClick={() => setFilterShow(!filterShow)}
             style={{ cursor: 'pointer', color: "#6e8192", position: "absolute", right: "30px", top: "-2px", zIndex: "10" }}
           >
             <FaFilter />
