@@ -7,10 +7,13 @@ import AffiliateReferFriend from "./AffiliateReferFriend";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import AffiliateDashboardChartAndData from "./AffiliateDashboardChartAndData";
+import { getAffiliateIncomeHistory } from "@/app/services/affiliate/getAffiliateIncomeHistory";
 
 const AffiliateDashboardWrapp = () => {
     const [affiliateData, setAffiliateData] = useState({});
+    const [incomeHistoryInfo, setIncomeHistoryInfo] = useState([]);
     const { data: session, status } = useSession();
+
     useEffect(() => {
         if (status === "authenticated") {
             const affiliateDashboard = async () => {
@@ -31,6 +34,27 @@ const AffiliateDashboardWrapp = () => {
         }
     }, [status, session]);
 
+    // income History Info functionality
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken) {
+            const fetchIncomeHistory = async () => {
+                try {
+                    const incomehistory = await getAffiliateIncomeHistory(
+                        session.accessToken
+                    );
+                    const incomehistoryData =
+                        incomehistory?.results?.data || [];
+                    setIncomeHistoryInfo(incomehistoryData);
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch affiliate income history data:",
+                        error
+                    );
+                }
+            };
+            fetchIncomeHistory();
+        }
+    }, [status, session]);
 
     return (
         <>
@@ -49,8 +73,9 @@ const AffiliateDashboardWrapp = () => {
                     <AffiliateDashboardRank affiliateData={affiliateData} />
                     <AffiliateReferFriend affiliateData={affiliateData} />
                     <AffiliateDashboardInfo affiliateData={affiliateData} />
-                    <AffiliateDashboardChartAndData />
-                    
+                    <AffiliateDashboardChartAndData
+                        incomeHistoryInfo={incomeHistoryInfo}
+                    />
                 </div>
             </div>
         </>

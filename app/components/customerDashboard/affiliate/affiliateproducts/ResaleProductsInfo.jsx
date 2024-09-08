@@ -37,13 +37,13 @@ const ResaleProductsInfo = ({ resaleProduct, outletId }) => {
                                 <p className="fpnh-resale-pricess">
                                     Price (MRP):{" "}
                                     <del className="fw-bold">
-                                        ৳ {product.mrp_price}
+                                        ৳ {product.resell_mrp_price}
                                     </del>
                                 </p>
                                 <p className="fpnh-resale-pricess">
                                     Price (Offer):{" "}
                                     <span className="fw-bold">
-                                        ৳ {product.after_discount_mrp_price}
+                                        ৳ {product.resell_purchases_price}
                                     </span>
                                 </p>
                                 <p className="fpnh-resale-pricess">
