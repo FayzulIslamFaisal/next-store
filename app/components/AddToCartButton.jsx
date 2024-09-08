@@ -123,7 +123,7 @@ function AddToCartButton({
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
-                            discountPrice: productPrice?.discountPrice,
+                            regular_price: productPrice?.discountPrice,
                             outlet_id: productInfo?.outlet_id,
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
@@ -134,7 +134,7 @@ function AddToCartButton({
                                 selectedVariantProductInfo?.product_variation_id,
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
-                            regular_price:
+                            discountPrice:
                                 selectedVariantProductInfo?.discount_amount ==
                                 null
                                     ? 0
@@ -199,7 +199,7 @@ function AddToCartButton({
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
-                        discountPrice: productPrice?.discountPrice,
+                        regular_price: productPrice?.discountPrice,
                         outlet_id: productInfo?.outlet_id,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
@@ -208,7 +208,7 @@ function AddToCartButton({
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
-                        regular_price:
+                        discountPrice:
                             productInfo?.discount_amount == null
                                 ? 0
                                 : productInfo?.discount_amount,
@@ -299,7 +299,7 @@ function AddToCartButton({
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
-                            discountPrice: productPrice?.discountPrice,
+                            regular_price: productPrice?.discountPrice,
                             outlet_id: productInfo?.outlet_id,
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
@@ -310,7 +310,7 @@ function AddToCartButton({
                                 selectedVariantProductInfo?.product_variation_id,
                             discount_type:
                                 selectedVariantProductInfo?.discount_type,
-                            regular_price:
+                            discountPrice:
                                 selectedVariantProductInfo?.discount_amount ==
                                 null
                                     ? 0
@@ -326,7 +326,7 @@ function AddToCartButton({
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
-                        discountPrice: productPrice?.discountPrice,
+                        regular_price: productPrice?.discountPrice,
                         outlet_id: productInfo?.outlet_id,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
@@ -334,7 +334,7 @@ function AddToCartButton({
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
-                        regular_price:
+                        discountPrice:
                             productInfo?.discount_amount == null
                                 ? 0
                                 : productInfo?.discount_amount,

@@ -39,7 +39,7 @@ const CartPage = () => {
     const [isRemoveOpen, setIsRemoveOpen] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     let price;
-    let discountPrice;
+    let regularPrice;
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -655,8 +655,8 @@ const CartPage = () => {
                                                         price =
                                                             item.price *
                                                             item.quantity;
-                                                        discountPrice =
-                                                            item.discountPrice *
+                                                            regularPrice =
+                                                            item.regular_price *
                                                             item.quantity;
 
                                                         return (
@@ -782,7 +782,7 @@ const CartPage = () => {
                                                                             <del className="product-cart-discount-price">
                                                                                 ৳
                                                                                 {
-                                                                                    discountPrice
+                                                                                    regularPrice
                                                                                 }
                                                                             </del>
                                                                         </p>

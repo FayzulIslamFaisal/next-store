@@ -6,7 +6,7 @@ import React from 'react';
 
 const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
     let price;
-    let discountPrice;
+    let regularPrice = 0;
     let totalDiscountPrice = 0;
     let totalPrice = 0;
     let subTotal = 0;
@@ -20,13 +20,13 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
                             <tbody>
                                 {cartProduct?.map((item, index) => {
                                     price = item.price * item.quantity;
-                                    discountPrice = item.discountPrice * item.quantity;
+                                    regularPrice += item.regular_price * item.quantity;
                                     totalPrice += price;
-                                    setSubTotal(discountPrice);
+                                    setSubTotal(regularPrice);
                                     setTotalPrice(totalPrice);
-                                    subTotal += item.discountPrice > 0
-                                        ? discountPrice
-                                        : discountPrice + item.price * item.quantity;
+                                    subTotal += item.regular_price > 0
+                                        ? regularPrice
+                                        : regularPrice + item.price * item.quantity;
 
                                     totalDiscountPrice += item.regular_price * item.quantity;
 
@@ -79,7 +79,7 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
                                             <td>
                                                 <div className="d-flex gap-2 new-nh-product-price">
                                                     <p>৳ {item.price * item.quantity}</p>
-                                                    <del className="rounded-1">৳ {item.discountPrice * item.quantity}</del>
+                                                    <del className="rounded-1">৳ {item.regular_price * item.quantity}</del>
                                                 </div>
                                             </td>
                                         </tr>
