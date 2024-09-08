@@ -119,7 +119,7 @@ function AddToCartButton({
                         }
 
                         const addToCartInfo = {
-                            cart_product_type : 3 ,
+                            cart_product_type : 2 ,
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
@@ -195,7 +195,7 @@ function AddToCartButton({
                     }
                 } else {
                     const addToCartInfo = {
-                        cart_product_type : 3 ,
+                        cart_product_type : 2 ,
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
@@ -295,7 +295,7 @@ function AddToCartButton({
                     } else {
                         setProductVariationError(" ");
                         const addToCartInfo = {
-                            cart_product_type : 3 ,
+                            cart_product_type : 2 ,
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
@@ -322,7 +322,7 @@ function AddToCartButton({
                     }
                 } else {
                     const addToCartInfo = {
-                        cart_product_type : 3 ,
+                        cart_product_type : 2 ,
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
