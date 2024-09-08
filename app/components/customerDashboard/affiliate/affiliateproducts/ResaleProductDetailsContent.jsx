@@ -48,45 +48,13 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
                 <div className="product-details-price-area align-items-center d-flex">
                     <strong>
                         <span>৳ </span>
-                        {productDetails?.after_discount_mrp_price}
+                        {productDetails?.resell_purchases_price}
                     </strong>
-                    <del>৳ {productDetails?.mrp_price}</del>
+                    <del>৳ {productDetails?.resell_mrp_price}</del>
                 </div>
 
                 <div className="product-info-rtk-content pt-4">
                     <form>
-                        <div className="product-details-variant-area">
-                            <div className="d-flex align-items-center">
-                                <div>
-                                    <div className="product-details-variant-holder d-flex align-items-center mb-4">
-                                        <p className="variantName">Color</p>
-                                        <div
-                                            className="product-details-inner-color product-details-variant-item"
-                                            style={{ backgroundColor: "red" }}
-                                        ></div>
-                                        <div
-                                            className="product-details-inner-color product-details-variant-item"
-                                            style={{ backgroundColor: "green" }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="product-details-variant-area">
-                            <div className="product-details-variant d-flex align-items-center">
-                                <div>
-                                    <div className="product-details-variant-holder d-flex align-items-center mb-4">
-                                        <p>Size:</p>
-                                        <div className="product-details-variant-item variantAttributeUnitive">
-                                            <label>M</label>
-                                        </div>
-                                        <div className="product-details-variant-item variantAttributeUnitive">
-                                            <label>L</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div></div>
                         <div className="product-details-quantity-area d-flex align-items-center justify-content-start">
                             <div className="product-details-quantity d-flex align-items-center">
@@ -124,6 +92,7 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
                         </div>
                     </form>
                 </div>
+                <div className="pt-4">{productDetails?.short_description}</div>
             </div>
         </>
     );
