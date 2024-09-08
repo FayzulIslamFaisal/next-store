@@ -104,9 +104,9 @@ const BuyNowShippingProductPage = () => {
         // console.log(shippingPrice);
         const order = await placeOrder(payload, session?.accessToken);
         if (order.code == 200) {
-            setRedirectPath(`/paynow?orderId=${order?.results}`);
+            setRedirectPath(`/paynow?orderId=${order?.results?.order_id}`);
             deleteBuyNowProductData();
-            router.push(`/paynow?orderId=${order?.results}`);
+            router.push(`/paynow?orderId=${order?.results?.order_id}`);
         } else {
             setRedirectPath("#");
             showToast(order.message, "error");

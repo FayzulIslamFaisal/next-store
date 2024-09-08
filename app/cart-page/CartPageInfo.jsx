@@ -678,8 +678,8 @@ const CartPage = () => {
             if (session) {
                 const order = await placeOrder(data, session?.accessToken);
                 if (order.code == 200) {
-                    // deleteBuyNowProductData();
-                    router.push(`/paynow?orderId=${order?.results}`);
+                    deleteBuyNowProductData();
+                    router.push(`/paynow?orderId=${order?.results?.order_id}`);
                 } else {
                     showToast(order.message, "error");
                 }

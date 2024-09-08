@@ -138,9 +138,9 @@ const AddToCartProductShippingPage = () => {
         setCartProduct(cartProductsItem?.data);
 
         if (order.code == 200) {
-            setRedirectPath(`/paynow?orderId=${order?.results}`);
+            setRedirectPath(`/paynow?orderId=${order?.results?.order_id}`);
 
-            router.push(`/paynow?orderId=${order?.results}`);
+            router.push(`/paynow?orderId=${order?.results?.order_id}`);
             dispatch(
                 setAddToCart({
                     hasSession: true,
