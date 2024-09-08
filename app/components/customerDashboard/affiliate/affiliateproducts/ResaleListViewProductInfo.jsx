@@ -31,17 +31,21 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                     <div
                                         className="mb-0"
                                         style={{
-                                            height: "80px",
+                                            height: "120px",
                                             width: "80px",
                                         }}
                                     >
-                                        <Image
-                                            height={80}
-                                            width={80}
-                                            src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
-                                            className="img-fluid"
-                                            alt={product.product_name}
-                                        />
+                                        <Link
+                                            href={`/resale-product-details/${product.id}/${tab}`}
+                                        >
+                                            <Image
+                                                height={120}
+                                                width={80}
+                                                src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
+                                                className="img-fluid"
+                                                alt={product.product_name}
+                                            />
+                                        </Link>
                                     </div>
                                     <h4
                                         title={product.product_name}
@@ -53,24 +57,25 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                     >
                                         <Link
                                             href={`/resale-product-details/${product.id}/${tab}`}
-                                        ></Link>
-                                        {truncateTitle(
-                                            product.product_name,
-                                            80
-                                        )}
+                                        >
+                                            {truncateTitle(
+                                                product.product_name,
+                                                80
+                                            )}
+                                        </Link>
                                     </h4>
                                 </div>
                                 <div className="category-product-price">
                                     <p className="fpnh-resale-pricess">
                                         Price (MRP):{" "}
                                         <del className="fw-bold">
-                                            ৳ {product.mrp_price}
+                                            ৳ {product.resell_mrp_price}
                                         </del>
                                     </p>
                                     <p className="fpnh-resale-pricess">
                                         Price (Offer):{" "}
                                         <span className="fw-bold">
-                                            ৳ {product.after_discount_mrp_price}
+                                            ৳ {product.resell_purchases_price}
                                         </span>
                                     </p>
                                     <p className="fpnh-resale-pricess">
