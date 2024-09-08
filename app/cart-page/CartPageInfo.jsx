@@ -6,6 +6,7 @@ import {
     NagadhatPublicUrl,
     addToCartProductList,
     apiBaseUrl,
+    deleteBuyNowProductData,
     getSelectedCardIds,
     getTotalQuantity,
     requestPage,
@@ -32,12 +33,17 @@ import { showToast } from "../components/Toast";
 import { useRouter } from "next/navigation";
 import { addToCartSelectedProduct } from "../services/postCartSelectedProducts";
 import { toast } from "react-toastify";
+import NoDataFound from "../components/NoDataFound";
+import { placeOrder } from "../services/postPlaceOrder";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
+    const [checkingProductFilter, setCheckingProductFilter] = useState([]);
     const [selected, setSelected] = useState([]);
     const { status, data: session } = useSession();
     const [isRemoveOpen, setIsRemoveOpen] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [subTotalPrice, setSubTotalPrice] = useState(0);
+    const [totalDiscount, setTotalDiscount] = useState(0);
     let price;
     let regularPrice;
     const dispatch = useDispatch();
@@ -68,37 +74,43 @@ const CartPage = () => {
     //         if (hasDifferentType) {
     //             toast.error("Different product types selected!"); // Show toast message
     //             console.log("Different product types selected!", hasDifferentType);
-                
+
     //             // setHasDifferentType(hasDifferentType);
     //         }
-        
+
     //     }
     //     console.log(checkedProductCard);
-        
+
 
     // }, [checkedProductCard])
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [selectedProductType, setSelectedProductType] = useState(null);
+    console.log({ selectedProductType });
 
-  useEffect(() => {
-    // Check if any product has isChecked true and different cart_product_type
-    const checkedProducts = checkedProductCard.filter(product => product.isChecked);
 
-    if (checkedProducts.length > 1) {
-      const firstProductType = checkedProducts[0].cart_product_type;
-      const hasDifferentType = checkedProducts.some(product => product.cart_product_type !== firstProductType);
+    useEffect(() => {
+        // Check if any product has isChecked true and different cart_product_type
+        const checkedProducts = checkedProductCard.filter(product => product.isChecked);
 
-      // Show toast and disable/enable button
-      if (hasDifferentType) {
-        toast.error("Different product types selected!"); // Show toast message
-        setIsButtonDisabled(true); // Disable the button if different product types are selected
-      } else {
-        setIsButtonDisabled(false); // Enable the button if all product types are the same
-      }
-    } else {
-      setIsButtonDisabled(false); // Enable the button if only one product or none is selected
-    }
-  }, [checkedProductCard]);
+        if (checkedProducts.length > 0) {
+            const firstProductType = checkedProducts[0].cart_product_type;
+            setSelectedProductType(firstProductType);
+            const hasDifferentType = checkedProducts.some(product => product.cart_product_type !== firstProductType);
+
+            if (hasDifferentType) {
+                toast.error("Different product types selected!");
+                setIsButtonDisabled(true);
+            } else {
+                setIsButtonDisabled(false);
+            }
+        } else {
+            setSelectedProductType(null);
+            setIsButtonDisabled(false);
+        }
+        console.log(checkedProductCard);
+
+    }, [checkedProductCard]);
 
     const updateLocalStorage = (items) => {
         localStorage.setItem("addToCart", JSON.stringify(items));
@@ -557,14 +569,32 @@ const CartPage = () => {
 
     useEffect(() => {
         const checkingProductFilter = isAnyChecked(checkedProductCard);
+        console.log({ checkingProductFilter });
+        setCheckingProductFilter(checkingProductFilter)
+
         const checkedProductTotalPrice = checkingProductFilter.reduce(
             (sum, product) => {
-                // console.log(product);
                 return sum + parseFloat(product.price) * product.quantity;
             },
             0
         );
+        const checkedProductSubTotalPrice = checkingProductFilter.reduce(
+            (sum, product) => {
+                return sum + parseFloat(product.regular_price || product.price) * product.quantity;
+            },
+            0
+        );
+        const checkedProductTotalDiscount = checkingProductFilter.reduce(
+            (sum, product) => {
+                return sum + parseFloat((product.regular_price ? product.regular_price : product.price) - product.price) * product.quantity;
+            },
+            0
+        );
+
         setTotalPrice(checkedProductTotalPrice);
+        setSubTotalPrice(checkedProductSubTotalPrice);
+        setTotalDiscount(checkedProductTotalDiscount);
+
         setIsRemoveOpen(checkingProductFilter.length > 0 ? true : false);
     }, [checkedProductCard]);
 
@@ -593,8 +623,77 @@ const CartPage = () => {
         }
     };
 
- 
-    
+
+
+    const handlePlaceOrder = async () => {
+
+        const cartItems = checkingProductFilter.map(product => ({
+            product_id: product.product_id,
+            product_quantity: product.quantity,
+            product_regular_price: product.regular_price,
+            product_unit_price: product.price,
+            product_variation_id: product.product_variation_id || "",
+            product_shipping_charge: "", // You can add this if available
+            product_discount_type: product.discount_type || "",
+            product_discount_amount: product.discountPrice || "",
+            vendor_id: "",
+            thumbnail: product.product_thumbnail || ""
+        }));
+
+        const data = {
+            outlet_id: outletId,
+            location_id: districtId,
+            sub_total: subTotalPrice,
+            discount_amount: totalDiscount,
+            total_products_price: subTotalPrice,
+            total_delivery_charge: 0,
+            grand_total: totalPrice,
+            delivery_note: "",
+            shipping_email: "",
+            outlet_pickup_point_id: null,
+            order_product_type: selectedProductType,
+            place_order_with: "add to cart",
+            shipping_address_id:null,
+            payment_type:"",
+            cart_items: cartItems,
+            // cart_items: [
+            //   {
+            //     product_id: 1,
+            //     product_quantity: 1,
+            //     product_regular_price: 0,
+            //     product_unit_price: 100,
+            //     product_variation_id: "",
+            //     product_shipping_charge: "",
+            //     product_discount_type: "",
+            //     product_discount_amount: "",
+            //     vendor_id: "",
+            //     thumbnail: "storage/media/product/thumbnail/Capture.PNG"
+            //   }
+            // ]
+        }
+
+        console.log("place order", data);
+
+        try {
+            if (session) {
+                const order = await placeOrder(data, session?.accessToken);
+                if (order.code == 200) {
+                    // deleteBuyNowProductData();
+                    router.push(`/paynow?orderId=${order?.results}`);
+                } else {
+                    showToast(order.message, "error");
+                }
+            } else {
+                requestPage("cart-page");
+                router.push("/login");
+                showToast("Log in to access shipping", "error");
+            }
+        } catch (error) {
+            console.error("An error occurred while placing the order:", error);
+            showToast("Something went wrong, please try again later.", "error");
+        }
+    }
+
 
     return (
         <section className="cart-section-area">
@@ -612,7 +711,7 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                    0 &&
+                                                0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
@@ -655,7 +754,7 @@ const CartPage = () => {
                                                         price =
                                                             item.price *
                                                             item.quantity;
-                                                            regularPrice =
+                                                        regularPrice =
                                                             item.regular_price *
                                                             item.quantity;
 
@@ -670,22 +769,15 @@ const CartPage = () => {
                                                                             className="cart-checkbox"
                                                                             type="checkbox"
                                                                             name={`${index}`}
-                                                                            checked={
-                                                                                item?.isChecked ||
-                                                                                false
-                                                                            }
-                                                                            onChange={
-                                                                                handleChange
-                                                                            }
+                                                                            checked={item?.isChecked || false}
+                                                                            onChange={handleChange}
                                                                         />
                                                                     </div>
 
                                                                     <div>
                                                                         <div className="product-cart-product-img">
                                                                             <Image
-                                                                                fill={
-                                                                                    true
-                                                                                }
+                                                                                fill={true}
                                                                                 src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
                                                                                 alt="black-friday"
                                                                             />
@@ -696,9 +788,7 @@ const CartPage = () => {
                                                                             <Link
                                                                                 href={`/products/get-product-details?outlet_id=${item?.outlet_id}&product_id=${item?.product_id}`}
                                                                             >
-                                                                                {
-                                                                                    item.product_name
-                                                                                }
+                                                                                {item.product_name}
                                                                             </Link>
                                                                         </h2>
                                                                         <div className="cart-prodect-variants">
@@ -718,12 +808,12 @@ const CartPage = () => {
                                                                                             if (
                                                                                                 variant &&
                                                                                                 typeof variant ===
-                                                                                                    "object" &&
+                                                                                                "object" &&
                                                                                                 Object.entries(
                                                                                                     variant
                                                                                                 )
                                                                                                     .length >
-                                                                                                    0
+                                                                                                0
                                                                                             ) {
                                                                                                 const [
                                                                                                     key,
@@ -738,25 +828,11 @@ const CartPage = () => {
                                                                                                     )[1];
 
                                                                                                 return (
-                                                                                                    <React.Fragment
-                                                                                                        key={
-                                                                                                            inx
-                                                                                                        }
-                                                                                                    >
+                                                                                                    <React.Fragment key={inx}>
                                                                                                         <p>
-                                                                                                            <span>
-                                                                                                                {
-                                                                                                                    keyDisplay
-                                                                                                                }
-
-                                                                                                                :{" "}
-                                                                                                            </span>
+                                                                                                            <span>{keyDisplay}:{" "}</span>
                                                                                                             <span className="cart-prodect-variants-item">
-                                                                                                                <label>
-                                                                                                                    {
-                                                                                                                        value
-                                                                                                                    }
-                                                                                                                </label>
+                                                                                                                <label>{value}</label>
                                                                                                             </span>
                                                                                                         </p>
                                                                                                     </React.Fragment>
@@ -770,36 +846,13 @@ const CartPage = () => {
                                                                 </div>
                                                                 <div>
                                                                     <div>
-                                                                        <p>
-                                                                            <strong className="product-cart-price">
-                                                                                ৳
-                                                                                {
-                                                                                    price
-                                                                                }
-                                                                            </strong>
-                                                                        </p>
-                                                                        <p>
-                                                                            <del className="product-cart-discount-price">
-                                                                                ৳
-                                                                                {
-                                                                                    regularPrice
-                                                                                }
-                                                                            </del>
-                                                                        </p>
-                                                                        {/*  <p>
-                                                                                -10%
-                                                                            </p> */}
+                                                                        <p><strong className="product-cart-price">৳{price}</strong></p>
+                                                                        <p><del className="product-cart-discount-price">৳{regularPrice}</del></p>
                                                                     </div>
                                                                     <div className="d-flex gap-2">
                                                                         <button
                                                                             className="product-cart-remov-btn"
-                                                                            onClick={() =>
-                                                                                handleDelete(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
-                                                                                )
-                                                                            }
+                                                                            onClick={() => handleDelete(session ? item?.cart_id : index)}
                                                                         >
                                                                             <FaTrashCan />
                                                                         </button>
@@ -808,7 +861,7 @@ const CartPage = () => {
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                                <div>
+                                                                <div className="my-auto">
                                                                     <div
                                                                         className="btn-group quantity-area"
                                                                         role="group"
@@ -817,16 +870,8 @@ const CartPage = () => {
                                                                         <button
                                                                             type="button"
                                                                             className="quantity-increase"
-                                                                            onClick={() => {
-                                                                                handleDecrement(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
-                                                                                );
-                                                                            }}
-                                                                            disabled={
-                                                                                quanticUpdateLoader
-                                                                            }
+                                                                            onClick={() => { handleDecrement(session ? item?.cart_id : index); }}
+                                                                            disabled={quanticUpdateLoader}
                                                                         >
                                                                             <FaMinus />
                                                                         </button>
@@ -838,24 +883,14 @@ const CartPage = () => {
                                                                             autoComplete="off"
                                                                             type="text"
                                                                             height="100%"
-                                                                            value={
-                                                                                item?.quantity
-                                                                            }
+                                                                            value={item?.quantity}
                                                                             readOnly
                                                                         />
                                                                         <button
                                                                             className="quantity-decrease"
                                                                             type="button"
-                                                                            onClick={() => {
-                                                                                handleIncrement(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
-                                                                                );
-                                                                            }}
-                                                                            disabled={
-                                                                                quanticUpdateLoader
-                                                                            }
+                                                                            onClick={() => { handleIncrement(session ? item?.cart_id : index); }}
+                                                                            disabled={quanticUpdateLoader}
                                                                         >
                                                                             <FaPlus />
                                                                         </button>
@@ -866,11 +901,10 @@ const CartPage = () => {
                                                     }
                                                 )
                                             ) : (
-                                                <NoProductShows
-                                                    text={
-                                                        "There are no items in this cart"
-                                                    }
-                                                ></NoProductShows>
+                                                <NoDataFound
+                                                    title={"No Cart Items"}
+                                                    description={"There are no items in this cart"}
+                                                />
                                             )}
                                         </div>
                                     </div>
@@ -915,7 +949,7 @@ const CartPage = () => {
                                     </h3>
                                     <div className="d-flex gap-3 align-items-center justify-content-between shopping-price-area py-1">
                                         <p className="">
-                                            Sub Total{" "}
+                                            Total{" "}
                                             {checkedProductCard.length > 0 &&
                                                 totalPrice > 0 && (
                                                     <span
@@ -929,33 +963,41 @@ const CartPage = () => {
                                                     </span>
                                                 )}
                                         </p>
-                                        <strong className="">
-                                            ৳{totalPrice}
-                                        </strong>
+                                        <strong>৳{totalPrice}</strong>
                                     </div>
-                                    <button
-                                        onClick={(e) => {
-                                            handleCheckoutNavigation();
-                                        }}
-                                        className="add-to-cart-link border border-0 w-100"
-                                        disabled={!totalPrice}
-                                        style={{
-                                            pointerEvents:
-                                                totalPrice &&
-                                                !isButtonDisabled
-                                                    ? "auto"
-                                                    : "none",
-                                            opacity:
-                                                totalPrice &&
-                                                !isButtonDisabled
-                                                    ? 1
-                                                    : 0.5,
-                                        }}
-                                    >
-                                        {totalPrice
-                                            ? "CHECKOUT"
-                                            : "Select First"}
-                                    </button>
+                                    {selectedProductType == 2 ?
+                                        <button
+                                            onClick={(e) => { handlePlaceOrder() }}
+                                            className="add-to-cart-link border border-0 w-100"
+                                            disabled={!totalPrice}
+                                            style={{
+                                                pointerEvents:
+                                                    totalPrice && !isButtonDisabled
+                                                        ? "auto" : "none",
+                                                opacity:
+                                                    totalPrice && !isButtonDisabled
+                                                        ? 1 : 0.5,
+                                            }}
+                                        >
+                                            {totalPrice ? "place order" : "Select First"}
+                                        </button>
+                                        :
+                                        <button
+                                            onClick={(e) => { handleCheckoutNavigation() }}
+                                            className="add-to-cart-link border border-0 w-100"
+                                            disabled={!totalPrice}
+                                            style={{
+                                                pointerEvents:
+                                                    totalPrice && !isButtonDisabled
+                                                        ? "auto" : "none",
+                                                opacity:
+                                                    totalPrice && !isButtonDisabled
+                                                        ? 1 : 0.5,
+                                            }}
+                                        >
+                                            {totalPrice ? "CHECKOUT" : "Select First"}
+                                        </button>
+                                    }
                                     <Link
                                         href="/"
                                         className="shopping-back-btn"
