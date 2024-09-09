@@ -61,10 +61,7 @@ const AffiliateRetailsProductInfo = ({
                                         <Link
                                             href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
                                         >
-                                            {truncateTitle(
-                                                product.product_name,
-                                                36
-                                            )}
+                                            {truncateTitle( product.product_name, 36 )}
                                         </Link>
                                     </h4>
                                     <div className=" d-flex align-items-center justify-content-between ">
@@ -77,11 +74,9 @@ const AffiliateRetailsProductInfo = ({
                                             <>
                                                 <strong>{`৳ ${product?.after_discount_mrp_price}`}</strong>
                                                 <strong>
-                                                    <del
-                                                        style={{
-                                                            color: "#ACACAC",
-                                                        }}
-                                                    >{`৳ ${product?.mrp_price}`}</del>
+                                                    <del style={{color: "#ACACAC",}}>
+                                                        {`৳ ${product?.mrp_price}`}
+                                                    </del>
                                                 </strong>
                                             </>
                                         )}
@@ -89,10 +84,7 @@ const AffiliateRetailsProductInfo = ({
 
                                     <p className="affiliate-commission">
                                         Commission:{" "}
-                                        {`৳ ${
-                                            product?.calculated_commission ||
-                                            "0"
-                                        }`}{" "}
+                                        {`৳ ${product?.calculated_commission ||"0"}`}{""}
                                         <span className="ms-1">
                                             ({product?.level_commission})
                                         </span>

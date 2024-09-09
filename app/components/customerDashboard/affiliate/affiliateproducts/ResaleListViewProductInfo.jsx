@@ -3,6 +3,7 @@ import { NagadhatPublicUrl, truncateTitle } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import ResaleBuyNowBtn from "./ResaleBuyNowBtn";
 
 const ResaleListViewProductInfo = ({ resaleProduct }) => {
     const searchParams = useSearchParams();
@@ -93,16 +94,9 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                 </div>
                                 <div className="add-to-cart-holder">
                                     <div className="add-to-cart-btn">
-                                        <a
-                                            className="add-to-cart-link undefined category-product-add-btn"
-                                            href="#"
-                                            style={{
-                                                pointerEvents: "auto",
-                                                opacity: 1,
-                                            }}
-                                        >
-                                            Buy Now
-                                        </a>
+                                        <ResaleBuyNowBtn
+                                            product={product}
+                                        />
                                     </div>
                                 </div>
                             </div>
