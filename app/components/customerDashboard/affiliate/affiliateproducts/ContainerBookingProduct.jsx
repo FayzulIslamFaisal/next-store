@@ -16,7 +16,9 @@ const ContainerBookingProduct = ({
     // Toggle product selection
     const handleSelectProduct = (product) => {
         if (selectedProducts.some((p) => p.id === product.id)) {
-            setSelectedProducts(selectedProducts.filter(p => p.id !== product.id));
+            setSelectedProducts(
+                selectedProducts.filter((p) => p.id !== product.id)
+            );
         } else {
             setSelectedProducts([
                 ...selectedProducts,
@@ -47,7 +49,7 @@ const ContainerBookingProduct = ({
                         </div>
                     </div>
                 </div>
-                <div className="row row-cols-auto row-cols-sm-2 row-cols-lg-3 p-4 row-cols-xxl-4 g-3">
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 p-4 row-cols-xxl-4 g-3">
                     {containerProduct.map((product) => (
                         <div
                             key={product.id}
@@ -76,7 +78,10 @@ const ContainerBookingProduct = ({
                                         src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
                                         className="img-fluid mx-auto"
                                         alt={product.product_name}
-                                        style={{ objectFit: "cover" }}
+                                        style={{
+                                            objectFit: "cover",
+                                        }}
+                                        sizes="100vw"
                                     />
                                 </div>
                                 <div className="flash-sale-content-info text-hover-effect">
