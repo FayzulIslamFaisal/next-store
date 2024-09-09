@@ -1,6 +1,47 @@
+"use client";
+import { useState, useEffect } from "react";
 import { FaCheck, FaRegEye, FaRegStar, FaStar } from "react-icons/fa6";
+import ResaleBuyNowBtn from "./ResaleBuyNowBtn";
 
 const ResaleProductDetailsContent = ({ productDetails }) => {
+    // Ensure the prices are numbers
+    const productPrice = parseFloat(productDetails?.resell_purchases_price) || 0;
+    const productMRP = parseFloat(productDetails?.resell_mrp_price) || 0;
+    
+    // State to manage quantity, total price, and total MRP price
+    const [quantity, setQuantity] = useState(productDetails?.min_quantity ?? 1);
+    const [totalPrice, setTotalPrice] = useState(productPrice * quantity);
+    const [totalMRPPrice, setTotalMRPPrice] = useState(productMRP * quantity);
+
+    console.log({quantity});
+    
+    // Function to update prices based on quantity
+    const updatePrices = (newQuantity) => {
+        setTotalPrice(productPrice * newQuantity);
+        setTotalMRPPrice(productMRP * newQuantity);
+    };
+
+    // Function to handle quantity increment
+    const handleIncrease = () => {
+        const newQuantity = quantity + 1;
+        setQuantity(newQuantity);
+        updatePrices(newQuantity);
+    };
+
+    // Function to handle quantity decrement
+    const handleDecrease = () => {
+        if (quantity > productDetails?.min_quantity) {
+            const newQuantity = quantity - 1;
+            setQuantity(newQuantity);
+            updatePrices(newQuantity);
+        }
+    };
+
+    // Update prices when the product price, MRP, or quantity changes
+    useEffect(() => {
+        updatePrices(quantity);
+    }, [productPrice, productMRP, quantity]);
+
     return (
         <>
             <div className="product-details-content">
@@ -48,9 +89,9 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
                 <div className="product-details-price-area align-items-center d-flex">
                     <strong>
                         <span>৳ </span>
-                        {productDetails?.resell_purchases_price}
+                        {totalPrice.toFixed(2)}
                     </strong>
-                    <del>৳ {productDetails?.resell_mrp_price}</del>
+                    <del>৳ {totalMRPPrice.toFixed(2)}</del>
                 </div>
 
                 <div className="product-info-rtk-content pt-4">
@@ -62,24 +103,24 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
                                     <p>Quantity:</p>
                                 </div>
                                 <div className="product-details-inner-quantity product-details-inner-qty d-flex align-items-center">
-                                    <button type="button" disabled="">
+                                    <button type="button" onClick={handleDecrease} disabled={quantity <= productDetails?.min_quantity}>
                                         -
                                     </button>
                                     <input
-                                        readOnly=""
+                                        readOnly
                                         type="text"
-                                        defaultValue="1"
+                                        value={quantity}
                                     />
-                                    <button type="button">+</button>
+                                    <button type="button" onClick={handleIncrease}>
+                                        +
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <div className="product-details-add-cart-area d-flex align-items-center">
                             <div className="product-details-add-cart">
                                 <div className="add-to-cart-btn">
-                                    <button className="add-to-cart-link border-0 product-details-action-btn undefined">
-                                        BUY NOW
-                                    </button>
+                                    <ResaleBuyNowBtn product={{...productDetails, updateQuantity : quantity}} />
                                 </div>
                             </div>
                             <div className="product-details-add-cart">
