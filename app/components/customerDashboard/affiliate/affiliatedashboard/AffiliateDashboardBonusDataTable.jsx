@@ -5,7 +5,7 @@ import React from "react";
 const AffiliateDashboardBonusDataTable = ({ incomeHistoryInfo }) => {
     return (
         <div className="border rounded table-responsive">
-            <h3 className="px-2 pt-3 fs-6 fw-bold">Affiliate Bonus</h3>
+            <h3 className="px-2 pt-3 fs-6 fw-bold">Last Income History</h3>
             {incomeHistoryInfo.length > 0 ? (
                 <div className="table-responsive ">
                     <table className="table">
