@@ -6,14 +6,30 @@ const RankRewardList = () => {
                     <thead>
                         <tr>
                             <th scope="col">Ranks</th>
-                            <th scope="col">Icon</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Total Sales</th>
-                            <th scope="col">Direct Sales</th>
-                            <th scope="col">1st Highest Sales</th>
-                            <th scope="col">2nd Highest Sales</th>
-                            <th scope="col">Others Sales</th>
-                            <th scope="col">Rewards</th>
+                            <th scope="col" className="text-center">
+                                Icon
+                            </th>
+                            <th scope="col" className="text-center">
+                                Title
+                            </th>
+                            <th scope="col" className="text-center">
+                                Total Sales
+                            </th>
+                            <th scope="col" className="text-center">
+                                Direct Sales
+                            </th>
+                            <th scope="col" className="text-center">
+                                1st Highest Sales
+                            </th>
+                            <th scope="col" className="text-center">
+                                2nd Highest Sales
+                            </th>
+                            <th scope="col" className="text-center">
+                                Others Sales
+                            </th>
+                            <th scope="col" className="text-center">
+                                Rewards
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,7 +37,7 @@ const RankRewardList = () => {
                             <td className="align-middle" scope="row">
                                 1
                             </td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
                                 <img
                                     src="/images/men (1).png"
                                     style={{
@@ -31,13 +47,25 @@ const RankRewardList = () => {
                                     alt="men (1).png"
                                 />
                             </td>
-                            <td className="align-middle">Executive</td>
-                            <td className="align-middle">0 | 500000 </td>
-                            <td className="align-middle">0 | 500000 </td>
-                            <td className="align-middle">0 | 200000 </td>
-                            <td className="align-middle">0 | 100000 </td>
-                            <td className="align-middle">0 | 300000 </td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
+                                Executive
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 500000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 500000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 200000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 100000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 300000{" "}
+                            </td>
+                            <td className="align-middle text-center">
                                 <button className="add-to-cart-link affiliate-rank-btn ">
                                     Rank Not Achieved
                                 </button>
@@ -47,7 +75,7 @@ const RankRewardList = () => {
                             <td className="align-middle" scope="row">
                                 2
                             </td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
                                 <img
                                     src="/images/men (2).png"
                                     style={{
@@ -57,13 +85,25 @@ const RankRewardList = () => {
                                     alt="men (2).png"
                                 />
                             </td>
-                            <td className="align-middle">Senior Executive</td>
-                            <td className="align-middle">0 | 500000</td>
-                            <td className="align-middle">0 | 500000</td>
-                            <td className="align-middle">0 | 200000</td>
-                            <td className="align-middle">0 | 100000</td>
-                            <td className="align-middle">0 | 300000</td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
+                                Senior Executive
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 500000
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 500000
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 200000
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 100000
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 300000
+                            </td>
+                            <td className="align-middle text-center">
                                 <button className="add-to-cart-link affiliate-rank-btn ">
                                     Rank Not Achieved
                                 </button>
@@ -73,7 +113,7 @@ const RankRewardList = () => {
                             <td className="align-middle" scope="row">
                                 3
                             </td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
                                 <img
                                     src="/images/men (3).png"
                                     style={{
@@ -83,13 +123,25 @@ const RankRewardList = () => {
                                     alt="men (3).png"
                                 />
                             </td>
-                            <td className="align-middle">Area Manager</td>
-                            <td className="align-middle">0 | 500000 </td>
-                            <td className="align-middle">0 | 500000 </td>
-                            <td className="align-middle">0 | 200000 </td>
-                            <td className="align-middle">0 | 100000 </td>
-                            <td className="align-middle">0 | 300000 </td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
+                                Area Manager
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 500000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 500000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 200000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 100000{" "}
+                            </td>
+                            <td className="align-middle text-center">
+                                0 | 300000{" "}
+                            </td>
+                            <td className="align-middle text-center">
                                 <button className="add-to-cart-link affiliate-rank-btn ">
                                     Rank Not Achieved
                                 </button>

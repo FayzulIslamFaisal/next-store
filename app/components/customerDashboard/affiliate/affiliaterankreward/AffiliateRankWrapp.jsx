@@ -10,7 +10,7 @@ const AffiliateRankWrapp = () => {
                         Ranks & Rewards
                     </h1>
                 </div>
-                <div className="customer-dashboard-order-history table-responsive">
+                <div className="customer-dashboard-order-history px-2">
                     <RankRewardList />
                     <TeamListNotFound />
                 </div>

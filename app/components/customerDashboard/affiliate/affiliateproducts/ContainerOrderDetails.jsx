@@ -171,7 +171,6 @@ const ContainerOrderDetails = ({
             toast.error("Cannot proceed: total exceeds available value.");
         }
     };
-    console.log("selectedProducts", selectedProducts);
 
     return (
         <>
