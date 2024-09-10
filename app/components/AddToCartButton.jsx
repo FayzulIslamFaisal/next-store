@@ -367,8 +367,8 @@ function AddToCartButton({
                         loading ? (
                             <div
                                 style={{
-                                    height: "28px",
-                                    width: "100px",
+                                    height: "21px",
+                                    width: "75px",
                                     textAlign: "center",
                                 }}
                             >

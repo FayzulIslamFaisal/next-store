@@ -2,19 +2,20 @@
 import { useState, useEffect } from "react";
 import { FaCheck, FaRegEye, FaRegStar, FaStar } from "react-icons/fa6";
 import ResaleBuyNowBtn from "./ResaleBuyNowBtn";
+import ResaleAddToCartBtn from "./ResaleAddToCartBtn";
 
 const ResaleProductDetailsContent = ({ productDetails }) => {
     // Ensure the prices are numbers
     const productPrice = parseFloat(productDetails?.resell_purchases_price) || 0;
     const productMRP = parseFloat(productDetails?.resell_mrp_price) || 0;
-    
+
     // State to manage quantity, total price, and total MRP price
     const [quantity, setQuantity] = useState(productDetails?.min_quantity ?? 1);
     const [totalPrice, setTotalPrice] = useState(productPrice * quantity);
     const [totalMRPPrice, setTotalMRPPrice] = useState(productMRP * quantity);
 
-    console.log({quantity});
-    
+    console.log({ quantity });
+
     // Function to update prices based on quantity
     const updatePrices = (newQuantity) => {
         setTotalPrice(productPrice * newQuantity);
@@ -120,14 +121,16 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
                         <div className="product-details-add-cart-area d-flex align-items-center">
                             <div className="product-details-add-cart">
                                 <div className="add-to-cart-btn">
-                                    <ResaleBuyNowBtn product={{...productDetails, updateQuantity : quantity}} />
+                                    <ResaleBuyNowBtn
+                                        product={{ ...productDetails, updateQuantity: quantity }}
+                                    />
                                 </div>
                             </div>
                             <div className="product-details-add-cart">
                                 <div className="add-to-cart-btn">
-                                    <button className="add-to-cart-link border-0 product-details-action-btn undefined">
-                                        ADD TO CART
-                                    </button>
+                                    <ResaleAddToCartBtn
+                                        product={{ ...productDetails, updateQuantity: quantity }}
+                                    />
                                 </div>
                             </div>
                         </div>
