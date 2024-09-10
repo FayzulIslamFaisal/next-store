@@ -16,8 +16,9 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                     style={{ minWidth: "640px" }}
                 >
                     {resaleProduct?.map((product) => (
-                        <div
+                        <Link
                             key={product.id}
+                            href={`/resale-product-details/${product.id}/${tab}`}
                             className="flash-sale-content-item flash-sale-content-bg affiliate-product-list-item"
                         >
                             <div className="flash-sale-content-info text-hover-effect d-flex gap-3 justify-content-between align-items-center">
@@ -32,21 +33,17 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                     <div
                                         className="mb-0"
                                         style={{
-                                            height: "120px",
+                                            height: "100px",
                                             width: "80px",
                                         }}
                                     >
-                                        <Link
-                                            href={`/resale-product-details/${product.id}/${tab}`}
-                                        >
                                             <Image
-                                                height={120}
+                                                height={100}
                                                 width={80}
                                                 src={`${NagadhatPublicUrl}/${product.product_thumbnail}`}
                                                 className="img-fluid"
                                                 alt={product.product_name}
                                             />
-                                        </Link>
                                     </div>
                                     <h4
                                         title={product.product_name}
@@ -54,16 +51,10 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                             minWidth: "120px",
                                             maxWidth: "280px",
                                             flex: "1",
+                                            marginBottom:"0"
                                         }}
                                     >
-                                        <Link
-                                            href={`/resale-product-details/${product.id}/${tab}`}
-                                        >
-                                            {truncateTitle(
-                                                product.product_name,
-                                                80
-                                            )}
-                                        </Link>
+                                        {truncateTitle(product.product_name, 80)}
                                     </h4>
                                 </div>
                                 <div className="category-product-price">
@@ -100,7 +91,7 @@ const ResaleListViewProductInfo = ({ resaleProduct }) => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -772,10 +772,10 @@ const CartPage = () => {
                                                                                 return null;
                                                                             })}
                                                                     </div>
-                                                                    <div className="">
+                                                                    <div className="cart-prodect-variants">
                                                                         Product Type :
                                                                         <span className="cart-prodect-variants-item">
-                                                                            {item.cart_product_type == 2 ? " Resale" : " Retail"}
+                                                                            {item.cart_product_type == 2 ? "Resale" : "Retail"}
                                                                         </span>
                                                                     </div>
                                                                 </div>
