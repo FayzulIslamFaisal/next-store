@@ -1,4 +1,5 @@
 "use client";
+import { getContainerOrderSummery } from "@/app/services/affiliate/getContainerOrderSummery";
 import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -9,16 +10,29 @@ const PayNowSummary = () => {
     const [orderProduct, setOrderProduct] = useState([]);
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
-    const orderId = searchParams.get('orderId');
+    const orderId = searchParams.get("orderId");
+    const orderProductType = searchParams.get("order_product_type");
 
     useEffect(() => {
         if (status === "authenticated" && orderId) {
             const fetchOrderSummary = async () => {
                 try {
-                    const orderData = await getProductOrderSummery(orderId, session?.accessToken);
-                    if (orderData && orderData.results) {
-                        setOrderSummary(orderData.results);
-                        setOrderProduct(orderData.results.products || []);
+                    let orderData;
+                    if (orderProductType === "3") {
+                        orderData = await getContainerOrderSummery(
+                            orderId,
+                            session?.accessToken
+                        );
+                    } else {
+                        orderData = await getProductOrderSummery(
+                            orderId,
+                            session?.accessToken
+                        );
+                    }
+
+                    if (orderData && orderData?.results) {
+                        setOrderSummary(orderData?.results);
+                        setOrderProduct(orderData?.results?.products || []);
                     } else {
                         console.error("Invalid response format:", orderData);
                     }
@@ -28,7 +42,7 @@ const PayNowSummary = () => {
             };
             fetchOrderSummary();
         }
-    }, [session, status, orderId]);
+    }, [session, status, orderId, orderProductType]);
 
     return (
         <div className="col-lg-4 col-md-12">
@@ -42,7 +56,8 @@ const PayNowSummary = () => {
                 <div className="pay-now-summary-body">
                     <div className="pay-now-summary-cash-on-bg">
                         <p className="rounded-1">
-                            Only cash on delivery is available for these products
+                            Only cash on delivery is available for these
+                            products
                         </p>
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
@@ -82,7 +97,9 @@ const PayNowSummary = () => {
                         </div>
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                        <strong>Total Shipping <br /> (*Applicable)</strong>
+                        <strong>
+                            Total Shipping <br /> (*Applicable)
+                        </strong>
                         <p>৳ {orderSummary?.total_delivery_charge}</p>
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">

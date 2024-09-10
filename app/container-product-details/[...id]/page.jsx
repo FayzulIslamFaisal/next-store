@@ -27,21 +27,19 @@ const AffiliateProductDetailsPage = ({ params }) => {
     }, [status, Id, containerId, session?.accessToken]);
 
     return (
-        <PrivateRoute>
-            <div>
-                <Suspense
-                    fallback={
-                        <div className="d-flex align-items-center justify-content-center vh-100 ">
-                            <h1 className="d-flex align-items-center justify-content-center">
-                                Loading Container Product....
-                            </h1>
-                        </div>
-                    }
-                >
-                    <AffiliateProductDetails productDetails={productDetails} />
-                </Suspense>
-            </div>
-        </PrivateRoute>
+        <div>
+            <Suspense
+                fallback={
+                    <div className="d-flex align-items-center justify-content-center vh-100 ">
+                        <h1 className="d-flex align-items-center justify-content-center">
+                            Loading Container Product....
+                        </h1>
+                    </div>
+                }
+            >
+                <AffiliateProductDetails productDetails={productDetails} />
+            </Suspense>
+        </div>
     );
 };
 

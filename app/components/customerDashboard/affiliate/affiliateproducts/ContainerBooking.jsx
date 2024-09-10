@@ -58,6 +58,7 @@ const ContainerBooking = ({ isActive }) => {
                         setSelectedProducts={setSelectedProducts}
                         availableQuantity={availableQuantity}
                         availableValue={availableValue}
+                        session={session}
                     />
                 </Suspense>
             </div>
