@@ -1,19 +1,55 @@
-"use client ";
-import React, { useState } from "react";
+"use client";
+import { getAffiliateIncomeChart } from "@/app/services/affiliate/getAffiliateIncomeChart";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { FaFilter } from "react-icons/fa6";
 
 const ApexChart = () => {
     const [filterShow, setFilterShow] = useState(false);
+    const [chartData, setChartData] = useState([]);
+    const [selectedFilter, setSelectedFilter] = useState("daily");
+    const { data: session, status } = useSession();
 
-    const [series] = useState([
+    useEffect(() => {
+        const fetchChartInfo = async () => {
+            if (session?.accessToken) {
+                try {
+                    const chartInfo = await getAffiliateIncomeChart(
+                        session?.accessToken,
+                        selectedFilter
+                    );
+
+                    setChartData(chartInfo?.results?.earnings_info || []);
+                } catch (error) {
+                    console.error("Error inside useEffect:", error);
+                }
+            }
+        };
+
+        fetchChartInfo();
+    }, [selectedFilter, session?.accessToken]);
+
+    const handleFilterClick = (filter) => {
+        setSelectedFilter(filter);
+        setFilterShow(false);
+    };
+
+    const earnings = chartData.map((item) => item?.earnings);
+    const labels = chartData.map((item) => item?.name);
+
+    // console.log("earnings", { earnings });
+    // console.log("labels", { labels });
+    // console.log("selectedFilter", { selectedFilter });
+
+    const series = [
         {
-            name: "STOCK ABC",
-            data: [31, 40, 28, 51, 42, 109, 100],
+            name: "Earnings",
+            data: earnings.length ? earnings : "",
         },
-    ]);
+    ];
 
-    const [options] = useState({
+    const options = {
         chart: {
             type: "area",
             height: 250,
@@ -28,18 +64,10 @@ const ApexChart = () => {
             curve: "straight",
         },
         title: {
-            text: "My Team Resale Chart ",
+            text: "My Team Resale Chart",
             align: "left",
         },
-        labels: [
-            "2018-09-19T00:00:00.000Z",
-            "2018-09-19T01:30:00.000Z",
-            "2018-09-19T02:30:00.000Z",
-            "2018-09-19T03:30:00.000Z",
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z",
-        ],
+        labels: labels.length ? labels : "",
         xaxis: {
             type: "datetime",
         },
@@ -49,13 +77,12 @@ const ApexChart = () => {
         legend: {
             horizontalAlign: "left",
         },
-    });
+    };
 
     return (
         <div>
             <div id="chart">
                 <div className="d-flex justify-content-end position-relative">
-                    {/* Simple div to ensure clickable area */}
                     <div
                         className="filter-icon p-1"
                         onClick={() => setFilterShow(!filterShow)}
@@ -82,24 +109,36 @@ const ApexChart = () => {
                             }}
                         >
                             <li>
-                                <a className="w-100 p-3" href="#">
+                                <button
+                                    onClick={() => handleFilterClick("daily")}
+                                    className="w-100 px-3 py-1 border-0 bg-transparent text-left"
+                                >
                                     Last Day
-                                </a>
+                                </button>
                             </li>
                             <li>
-                                <a className="w-100 p-3" href="#">
+                                <button
+                                    onClick={() => handleFilterClick("weekly")}
+                                    className="w-100 px-3 py-1 border-0 bg-transparent text-left"
+                                >
                                     Last Week
-                                </a>
+                                </button>
                             </li>
                             <li>
-                                <a className="w-100 p-3" href="#">
+                                <button
+                                    onClick={() => handleFilterClick("monthly")}
+                                    className="w-100 px-3 py-1 border-0 bg-transparent text-left"
+                                >
                                     Last Month
-                                </a>
+                                </button>
                             </li>
                             <li>
-                                <a className="w-100 p-3" href="#">
+                                <button
+                                    onClick={() => handleFilterClick("yearly")}
+                                    className="w-100 px-3 py-1 border-0 bg-transparent text-left"
+                                >
                                     Last Year
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     )}
