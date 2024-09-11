@@ -140,7 +140,7 @@ export function storeProduct(product) {
         // If product is unique, add it to the end of the array
         storedProducts = [product, ...storedProducts];
         // Limit array size to 10
-        if (storedProducts.length > 10) {
+        if (storedProducts.length > 12) {
             storedProducts.pop(); // Remove the last element (oldest)
         }
     } else {
@@ -156,6 +156,34 @@ export function storeProduct(product) {
         JSON.stringify(storedProducts)
     );
 }
+
+export function storeProductId(productId) {
+    if (typeof localStorage === "undefined") {
+        return;
+    }
+
+    let storedProductIds = JSON.parse(localStorage.getItem("recentlyViewProductIds")) || [];
+    
+    const existingProductIndex = storedProductIds.indexOf(productId);
+
+    if (existingProductIndex === -1) {
+        storedProductIds = [productId, ...storedProductIds];
+        if (storedProductIds.length > 12) {
+            storedProductIds.pop(); // Remove the last element (oldest)
+        }
+    } else {
+        storedProductIds.splice(existingProductIndex, 1);
+        storedProductIds = [productId, ...storedProductIds];
+    }
+
+    // Update localStorage with the modified array
+    localStorage.setItem(
+        "recentlyViewProductIds",
+        JSON.stringify(storedProductIds)
+    );
+}
+
+
 // recent view product List
 export function recentViewProductList() {
     if (typeof localStorage === "undefined") {

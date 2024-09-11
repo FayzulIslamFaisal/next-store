@@ -12,6 +12,8 @@ import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Pagination from "../components/productCategory/Pagination";
+import { getRecentViewProductsById } from "../services/getRecentViewProductsById";
+import RecentViewProduc from "../components/RecentViewProduc";
 
 const ViewAllProductPage = () => {
     const [viewProductData, setViewProductData] = useState([]);
@@ -22,8 +24,9 @@ const ViewAllProductPage = () => {
     const [districtId, setDistrictId] = useState(null);
     const { status, data: session } = useSession();
     const [outletId, setOutletId] = useState(0);
-    const [lastPage, setLastPage] = useState(1); // New state for last page
-    const [currentPages, setCurrentPages] = useState(1); // New state for current pages
+    const [lastPage, setLastPage] = useState(1); 
+    const [currentPages, setCurrentPages] = useState(1); 
+    const [recentView, setRecentView] = useState(true); 
 
     const searchParams = useSearchParams();
     const type = searchParams.get('type');
@@ -31,7 +34,7 @@ const ViewAllProductPage = () => {
     useEffect(() => {
         const page = searchParams.get('page');
         if (page && page !== currentPages) {
-            setCurrentPages( parseInt(page));
+            setCurrentPages(parseInt(page));
         }
     }, [searchParams, currentPages]);
     const limit = 12; //Per Page Category
@@ -45,31 +48,6 @@ const ViewAllProductPage = () => {
         const initialDistrictId = localStorage.getItem("districtId");
         setDistrictId(initialDistrictId || 47);
     }, []);
-    // useEffect(() => {
-    const recentViewConfigure = async () => {
-        if (session) {
-            const recentViewProductFetch = await fetchRecentViewProducts(
-                session?.accessToken,
-                outletId
-            );
-            // setViewProductData(
-            //     recentViewProductFetch?.results?.for_you_products
-            // );
-            setRecentViewProductData(
-                recentViewProductFetch?.results?.for_you_products
-            );
-        } else {
-            if (typeof window !== "undefined") {
-                const storedProducts =
-                    JSON.parse(localStorage.getItem("recentlyViewProducts")) ||
-                    [];
-                // setViewProductData(storedProducts);
-                setRecentViewProductData(storedProducts);
-            }
-        }
-    };
-    //     recentViewConfigure();
-    // }, [session, outletId]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,11 +56,12 @@ const ViewAllProductPage = () => {
                     switch (type) {
                         case "justForYou":
                             try {
+                                setRecentView(true)
                                 const justForYouProductData = await getHomeJustForYouProduct(districtId, currentPages, limit);
                                 setViewProductData(justForYouProductData?.results?.just_for_you?.data);
                                 setLastPage(justForYouProductData?.results?.just_for_you?.last_page)
                                 setSectionTitle("Just For You");
-                                recentViewConfigure();
+                                // recentViewConfigure();
                             } catch (error) {
                                 console.error("Error fetching 'Just For You' products:", error);
                             }
@@ -90,6 +69,7 @@ const ViewAllProductPage = () => {
 
                         case "flashSale":
                             try {
+                                setRecentView(true)
                                 const flashSaleProductData =
                                     await getHomeFlashSalesProduct(districtId, currentPages, limit);
                                 const flashSaleInfoTime =
@@ -103,34 +83,34 @@ const ViewAllProductPage = () => {
                                     ?.flash_sales_product.last_page)
                                 setFlashSaleEndData(flashSaleInfoTime);
                                 setSectionTitle("Flash Sale");
-                                recentViewConfigure();
+                                // recentViewConfigure();
                             } catch (error) {
                                 console.error("Error fetching 'Just For You' products:", error);
                             }
                             break;
                         case "recentview":
                             try {
+                                setRecentView(false)
                                 setViewProductData([]); // Clear existing data
                                 setRecentViewProductData([]); // Clear recent view data
-                                if (session) {
-                                    const recentViewProductFetch =
-                                        await fetchRecentViewProducts(
-                                            session?.accessToken,
-                                            outletId
-                                        );
-                                    setViewProductData(
-                                        recentViewProductFetch?.results
-                                            ?.for_you_products || []
-                                    );
-                                } else {
-                                    if (typeof window !== "undefined") {
-                                        const storedProducts =
-                                            JSON.parse(
-                                                localStorage.getItem(
-                                                    "recentlyViewProducts"
-                                                )
-                                            ) || [];
-                                        setViewProductData(storedProducts);
+
+                                if (typeof window !== "undefined" && outletId) {
+                                    try {
+                                        const storedProducts = JSON.parse(localStorage.getItem('recentlyViewProductIds')) || [];
+
+                                        if (storedProducts.length > 0) {
+                                            const recentViewProducts = await getRecentViewProductsById(outletId, storedProducts);
+                                            if (recentViewProducts.code == 200) {
+                                                setViewProductData(recentViewProducts?.results?.product_information
+                                                );
+                                                setRecentViewProductData(recentViewProducts?.results?.product_information);
+                                                setLastPage(1)
+                                            } else {
+                                                console.warn('No recent view products fetched');
+                                            }
+                                        }
+                                    } catch (error) {
+                                        console.error('Error fetching recently viewed products:', error);
                                     }
                                 }
                                 setSectionTitle("Recent View Product");
@@ -182,22 +162,22 @@ const ViewAllProductPage = () => {
     return (
         <div className="container view-all-product-container">
             <ViewAllBanner imageUrl={bannerUrl} />
+
             <ViewAllCategoryTitle
                 title={sectionTitle}
                 isFlashSaleTimer={true}
                 flashSaleEndData={flashSaleEndData}
             />
+            
             <ViewAllProduct viewProductData={viewProductData} />
+
             <Pagination
                 currentPage={currentPages}
                 lastPage={lastPage}
             />
-            {recentViewProductData?.length > 0 && (
-                <Sales
-                    isHome={false}
-                    bgcolor="bg-white"
-                    removePx={`removepadding-x`}
-                />
+
+            { recentView && (
+                <RecentViewProduc/>
             )}
 
             <Service serviceItems={serviceItems} />

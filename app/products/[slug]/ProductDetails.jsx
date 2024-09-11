@@ -5,13 +5,14 @@ import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import ProductLeftSide from "@/app/components/productDetail/ProductLeftSide";
 import ProductRightSide from "@/app/components/productDetail/ProductRightSide";
 import { getProductDetails } from "@/app/services/getProductDetails";
-import { storeProduct } from "@/app/utils";
+import { storeProduct, storeProductId } from "@/app/utils";
 import { useSearchParams } from "next/navigation";
 import NotFound from "@/app/not-found";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import { useSession } from "next-auth/react";
 import { recentViewProductApi } from "@/app/services/postRecentViewProduct";
 import NoDataFound from "@/app/components/NoDataFound";
+import RecentViewProduc from "@/app/components/RecentViewProduc";
 
 const ProductSinglePage = ({ params }) => {
     const { status, data: session } = useSession();
@@ -27,7 +28,6 @@ const ProductSinglePage = ({ params }) => {
             if (productInfo?.message === "Product Found Other Outlet") {
                 setOutletInfo(productInfo?.results?.outlets)
                 console.log("Product Found Other Outlet");
-
             }
             if (productInfo?.results && productInfo.message != "Product Found Other Outlet") {
                 const productDetails = productInfo.results;
@@ -67,6 +67,7 @@ const ProductSinglePage = ({ params }) => {
                 }
 
                 storeProduct(recentViewProductInformation);
+                storeProductId(recentViewProductInformation.id);
 
                 setProductInfo(productDetails);
             }
@@ -94,12 +95,13 @@ const ProductSinglePage = ({ params }) => {
                                             productInfo={productInfo}
                                         />
                                     </div>
-                                    <Sales
+                                    {/* <Sales
                                         isHome={false}
                                         bgcolor="bg-white"
                                         removePx={`removepadding-x`}
                                         isRecentView={true}
-                                    />
+                                    /> */}
+                                    <RecentViewProduc/>
                                     {/* <Service serviceItems={serviceItems} /> */}
                                 </>
                             )
@@ -125,7 +127,6 @@ const ProductSinglePage = ({ params }) => {
                                     </>
                                 )
                             }
-
                         </Suspense>
                     </div>
                 </section>

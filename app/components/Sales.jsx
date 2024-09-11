@@ -1,5 +1,4 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import FlipClock from "./FlipClock";
 import SectionTitle from "./SectionTitle";
@@ -11,25 +10,13 @@ import "slick-carousel/slick/slick-theme.css";
 // import getAllSettings from "../services/getAllSettings";
 import { getHomeFlashSalesProduct } from "../services/getHomeFlashSalesProduct";
 import { getFlashSlaeShowOnHomePage } from "../services/getFlashSlaeShowOnHomePage";
-import { fetchRecentViewProducts } from "../services/getRecentViewProduct";
-import { useSession } from "next-auth/react";
 
-function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
+function Sales() {
     const [flashSaleProductList, setFlashSaleProductList] = useState([]);
     const [flashSaleEndsTime, setFlashSaleEndsTime] = useState(null);
-    const [recentViewProductList, setRecentViewProductList] = useState([]);
     const [districtId, setDistrictId] = useState(null);
-    const [outletId, setOutletId] = useState(0);
 
-    const { status, data: session } = useSession();
-    const searchParams = useSearchParams();
     const flashSaleArrow = flashSaleProductList?.length > 6 ? true : false;
-    const recentArrow = recentViewProductList?.length > 6 ? true : false;
-
-    useEffect(() => {
-        const initialOutletId = localStorage.getItem("outletId");
-        setOutletId(initialOutletId ? parseInt(initialOutletId) : 3);
-    }, []);
 
     useEffect(() => {
         const initialDistrictId = localStorage.getItem("districtId");
@@ -46,47 +33,18 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     }, [districtId]);
 
     useEffect(() => {
-        let ignore = false;
         async function fetchSettingData() {
             try {
                 const settingData = await getFlashSlaeShowOnHomePage();
-                if (!ignore) {
-                    const settingAllData = settingData?.results;
-                    const flashSaleEndTime = settingAllData?.end_time;
-                    setFlashSaleEndsTime(flashSaleEndTime);
-                }
+                const settingAllData = settingData?.results;
+                const flashSaleEndTime = settingAllData?.end_time;
+                setFlashSaleEndsTime(flashSaleEndTime);
             } catch (error) {
                 console.error("Failed to fetch setting data", error);
             }
         }
         fetchSettingData();
-        return () => {
-            ignore = true;
-        };
     }, []);
-
-    useEffect(() => {
-        const recentViewConfigure = async () => {
-            if (session) {
-                const recentViewProductFetch = await fetchRecentViewProducts(
-                    session?.accessToken,
-                    outletId
-                );
-                setRecentViewProductList(
-                    recentViewProductFetch?.results?.for_you_products
-                );
-            } else {
-                if (typeof window !== "undefined") {
-                    const storedProducts =
-                        JSON.parse(
-                            localStorage.getItem("recentlyViewProducts")
-                        ) || [];
-                    setRecentViewProductList(storedProducts);
-                }
-            }
-        };
-        recentViewConfigure();
-    }, [session]);
 
     const settings = {
         // centerPadding: "60px",
@@ -97,7 +55,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 2,
-        arrows: isHome ? flashSaleArrow : recentArrow,
+        arrows: flashSaleArrow,
 
         responsive: [
             {
@@ -105,7 +63,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 2,
-                    arrows: false,
+                    arrows: flashSaleArrow,
                     initialSlide: 0,
                 },
             },
@@ -114,7 +72,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 2,
-                    arrows: isHome ? flashSaleArrow : recentArrow,
+                    arrows: flashSaleArrow,
                     initialSlide: 0,
                 },
             },
@@ -123,7 +81,7 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
-                    arrows: isHome ? flashSaleArrow : recentArrow,
+                    arrows: flashSaleArrow,
                     initialSlide: 0,
                 },
             },
@@ -131,47 +89,41 @@ function Sales({ bgcolor = "", isHome = true, removePx = "", isRecentView }) {
     };
 
     return (
-        <section className={`flash-sale-area ${bgcolor} ${removePx}`}>
-            <div className="container">
-                <SectionTitle
-                    isSale={true}
-                    title={
-                        isHome
-                            ? `Flash Sale`
-                            : recentViewProductList?.length > 0 && `Recent View`
-                    }
-                    target={isHome ? "flashSale" : `recentview`}
-                    path="/viewallproduct"
-                >
-                    {isHome && flashSaleEndsTime && (
-                        <FlipClock endsAt={flashSaleEndsTime} />
-                    )}
-                </SectionTitle>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className={`${"flash-sale-content-area-grid "}`}>
-                            <Slider {...settings}>
-                                {isHome && !isRecentView
-                                    ? flashSaleProductList?.length > 0 &&
-                                      flashSaleProductList?.map((product) => (
-                                          <ProductCard
-                                              key={product.id}
-                                              item={product}
-                                          />
-                                      ))
-                                    : recentViewProductList?.length > 0 &&
-                                      recentViewProductList?.map((product) => (
-                                          <ProductCard
-                                              key={product.id}
-                                              item={product}
-                                          />
-                                      ))}
-                            </Slider>
+        <>
+            {
+                flashSaleProductList?.length > 0 && flashSaleEndsTime &&
+                <section className={`flash-sale-area `}>
+                    <div className="container">
+                        <SectionTitle
+                            isSale={true}
+                            title={`Flash Sale`}
+                            target={"flashSale"}
+                            path="/viewallproduct"
+                        >
+                            {flashSaleEndsTime && (
+                                <FlipClock endsAt={flashSaleEndsTime} />
+                            )}
+                        </SectionTitle>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className={`${"flash-sale-content-area-grid "}`}>
+                                    <Slider {...settings}>
+                                        {flashSaleProductList?.length > 0 &&
+                                            flashSaleProductList?.map((product) => (
+                                                <ProductCard
+                                                    key={product.id}
+                                                    item={product}
+                                                />
+                                            ))
+                                        }
+                                    </Slider>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
+            }
+        </>
     );
 }
 
