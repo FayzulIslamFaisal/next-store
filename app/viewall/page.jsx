@@ -3,11 +3,11 @@ import Service from "../components/Service";
 import ViewAllBanner from "../components/viewAllProduct/ViewAllBanner";
 import ViewAllCategoryTitle from "../components/viewAllProduct/ViewAllCategoryTitle";
 import ViewAllCategories from "../components/viewAllProduct/ViewAllCategories";
-import ViewAllFlashCheck from "../components/viewAllProduct/ViewAllFlashCheck";
 import { getHomeCategory } from "../services/getHomeCategory";
 import { getHomeBrand } from "../services/getHomeBrand";
 import { NagadhatPublicUrl } from "../utils";
 import Pagination from "../components/productCategory/Pagination";
+import RecentViewProduc from "../components/RecentViewProduc";
 
 const ViewAllPage = async ({ searchParams }) => {
     const page = parseInt(searchParams.page) || 1;
@@ -79,7 +79,7 @@ const ViewAllPage = async ({ searchParams }) => {
                     lastPage={lastPage}
                 />
             </div>
-            <ViewAllFlashCheck />
+            <RecentViewProduc/>
             <Service serviceItems={serviceItems} />
         </div>
     );
