@@ -19,7 +19,6 @@ const ApexChart = () => {
                         session?.accessToken,
                         selectedFilter
                     );
-
                     setChartData(chartInfo?.results?.earnings_info || []);
                 } catch (error) {
                     console.error("Error inside useEffect:", error);
@@ -35,17 +34,22 @@ const ApexChart = () => {
         setFilterShow(false);
     };
 
-    const earnings = chartData.map((item) => item?.earnings);
-    const labels = chartData.map((item) => item?.name);
+    const earnings = chartData.map((item) => item?.earnings || 0);
 
-    // console.log("earnings", { earnings });
-    // console.log("labels", { labels });
-    // console.log("selectedFilter", { selectedFilter });
+    const labels = chartData.map((item) => {
+        const date = new Date(item?.name);
+        return !isNaN(date.getTime()) ? date.toISOString() : item?.name;
+    });
+
+    // If dates are invalid, remove 'datetime' type for x-axis
+    const isValidDate = labels.every(
+        (label) => !isNaN(new Date(label).getTime())
+    );
 
     const series = [
         {
             name: "Earnings",
-            data: earnings.length ? earnings : "",
+            data: earnings.length ? earnings : [],
         },
     ];
 
@@ -67,9 +71,9 @@ const ApexChart = () => {
             text: "My Team Resale Chart",
             align: "left",
         },
-        labels: labels.length ? labels : "",
+        labels: labels.length ? labels : [],
         xaxis: {
-            type: "datetime",
+            type: isValidDate ? "datetime" : "category", // Conditionally set based on label format
         },
         yaxis: {
             opposite: true,

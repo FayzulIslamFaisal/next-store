@@ -21,8 +21,8 @@ const RetailListViewProductInfo = ({
                 className="d-flex flex-column gap-3"
                 style={{ minWidth: "600px" }}
             >
-                {retailProduct.length > 0 ? (
-                    retailProduct.map((product) => {
+                {retailProduct?.length > 0 ? (
+                    retailProduct?.map((product) => {
                         const imageUrl = `${NagadhatPublicUrl}/${product?.product_thumbnail}`;
                         return (
                             <div
@@ -32,7 +32,8 @@ const RetailListViewProductInfo = ({
                                 <div className="flash-sale-content-info text-hover-effect d-flex gap-3 justify-content-between align-items-center">
                                     <Link
                                         href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
-                                        className="d-flex gap-3 flex-1 flex-shrink-0 flex-grow-1">
+                                        className="d-flex gap-3 flex-1 flex-shrink-0 flex-grow-1"
+                                    >
                                         <div
                                             className="mb-0 flex-shrink-0"
                                             style={{
@@ -43,14 +44,20 @@ const RetailListViewProductInfo = ({
                                         >
                                             <Image
                                                 fill
-                                                src={imageUrl ||"/images/flash-img1.jpg"}
+                                                src={
+                                                    imageUrl ||
+                                                    "/images/flash-img1.jpg"
+                                                }
                                                 className="img-fluid"
-                                                alt={product?.product_name ||"Product image"}
+                                                alt={
+                                                    product?.product_name ||
+                                                    "Product image"
+                                                }
                                                 sizes="(max-width: 576px) 100vw, 
                                                     (max-width: 768px) 100vw, 
                                                     (max-width: 992px) 100vw, 
                                                     100vw"
-                                                style={{objectFit: "cover",}}
+                                                style={{ objectFit: "cover" }}
                                             />
                                         </div>
                                         <h4
@@ -66,11 +73,14 @@ const RetailListViewProductInfo = ({
                                             )}
                                         </h4>
                                     </Link>
-                                    <Link href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}>
+                                    <Link
+                                        href={`/products/get-product-details?outlet_id=${outletId}&product_id=${product?.id}&tab=${tab}`}
+                                    >
                                         <div className="flex-shrink-0 ">
                                             <div className="d-flex flex-column justify-content-center">
                                                 <div className="d-flex align-items-center gap-2">
-                                                    {product?.after_discount_mrp_price === product?.mrp_price ? (
+                                                    {product?.after_discount_mrp_price ===
+                                                    product?.mrp_price ? (
                                                         <strong>
                                                             {`৳ ${product?.mrp_price}`}
                                                         </strong>
@@ -89,9 +99,16 @@ const RetailListViewProductInfo = ({
                                                 </div>
                                                 <p className="affiliate-commission">
                                                     Commission:{" "}
-                                                    {`৳ ${product?.calculated_commission ||"0"}`}{" "}
+                                                    {`৳ ${
+                                                        product?.calculated_commission ||
+                                                        "0"
+                                                    }`}{" "}
                                                     <span className="ms-1">
-                                                        ({product?.level_commission})
+                                                        (
+                                                        {
+                                                            product?.level_commission
+                                                        }
+                                                        )
                                                     </span>
                                                 </p>
                                             </div>
