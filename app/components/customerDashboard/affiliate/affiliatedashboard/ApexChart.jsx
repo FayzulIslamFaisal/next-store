@@ -6,32 +6,32 @@ import ReactApexChart from "react-apexcharts";
 import { FaFilter } from "react-icons/fa6";
 
 const ApexChart = () => {
-    const [filterShow, setFilterShow] = useState(false);
+    const [filterVisible, setFilterVisible] = useState(false);
     const [chartData, setChartData] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState("daily");
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     useEffect(() => {
-        const fetchChartInfo = async () => {
+        const fetchChartData = async () => {
             if (session?.accessToken) {
                 try {
                     const chartInfo = await getAffiliateIncomeChart(
-                        session?.accessToken,
+                        session.accessToken,
                         selectedFilter
                     );
                     setChartData(chartInfo?.results?.earnings_info || []);
                 } catch (error) {
-                    console.error("Error inside useEffect:", error);
+                    console.error("Error fetching chart data:", error);
                 }
             }
         };
 
-        fetchChartInfo();
+        fetchChartData();
     }, [selectedFilter, session?.accessToken]);
 
     const handleFilterClick = (filter) => {
         setSelectedFilter(filter);
-        setFilterShow(false);
+        setFilterVisible(false);
     };
 
     const earnings = chartData.map((item) => item?.earnings || 0);
@@ -41,10 +41,10 @@ const ApexChart = () => {
         return !isNaN(date.getTime()) ? date.toISOString() : item?.name;
     });
 
-    // If dates are invalid, remove 'datetime' type for x-axis
-    const isValidDate = labels.every(
-        (label) => !isNaN(new Date(label).getTime())
-    );
+    const isValidDate = labels.every((label) => {
+        const date = new Date(label);
+        return !isNaN(date.getTime());
+    });
 
     const series = [
         {
@@ -73,7 +73,7 @@ const ApexChart = () => {
         },
         labels: labels.length ? labels : [],
         xaxis: {
-            type: isValidDate ? "datetime" : "category", // Conditionally set based on label format
+            type: isValidDate ? "datetime" : "category",
         },
         yaxis: {
             opposite: true,
@@ -89,7 +89,7 @@ const ApexChart = () => {
                 <div className="d-flex justify-content-end position-relative">
                     <div
                         className="filter-icon p-1"
-                        onClick={() => setFilterShow(!filterShow)}
+                        onClick={() => setFilterVisible(!filterVisible)}
                         style={{
                             cursor: "pointer",
                             color: "#6e8192",
@@ -101,7 +101,7 @@ const ApexChart = () => {
                     >
                         <FaFilter />
                     </div>
-                    {filterShow && (
+                    {filterVisible && (
                         <ul
                             className="bg-white border py-2 d-flex flex-column gap-1"
                             style={{

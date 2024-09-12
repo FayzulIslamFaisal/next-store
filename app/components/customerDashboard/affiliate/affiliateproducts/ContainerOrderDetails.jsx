@@ -320,13 +320,20 @@ const ContainerOrderDetails = ({
                                 onClick={handleBookingNow}
                                 disabled={
                                     selectedProducts.length === 0 ||
-                                    availableValue < finalTotal
+                                    availableValue < finalTotal ||
+                                    availableQuantity < 1
                                 }
                                 style={{
                                     opacity:
-                                        selectedProducts.length === 0 ? 0.5 : 1,
+                                        selectedProducts.length === 0 ||
+                                        availableValue < finalTotal ||
+                                        availableQuantity < 1
+                                            ? 0.5
+                                            : 1,
                                     cursor:
-                                        selectedProducts.length === 0
+                                        selectedProducts.length === 0 ||
+                                        availableValue < finalTotal ||
+                                        availableQuantity < 1
                                             ? "not-allowed"
                                             : "pointer",
                                 }}
