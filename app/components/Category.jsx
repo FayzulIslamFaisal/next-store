@@ -39,23 +39,14 @@ async function Category({ flashSaleEndTime, showOnHome }) {
     const categoryBrandData = brandData?.results?.brands;
     
     return (
-        <section
-            className={`nh-categories-area ${
-                !flashSaleEndTime ? "nh-categories-pt-remove" : ""
-            } ${!showOnHome ? "show-on-pt-remove" : ""}`}
-        >
-            <div className="container">
+        <section className="container">
+            <div className="nh-categories-area">
                 <SectionTitle title="Categories" target="category" />
                 <ProductCategories categoryProductData={categoryProductData} />
-
-                <div className="nh-brands-area">
+            </div>
+            <div className="nh-brands-area pt-0">
                     <SectionTitle title="Brands" target="brand" />
-                    <ProductCategories
-                        categoryProductData={categoryBrandData}
-                    />
-                </div>
-                <JustForYou />
-                <Service serviceItems={serviceItems} />
+                    <ProductCategories categoryProductData={categoryBrandData}/>
             </div>
         </section>
     );

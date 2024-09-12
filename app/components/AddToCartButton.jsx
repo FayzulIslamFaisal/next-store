@@ -105,12 +105,11 @@ function AddToCartButton({
                         setProductVariationError("Please Select variant");
                     } else if (result?.length == 1) {
                         setProductVariationError(
-                            `${
-                                result[0]
-                                    .split("_")[1]
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                result[0].split("_")[1].slice(1)
+                            `${result[0]
+                                .split("_")[1]
+                                .charAt(0)
+                                .toUpperCase() +
+                            result[0].split("_")[1].slice(1)
                             } not selected`
                         );
                     } else {
@@ -119,7 +118,7 @@ function AddToCartButton({
                         }
 
                         const addToCartInfo = {
-                            cart_product_type : 1 ,
+                            cart_product_type: 1,
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
@@ -130,15 +129,11 @@ function AddToCartButton({
                             selectedVariants: selectedVariants,
                             location_id: districtId,
                             order_type: "Regular",
-                            product_variation_id:
-                                selectedVariantProductInfo?.product_variation_id,
-                            discount_type:
-                                selectedVariantProductInfo?.discount_type,
-                            discountPrice:
-                                selectedVariantProductInfo?.discount_amount ==
-                                null
-                                    ? 0
-                                    : selectedVariantProductInfo?.discount_amount,
+                            product_variation_id: selectedVariantProductInfo?.product_variation_id,
+                            discount_type: selectedVariantProductInfo?.discount_type,
+                            discountPrice: selectedVariantProductInfo?.discount_amount == null
+                                ? 0
+                                : selectedVariantProductInfo?.discount_amount,
                         };
 
                         try {
@@ -195,7 +190,7 @@ function AddToCartButton({
                     }
                 } else {
                     const addToCartInfo = {
-                        cart_product_type : 1 ,
+                        cart_product_type: 1,
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
@@ -284,18 +279,17 @@ function AddToCartButton({
                         setProductVariationError("Please Select variant");
                     } else if (result?.length == 1) {
                         setProductVariationError(
-                            `${
-                                result[0]
-                                    .split("_")[1]
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                result[0].split("_")[1].slice(1)
+                            `${result[0]
+                                .split("_")[1]
+                                .charAt(0)
+                                .toUpperCase() +
+                            result[0].split("_")[1].slice(1)
                             } not selected`
                         );
                     } else {
                         setProductVariationError(" ");
                         const addToCartInfo = {
-                            cart_product_type : 1 ,
+                            cart_product_type: 1,
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
@@ -312,7 +306,7 @@ function AddToCartButton({
                                 selectedVariantProductInfo?.discount_type,
                             discountPrice:
                                 selectedVariantProductInfo?.discount_amount ==
-                                null
+                                    null
                                     ? 0
                                     : selectedVariantProductInfo?.discount_amount,
                         };
@@ -322,7 +316,7 @@ function AddToCartButton({
                     }
                 } else {
                     const addToCartInfo = {
-                        cart_product_type : 1 ,
+                        cart_product_type: 1,
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
@@ -368,14 +362,14 @@ function AddToCartButton({
                             <div
                                 style={{
                                     height: "21px",
-                                    width: "75px",
+                                    width: "96px",
                                     textAlign: "center",
                                 }}
                             >
                                 <RotatingLines
                                     visible={true}
-                                    height="10"
-                                    width="30"
+                                    height="18"
+                                    width="20"
                                     color="#ffffff"
                                     strokeWidth="5"
                                     animationDuration="0.75"

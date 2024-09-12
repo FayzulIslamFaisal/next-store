@@ -84,7 +84,7 @@ const RecentViewProduc = () => {
     return (
         <>
             {recentViewProductList.length > 0 &&
-                <section className="flash-sale-area bg-white">
+                <section className="bg-white">
                     <div className="container">
                         <SectionTitle
                             title="Recent View"

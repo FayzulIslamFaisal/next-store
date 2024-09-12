@@ -45,27 +45,29 @@ function JustForYou() {
     };
 
     return (
-        <div className="nh-just-for-you">
-            <SectionTitle
-                title="Just For You"
-                target="justForYou"
-                path="/viewallproduct"
-            />
+        <div className="container">
+            <div className="nh-just-for-you">
+                <SectionTitle
+                    title="Just For You"
+                    target="justForYou"
+                    path="/viewallproduct"
+                />
 
-            <div className="row just-for-random-product">
-                <div className="col-md-12">
-                    <div className="flash-sale-content-area">
-                        {jfyProducts?.map((product, index) => (
-                            <ProductCard
-                                key={`${product.id}-${product.slug}-${index}`}
-                                item={product}
-                            />
-                        ))}
+                <div className="row just-for-random-product">
+                    <div className="col-md-12">
+                        <div className="flash-sale-content-area">
+                            {jfyProducts?.map((product, index) => (
+                                <ProductCard
+                                    key={`${product.id}-${product.slug}-${index}`}
+                                    item={product}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {showLoadMore && <LoadMore onLoadMore={handleLoadMore} />}
+                {showLoadMore && <LoadMore onLoadMore={handleLoadMore} />}
+            </div>
         </div>
     );
 }

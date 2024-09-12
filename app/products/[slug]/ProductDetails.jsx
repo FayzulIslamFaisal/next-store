@@ -5,7 +5,7 @@ import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import ProductLeftSide from "@/app/components/productDetail/ProductLeftSide";
 import ProductRightSide from "@/app/components/productDetail/ProductRightSide";
 import { getProductDetails } from "@/app/services/getProductDetails";
-import { storeProduct, storeProductId } from "@/app/utils";
+import { storeProductId } from "@/app/utils";
 import { useSearchParams } from "next/navigation";
 import NotFound from "@/app/not-found";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { recentViewProductApi } from "@/app/services/postRecentViewProduct";
 import NoDataFound from "@/app/components/NoDataFound";
 import RecentViewProduc from "@/app/components/RecentViewProduc";
+import Service from "@/app/components/Service";
 
 const ProductSinglePage = ({ params }) => {
     const { status, data: session } = useSession();
@@ -66,7 +67,6 @@ const ProductSinglePage = ({ params }) => {
                     );
                 }
 
-                storeProduct(recentViewProductInformation);
                 storeProductId(recentViewProductInformation.id);
 
                 setProductInfo(productDetails);
@@ -95,20 +95,12 @@ const ProductSinglePage = ({ params }) => {
                                             productInfo={productInfo}
                                         />
                                     </div>
-                                    {/* <Sales
-                                        isHome={false}
-                                        bgcolor="bg-white"
-                                        removePx={`removepadding-x`}
-                                        isRecentView={true}
-                                    /> */}
-                                    <RecentViewProduc/>
-                                    {/* <Service serviceItems={serviceItems} /> */}
+                                    <div className="pt-5">
+                                        <RecentViewProduc />
+                                    </div>
+                                    <Service />
                                 </>
                             )
-                                // : (
-                                //     <DefaultLoader />
-                                //     // <NoDataFound/>
-                                // )
                             }
                             {
                                 outletInfo.length > 0 && (
