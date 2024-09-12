@@ -1,4 +1,5 @@
 "use client";
+import LodingFixed from "@/app/components/LodingFixed";
 import Service from "@/app/components/Service";
 import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import CategoryLeftSide from "@/app/components/productCategory/CategoryLeftSide";
@@ -111,6 +112,7 @@ const DynamicCategoryPage = ({ params }) => {
                 </div>
             </div>
             <Service />
+            {loading && <LodingFixed />}
         </section>
     );
 };
