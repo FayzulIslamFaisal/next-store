@@ -26,8 +26,6 @@ import {
     FaTrash,
     FaTrashCan,
 } from "react-icons/fa6";
-import { RotatingLines } from "react-loader-spinner";
-import NoProductShows from "../components/NoProductShows";
 import Swal from "sweetalert2";
 import { showToast } from "../components/Toast";
 import { useRouter } from "next/navigation";
@@ -35,6 +33,7 @@ import { addToCartSelectedProduct } from "../services/postCartSelectedProducts";
 import { toast } from "react-toastify";
 import NoDataFound from "../components/NoDataFound";
 import { placeOrder } from "../services/postPlaceOrder";
+import LodingFixed from "../components/LodingFixed";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [checkingProductFilter, setCheckingProductFilter] = useState([]);
@@ -44,8 +43,6 @@ const CartPage = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [subTotalPrice, setSubTotalPrice] = useState(0);
     const [totalDiscount, setTotalDiscount] = useState(0);
-    let price;
-    let regularPrice;
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -189,8 +186,10 @@ const CartPage = () => {
                 setLoading(false);
             }
         } catch (error) {
+            setLoading(false);
             console.log(error);
         }
+        
     };
 
     /**
@@ -272,8 +271,10 @@ const CartPage = () => {
                 setLoading(false);
             }
         } catch (error) {
+            setLoading(false);
             console.log(error);
         }
+        
     };
 
     /**
@@ -382,6 +383,7 @@ const CartPage = () => {
             setQuantityUpdateLoader(false);
         } catch (error) {
             console.log(error);
+            setQuantityUpdateLoader(false);
         }
     };
 
@@ -462,6 +464,7 @@ const CartPage = () => {
             setQuantityUpdateLoader(false);
         } catch (error) {
             console.log(error);
+            setQuantityUpdateLoader(false);
         }
     };
 
@@ -514,7 +517,6 @@ const CartPage = () => {
 
     const handleCheckout = async () => {
         try {
-            setLoading(true);
             if (session) {
                 const updatedCartProducts = await fetchCartProducts(
                     outletId,
@@ -525,7 +527,6 @@ const CartPage = () => {
                     setCheckedProductCard(updatedCartProducts?.data);
                 }
             }
-            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -601,8 +602,6 @@ const CartPage = () => {
         }
     };
 
-
-
     const handlePlaceOrder = async () => {
 
         const cartItems = checkingProductFilter.map(product => ({
@@ -640,6 +639,7 @@ const CartPage = () => {
 
         try {
             if (session) {
+                setLoading(true)
                 const order = await placeOrder(data, session?.accessToken);
                 if (order.code == 200) {
                     deleteBuyNowProductData();
@@ -647,12 +647,14 @@ const CartPage = () => {
                 } else {
                     showToast(order.message, "error");
                 }
+                setLoading(false);
             } else {
                 requestPage("cart-page");
                 router.push("/login");
                 showToast("Log in to access shipping", "error");
             }
         } catch (error) {
+            setLoading(false);
             console.error("An error occurred while placing the order:", error);
             showToast("Something went wrong, please try again later.", "error");
         }
@@ -711,7 +713,7 @@ const CartPage = () => {
                             <div className="col-12">
                                 <div className="product-cart-details-continer overflow-x-auto">
                                     <div className="table align-middle">
-                                        <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column-reverse gap-2">
                                             {checkedProductCard.length > 0 ? (
                                                 checkedProductCard.map((item, index) => {
                                                     const price = item.price * item.quantity;
@@ -950,6 +952,7 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
+            {(loading || quanticUpdateLoader) && <LodingFixed />}
         </section>
     );
 };
