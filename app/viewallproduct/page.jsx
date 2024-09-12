@@ -180,7 +180,7 @@ const ViewAllProductPage = () => {
                 <RecentViewProduc/>
             )}
 
-            <Service serviceItems={serviceItems} />
+            <Service />
         </div>
     );
 };

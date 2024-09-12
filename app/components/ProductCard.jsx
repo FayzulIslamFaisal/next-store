@@ -101,31 +101,17 @@ function ProductCard({ item }) {
                                                     ?.discount_amount > 0 ? (
                                                     <div className="d-flex align-items-center justify-content-between">
                                                         <strong>
-                                                            ট {""}
-                                                            {
-                                                                variant_item
-                                                                    ?.price
-                                                                    ?.discounted_price
-                                                            }
+                                                            ট {variant_item?.price?.discounted_price}
                                                         </strong>
-                                                        <strong>
+                                                        <strong className="text-secondary">
                                                             <del>
-                                                                ট {""}
-                                                                {
-                                                                    variant_item
-                                                                        ?.price
-                                                                        ?.regular_price
-                                                                }
+                                                                ট { variant_item?.price?.regular_price}
                                                             </del>
                                                         </strong>
                                                     </div>
                                                 ) : (
                                                     <strong>
-                                                        ট {""}
-                                                        {
-                                                            variant_item?.price
-                                                                ?.regular_price
-                                                        }
+                                                        ট {variant_item?.price?.regular_price}
                                                     </strong>
                                                 )}
                                             </div>
@@ -137,7 +123,7 @@ function ProductCard({ item }) {
                                         <strong>
                                             ট {item?.price?.discounted_price}
                                         </strong>
-                                        <strong>
+                                        <strong  className="text-secondary">
                                             <del>
                                                 ট {item?.price?.regular_price}
                                             </del>
