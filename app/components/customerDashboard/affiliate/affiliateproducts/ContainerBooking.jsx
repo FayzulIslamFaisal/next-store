@@ -32,10 +32,9 @@ const ContainerBooking = ({ isActive }) => {
         fetchRetailProducts();
     }, [session]);
 
-    const availableQuantity =
-        containerData?.quantity - containerData?.booked_quantity;
-    const availableValue =
-        containerData?.container_value - containerData?.booked_value;
+    const availableQuantity = containerData?.quantity - containerData?.booked_quantity;
+    const availableValue = containerData?.container_value - containerData?.booked_value;
+    const progressBarValue = containerData?.progress_bar_value;
 
     return (
         <>
@@ -51,6 +50,7 @@ const ContainerBooking = ({ isActive }) => {
                         selectedProducts={selectedProducts}
                         setSelectedProducts={setSelectedProducts}
                         containerId={containerData.id}
+                        progressBarValue={progressBarValue}
                     />
 
                     <ContainerOrderDetails

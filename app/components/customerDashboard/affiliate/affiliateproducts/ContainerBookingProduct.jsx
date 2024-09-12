@@ -10,6 +10,7 @@ const ContainerBookingProduct = ({
     selectedProducts,
     setSelectedProducts,
     containerId,
+    progressBarValue,
 }) => {
     const searchParams = useSearchParams();
     const tab = searchParams.get("tab") || "retails-tab";
@@ -40,12 +41,17 @@ const ContainerBookingProduct = ({
                         <div
                             className="progress-bar bg-praymary-color"
                             role="progressbar"
-                            aria-valuenow="70"
+                            aria-valuenow={progressBarValue}
                             aria-valuemin="0"
                             aria-valuemax="100"
-                            style={{ width: "70%", fontSize: "12px" }}
+                            style={{
+                                width: `${progressBarValue}%`,
+                                fontSize: "12px",
+                            }}
                         >
-                            <span className="sr-only">70% Complete</span>
+                            <span className="sr-only">
+                                {progressBarValue} {""} % Complete
+                            </span>
                         </div>
                     </div>
                 </div>
