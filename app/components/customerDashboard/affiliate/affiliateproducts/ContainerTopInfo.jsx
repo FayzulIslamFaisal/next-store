@@ -47,7 +47,7 @@ const ContainerTopInfo = ({ containerData }) => {
                             <tr>
                                 <td>Quantity</td>
                                 <td className="px-5">:</td>
-                                <td className="text-end">{quantity}৳</td>
+                                <td className="text-end">{quantity}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -11,6 +11,7 @@ const ContainerBooking = ({ isActive }) => {
     const [containerData, setContainerData] = useState({});
     const [containerProduct, setContainerProduct] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
+    const [quantityFull, setQuantityFull] = useState(1);
     const { data: session, status } = useSession();
 
     useEffect(() => {
@@ -36,6 +37,13 @@ const ContainerBooking = ({ isActive }) => {
     const availableValue = containerData?.container_value - containerData?.booked_value;
     const progressBarValue = containerData?.progress_bar_value;
 
+    const getTotalQuantity = () => {
+        return selectedProducts.reduce(
+            (acc, product) => acc + product.quantity,
+            0
+        );
+    };
+
     return (
         <>
             <div
@@ -51,6 +59,10 @@ const ContainerBooking = ({ isActive }) => {
                         setSelectedProducts={setSelectedProducts}
                         containerId={containerData.id}
                         progressBarValue={progressBarValue}
+                        quantityFull={quantityFull}
+                        setQuantityFull={setQuantityFull}
+                        availableQuantity={availableQuantity}
+                        getTotalQuantity={getTotalQuantity}
                     />
 
                     <ContainerOrderDetails
@@ -59,6 +71,9 @@ const ContainerBooking = ({ isActive }) => {
                         availableQuantity={availableQuantity}
                         availableValue={availableValue}
                         session={session}
+                        setQuantityFull={setQuantityFull}
+                        quantityFull={quantityFull}
+                        getTotalQuantity={getTotalQuantity}
                     />
                 </Suspense>
             </div>
