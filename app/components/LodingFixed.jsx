@@ -1,5 +1,4 @@
 import React from 'react'
-import DefaultLoader from './defaultloader/DefaultLoader'
 
 const LodingFixed = () => {
     return (

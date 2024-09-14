@@ -1,4 +1,5 @@
 "use client";
+import LodingFixed from "@/app/components/LodingFixed";
 import { postContainerPlaceOrder } from "@/app/services/affiliate/affiliateproducts/postContainerPlaceOrder";
 import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
@@ -15,9 +16,11 @@ const ContainerOrderDetails = ({
     availableQuantity,
     availableValue,
     session,
+    getTotalQuantity
 }) => {
     const [outletId, setOutletId] = useState(0);
     const [districtId, setDistrictId] = useState(null);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -30,16 +33,9 @@ const ContainerOrderDetails = ({
         setDistrictId(initialDistrictId ? parseInt(initialDistrictId) : 47);
     }, []);
 
-    const getTotalQuantity = () => {
-        return selectedProducts.reduce(
-            (acc, product) => acc + product.quantity,
-            0
-        );
-    };
-
     const handleIncrease = (productId) => {
         const totalQuantity = getTotalQuantity();
-        if (totalQuantity < availableQuantity) {
+        if (totalQuantity < availableQuantity ) {
             setSelectedProducts((prevProducts) =>
                 prevProducts.map((product) =>
                     product.id === productId
@@ -95,24 +91,22 @@ const ContainerOrderDetails = ({
         setSelectedProducts(updatedProducts);
     };
 
-    const calculateTotalPrice = () => {
-        return selectedProducts.reduce(
+    const calculateTotals = () => {
+        const totalPrice = selectedProducts.reduce(
             (acc, product) => acc + product.pivot.mrp_price * product.quantity,
             0
         );
-    };
-
-    const calculateDiscount = () => {
-        return selectedProducts.reduce(
+    
+        const discount = selectedProducts.reduce(
             (acc, product) => acc + product.pivot.profit * product.quantity,
             0
         );
+    
+        const finalTotal = totalPrice - discount;
+    
+        return { totalPrice, discount, finalTotal };
     };
-
-    const totalPrice = calculateTotalPrice();
-    const discount = calculateDiscount();
-    const finalTotal = totalPrice - discount;
-
+    const { totalPrice, discount, finalTotal } = calculateTotals();
     if (availableValue < finalTotal) {
         toast.error("Booked Pricr cannot exceed the total value.");
     }
@@ -147,6 +141,7 @@ const ContainerOrderDetails = ({
             };
 
             try {
+                setLoading(true);
                 const response = await postContainerPlaceOrder(
                     containerOrder,
                     session?.accessToken
@@ -154,9 +149,9 @@ const ContainerOrderDetails = ({
 
                 if (!response.error) {
                     const { order_product_type, order_id } = response?.results;
-                    if (typeof window !== "undefined") {
-                        toast.success("Order placed successfully");
-                    }
+                    // if (typeof window !== "undefined") {
+                    //     toast.success("Order placed successfully");
+                    // }
                     router.push(
                         `/paynow?orderId=${order_id}&order_product_type=${order_product_type}`
                     );
@@ -166,6 +161,8 @@ const ContainerOrderDetails = ({
             } catch (error) {
                 console.error(error);
                 toast.error("Error occurred while placing the order.");
+            }finally {
+                 setLoading(false);
             }
         } else {
             toast.error("Cannot proceed: total exceeds available value.");
@@ -213,11 +210,7 @@ const ContainerOrderDetails = ({
                                                 <button
                                                     type="button"
                                                     className="quantity-decrease"
-                                                    onClick={() =>
-                                                        handleDecrease(
-                                                            product.id
-                                                        )
-                                                    }
+                                                    onClick={() =>handleDecrease(product.id)}
                                                     style={{ fontSize: "16px" }}
                                                 >
                                                     <FaMinus />
@@ -229,16 +222,8 @@ const ContainerOrderDetails = ({
                                                     type="text"
                                                     style={{ width: "36px" }}
                                                     value={product.quantity}
-                                                    onChange={(e) =>
-                                                        handleQuantityChange(
-                                                            product.id,
-                                                            e
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        availableValue <
-                                                        finalTotal
-                                                    }
+                                                    onChange={(e) => handleQuantityChange(product.id, e )}
+                                                    disabled={ availableValue < finalTotal }
                                                     readOnly={
                                                         availableValue <
                                                         finalTotal
@@ -249,16 +234,9 @@ const ContainerOrderDetails = ({
                                                 <button
                                                     className="quantity-increase"
                                                     type="button"
-                                                    onClick={() =>
-                                                        handleIncrease(
-                                                            product.id
-                                                        )
-                                                    }
+                                                    onClick={() =>handleIncrease( product.id)}
                                                     style={{ fontSize: "16px" }}
-                                                    disabled={
-                                                        availableValue <
-                                                        finalTotal
-                                                    }
+                                                    disabled={availableValue < finalTotal}
                                                 >
                                                     <FaPlus />
                                                 </button>
@@ -266,18 +244,12 @@ const ContainerOrderDetails = ({
                                         </td>
                                         <td className="align-middle">
                                             <strong>
-                                                {product.pivot.mrp_price *
-                                                    product.quantity}
-                                                ৳
+                                                {product.pivot.mrp_price * product.quantity} ৳
                                             </strong>
                                         </td>
                                         <td className="align-middle">
                                             <p
-                                                onClick={() =>
-                                                    handleDeleteSelectedProducts(
-                                                        product.id
-                                                    )
-                                                }
+                                                onClick={() =>handleDeleteSelectedProducts( product.id )}
                                                 className="text-danger"
                                                 title="Delete"
                                                 style={{
@@ -344,6 +316,7 @@ const ContainerOrderDetails = ({
                         </div>
                     </div>
                 </div>
+                {loading && <LodingFixed/>}
             </div>
         </>
     );

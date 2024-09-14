@@ -1,14 +1,12 @@
 "use client";
 import LodingFixed from "@/app/components/LodingFixed";
 import Service from "@/app/components/Service";
-import DefaultLoader from "@/app/components/defaultloader/DefaultLoader";
 import CategoryLeftSide from "@/app/components/productCategory/CategoryLeftSide";
 import CategoryRightSide from "@/app/components/productCategory/CategoryRightSide";
 import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import { getCategorydetailBySlug } from "@/app/services/getCategorydetailBySlug";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Audio } from "react-loader-spinner";
 
 const DynamicCategoryPage = ({ params }) => {
     const searchParams = useSearchParams();
@@ -45,13 +43,13 @@ const DynamicCategoryPage = ({ params }) => {
                         option
                     );
                     setCategoryBySlugData(data);
-                    setLoading(false);
                 } catch (error) {
-                    setLoading(false);
                     console.error(
                         "Error fetching 'Just For You' products:",
                         error
                     );
+                }finally {
+                    setLoading(false);
                 }
             };
             fetchProducts();
@@ -72,11 +70,6 @@ const DynamicCategoryPage = ({ params }) => {
     const categoryTotalMaxPrice = categoryByResult?.category_max_price;
     const totalProduct = categoryByResult?.total_product;
     const lastPage = categoryByResult?.products?.last_page;
-
-    
-    // if (loading) {
-    //     return <DefaultLoader />
-    // }
 
     return (
         <section className="product-category-wrapper">
@@ -106,6 +99,7 @@ const DynamicCategoryPage = ({ params }) => {
                                 lastPage={lastPage}
                                 currentPage={page}
                                 itemsPerPage={limit}
+                                loading={loading}
                             />
                         </div>
                     </div>

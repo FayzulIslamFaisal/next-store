@@ -4,6 +4,7 @@ import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 const ContainerBookingProduct = ({
     containerProduct,
@@ -11,23 +12,31 @@ const ContainerBookingProduct = ({
     setSelectedProducts,
     containerId,
     progressBarValue,
+    getTotalQuantity,
+    availableQuantity
 }) => {
     const searchParams = useSearchParams();
     const tab = searchParams.get("tab") || "retails-tab";
+
     // Toggle product selection
     const handleSelectProduct = (product) => {
+        const totalQuantity = getTotalQuantity();
         if (selectedProducts.some((p) => p.id === product.id)) {
             setSelectedProducts(
                 selectedProducts.filter((p) => p.id !== product.id)
             );
         } else {
+            if (totalQuantity + 1 > availableQuantity) {
+                toast.error("Quantity cannot exceed available quantity.");
+                return; // Don't proceed with adding the product
+            }
             setSelectedProducts([
                 ...selectedProducts,
                 { ...product, quantity: 1 },
             ]);
         }
     };
-
+    
     // Handle Link click event
     const handleLinkClick = (event) => {
         event.stopPropagation();
@@ -63,13 +72,12 @@ const ContainerBookingProduct = ({
                             onClick={() => handleSelectProduct(product)}
                         >
                             <div
-                                className={`flash-sale-content-bg nh-hover-box-shadow ${
-                                    selectedProducts.some(
-                                        (p) => p.id === product.id
-                                    )
+                                className={`flash-sale-content-bg nh-hover-box-shadow ${selectedProducts.some(
+                                    (p) => p.id === product.id
+                                )
                                         ? "selected-container-item"
                                         : ""
-                                }`}
+                                    }`}
                             >
                                 <div
                                     className="image-hover-effect mx-auto mb-2"

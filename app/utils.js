@@ -122,7 +122,7 @@ export function shortenString(str, length) {
     return str.slice(0, length) + "...";
 }
 
-// This function set recent view product
+// This function set recent view product id
 
 export function storeProductId(productId) {
     if (typeof localStorage === "undefined") {

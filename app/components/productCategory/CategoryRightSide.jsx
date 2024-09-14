@@ -13,7 +13,8 @@ const CategoryRightSide = ({
     searchParams,
     currentPage,
     lastPage,
-    totalProduct
+    totalProduct,
+    loading
 }) => {
     const categoryMainTitle = categoryTitle?.title;
     let categoryProductLength = categoryByProduct?.length;
@@ -41,6 +42,7 @@ const CategoryRightSide = ({
                     productArvhiveList={categoryByProduct}
                     />
                 ) : (
+                    !loading &&
                     <NoDataFound />
                 )}
                 {lastPage > 1 && (
