@@ -1,4 +1,5 @@
 "use client";
+import LodingFixed from '@/app/components/LodingFixed';
 import { showToast } from '@/app/components/Toast';
 import { placeOrder } from '@/app/services/postPlaceOrder';
 import { useSession } from 'next-auth/react';
@@ -7,6 +8,7 @@ import React, { useState } from 'react'
 
 const ResaleBuyNowBtn = ({ product }) => {
     const { status, data: session } = useSession();
+    const [loading, setLoading]= useState(false)
     const router = useRouter();
     const [outletId, setOutletId] = useState(() => {
         if (typeof window !== "undefined") {
@@ -60,6 +62,7 @@ const ResaleBuyNowBtn = ({ product }) => {
         }
 
         try {
+            setLoading(true);
             const order = await placeOrder(data, session?.accessToken);
             if (order.code == 200) {
                 router.push(`/paynow?orderId=${order?.results?.order_id}`);
@@ -69,6 +72,8 @@ const ResaleBuyNowBtn = ({ product }) => {
         } catch (error) {
             console.error("An error occurred while placing the order:", error);
             showToast("Something went wrong, please try again later.", "error");
+        }finally{
+            setLoading(false);
         }
     }
     return (
@@ -83,6 +88,7 @@ const ResaleBuyNowBtn = ({ product }) => {
             >
                 Buy Now
             </button>
+            {loading && <LodingFixed/>}
         </>
     )
 }

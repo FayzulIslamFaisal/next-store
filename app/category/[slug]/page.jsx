@@ -13,7 +13,7 @@ const DynamicCategoryPage = ({ params }) => {
     const [categoryBySlugData, setCategoryBySlugData] = useState(null);
     const { slug } = params;
     const [option, setOption] = useState({});
-    const [outletId, setOutletId] = useState(0); // default outlet
+    const [outletId, setOutletId] = useState(0);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
