@@ -67,12 +67,16 @@ const CartPage = () => {
 
     useEffect(() => {
         // Check if any product has isChecked true and different cart_product_type
-        const checkedProducts = checkedProductCard.filter(product => product.isChecked);
+        const checkedProducts = checkedProductCard.filter(
+            (product) => product.isChecked
+        );
 
         if (checkedProducts.length > 0) {
             const firstProductType = checkedProducts[0].cart_product_type;
             setSelectedProductType(firstProductType);
-            const hasDifferentType = checkedProducts.some(product => product.cart_product_type !== firstProductType);
+            const hasDifferentType = checkedProducts.some(
+                (product) => product.cart_product_type !== firstProductType
+            );
 
             if (hasDifferentType) {
                 toast.error("Different product types selected!");
@@ -84,7 +88,6 @@ const CartPage = () => {
             setSelectedProductType(null);
             setIsButtonDisabled(false);
         }
-
     }, [checkedProductCard]);
 
     const updateLocalStorage = (items) => {
@@ -107,13 +110,6 @@ const CartPage = () => {
         return updateProduct;
     }
 
-    /**
-     * Handles the deletion of a cart item.
-     * If a session exists, it deletes the item from the server and updates the state accordingly.
-     * If no session exists, it removes the item from the local state and updates local storage.
-     *
-     * @param {number} cart_id - The ID of the cart item to be deleted.
-     */
     const handleDelete = async (cart_id) => {
         const wantToDelete = await Swal.fire({
             title: "Are you sure?",
@@ -192,11 +188,6 @@ const CartPage = () => {
         }
     };
 
-    /**
-     * Handles the deletion of selected cart items.
-     * If a session exists, it deletes the selected items from the server and updates the state accordingly.
-     * If no session exists, it removes the selected items from the local state and updates local storage.
-     */
     const handleSelectedItemDelete = async () => {
         const wantToDelete = await Swal.fire({
             title: "Are you sure?",
@@ -278,13 +269,6 @@ const CartPage = () => {
 
     };
 
-    /**
-     * Handles changes to the selection state of cart items.
-     * If the "allSelect" checkbox is changed, it updates the selection state of all items.
-     * If an individual item checkbox is changed, it updates the selection state of that specific item.
-     *
-     * @param {Event} e - The change event triggered by the checkbox.
-     */
     const handleChange = (e) => {
         const { name, checked } = e.target;
         if (name === "allSelect") {
@@ -304,18 +288,14 @@ const CartPage = () => {
             setSelected(tempCard);
         }
     };
-    // selected checked product item
-    const selectedCount = checkedProductCard.filter(
-        (card) => card.isChecked
-    ).length;
 
-    /**
-     * Handles decrementing the quantity of a cart item.
-     * If a session exists, it updates the quantity on the server and refreshes the cart state.
-     * If no session exists, it updates the quantity locally and updates local storage.
-     *
-     * @param {number} indexId - The ID of the cart item to decrement.
-     */
+    //Start selected checked product item
+    const selectedCount = checkedProductCard.reduce(
+        (total, card) => (card.isChecked ? total + card.quantity : total),
+        0
+    );
+    //End selected checked product item
+
     const handleDecrement = async (indexId) => {
         try {
             setQuantityUpdateLoader(true);
@@ -388,14 +368,6 @@ const CartPage = () => {
             setQuantityUpdateLoader(false);
         }
     };
-
-    /**
-     * Handles incrementing the quantity of a cart item.
-     * If a session exists, it updates the quantity on the server and refreshes the cart state.
-     * If no session exists, it updates the quantity locally and updates local storage.
-     *
-     * @param {number} indexId - The ID of the cart item to increment.
-     */
 
     const handleIncrement = async (indexId) => {
         try {
@@ -529,13 +501,25 @@ const CartPage = () => {
         );
         const checkedProductSubTotalPrice = checkingProductFilter.reduce(
             (sum, product) => {
-                return sum + parseFloat(product.regular_price || product.price) * product.quantity;
+                return (
+                    sum +
+                    parseFloat(product.regular_price || product.price) *
+                        product.quantity
+                );
             },
             0
         );
         const checkedProductTotalDiscount = checkingProductFilter.reduce(
             (sum, product) => {
-                return sum + parseFloat((product.regular_price ? product.regular_price : product.price) - product.price) * product.quantity;
+                return (
+                    sum +
+                    parseFloat(
+                        (product.regular_price
+                            ? product.regular_price
+                            : product.price) - product.price
+                    ) *
+                        product.quantity
+                );
             },
             0
         );
@@ -573,8 +557,7 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
-
-        const cartItems = checkingProductFilter.map(product => ({
+        const cartItems = checkingProductFilter.map((product) => ({
             product_id: product.product_id,
             product_quantity: product.quantity,
             product_regular_price: product.regular_price,
@@ -584,7 +567,7 @@ const CartPage = () => {
             product_discount_type: product.discount_type || "",
             product_discount_amount: product.discountPrice || "",
             vendor_id: "",
-            thumbnail: product.product_thumbnail || ""
+            thumbnail: product.product_thumbnail || "",
         }));
 
         const data = {
@@ -603,13 +586,12 @@ const CartPage = () => {
             shipping_address_id: null,
             payment_type: "",
             cart_items: cartItems,
-        }
+        };
 
-        console.log("place order", data);
 
         try {
             if (session) {
-                setLoading(true)
+                setLoading(true);
                 const order = await placeOrder(data, session?.accessToken);
                 if (order.code == 200) {
                     deleteBuyNowProductData();
@@ -628,8 +610,7 @@ const CartPage = () => {
             console.error("An error occurred while placing the order:", error);
             showToast("Something went wrong, please try again later.", "error");
         }
-    }
-
+    };
 
     return (
         <section className="cart-section-area">
@@ -648,7 +629,7 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                0 &&
+                                                    0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
@@ -682,141 +663,244 @@ const CartPage = () => {
 
                         <div className="row product-cart-details-area">
                             <div className="col-12">
-                                <div className="product-cart-details-continer overflow-x-auto">
-                                    <div className="table align-middle">
+                                <div className="product-cart-details-continer overflow-x-auto w-100">
+                                    <div
+                                        className="table align-middle "
+                                        style={{ minWidth: "684px" }}
+                                    >
                                         <div className="d-flex flex-column-reverse gap-2">
                                             {checkedProductCard.length > 0 ? (
-                                                checkedProductCard.map((item, index) => {
-                                                    const price = item.price * item.quantity;
-                                                    const regularPrice = item.regular_price * item.quantity;
+                                                checkedProductCard.map(
+                                                    (item, index) => {
+                                                        const price =
+                                                            item.price *
+                                                            item.quantity;
+                                                        const regularPrice =
+                                                            item.regular_price *
+                                                            item.quantity;
 
-                                                    return (
-                                                        <div
-                                                            className="d-flex justify-content-between gap-2 product-cart-details-item"
-                                                            key={index}
-                                                        >
-                                                            <div className="d-flex gap-3">
-                                                                <div className="d-flex justify-content-center align-items-center">
-                                                                    <input
-                                                                        className="cart-checkbox"
-                                                                        type="checkbox"
-                                                                        name={`${index}`}
-                                                                        checked={item?.isChecked || false}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-
-                                                                <div>
-                                                                    <div className="product-cart-product-img">
-                                                                        <Image
-                                                                            fill={true}
-                                                                            src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
-                                                                            alt="black-friday"
+                                                        return (
+                                                            <div
+                                                                className="d-flex justify-content-between gap-2 product-cart-details-item"
+                                                                key={index}
+                                                            >
+                                                                <div className="d-flex gap-3">
+                                                                    <div className="d-flex justify-content-center align-items-center">
+                                                                        <input
+                                                                            className="cart-checkbox"
+                                                                            type="checkbox"
+                                                                            name={`${index}`}
+                                                                            checked={
+                                                                                item?.isChecked ||
+                                                                                false
+                                                                            }
+                                                                            onChange={
+                                                                                handleChange
+                                                                            }
                                                                         />
                                                                     </div>
+
+                                                                    <div>
+                                                                        <div className="product-cart-product-img">
+                                                                            <Image
+                                                                                fill={
+                                                                                    true
+                                                                                }
+                                                                                src={`${NagadhatPublicUrl}/${item?.product_thumbnail}`}
+                                                                                alt="black-friday"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <h2 className="product-cart-text">
+                                                                            <Link
+                                                                                href={`/products/get-product-details?outlet_id=${item?.outlet_id}&product_id=${item?.product_id}`}
+                                                                            >
+                                                                                {
+                                                                                    item.product_name
+                                                                                }
+                                                                            </Link>
+                                                                        </h2>
+                                                                        <div className="cart-prodect-variants">
+                                                                            {Array.isArray(
+                                                                                item?.selectedVariants
+                                                                            ) &&
+                                                                                item.selectedVariants
+                                                                                    .slice(
+                                                                                        0,
+                                                                                        2
+                                                                                    )
+                                                                                    .map(
+                                                                                        (
+                                                                                            variant,
+                                                                                            inx
+                                                                                        ) => {
+                                                                                            if (
+                                                                                                variant &&
+                                                                                                typeof variant ===
+                                                                                                    "object" &&
+                                                                                                Object.entries(
+                                                                                                    variant
+                                                                                                )
+                                                                                                    .length >
+                                                                                                    0
+                                                                                            ) {
+                                                                                                const [
+                                                                                                    key,
+                                                                                                    value,
+                                                                                                ] =
+                                                                                                    Object.entries(
+                                                                                                        variant
+                                                                                                    )[0];
+                                                                                                const keyDisplay =
+                                                                                                    key.split(
+                                                                                                        "_"
+                                                                                                    )[1];
+
+                                                                                                return (
+                                                                                                    <React.Fragment
+                                                                                                        key={
+                                                                                                            inx
+                                                                                                        }
+                                                                                                    >
+                                                                                                        <p>
+                                                                                                            <span>
+                                                                                                                {
+                                                                                                                    keyDisplay
+                                                                                                                }
+
+                                                                                                                :{" "}
+                                                                                                            </span>
+                                                                                                            <span className="cart-prodect-variants-item">
+                                                                                                                <label>
+                                                                                                                    {
+                                                                                                                        value
+                                                                                                                    }
+                                                                                                                </label>
+                                                                                                            </span>
+                                                                                                        </p>
+                                                                                                    </React.Fragment>
+                                                                                                );
+                                                                                            }
+                                                                                            return null;
+                                                                                        }
+                                                                                    )}
+                                                                        </div>
+                                                                        <div className="cart-prodect-variants">
+                                                                            Product
+                                                                            Type
+                                                                            :
+                                                                            <span className="cart-prodect-variants-item">
+                                                                                {item.cart_product_type ==
+                                                                                2
+                                                                                    ? "Resale"
+                                                                                    : "Retail"}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
 
                                                                 <div>
-                                                                    <h2 className="product-cart-text">
-                                                                        <Link
-                                                                            href={`/products/get-product-details?outlet_id=${item?.outlet_id}&product_id=${item?.product_id}`}
+                                                                    <p>
+                                                                        <strong className="product-cart-price">
+                                                                            ৳
+                                                                            {
+                                                                                price
+                                                                            }
+                                                                        </strong>
+                                                                    </p>
+                                                                    <p>
+                                                                        <del className="product-cart-discount-price">
+                                                                            ৳
+                                                                            {
+                                                                                regularPrice
+                                                                            }
+                                                                        </del>
+                                                                    </p>
+
+                                                                    <div className="d-flex gap-2">
+                                                                        <button
+                                                                            className="product-cart-remov-btn"
+                                                                            onClick={() =>
+                                                                                handleDelete(
+                                                                                    session
+                                                                                        ? item?.cart_id
+                                                                                        : index
+                                                                                )
+                                                                            }
                                                                         >
-                                                                            {item.product_name}
-                                                                        </Link>
-                                                                    </h2>
-                                                                    <div className="cart-prodect-variants">
-                                                                        {Array.isArray(item?.selectedVariants) &&
-                                                                            item.selectedVariants.slice(0, 2).map((variant, inx) => {
-                                                                                if (variant && typeof variant === "object" && Object.entries(variant).length > 0) {
-                                                                                    const [key, value] = Object.entries(variant)[0];
-                                                                                    const keyDisplay = key.split("_")[1];
-
-                                                                                    return (
-                                                                                        <React.Fragment key={inx}>
-                                                                                            <p>
-                                                                                                <span>{keyDisplay}: </span>
-                                                                                                <span className="cart-prodect-variants-item">
-                                                                                                    <label>{value}</label>
-                                                                                                </span>
-                                                                                            </p>
-                                                                                        </React.Fragment>
-                                                                                    );
-                                                                                }
-                                                                                return null;
-                                                                            })}
-                                                                    </div>
-                                                                    <div className="cart-prodect-variants">
-                                                                        Product Type :
-                                                                        <span className="cart-prodect-variants-item">
-                                                                            {item.cart_product_type == 2 ? "Resale" : "Retail"}
-                                                                        </span>
+                                                                            <FaTrashCan />
+                                                                        </button>
+                                                                        <button className="product-cart-remov-btn">
+                                                                            <FaRegHeart />
+                                                                        </button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div>
-                                                                <p>
-                                                                    <strong className="product-cart-price">৳{price}</strong>
-                                                                </p>
-                                                                <p>
-                                                                    <del className="product-cart-discount-price">৳{regularPrice}</del>
-                                                                </p>
-
-                                                                <div className="d-flex gap-2">
-                                                                    <button
-                                                                        className="product-cart-remov-btn"
-                                                                        onClick={() => handleDelete(session ? item?.cart_id : index)}
+                                                                <div className="my-auto">
+                                                                    <div
+                                                                        className="btn-group quantity-area"
+                                                                        role="group"
+                                                                        aria-label="Basic example"
                                                                     >
-                                                                        <FaTrashCan />
-                                                                    </button>
-                                                                    <button className="product-cart-remov-btn">
-                                                                        <FaRegHeart />
-                                                                    </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            className="quantity-increase"
+                                                                            onClick={() =>
+                                                                                handleDecrement(
+                                                                                    session
+                                                                                        ? item?.cart_id
+                                                                                        : index
+                                                                                )
+                                                                            }
+                                                                            disabled={
+                                                                                quanticUpdateLoader
+                                                                            }
+                                                                        >
+                                                                            <FaMinus />
+                                                                        </button>
+                                                                        <input
+                                                                            className="quantity-fild"
+                                                                            min="1"
+                                                                            max="5"
+                                                                            step="1"
+                                                                            autoComplete="off"
+                                                                            type="text"
+                                                                            value={
+                                                                                item?.quantity
+                                                                            }
+                                                                            readOnly
+                                                                        />
+                                                                        <button
+                                                                            className="quantity-decrease"
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                handleIncrement(
+                                                                                    session
+                                                                                        ? item?.cart_id
+                                                                                        : index
+                                                                                )
+                                                                            }
+                                                                            disabled={
+                                                                                quanticUpdateLoader
+                                                                            }
+                                                                        >
+                                                                            <FaPlus />
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-
-                                                            <div className="my-auto">
-                                                                <div
-                                                                    className="btn-group quantity-area"
-                                                                    role="group"
-                                                                    aria-label="Basic example"
-                                                                >
-                                                                    <button
-                                                                        type="button"
-                                                                        className="quantity-increase"
-                                                                        onClick={() => handleDecrement(session ? item?.cart_id : index)}
-                                                                        disabled={quanticUpdateLoader}
-                                                                    >
-                                                                        <FaMinus />
-                                                                    </button>
-                                                                    <input
-                                                                        className="quantity-fild"
-                                                                        min="1"
-                                                                        max="5"
-                                                                        step="1"
-                                                                        autoComplete="off"
-                                                                        type="text"
-                                                                        value={item?.quantity}
-                                                                        readOnly
-                                                                    />
-                                                                    <button
-                                                                        className="quantity-decrease"
-                                                                        type="button"
-                                                                        onClick={() => handleIncrement(session ? item?.cart_id : index)}
-                                                                        disabled={quanticUpdateLoader}
-                                                                    >
-                                                                        <FaPlus />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    );
-                                                })
+                                                        );
+                                                    }
+                                                )
                                             ) : (
                                                 !loading &&
                                                 <NoDataFound
                                                     title={"No Cart Items"}
-                                                    description={"There are no items in this cart"}
+                                                    description={
+                                                        "There are no items in this cart"
+                                                    }
                                                 />
                                             )}
                                         </div>
@@ -824,7 +908,6 @@ const CartPage = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div className="col-lg-3">
                         <div className="row promo-code-section">
@@ -862,56 +945,84 @@ const CartPage = () => {
                                         Shopping Summary
                                     </h3>
                                     <div className="d-flex gap-3 align-items-center justify-content-between shopping-price-area py-1">
-                                        <p className="">
-                                            Total{" "}
+                                        <p
+                                            className="fw-normal"
+                                            style={{
+                                                fontSize: "14px",
+                                            }}
+                                        >
+                                            SubTotal{" "}
                                             {checkedProductCard.length > 0 &&
                                                 totalPrice > 0 && (
                                                     <span
                                                         style={{
                                                             color: "#414241",
                                                             fontSize: "14px",
-                                                            fontWeight: "400"
+                                                            fontWeight: "400",
                                                         }}
                                                     >
-                                                        (Items {selectedCount})
+                                                        (Item {selectedCount})
                                                     </span>
                                                 )}
                                         </p>
-                                        <strong>৳{totalPrice}</strong>
+                                        <strong
+                                            className="fw-normal"
+                                            style={{
+                                                fontSize: "14px",
+                                            }}
+                                        >
+                                            ৳{totalPrice}
+                                        </strong>
                                     </div>
-                                    {selectedProductType == 2 ?
+                                    {selectedProductType == 2 ? (
                                         <button
-                                            onClick={(e) => { handlePlaceOrder() }}
+                                            onClick={(e) => {
+                                                handlePlaceOrder();
+                                            }}
                                             className="add-to-cart-link border border-0 w-100"
                                             disabled={!totalPrice}
                                             style={{
                                                 pointerEvents:
-                                                    totalPrice && !isButtonDisabled
-                                                        ? "auto" : "none",
+                                                    totalPrice &&
+                                                    !isButtonDisabled
+                                                        ? "auto"
+                                                        : "none",
                                                 opacity:
-                                                    totalPrice && !isButtonDisabled
-                                                        ? 1 : 0.5,
+                                                    totalPrice &&
+                                                    !isButtonDisabled
+                                                        ? 1
+                                                        : 0.5,
                                             }}
                                         >
-                                            {totalPrice ? "place order" : "Select First"}
+                                            {totalPrice
+                                                ? "place order"
+                                                : "Select First"}
                                         </button>
-                                        :
+                                    ) : (
                                         <button
-                                            onClick={(e) => { handleCheckoutNavigation() }}
+                                            onClick={(e) => {
+                                                handleCheckoutNavigation();
+                                            }}
                                             className="add-to-cart-link border border-0 w-100"
                                             disabled={!totalPrice}
                                             style={{
                                                 pointerEvents:
-                                                    totalPrice && !isButtonDisabled
-                                                        ? "auto" : "none",
+                                                    totalPrice &&
+                                                    !isButtonDisabled
+                                                        ? "auto"
+                                                        : "none",
                                                 opacity:
-                                                    totalPrice && !isButtonDisabled
-                                                        ? 1 : 0.5,
+                                                    totalPrice &&
+                                                    !isButtonDisabled
+                                                        ? 1
+                                                        : 0.5,
                                             }}
                                         >
-                                            {totalPrice ? "CHECKOUT" : "Select First"}
+                                            {totalPrice
+                                                ? "CHECKOUT"
+                                                : "Select First"}
                                         </button>
-                                    }
+                                    )}
                                     <Link
                                         href="/"
                                         className="shopping-back-btn"
