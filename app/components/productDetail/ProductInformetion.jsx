@@ -599,6 +599,7 @@ const ProductInformetion = ({ productInfo, setProductGallery }) => {
                                                         (variant, inx) =>
                                                             variant.selectAble ? (
                                                                 <div
+                                                                    key={inx}
                                                                     className="product-details-inner-color product-details-variant-item"
                                                                     onClick={() =>
                                                                         handleVariations(
