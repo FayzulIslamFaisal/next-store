@@ -57,7 +57,7 @@ const ResaleAddToCartBtn = ({ product }) => {
             setLoading(true)
             const productAdded = await addToCartProduct(addToCartInfo, session?.accessToken);
             if (productAdded.code == 200) {
-                const updatedCartProducts =await fetchCartProducts(
+                const updatedCartProducts = await fetchCartProducts(
                     session?.accessToken,
                     outletId,
                     districtId
@@ -86,35 +86,47 @@ const ResaleAddToCartBtn = ({ product }) => {
         <>
             <button
                 onClick={handleAddToCart}
-                className="add-to-cart-link border-0 product-details-action-btn undefined"
+                className="add-to-cart-link undefined category-product-add-btn border-0"
+                style={{
+                    pointerEvents:"auto",
+                    opacity: (product?.max_quantity || 0) < (product?.min_quantity || 1) ? 0.5 : 1,
+                }}
+                disabled={
+                    !product ||
+                    (product.max_quantity || 0) < (product.min_quantity || 1) ||
+                    loading
+                }
             >
                 {
-                    loading ? (
-                        <div
-                            style={{
-                                height: "21px",
-                                width: "75px",
-                                textAlign: "center",
-                            }}
-                        >
-                            <RotatingLines
-                                visible={true}
-                                height="18"
-                                width="20"
-                                color="#ffffff"
-                                strokeWidth="5"
-                                animationDuration="0.75"
-                                ariaLabel="rotating-lines-loading"
-                                wrapperStyle={{}}
-                                wrapperClass="w-25"
-                            />
-                        </div>
-                    ) : (
-                        "ADD TO CART"
-                    )
+                    (product?.max_quantity || 0) < (product?.min_quantity || 1) ?
+                        'out of stock' :
+                        loading ? (
+                            <div
+                                style={{
+                                    height: "21px",
+                                    width: "96px",
+                                    textAlign: "center",
+                                }}
+                            >
+                                <RotatingLines
+                                    visible={true}
+                                    height="18"
+                                    width="20"
+                                    color="#ffffff"
+                                    strokeWidth="5"
+                                    animationDuration="0.75"
+                                    ariaLabel="rotating-lines-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="w-25"
+                                />
+                            </div>
+                        ) : (
+                            "ADD TO CART"
+                        )
                 }
             </button>
         </>
+
     )
 }
 

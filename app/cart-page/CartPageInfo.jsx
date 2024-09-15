@@ -34,6 +34,7 @@ import { toast } from "react-toastify";
 import NoDataFound from "../components/NoDataFound";
 import { placeOrder } from "../services/postPlaceOrder";
 import LodingFixed from "../components/LodingFixed";
+import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [checkingProductFilter, setCheckingProductFilter] = useState([]);
@@ -83,7 +84,6 @@ const CartPage = () => {
             setSelectedProductType(null);
             setIsButtonDisabled(false);
         }
-        console.log(checkedProductCard);
 
     }, [checkedProductCard]);
 
@@ -142,6 +142,7 @@ const CartPage = () => {
                         session?.accessToken
                     );
                     const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
                         outletId,
                         districtId
                     );
@@ -189,7 +190,6 @@ const CartPage = () => {
             setLoading(false);
             console.log(error);
         }
-        
     };
 
     /**
@@ -229,6 +229,7 @@ const CartPage = () => {
                         session?.accessToken
                     );
                     const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
                         outletId,
                         districtId
                     );
@@ -274,7 +275,7 @@ const CartPage = () => {
             setLoading(false);
             console.log(error);
         }
-        
+
     };
 
     /**
@@ -336,6 +337,7 @@ const CartPage = () => {
                 );
 
                 const updatedCartProducts = await fetchCartProducts(
+                    session?.accessToken,
                     outletId,
                     districtId
                 );
@@ -397,7 +399,6 @@ const CartPage = () => {
 
     const handleIncrement = async (indexId) => {
         try {
-            setQuantityUpdateLoader(true);
             if (session) {
                 const checkingProductFilter = isAnyChecked(checkedProductCard);
                 const cartIds = checkingProductFilter.map((item) => ({
@@ -409,13 +410,23 @@ const CartPage = () => {
                     outlet_id: outletId,
                     quantity: "increment",
                 };
-
-                const incrementApi = await addToCartQuantityUpdate(
-                    quantityUpdateInfo,
-                    session?.accessToken
-                );
+                try {
+                    setQuantityUpdateLoader(true)
+                    const incrementApi = await addToCartQuantityUpdate(
+                        quantityUpdateInfo,
+                        session?.accessToken
+                    );
+                    if (incrementApi.code != 200) {
+                        toast.error(incrementApi.message)
+                    }
+                } catch (error) {
+                    console.error('Error updating cart quantity:', error);
+                } finally {
+                    setQuantityUpdateLoader(false);
+                }
 
                 const updatedCartProducts = await fetchCartProducts(
+                    session?.accessToken,
                     outletId,
                     districtId
                 );
@@ -461,10 +472,8 @@ const CartPage = () => {
                 setCheckedProductCard(updatedUsers);
                 updateLocalStorage(updatedUsers);
             }
-            setQuantityUpdateLoader(false);
         } catch (error) {
             console.log(error);
-            setQuantityUpdateLoader(false);
         }
     };
 
@@ -474,67 +483,29 @@ const CartPage = () => {
             setCheckedProductCard(cartProduct);
         }
     }, []);
-    /**
-     * Fetches the products in the cart by making a GET request to the API.
-     *
-     * @returns {Promise<Object>} - The response from the API containing the cart products.
-     */
-
-    const fetchCartProducts = async (outletId, districtId) => {
-        try {
-            const response = await fetch(
-                `${apiBaseUrl}/get-cart-products?outlet_id=${outletId}&location_id=${districtId}`,
-                {
-                    method: "GET",
-                    headers: {
-                        accept: "application/json",
-                        Authorization: `Bearer ${session?.accessToken}`,
-                    },
-                }
-            );
-
-            // console.log("s", response);
-
-            return response.json();
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    /**
-     * Handles the checkout process for the user.
-     *
-     * If the user is logged in (session exists), it performs the following steps:
-     * 1. Retrieves the list of products to be added to the cart.
-     * 2. Adds the products to the cart.
-     * 3. Fetches the updated cart products after adding the new items.
-     * 4. Updates the state with the new cart products.
-     * 5. Removes the 'addToCart' item from local storage.
-     * 6. Dispatches an action to update the cart state in the Redux store.
-     *
-     * If any error occurs during the process, it logs the error to the console.
-     */
-
-    const handleCheckout = async () => {
-        try {
-            if (session) {
-                const updatedCartProducts = await fetchCartProducts(
-                    outletId,
-                    districtId
-                );
-                // console.log("sjfhdufh", updatedCartProducts);
-                if (updatedCartProducts?.success) {
-                    setCheckedProductCard(updatedCartProducts?.data);
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     useEffect(() => {
+        const handleCheckout = async () => {
+            try {
+                if (session?.accessToken) {
+                    setLoading(true)
+                    const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
+                        outletId,
+                        districtId
+                    );
+                    if (updatedCartProducts?.success) {
+                        setCheckedProductCard(updatedCartProducts?.data);
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false)
+            }
+        };
         handleCheckout();
-    }, [session]);
+    }, [session?.accessToken]);
 
     function isAnyChecked(products) {
         const isCheckedProduct = [];
@@ -547,8 +518,7 @@ const CartPage = () => {
     }
 
     useEffect(() => {
-        const checkingProductFilter = isAnyChecked(checkedProductCard);
-        console.log({ checkingProductFilter });
+        const checkingProductFilter = isAnyChecked(checkedProductCard);;
         setCheckingProductFilter(checkingProductFilter)
 
         const checkedProductTotalPrice = checkingProductFilter.reduce(
@@ -664,6 +634,7 @@ const CartPage = () => {
     return (
         <section className="cart-section-area">
             <div className="container">
+                {(loading || quanticUpdateLoader) && <LodingFixed />}
                 <div className="row gx-4 gy-5">
                     <div className="col-lg-9">
                         <div className="row cart-top-area">
@@ -842,6 +813,7 @@ const CartPage = () => {
                                                     );
                                                 })
                                             ) : (
+                                                !loading &&
                                                 <NoDataFound
                                                     title={"No Cart Items"}
                                                     description={"There are no items in this cart"}
@@ -952,7 +924,6 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
-            {(loading || quanticUpdateLoader) && <LodingFixed />}
         </section>
     );
 };
