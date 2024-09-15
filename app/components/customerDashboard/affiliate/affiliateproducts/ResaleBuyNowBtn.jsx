@@ -1,14 +1,14 @@
 "use client";
-import LodingFixed from '@/app/components/LodingFixed';
 import { showToast } from '@/app/components/Toast';
 import { placeOrder } from '@/app/services/postPlaceOrder';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import { RotatingLines } from 'react-loader-spinner';
 
 const ResaleBuyNowBtn = ({ product }) => {
     const { status, data: session } = useSession();
-    const [loading, setLoading]= useState(false)
+    const [loading, setLoading] = useState(false)
     const router = useRouter();
     const [outletId, setOutletId] = useState(() => {
         if (typeof window !== "undefined") {
@@ -28,9 +28,9 @@ const ResaleBuyNowBtn = ({ product }) => {
         event.preventDefault();
 
         let newQuantity = product.updateQuantity || product.min_quantity || 1;
-        
+
         const cartItems = [{
-            cart_product_type : product.sell_product_type || 2,
+            cart_product_type: product.sell_product_type || 2,
             product_id: product.id,
             product_quantity: (newQuantity || 1),
             product_regular_price: product.resell_mrp_price,
@@ -72,24 +72,56 @@ const ResaleBuyNowBtn = ({ product }) => {
         } catch (error) {
             console.error("An error occurred while placing the order:", error);
             showToast("Something went wrong, please try again later.", "error");
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
+ 
     return (
         <>
             <button
                 onClick={handlePlaceOrder}
                 className="add-to-cart-link undefined category-product-add-btn border-0"
                 style={{
-                    pointerEvents: "auto",
-                    opacity: 1,
+                    pointerEvents:"auto",
+                    opacity: (product?.max_quantity || 0) < (product?.min_quantity || 1) ? 0.5 : 1,
                 }}
+                disabled={
+                    !product ||
+                    (product.max_quantity || 0) < (product.min_quantity || 1) ||
+                    loading
+                }
             >
-                Buy Now
+                {
+                    (product?.max_quantity || 0) < (product?.min_quantity || 1) ?
+                    'out of stock' :
+                    loading ? (
+                        <div
+                            style={{
+                                height: "21px",
+                                width: "67px",
+                                textAlign: "center",
+                            }}
+                        >
+                            <RotatingLines
+                                visible={true}
+                                height="18"
+                                width="20"
+                                color="#ffffff"
+                                strokeWidth="5"
+                                animationDuration="0.75"
+                                ariaLabel="rotating-lines-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="w-25"
+                            />
+                        </div>
+                    ) : (
+                        "BUY NOW"
+                    )
+                }
             </button>
-            {loading && <LodingFixed/>}
         </>
+
     )
 }
 

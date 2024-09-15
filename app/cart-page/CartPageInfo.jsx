@@ -34,6 +34,7 @@ import { toast } from "react-toastify";
 import NoDataFound from "../components/NoDataFound";
 import { placeOrder } from "../services/postPlaceOrder";
 import LodingFixed from "../components/LodingFixed";
+import { fetchCartProducts } from "../services/getShowAddToCartProduct";
 const CartPage = () => {
     const [checkedProductCard, setCheckedProductCard] = useState([]);
     const [checkingProductFilter, setCheckingProductFilter] = useState([]);
@@ -87,7 +88,6 @@ const CartPage = () => {
             setSelectedProductType(null);
             setIsButtonDisabled(false);
         }
-        // console.log(checkedProductCard);
     }, [checkedProductCard]);
 
     const updateLocalStorage = (items) => {
@@ -138,6 +138,7 @@ const CartPage = () => {
                         session?.accessToken
                     );
                     const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
                         outletId,
                         districtId
                     );
@@ -219,6 +220,7 @@ const CartPage = () => {
                         session?.accessToken
                     );
                     const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
                         outletId,
                         districtId
                     );
@@ -264,6 +266,7 @@ const CartPage = () => {
             setLoading(false);
             console.log(error);
         }
+
     };
 
     const handleChange = (e) => {
@@ -314,6 +317,7 @@ const CartPage = () => {
                 );
 
                 const updatedCartProducts = await fetchCartProducts(
+                    session?.accessToken,
                     outletId,
                     districtId
                 );
@@ -367,7 +371,6 @@ const CartPage = () => {
 
     const handleIncrement = async (indexId) => {
         try {
-            setQuantityUpdateLoader(true);
             if (session) {
                 const checkingProductFilter = isAnyChecked(checkedProductCard);
                 const cartIds = checkingProductFilter.map((item) => ({
@@ -379,13 +382,23 @@ const CartPage = () => {
                     outlet_id: outletId,
                     quantity: "increment",
                 };
-
-                const incrementApi = await addToCartQuantityUpdate(
-                    quantityUpdateInfo,
-                    session?.accessToken
-                );
+                try {
+                    setQuantityUpdateLoader(true)
+                    const incrementApi = await addToCartQuantityUpdate(
+                        quantityUpdateInfo,
+                        session?.accessToken
+                    );
+                    if (incrementApi.code != 200) {
+                        toast.error(incrementApi.message)
+                    }
+                } catch (error) {
+                    console.error('Error updating cart quantity:', error);
+                } finally {
+                    setQuantityUpdateLoader(false);
+                }
 
                 const updatedCartProducts = await fetchCartProducts(
+                    session?.accessToken,
                     outletId,
                     districtId
                 );
@@ -431,10 +444,8 @@ const CartPage = () => {
                 setCheckedProductCard(updatedUsers);
                 updateLocalStorage(updatedUsers);
             }
-            setQuantityUpdateLoader(false);
         } catch (error) {
             console.log(error);
-            setQuantityUpdateLoader(false);
         }
     };
 
@@ -445,45 +456,28 @@ const CartPage = () => {
         }
     }, []);
 
-    const fetchCartProducts = async (outletId, districtId) => {
-        try {
-            const response = await fetch(
-                `${apiBaseUrl}/get-cart-products?outlet_id=${outletId}&location_id=${districtId}`,
-                {
-                    method: "GET",
-                    headers: {
-                        accept: "application/json",
-                        Authorization: `Bearer ${session?.accessToken}`,
-                    },
-                }
-            );
-
-            return response.json();
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleCheckout = async () => {
-        try {
-            if (session) {
-                const updatedCartProducts = await fetchCartProducts(
-                    outletId,
-                    districtId
-                );
-                // console.log("sjfhdufh", updatedCartProducts);
-                if (updatedCartProducts?.success) {
-                    setCheckedProductCard(updatedCartProducts?.data);
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     useEffect(() => {
+        const handleCheckout = async () => {
+            try {
+                if (session?.accessToken) {
+                    setLoading(true)
+                    const updatedCartProducts = await fetchCartProducts(
+                        session?.accessToken,
+                        outletId,
+                        districtId
+                    );
+                    if (updatedCartProducts?.success) {
+                        setCheckedProductCard(updatedCartProducts?.data);
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false)
+            }
+        };
         handleCheckout();
-    }, [session]);
+    }, [session?.accessToken]);
 
     function isAnyChecked(products) {
         const isCheckedProduct = [];
@@ -496,9 +490,8 @@ const CartPage = () => {
     }
 
     useEffect(() => {
-        const checkingProductFilter = isAnyChecked(checkedProductCard);
-        // console.log({ checkingProductFilter });
-        setCheckingProductFilter(checkingProductFilter);
+        const checkingProductFilter = isAnyChecked(checkedProductCard);;
+        setCheckingProductFilter(checkingProductFilter)
 
         const checkedProductTotalPrice = checkingProductFilter.reduce(
             (sum, product) => {
@@ -595,7 +588,6 @@ const CartPage = () => {
             cart_items: cartItems,
         };
 
-        console.log("place order", data);
 
         try {
             if (session) {
@@ -623,6 +615,7 @@ const CartPage = () => {
     return (
         <section className="cart-section-area">
             <div className="container">
+                {(loading || quanticUpdateLoader) && <LodingFixed />}
                 <div className="row gx-4 gy-5">
                     <div className="col-lg-9">
                         <div className="row cart-top-area">
@@ -902,6 +895,7 @@ const CartPage = () => {
                                                     }
                                                 )
                                             ) : (
+                                                !loading &&
                                                 <NoDataFound
                                                     title={"No Cart Items"}
                                                     description={
@@ -1041,7 +1035,6 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
-            {(loading || quanticUpdateLoader) && <LodingFixed />}
         </section>
     );
 };

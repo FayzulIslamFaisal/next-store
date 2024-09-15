@@ -24,6 +24,7 @@ const ViewAllProductPage = () => {
     const [districtId, setDistrictId] = useState(null);
     const { status, data: session } = useSession();
     const [outletId, setOutletId] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [lastPage, setLastPage] = useState(1); 
     const [currentPages, setCurrentPages] = useState(1); 
     const [recentView, setRecentView] = useState(true); 
@@ -52,6 +53,7 @@ const ViewAllProductPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 if (type && districtId) {
                     switch (type) {
                         case "justForYou":
@@ -127,37 +129,13 @@ const ViewAllProductPage = () => {
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
-            }
+            }finally {
+                setLoading(false);
+            };
         };
         fetchData();
     }, [districtId, type, currentPages]);
 
-    const serviceItems = [
-        {
-            imageurl: "/images/pickup.svg",
-            altText: "pickup image",
-            title: " Fast Delivery",
-            subTitle: "Free For All Type Order",
-        },
-        {
-            imageurl: "/images/gift-cart.svg",
-            altText: "gift cart",
-            title: " Best Quality",
-            subTitle: "Best Product Peices",
-        },
-        {
-            imageurl: "/images/gift-box.svg",
-            altText: "gift box",
-            title: " Exchange Offer",
-            subTitle: "One Day To Changes",
-        },
-        {
-            imageurl: "/images/headphone.svg",
-            altText: "headphone",
-            title: "  Help Center",
-            subTitle: "Support System 24/7",
-        },
-    ];
 
     return (
         <div className="container view-all-product-container">
@@ -169,7 +147,7 @@ const ViewAllProductPage = () => {
                 flashSaleEndData={flashSaleEndData}
             />
             
-            <ViewAllProduct viewProductData={viewProductData} />
+            <ViewAllProduct viewProductData={viewProductData} loading={loading}/>
 
             <Pagination
                 currentPage={currentPages}
