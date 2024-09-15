@@ -82,7 +82,6 @@ function ProductCard({ item }) {
         <div className="flash-sale-content-item mx-1 ">
             <Link
                 href={`/products/get-product-details?outlet_id=${outlet_id}&product_id=${product_id}`}
-                target="_blank"
             >
                 <div className="flash-sale-content-bg nh-hover-box-shadow d-flex flex-column justify-content-between">
                     <div className="flash-sale-content-img image-hover-effect">
@@ -101,17 +100,31 @@ function ProductCard({ item }) {
                                                     ?.discount_amount > 0 ? (
                                                     <div className="d-flex align-items-center justify-content-between">
                                                         <strong>
-                                                            ট {variant_item?.price?.discounted_price}
+                                                            ট{" "}
+                                                            {
+                                                                variant_item
+                                                                    ?.price
+                                                                    ?.discounted_price
+                                                            }
                                                         </strong>
                                                         <strong className="text-secondary">
                                                             <del>
-                                                                ট { variant_item?.price?.regular_price}
+                                                                ট{" "}
+                                                                {
+                                                                    variant_item
+                                                                        ?.price
+                                                                        ?.regular_price
+                                                                }
                                                             </del>
                                                         </strong>
                                                     </div>
                                                 ) : (
                                                     <strong>
-                                                        ট {variant_item?.price?.regular_price}
+                                                        ট{" "}
+                                                        {
+                                                            variant_item?.price
+                                                                ?.regular_price
+                                                        }
                                                     </strong>
                                                 )}
                                             </div>
@@ -123,7 +136,7 @@ function ProductCard({ item }) {
                                         <strong>
                                             ট {item?.price?.discounted_price}
                                         </strong>
-                                        <strong  className="text-secondary">
+                                        <strong className="text-secondary">
                                             <del>
                                                 ট {item?.price?.regular_price}
                                             </del>

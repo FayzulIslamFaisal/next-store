@@ -1,7 +1,8 @@
 import React from "react";
-import ProductSinglePage from "./ProductDetails";
+// import ProductSinglePage from "../../components/ProductDetails";
 import Head from "next/head";
 import { getProductDetails } from "@/app/services/getProductDetails";
+import ProductSinglePage from "@/app/components/ProductDetails";
 export async function generateMetadata(path) {
     try {
         const productData = await getProductDetails(
