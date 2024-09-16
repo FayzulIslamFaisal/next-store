@@ -151,10 +151,19 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
                                 </div>
                             </div>
                             <div className="rewards-gif-image-item col">
-                                <h4 style={{ color: "44bc9d" }}>
-                                    {rewardDetails?.rewards_details ||
-                                        "No rewards details available"}
-                                </h4>
+                                <div
+                                    className=" position-relative w-100 "
+                                    style={{ height: "350px" }}
+                                >
+                                    <Image
+                                        fill
+                                        src={
+                                            rewardDetails?.reward_image ||
+                                            "/images/placeholder--image.jpg"
+                                        }
+                                        alt={`${rewardDetails?.level}`}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
