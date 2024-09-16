@@ -208,33 +208,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                         Affiliate Products
                                     </Link>
                                 </li>
-                                {/* <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
-                                        href="#"
-                                    >
-                                        <span className="dropdown-item-circle"></span>
-                                        Resell Products
-                                    </Link>
-                                </li> */}
-                                {/* <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
-                                        href="#"
-                                    >
-                                        <span className="dropdown-item-circle"></span>
-                                        Resell Products Option
-                                    </Link>
-                                </li> */}
-                                <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
-                                        href="#"
-                                    >
-                                        <span className="dropdown-item-circle"></span>
-                                        Sell On Nagadhat
-                                    </Link>
-                                </li>
+
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
@@ -287,7 +261,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/payout-affiliate-bonus"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Affiliate Bonus
@@ -296,7 +270,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/payout-resale-bonus"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Resell Bonus
@@ -305,7 +279,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/payout-generation-bonus"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Generation Bonus
@@ -314,16 +288,16 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/payout-rank-&-reward"
                                 >
                                     <span className="dropdown-item-circle"></span>
-                                    My Income
+                                    Rank & Reward
                                 </Link>
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/payout-salary"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Salary

@@ -5,6 +5,7 @@ import { FaDownload, FaRegFaceFrown, FaXmark } from "react-icons/fa6";
 import Pagination from "../../productCategory/Pagination";
 import { postOrderCancel } from "@/app/services/userdashboard/postOrderCancel";
 import { toast } from "react-toastify"; // Import Toastify
+import { useState } from "react";
 
 const CustomerRightsids = ({
     customerOrders,
@@ -14,6 +15,8 @@ const CustomerRightsids = ({
     setOrderCancel,
     orderCancel,
 }) => {
+    const [cancelStatus, setCancelStatus] = useState(null);
+
     const handleOrderCanceled = async (orderID) => {
         try {
             const token = session?.accessToken;
@@ -24,6 +27,7 @@ const CustomerRightsids = ({
             const response = await postOrderCancel(orderID, token);
             if (response.code === 200 && !response?.error) {
                 setOrderCancel(!orderCancel);
+                setCancelStatus(response?.message?.status);
                 toast.success(response?.message?.message);
             } else {
                 console.error("Error response:", response);
@@ -73,8 +77,10 @@ const CustomerRightsids = ({
                                                 <td>{invoice_id}</td>
                                                 <td>{order_date}</td>
                                                 <td>{grand_total}</td>
-                                                <td>{order_status}</td>
-
+                                                <td>
+                                                    {order_status ||
+                                                        cancelStatus}
+                                                </td>
                                                 <td className="paid">
                                                     {order_status !==
                                                         "Canceled" &&

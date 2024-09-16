@@ -20,7 +20,7 @@ const AffiliateDashboardInfo = ({ affiliateData }) => {
                                 <h4 className="mb-1">
                                     ট {cash_balance > 0 ? cash_balance : "0"}
                                 </h4>
-                                <p class="opacity-75">Cash Balance</p>
+                                <p className="opacity-75">Cash Balance</p>
                             </div>
                             <div className="flex-1 pt-3 ">
                                 <h4 className="mb-1">
@@ -29,7 +29,7 @@ const AffiliateDashboardInfo = ({ affiliateData }) => {
                                         ? pending_balance
                                         : "0"}
                                 </h4>
-                                <p class="opacity-75">Pending Balance</p>
+                                <p className="opacity-75">Pending Balance</p>
                             </div>
                         </div>
                     </div>
