@@ -1,9 +1,10 @@
+
 import { apiBaseUrl } from "@/app/utils";
 
 
-export const getPayoutAffiliateBonus =async(token)=>{
+export const getPayoutResaleBonus =async(token)=>{
     try {
-        const url = `${apiBaseUrl}/affiliate-bonus`;
+        const url = `${apiBaseUrl}/affiliate-buyback-commission`;
 
         const response = await fetch(url, {
             method: "GET",
@@ -16,7 +17,7 @@ export const getPayoutAffiliateBonus =async(token)=>{
 
         return await response.json();
     } catch (error) {
-        console.error("Something went wrong fetching affiliate bonus Data");
+        console.error("Something went wrong fetching payout resale bonus Data");
         console.info(error);
     }
 }

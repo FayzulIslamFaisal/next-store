@@ -31,28 +31,28 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                     <tbody>
                         {affiliateBonusData?.map((item, index) => {
                             return (
-                                <tr key={index}>
+                                <tr key={item?.id}>
                                     <td className="align-middle text-center">
                                         {index + 1}
                                     </td>
 
                                     <td className="align-middle text-center">
-                                        {item?.date_time}
+                                        {item?.date_time || "N/A"}
                                     </td>
                                     <td className="align-middle text-center">
-                                        {item?.earning}
+                                        {item?.earning || "N/A"}
                                     </td>
                                     <td className="align-middle text-center">
-                                        {item?.user_name}
+                                        {item?.user_name || "N/A"}
                                     </td>
                                     <td className="align-middle text-center">
-                                        {item?.invoice}
+                                        {item?.invoice || "N/A"}
                                     </td>
                                     <td className="align-middle text-center">
-                                        {item?.level}
+                                        {item?.level || "N/A"}
                                     </td>
                                     <td className="align-middle text-center">
-                                        {item?.purpose}
+                                        {item?.purpose || "N/A"}
                                     </td>
                                 </tr>
                             );
@@ -60,9 +60,8 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
 
                         <tr>
                             <td className="align-middle text-center"></td>
-
                             <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center">
+                            <td colSpan="5" className="align-middle ">
                                 {affiliateBonusResult?.total_earning > 0 && (
                                     <strong>
                                         Total : ৳{" "}
@@ -72,15 +71,25 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                     </strong>
                                 )}
                             </td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p className="ps-4">Showing 0 to 0 of 0 entries </p>
+            <p className="ps-4">
+                Showing{" "}
+                {affiliateBonusResult?.current_page
+                    ? affiliateBonusResult?.current_page
+                    : 0}
+                to{" "}
+                {affiliateBonusResult?.last_page
+                    ? affiliateBonusResult?.last_page
+                    : 0}{" "}
+                of{" "}
+                {affiliateBonusResult?.total_page_count
+                    ? affiliateBonusResult?.total_page_count
+                    : 0}{" "}
+                entries{" "}
+            </p>
             <p className="ps-4">pagination</p>
         </>
     );
