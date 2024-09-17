@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { cache, useEffect, useState } from "react";
 import AffiliateBonusDetail from "./AffiliateBonusDetail";
 import AffiliateBonusTop from "./AffiliateBonusTop";
 import { useSession } from "next-auth/react";
@@ -36,19 +36,17 @@ const AffiliateBonusWrapper = () => {
         }
     }, [status, session?.accessToken]);
 
-    const affiliateBonusLength = Object.keys(affiliateBonusResult).length > 0;
+    // const affiliateBonusLength = Object.keys(affiliateBonusResult).length > 0;
     return (
         <>
             {isLoading && <LodingFixed />}
             <div className="customer-dashboard-order-history-area h-100">
-                {affiliateBonusLength ? (
-                    <>
-                        <AffiliateBonusTop />
-                        <AffiliateBonusDetail
-                            affiliateBonusResult={affiliateBonusResult}
-                            affiliateBonusData={affiliateBonusData}
-                        />
-                    </>
+                <AffiliateBonusTop />
+                {affiliateBonusData?.length > 0 ? (
+                    <AffiliateBonusDetail
+                        affiliateBonusResult={affiliateBonusResult}
+                        affiliateBonusData={affiliateBonusData}
+                    />
                 ) : (
                     !isLoading && <NoDataFound />
                 )}

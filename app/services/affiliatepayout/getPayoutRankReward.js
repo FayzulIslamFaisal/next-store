@@ -1,9 +1,8 @@
+
 import { apiBaseUrl } from "@/app/utils";
-
-
-export const getPayoutAffiliateBonus =async(token)=>{
+export const getPayoutRankReward = async (token) =>{
     try {
-        const url = `${apiBaseUrl}/affiliate-bonus`;
+        const url = `${apiBaseUrl}/affiliate-rank-reward`;
 
         const response = await fetch(url, {
             method: "GET",
@@ -16,7 +15,7 @@ export const getPayoutAffiliateBonus =async(token)=>{
 
         return await response.json();
     } catch (error) {
-        console.error("Something went wrong fetching affiliate bonus Data");
+        console.error("Something went wrong fetching affiliate payout rank reward Data");
         console.info(error);
     }
 }

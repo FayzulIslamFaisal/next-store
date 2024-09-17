@@ -1,4 +1,7 @@
-const GenerationBonusDetail = () => {
+const GenerationBonusDetail = ({
+    generationBonusData,
+    generationBonusResult,
+}) => {
     return (
         <>
             <div className="table-responsive">
@@ -17,104 +20,63 @@ const GenerationBonusDetail = () => {
                             <th scope="col" className="text-center">
                                 From
                             </th>
-
                             <th scope="col" className="text-center">
                                 Level
                             </th>
                         </tr>
                     </thead>
                     <tbody>
+                        {generationBonusData?.map((item, index) => (
+                            <tr key={item.id}>
+                                <td className="align-middle text-center">
+                                    {index + 1}
+                                </td>
+                                <td className="align-middle text-center">
+                                    {item?.date_time || "N/A"}
+                                </td>
+                                <td className="align-middle text-center">
+                                    {item?.earning || "N / A"}
+                                </td>
+                                <td className="align-middle text-center">
+                                    {item?.user_name || "Unknown"}
+                                </td>
+                                <td className="align-middle text-center">
+                                    {item?.level || "N/A"}
+                                </td>
+                            </tr>
+                        ))}
                         <tr>
-                            <td className="align-middle text-center">1</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
+                            <td
+                                colSpan={2}
+                                className="align-middle text-center"
+                            ></td>
+                            <td colSpan={3} className="align-middle ">
+                                {generationBonusResult?.total_earning > 0 && (
+                                    <strong>
+                                        Total: ৳{" "}
+                                        {generationBonusResult?.total_earning}
+                                    </strong>
+                                )}
                             </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">2</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">3</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">4</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">5</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="align-middle text-center"></td>
-
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center">
-                                <strong>Total : ৳ 50000</strong>
-                            </td>
-                            <td className="align-middle text-center"></td>
-
-                            <td className="align-middle text-center"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p className="ps-4">Showing 0 to 0 of 0 entries </p>
+            <p className="ps-4">
+                Showing{" "}
+                {generationBonusResult?.current_page
+                    ? generationBonusResult?.current_page
+                    : 0}
+                to{" "}
+                {generationBonusResult?.last_page
+                    ? generationBonusResult?.last_page
+                    : 0}{" "}
+                of{" "}
+                {generationBonusResult?.total_page_count
+                    ? generationBonusResult?.total_page_count
+                    : 0}{" "}
+                entries{" "}
+            </p>
             <p className="ps-4">pagination</p>
         </>
     );
