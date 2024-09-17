@@ -48,7 +48,7 @@ const DynamicCategoryPage = ({ params }) => {
                         "Error fetching 'Just For You' products:",
                         error
                     );
-                }finally {
+                } finally {
                     setLoading(false);
                 }
             };
@@ -75,7 +75,7 @@ const DynamicCategoryPage = ({ params }) => {
         <section className="product-category-wrapper">
             <div className="container">
                 <Breadcrumb />
-                <div className="row product-category-details-row">
+                <div className="row product-category-details-row" style={{minHeight:"60vh"}}>
                     <div className="col-md-12">
                         <div className="product-category-details">
                             <CategoryLeftSide
@@ -104,9 +104,9 @@ const DynamicCategoryPage = ({ params }) => {
                         </div>
                     </div>
                 </div>
+                {loading && <LodingFixed />}
+                <Service />
             </div>
-            <Service />
-            {loading && <LodingFixed />}
         </section>
     );
 };
