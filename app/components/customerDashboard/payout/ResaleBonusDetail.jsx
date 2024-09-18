@@ -1,6 +1,6 @@
 import { FaSearch } from "react-icons/fa";
 
-const ResaleBonusDetail = () => {
+const ResaleBonusDetail = ({ resalBonusResult, resalBonusData }) => {
     return (
         <>
             <div className=" d-flex justify-content-end px-4 py-3">
@@ -32,73 +32,66 @@ const ResaleBonusDetail = () => {
                                 Date/Time
                             </th>
                             <th scope="col" className="text-center">
-                                Amount
+                                Reference
                             </th>
                             <th scope="col" className="text-center">
-                                User
+                                Amount
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="align-middle text-center">1</td>
+                        {resalBonusData?.map((item, index) => {
+                            return (
+                                <tr key={item?.id || index}>
+                                    <td className="align-middle text-center">
+                                        {index + 1}
+                                    </td>
 
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">Hamid</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">2</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">Kamal</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">3</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">Jamal</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">4</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">Akmal</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">5</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">Nurul</td>
-                        </tr>
+                                    <td className="align-middle text-center">
+                                        {item?.date_time || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.reference_no || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.earning || "N/A"}
+                                    </td>
+                                </tr>
+                            );
+                        })}
 
                         <tr>
                             <td className="align-middle text-center"></td>
                             <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center">
-                                <strong>Total : ৳ 50000</strong>
-                            </td>
                             <td className="align-middle text-center"></td>
+                            <td className="align-middle text-center">
+                                {resalBonusResult?.total_earning && (
+                                    <strong>
+                                        Total : ৳{" "}
+                                        {resalBonusResult?.total_earning}
+                                    </strong>
+                                )}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div className="pt-5 ">
-                <p className="ps-4">Showing 0 to 0 of 0 entries </p>
+                <p className="ps-4">
+                    Showing{" "}
+                    {resalBonusResult?.current_page
+                        ? resalBonusResult?.current_page
+                        : 0}
+                    to{" "}
+                    {resalBonusResult?.last_page
+                        ? resalBonusResult?.last_page
+                        : 0}{" "}
+                    of{" "}
+                    {resalBonusResult?.total_page_count
+                        ? resalBonusResult?.total_page_count
+                        : 0}{" "}
+                    entries{" "}
+                </p>
                 <p className="ps-4">pagination</p>
             </div>
         </>

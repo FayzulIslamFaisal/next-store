@@ -1,27 +1,8 @@
 import { FaSearch } from "react-icons/fa";
 
-const PayoutRankRewardDetail = () => {
+const PayoutRankRewardDetail = ({ rankRewardData, rankRewardResult }) => {
     return (
         <>
-            <form className="row" action="">
-                <div className=" d-flex justify-content-end px-4 pb-2">
-                    <div
-                        className="input-group affiliate-products-search"
-                        style={{ maxWidth: "250px" }}
-                    >
-                        <input
-                            className="form-control"
-                            placeholder="Search..."
-                            type="search"
-                            // value=""
-                            name="search"
-                        />
-                        <button className="input-group-text" id="search">
-                            <FaSearch />
-                        </button>
-                    </div>
-                </div>
-            </form>
             <div className="table-responsive">
                 <table className="table">
                     <thead>
@@ -33,23 +14,26 @@ const PayoutRankRewardDetail = () => {
                         </tr>
                     </thead>
                     <tbody>
+                        {rankRewardData?.map((item, index) => {
+                            return (
+                                <tr key={item?.id || index}>
+                                    <td scope="row">{index + 1}</td>
+                                    <td>{item?.date_time || "N/A"}</td>
+                                    <td>{item?.purpose || "N/A"} </td>
+                                    <td> ৳ {item?.earning || "0"} </td>
+                                </tr>
+                            );
+                        })}
+
                         <tr>
-                            <td scope="row">1</td>
-                            <td>24/05/2024</td>
-                            <td>Speciel Bonus</td>
-                            <td>400 ৳</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td>24/05/2024</td>
-                            <td>Speciel Bonus</td>
-                            <td>400 ৳</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">3</td>
-                            <td>24/05/2024</td>
-                            <td>Speciel Bonus</td>
-                            <td>400 ৳</td>
+                            <td colSpan={3} scope="row"></td>
+                            <td>
+                                {rankRewardResult?.total_earning > 0 && (
+                                    <strong>
+                                        ৳ {rankRewardResult?.total_earning}
+                                    </strong>
+                                )}
+                            </td>
                         </tr>
                     </tbody>
                 </table>

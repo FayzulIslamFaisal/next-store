@@ -1,4 +1,4 @@
-const AffiliateBonusDetail = () => {
+const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
     return (
         <>
             <div className="table-responsive">
@@ -29,113 +29,67 @@ const AffiliateBonusDetail = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="align-middle text-center">1</td>
+                        {affiliateBonusData?.map((item, index) => {
+                            return (
+                                <tr key={item?.id}>
+                                    <td className="align-middle text-center">
+                                        {index + 1}
+                                    </td>
 
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-                            <td className="align-middle text-center">
-                                REG00025351
-                            </td>
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                            <td className="align-middle text-center">Active</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">2</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-                            <td className="align-middle text-center">
-                                REG00025351
-                            </td>
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                            <td className="align-middle text-center">Active</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">3</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-                            <td className="align-middle text-center">
-                                REG00025351
-                            </td>
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                            <td className="align-middle text-center">Active</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">4</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-                            <td className="align-middle text-center">
-                                REG00025351
-                            </td>
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                            <td className="align-middle text-center">Active</td>
-                        </tr>
-                        <tr>
-                            <td className="align-middle text-center">5</td>
-
-                            <td className="align-middle text-center">
-                                16/09/2024
-                            </td>
-                            <td className="align-middle text-center">50000</td>
-                            <td className="align-middle text-center">
-                                lavel 3
-                            </td>
-                            <td className="align-middle text-center">
-                                REG00025351
-                            </td>
-                            <td className="align-middle text-center">
-                                lavel 5
-                            </td>
-                            <td className="align-middle text-center">Active</td>
-                        </tr>
+                                    <td className="align-middle text-center">
+                                        {item?.date_time || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.earning || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.user_name || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.invoice || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.level || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        {item?.purpose || "N/A"}
+                                    </td>
+                                </tr>
+                            );
+                        })}
 
                         <tr>
                             <td className="align-middle text-center"></td>
-
                             <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center">
-                                <strong>Total : ৳ 50000</strong>
+                            <td colSpan="5" className="align-middle ">
+                                {affiliateBonusResult?.total_earning > 0 && (
+                                    <strong>
+                                        Total : ৳{" "}
+                                        {Number(
+                                            affiliateBonusResult.total_earning
+                                        ).toFixed(2)}
+                                    </strong>
+                                )}
                             </td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p className="ps-4">Showing 0 to 0 of 0 entries </p>
+            <p className="ps-4">
+                Showing{" "}
+                {affiliateBonusResult?.current_page
+                    ? affiliateBonusResult?.current_page
+                    : 0}
+                to{" "}
+                {affiliateBonusResult?.last_page
+                    ? affiliateBonusResult?.last_page
+                    : 0}{" "}
+                of{" "}
+                {affiliateBonusResult?.total_page_count
+                    ? affiliateBonusResult?.total_page_count
+                    : 0}{" "}
+                entries{" "}
+            </p>
             <p className="ps-4">pagination</p>
         </>
     );
