@@ -34,7 +34,7 @@ const ResaleBonusDetail = ({ resalBonusResult, resalBonusData }) => {
                             <th scope="col" className="text-center">
                                 Reference
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end pe-3">
                                 Amount
                             </th>
                         </tr>
@@ -53,7 +53,7 @@ const ResaleBonusDetail = ({ resalBonusResult, resalBonusData }) => {
                                     <td className="align-middle text-center">
                                         {item?.reference_no || "N/A"}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-end pe-3">
                                         {item?.earning || "N/A"}
                                     </td>
                                 </tr>
@@ -61,10 +61,10 @@ const ResaleBonusDetail = ({ resalBonusResult, resalBonusData }) => {
                         })}
 
                         <tr>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center">
+                            <td
+                                colSpan={4}
+                                className="align-middle text-end pe-3"
+                            >
                                 {resalBonusResult?.total_earning && (
                                     <strong>
                                         Total : ৳{" "}

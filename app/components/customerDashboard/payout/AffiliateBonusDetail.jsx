@@ -1,3 +1,5 @@
+import PayoutSearchForm from "./PayoutSearchForm";
+
 const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
     return (
         <>
@@ -8,22 +10,22 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                             <th scope="col" className="text-center">
                                 SL
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-start">
                                 Date/Time
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end">
                                 Amount
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end">
                                 From
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end">
                                 Invoice
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end">
                                 Level
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end pe-3">
                                 Status
                             </th>
                         </tr>
@@ -36,22 +38,22 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                         {index + 1}
                                     </td>
 
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-start">
                                         {item?.date_time || "N/A"}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-end">
                                         {item?.earning || "N/A"}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-end">
                                         {item?.user_name || "N/A"}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-end">
                                         {item?.invoice || "N/A"}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-end">
                                         {item?.level || "N/A"}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-end pe-3">
                                         {item?.purpose || "N/A"}
                                     </td>
                                 </tr>
@@ -59,9 +61,7 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                         })}
 
                         <tr>
-                            <td className="align-middle text-center"></td>
-                            <td className="align-middle text-center"></td>
-                            <td colSpan="5" className="align-middle ">
+                            <td colSpan="3" className="align-middle text-end ">
                                 {affiliateBonusResult?.total_earning > 0 && (
                                     <strong>
                                         Total : ৳{" "}
@@ -71,6 +71,10 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                     </strong>
                                 )}
                             </td>
+                            <td
+                                colSpan={4}
+                                className="align-middle text-center"
+                            ></td>
                         </tr>
                     </tbody>
                 </table>

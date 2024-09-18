@@ -11,16 +11,16 @@ const GenerationBonusDetail = ({
                             <th scope="col" className="text-center">
                                 SL
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-start">
                                 Date/Time
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end">
                                 Amount
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end">
                                 From
                             </th>
-                            <th scope="col" className="text-center">
+                            <th scope="col" className="text-end pe-3">
                                 Level
                             </th>
                         </tr>
@@ -31,26 +31,22 @@ const GenerationBonusDetail = ({
                                 <td className="align-middle text-center">
                                     {index + 1}
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-start">
                                     {item?.date_time || "N/A"}
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-end">
                                     {item?.earning || "N / A"}
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-end">
                                     {item?.user_name || "Unknown"}
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-end pe-3">
                                     {item?.level || "N/A"}
                                 </td>
                             </tr>
                         ))}
                         <tr>
-                            <td
-                                colSpan={2}
-                                className="align-middle text-center"
-                            ></td>
-                            <td colSpan={3} className="align-middle ">
+                            <td colSpan={3} className="align-middle text-end">
                                 {generationBonusResult?.total_earning > 0 && (
                                     <strong>
                                         Total: ৳{" "}
@@ -58,6 +54,10 @@ const GenerationBonusDetail = ({
                                     </strong>
                                 )}
                             </td>
+                            <td
+                                colSpan={2}
+                                className="align-middle text-center"
+                            ></td>
                         </tr>
                     </tbody>
                 </table>

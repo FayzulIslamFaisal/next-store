@@ -33,17 +33,11 @@ const ResaleBonusWrapper = () => {
         }
     }, [status, session?.accessToken]);
 
-    console.log("resalBonusData", { resalBonusData });
-
     return (
         <>
             {isLoading && <LodingFixed />}
             <div className="customer-dashboard-order-history-area h-100">
                 <ResaleBonusTop />
-                {/* <ResaleBonusDetail
-                    resalBonusResult={resalBonusResult}
-                    resalBonusData={resalBonusData}
-                /> */}
                 {resalBonusData?.length > 0 ? (
                     <ResaleBonusDetail
                         resalBonusResult={resalBonusResult}
