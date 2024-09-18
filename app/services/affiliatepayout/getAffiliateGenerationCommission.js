@@ -1,10 +1,16 @@
 import { apiBaseUrl } from "@/app/utils";
 
 
-export const getAffiliateGenerationCommission = async (token)=>{
+export const getAffiliateGenerationCommission = async (token, params={})=>{
+    if (!token) {
+        console.error("Token is missing. Cannot fetch affiliate generation commission data.");
+        return null;
+    }
+    const urlParams = new URLSearchParams(params).toString();
+    const url = `${apiBaseUrl}/affiliate-generation-commission${urlParams ? `?${urlParams}` : ''}`;
 
     try {
-        const url = `${apiBaseUrl}/affiliate-generation-commission`;
+        
 
         const response = await fetch(url, {
             method: "GET",
@@ -19,5 +25,6 @@ export const getAffiliateGenerationCommission = async (token)=>{
     } catch (error) {
         console.error("Something went wrong fetching affiliate generation commission Data");
         console.info(error);
+        return null
     }
 }

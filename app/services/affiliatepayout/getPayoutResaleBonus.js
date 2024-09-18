@@ -1,11 +1,16 @@
-
 import { apiBaseUrl } from "@/app/utils";
 
+export const getPayoutResaleBonus = async (token, params = {}) => {
+    if (!token) {
+        console.error(
+            "Authorization token is missing. Cannot fetch payout resal commission data."
+        );
+        return null;
+    }
 
-export const getPayoutResaleBonus =async(token)=>{
+    const urlParams = new URLSearchParams(params).toString();
+    const url = `${apiBaseUrl}/affiliate-buyback-commission${urlParams ? `?${urlParams}` : ""}`;
     try {
-        const url = `${apiBaseUrl}/affiliate-buyback-commission`;
-
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -19,5 +24,6 @@ export const getPayoutResaleBonus =async(token)=>{
     } catch (error) {
         console.error("Something went wrong fetching payout resale bonus Data");
         console.info(error);
+        return null;
     }
-}
+};
