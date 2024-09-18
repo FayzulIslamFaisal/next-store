@@ -46,10 +46,7 @@ const PayoutRankRewardWrapper = () => {
                     ) : (
                         !isLoading && <NoDataFound />
                     )}
-                    {/* <PayoutRankRewardDetail
-                        rankRewardData={rankRewardData}
-                        rankRewardResult={rankRewardResult}
-                    /> */}
+                    
 
                     <div className="pt-5 ">
                         <p className="ps-4">

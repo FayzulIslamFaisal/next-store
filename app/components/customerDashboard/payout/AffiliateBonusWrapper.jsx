@@ -50,11 +50,7 @@ const AffiliateBonusWrapper = () => {
                 );
                 setAffiliateBonusResult(response?.results || {});
                 setAffiliateBonusData(response?.results?.data || []);
-                setLastPage(response?.results?.last_page);
-                
-                 // Set the last page
-                console.log(response?.results?.last_page);
-                
+                setLastPage(response?.results?.last_page); // Set the last page
             } catch (error) {
                 console.error("Failed to fetch affiliate bonus data:", error);
             } finally {

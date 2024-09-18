@@ -8,10 +8,13 @@ import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
 import { useSearchParams } from "next/navigation";
 import Pagination from "../../productCategory/Pagination";
+import PayoutSearchForm from "./PayoutSearchForm";
 
 const GenerationBonusWrapper = () => {
     const [generationBonusResult, setGenerationBonusResult] = useState({});
     const [generationBonusData, setGenerationBonusData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const { data: session, status } = useSession();
     const searchParam = useSearchParams();
@@ -30,36 +33,49 @@ console.log(lastPage);
     const limit = 20; //Per Page Category
 
     useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+        }, 500);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchTerm]);
+
+    const fetchgenerationBonus = async () => {
         if (status === "authenticated" && session.accessToken) {
-            const fetchgenerationBonus = async () => {
-                setIsLoading(true);
-                let params = { limit, page: currentPage };
-                try {
-                    const response = await getAffiliateGenerationCommission(
-                        session.accessToken,
-                        params
-                    );
-                    setGenerationBonusResult(response?.results || {});
-                    setGenerationBonusData(response?.results?.data || []);
-                    setLastPage(response?.results?.last_page); // Set the last page
-                } catch (error) {
-                    console.error(
-                        "Failed to fetch generation bonus data:",
-                        error
-                    );
-                } finally {
-                    setIsLoading(false);
-                }
-            };
+            setIsLoading(true);
+            let params={ search: debouncedSearchTerm, limit, page: currentPage  }
+            try {
+                const response = await getAffiliateGenerationCommission(
+                    session.accessToken,
+                    params
+                );
+                setGenerationBonusResult(response?.results || {});
+                setGenerationBonusData(response?.results?.data || []);
+                setLastPage(response?.results?.last_page)
+            } catch (error) {
+                console.error("Failed to fetch generation bonus data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (debouncedSearchTerm.length >= 3 || debouncedSearchTerm === "") {
             fetchgenerationBonus();
         }
-    }, [status, session?.accessToken, currentPage]);
+    }, [status, session?.accessToken, debouncedSearchTerm]);
 
     return (
         <>
             {isLoading && <LodingFixed />}
             <div className="customer-dashboard-order-history-area h-100">
                 <GenerationBonusTop />
+                <PayoutSearchForm
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                />
 
                 {generationBonusData?.length > 0 ? (
                     <GenerationBonusDetail
