@@ -19,6 +19,7 @@ const Registration = () => {
     const referralId = searchParams.get("id");
     const referral = searchParams.get("referral");
     const refName = searchParams.get("ref_name");
+const fromPath = searchParams.get("from");
     const { status, data: session } = useSession();
 
     const [referrerID, setReferrerID] = useState(() => {
@@ -30,8 +31,8 @@ const Registration = () => {
 
     useEffect(() => {
         async function fetchData() {
-            if (session != undefined && !referralId && !referral) {
-                router.push(getRequestPath());
+            if (session != undefined && !referralId && !referral && fromPath) {
+                router.push(fromPath);
             }
         }
         fetchData();

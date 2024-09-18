@@ -548,7 +548,7 @@ const CartPage = () => {
                 router.push(`/shipping-page/cart-product`);
             } else {
                 requestPage("cart-page");
-                router.push("/login");
+                router.push("/login?from=cart-page");
                 showToast("Log in to access shipping", "error");
             }
         } else {
@@ -602,7 +602,7 @@ const CartPage = () => {
                 setLoading(false);
             } else {
                 requestPage("cart-page");
-                router.push("/login");
+                router.push("/login?from=cart-page");
                 showToast("Log in to access shipping", "error");
             }
         } catch (error) {
