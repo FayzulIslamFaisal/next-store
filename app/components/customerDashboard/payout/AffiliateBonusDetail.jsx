@@ -2,7 +2,7 @@ import PayoutSearchForm from "./PayoutSearchForm";
 
 const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
     return (
-        <>
+        <div className="p-3">
             <div className="table-responsive">
                 <table className="table table-hover">
                     <thead>
@@ -79,7 +79,7 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                     </tbody>
                 </table>
             </div>
-            <p className="ps-4">
+            <p>
                 Showing{" "}
                 {affiliateBonusResult?.current_page
                     ? affiliateBonusResult?.current_page
@@ -94,8 +94,8 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                     : 0}{" "}
                 entries{" "}
             </p>
-            <p className="ps-4">pagination</p>
-        </>
+            
+        </div>
     );
 };
 

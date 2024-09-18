@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { getAffiliateGenerationCommission } from "@/app/services/affiliatepayout/getAffiliateGenerationCommission";
 import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
+import { useSearchParams } from "next/navigation";
+import Pagination from "../../productCategory/Pagination";
 import PayoutSearchForm from "./PayoutSearchForm";
 
 const GenerationBonusWrapper = () => {
@@ -15,6 +17,20 @@ const GenerationBonusWrapper = () => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const { data: session, status } = useSession();
+    const searchParam = useSearchParams();
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPage, setCurrentPage] = useState(1); // New state for current page
+console.log(lastPage);
+
+
+    useEffect(() => {
+        const page = searchParam.get("page");
+        if (page && parseInt(page) !== currentPage) {
+            setCurrentPage(parseInt(page));
+        }
+    }, [searchParam, currentPage]);
+
+    const limit = 20; //Per Page Category
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -28,15 +44,15 @@ const GenerationBonusWrapper = () => {
     const fetchgenerationBonus = async () => {
         if (status === "authenticated" && session.accessToken) {
             setIsLoading(true);
+            let params={ search: debouncedSearchTerm, limit, page: currentPage  }
             try {
                 const response = await getAffiliateGenerationCommission(
                     session.accessToken,
-                    {
-                        search: debouncedSearchTerm,
-                    }
+                    params
                 );
                 setGenerationBonusResult(response?.results || {});
                 setGenerationBonusData(response?.results?.data || []);
+                setLastPage(response?.results?.last_page)
             } catch (error) {
                 console.error("Failed to fetch generation bonus data:", error);
             } finally {
@@ -69,6 +85,10 @@ const GenerationBonusWrapper = () => {
                 ) : (
                     !isLoading && <NoDataFound />
                 )}
+                <Pagination
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                />
             </div>
         </>
     );

@@ -8,6 +8,7 @@ import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
 import { useSearchParams } from "next/navigation";
 import PayoutSearchForm from "./PayoutSearchForm";
+import Pagination from "../../productCategory/Pagination";
 
 const AffiliateBonusWrapper = () => {
     const [affiliateBonusResult, setAffiliateBonusResult] = useState({});
@@ -16,10 +17,18 @@ const AffiliateBonusWrapper = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
     const { data: session, status } = useSession();
-    // const searchParams = useSearchParams();
-    // const [searchQuery, setSearchQuery] = useState(
-    //     searchParams.get("search") || ""
-    // );
+    const searchParam = useSearchParams();
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPage, setCurrentPage] = useState(1); // New state for current page
+
+    useEffect(() => {
+        const page = searchParam.get("page");
+        if (page && parseInt(page) !== currentPage) {
+            setCurrentPage(parseInt(page));
+        }
+    }, [searchParam, currentPage]);
+
+    const limit = 20; //Per Page Category
     
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -33,13 +42,15 @@ const AffiliateBonusWrapper = () => {
     const fetchAffiliateBonus = async () => {
         if (status === "authenticated" && session.accessToken) {
             setIsLoading(true);
+            let params={ search: debouncedSearchTerm, limit, page: currentPage  }
             try {
                 const response = await getPayoutAffiliateBonus(
                     session.accessToken,
-                    { search: debouncedSearchTerm }
+                    params
                 );
                 setAffiliateBonusResult(response?.results || {});
                 setAffiliateBonusData(response?.results?.data || []);
+                setLastPage(response?.results?.last_page); // Set the last page
             } catch (error) {
                 console.error("Failed to fetch affiliate bonus data:", error);
             } finally {
@@ -52,7 +63,7 @@ const AffiliateBonusWrapper = () => {
         if (debouncedSearchTerm.length >= 3 || debouncedSearchTerm === "") {
             fetchAffiliateBonus();
         }
-    }, [status, session?.accessToken, debouncedSearchTerm]);
+    }, [status, session?.accessToken, debouncedSearchTerm, currentPage]);
 
     return (
         <>
@@ -71,6 +82,10 @@ const AffiliateBonusWrapper = () => {
                 ) : (
                     !isLoading && <NoDataFound />
                 )}
+                <Pagination
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                />
             </div>
         </>
     );
