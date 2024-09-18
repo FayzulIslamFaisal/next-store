@@ -3,24 +3,6 @@ import { FaSearch } from "react-icons/fa";
 const ResaleBonusDetail = ({ resalBonusResult, resalBonusData }) => {
     return (
         <>
-            <div className=" d-flex justify-content-end px-4 py-3">
-                <div
-                    className="input-group affiliate-products-search"
-                    style={{ maxWidth: "250px" }}
-                >
-                    <input
-                        className="form-control"
-                        placeholder="Search..."
-                        type="search"
-                        // value=""
-                        name="search"
-                    />
-                    <button className="input-group-text" id="search">
-                        <FaSearch />
-                    </button>
-                </div>
-            </div>
-
             <div className="table-responsive">
                 <table className="table table-hover">
                     <thead>
