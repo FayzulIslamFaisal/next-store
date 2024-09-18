@@ -1,3 +1,4 @@
+"use client";
 import { getUserDashboard } from "@/app/services/userdashboard/getUserDashboard";
 import { NagadhatPublicUrl, removeRequestPath } from "@/app/utils";
 import { useSession } from "next-auth/react";
@@ -305,7 +306,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                         </ul>
                     </li>
-                    <li className="nav-item customer-dashboard-nav-item">
+                    {/* <li className="nav-item customer-dashboard-nav-item">
                         <Link
                             className="nav-link customer-dashboard-nav-link"
                             href="#"
@@ -313,7 +314,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <FaGift className="nav-icon me-2" />
                             My Vouchers
                         </Link>
-                    </li>
+                    </li> */}
                     <li className="nav-item customer-dashboard-nav-item">
                         <Link
                             className={`${
@@ -324,6 +325,15 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         >
                             <FaUser className="nav-icon me-2" />
                             Manage Profile/KYC
+                        </Link>
+                    </li>
+                    <li className="nav-item customer-dashboard-nav-item">
+                        <Link
+                            className="nav-link customer-dashboard-nav-link"
+                            href="#"
+                        >
+                            <FaTicket className="nav-icon me-2" />
+                            Support
                         </Link>
                     </li>
                     <li className="nav-item customer-dashboard-nav-item">
@@ -366,7 +376,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                         </ul>
                     </li>
-                    <li className="nav-item customer-dashboard-nav-item">
+                    {/* <li className="nav-item customer-dashboard-nav-item">
                         <p
                             className="nav-link customer-dashboard-nav-link dropdown-btn"
                             onClick={() => toggleDropdown("others")}
@@ -403,17 +413,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 </Link>
                             </li>
                         </ul>
-                    </li>
-                    <li className="nav-item customer-dashboard-nav-item">
-                        <Link
-                            className="nav-link customer-dashboard-nav-link"
-                            href="#"
-                        >
-                            <FaTicket className="nav-icon me-2" />
-                            Support
-                        </Link>
-                    </li>
-
+                    </li> */}
                     {status === "authenticated" && (
                         <li className="nav-item customer-dashboard-nav-item">
                             <SignoutBtn />

@@ -166,7 +166,6 @@ const AddToCartProductShippingPage = () => {
 
     return (
         <>
-            <PrivateRoute>
                 {loading ? (
                     <div
                         style={{
@@ -231,7 +230,6 @@ const AddToCartProductShippingPage = () => {
                         </section>
                     </>
                 )}
-            </PrivateRoute>
         </>
     );
 };

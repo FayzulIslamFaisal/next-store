@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
     useEffect(() => {
         if (status === "unauthenticated") {
             requestPage(pathname);
-            router.push("/login");
+            router.push(`/login?from=${encodeURIComponent(pathname || "/")}`);
         }
     }, [status, router]);
 

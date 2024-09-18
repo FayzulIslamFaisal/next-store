@@ -23,6 +23,51 @@ const CustomerDashboardRightSide = () => {
 
     const { data: session, status } = useSession();
 
+    useEffect(() => {
+        const handleClick = (event) => {
+            handleClickOutside(event);
+        };
+        document.addEventListener("mousedown", handleClick);
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleGetShippingAddress = async () => {
+            try {
+                const data = await getCustomerAllShippingAddress(
+                    session?.accessToken
+                );
+                setCustomerAddress(data.results);
+                const defaultAddr = data.results.find(
+                    (address) => address.set_default === 1
+                );
+                setDefaultAddress(defaultAddr);
+            } catch (error) {
+                console.error("Failed to fetch shipping addresses:", error);
+            }
+        };
+        if (session) handleGetShippingAddress();
+    }, [session, liveUpdate]);
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            const fetchUserDashboardInfo = async () => {
+                try {
+                    const userDashboardInfo = await getUserDashboard(
+                        session?.accessToken
+                    );
+                    const userDashboardResult = userDashboardInfo?.results;
+                    setUserDashboard(userDashboardResult);
+                } catch (error) {
+                    console.error("Failed to fetch user dashboard info:", error);
+                }
+            };
+            fetchUserDashboardInfo();
+        }
+    }, [status, session]);
+
     if (status === "loading") {
         return (
             <div className=" d-flex align-items-center justify-content-center vh-100">
@@ -62,34 +107,7 @@ const CustomerDashboardRightSide = () => {
         }
     };
 
-    useEffect(() => {
-        const handleClick = (event) => {
-            handleClickOutside(event);
-        };
 
-        document.addEventListener("mousedown", handleClick);
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
-    }, []);
-
-    useEffect(() => {
-        const handleGetShippingAddress = async () => {
-            try {
-                const data = await getCustomerAllShippingAddress(
-                    session?.accessToken
-                );
-                setCustomerAddress(data.results);
-                const defaultAddr = data.results.find(
-                    (address) => address.set_default === 1
-                );
-                setDefaultAddress(defaultAddr);
-            } catch (error) {
-                console.error("Failed to fetch shipping addresses:", error);
-            }
-        };
-        if (session) handleGetShippingAddress();
-    }, [session, liveUpdate]);
 
     const handleSetDefaultAddress = async (id) => {
         const addAddressInfo = {
@@ -110,25 +128,6 @@ const CustomerDashboardRightSide = () => {
         }
     };
 
-    useEffect(() => {
-        if (status === "authenticated") {
-            const fetchUserDashboardInfo = async () => {
-                try {
-                    const userDashboardInfo = await getUserDashboard(
-                        session?.accessToken
-                    );
-                    const userDashboardResult = userDashboardInfo?.results;
-                    setUserDashboard(userDashboardResult);
-                } catch (error) {
-                    console.error(
-                        "Failed to fetch user dashboard info:",
-                        error
-                    );
-                }
-            };
-            fetchUserDashboardInfo();
-        }
-    }, [status, session]);
 
     const handleDeleteAddress = async (addressID) => {
         try {
