@@ -15,7 +15,7 @@ const RankRewardTop = ({ affiliateData }) => {
                 <div className="">
                     <Image
                         className="rounded-circle"
-                        src={imageUrl}
+                        src={imageUrl || "/images/men222222.png"}
                         width={60}
                         height={60}
                         alt={affiliateData?.reffer_a_friend_link}
