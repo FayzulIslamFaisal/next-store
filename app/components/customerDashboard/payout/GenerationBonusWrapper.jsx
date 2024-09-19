@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getAffiliateGenerationCommission } from "@/app/services/affiliatepayout/getAffiliateGenerationCommission";
 import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "../../productCategory/Pagination";
 import PayoutSearchForm from "./PayoutSearchForm";
 
@@ -20,31 +20,35 @@ const GenerationBonusWrapper = () => {
     const searchParam = useSearchParams();
     const [lastPage, setLastPage] = useState(1); // New state for last page
     const [currentPage, setCurrentPage] = useState(1); // New state for current page
-console.log(lastPage);
-
-
+    const router = useRouter()
     useEffect(() => {
         const page = searchParam.get("page");
         if (page && parseInt(page) !== currentPage) {
             setCurrentPage(parseInt(page));
         }
-    }, [searchParam, currentPage]);
+    }, [searchParam]);
 
     const limit = 20; //Per Page Category
 
     useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm);
-        }, 500);
-        return () => {
-            clearTimeout(handler);
-        };
+        if (searchTerm.length >= 3 || searchTerm === "") {
+            const handler = setTimeout(() => {
+                const newParams = new URLSearchParams(searchParam);
+                newParams.set('page', 1);
+                const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+                router.push(newUrl);
+                setDebouncedSearchTerm(searchTerm);
+            }, 500);
+            return () => {
+                clearTimeout(handler);
+            };
+        }
     }, [searchTerm]);
 
     const fetchgenerationBonus = async () => {
         if (status === "authenticated" && session.accessToken) {
             setIsLoading(true);
-            let params={ search: debouncedSearchTerm, limit, page: currentPage  }
+            let params = { search: debouncedSearchTerm, limit, page: currentPage }
             try {
                 const response = await getAffiliateGenerationCommission(
                     session.accessToken,
@@ -62,10 +66,8 @@ console.log(lastPage);
     };
 
     useEffect(() => {
-        if (debouncedSearchTerm.length >= 3 || debouncedSearchTerm === "") {
-            fetchgenerationBonus();
-        }
-    }, [status, session?.accessToken, debouncedSearchTerm]);
+        fetchgenerationBonus();
+    }, [status, session?.accessToken, debouncedSearchTerm, currentPage]);
 
     return (
         <>
@@ -78,17 +80,20 @@ console.log(lastPage);
                 />
 
                 {generationBonusData?.length > 0 ? (
-                    <GenerationBonusDetail
-                        generationBonusData={generationBonusData}
-                        generationBonusResult={generationBonusResult}
-                    />
+                    <>
+                        <GenerationBonusDetail
+                            generationBonusData={generationBonusData}
+                            generationBonusResult={generationBonusResult}
+                        />
+                        <Pagination
+                            currentPage={currentPage}
+                            lastPage={lastPage}
+
+                        />
+                    </>
                 ) : (
                     !isLoading && <NoDataFound />
                 )}
-                <Pagination
-                    currentPage={currentPage}
-                    lastPage={lastPage}
-                />
             </div>
         </>
     );

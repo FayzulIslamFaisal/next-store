@@ -184,7 +184,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             >
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        className={`${
+                                            isActive("/affiliatedashboard") ? "activ-link" : ""
+                                        } nav-link customer-dashboard-nav-link`}
                                         href="/affiliatedashboard"
                                     >
                                         <span className="dropdown-item-circle"></span>
@@ -193,7 +195,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        className={`${
+                                            isActive("/affiliateteam") ? "activ-link" : ""
+                                        } nav-link customer-dashboard-nav-link`}
                                         href="/affiliateteam"
                                     >
                                         <span className="dropdown-item-circle"></span>
@@ -202,7 +206,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        className={`${
+                                            isActive("/affiliateproducts") ? "activ-link" : ""
+                                        } nav-link customer-dashboard-nav-link`}
                                         href="/affiliateproducts"
                                     >
                                         <span className="dropdown-item-circle"></span>
@@ -212,7 +218,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
 
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
+                                        className={`${
+                                            isActive("/affiliaterankreward") ? "activ-link" : ""
+                                        } nav-link customer-dashboard-nav-link`}
                                         href="/affiliaterankreward"
                                     >
                                         <span className="dropdown-item-circle"></span>
@@ -261,7 +269,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         >
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/payout-affiliate-bonus") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/payout-affiliate-bonus"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -270,7 +280,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/payout-resale-bonus") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/payout-resale-bonus"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -279,7 +291,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/payout-generation-bonus") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/payout-generation-bonus"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -288,7 +302,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/payout-rank-&-reward") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/payout-rank-&-reward"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -297,7 +313,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/payout-salary") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/payout-salary"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -358,7 +376,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                         >
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/passwordtxnotp") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/passwordtxnotp"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -367,7 +387,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
-                                    className="dropdown-link customer-dashboard-dropdown-link"
+                                    className={`${
+                                        isActive("/customershippingaddress") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
                                     href="/customershippingaddress"
                                 >
                                     <span className="dropdown-item-circle"></span>
@@ -416,7 +438,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                     </li> */}
                     {status === "authenticated" && (
                         <li className="nav-item customer-dashboard-nav-item">
-                            <SignoutBtn />
+                            <p className="customer-dashboard-nav-link p-0">
+                                <SignoutBtn />
+                            </p>
                         </li>
                     )}
                 </ul>

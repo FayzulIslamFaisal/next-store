@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { getPayoutAffiliateBonus } from "@/app/services/affiliatepayout/getPayoutAffiliateBonus";
 import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PayoutSearchForm from "./PayoutSearchForm";
 import Pagination from "../../productCategory/Pagination";
 
@@ -18,20 +18,25 @@ const AffiliateBonusWrapper = () => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
     const { data: session, status } = useSession();
     const searchParam = useSearchParams();
+    const router = useRouter();
     const [lastPage, setLastPage] = useState(1); // New state for last page
     const [currentPage, setCurrentPage] = useState(1); // New state for current page
-
+    const limit = 20; //Per Page Category
+    
     useEffect(() => {
         const page = searchParam.get("page");
         if (page && parseInt(page) !== currentPage) {
             setCurrentPage(parseInt(page));
         }
-    }, [searchParam, currentPage]);
+    }, [searchParam]);
 
-    const limit = 20; //Per Page Category
-    
     useEffect(() => {
         const handler = setTimeout(() => {
+            const newParams = new URLSearchParams(searchParam);
+            newParams.set('page', 1);
+            const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+            router.push(newUrl);
+            // setCurrentPage(1)
             setDebouncedSearchTerm(searchTerm);
         }, 500);
         return () => {
@@ -42,7 +47,7 @@ const AffiliateBonusWrapper = () => {
     const fetchAffiliateBonus = async () => {
         if (status === "authenticated" && session.accessToken) {
             setIsLoading(true);
-            let params={ search: debouncedSearchTerm, limit, page: currentPage  }
+            let params = { search: debouncedSearchTerm, limit, page: currentPage }
             try {
                 const response = await getPayoutAffiliateBonus(
                     session.accessToken,
@@ -75,17 +80,19 @@ const AffiliateBonusWrapper = () => {
                     setSearchTerm={setSearchTerm}
                 />
                 {affiliateBonusData?.length > 0 ? (
-                    <AffiliateBonusDetail
-                        affiliateBonusResult={affiliateBonusResult}
-                        affiliateBonusData={affiliateBonusData}
-                    />
+                    <div>
+                        <AffiliateBonusDetail
+                            affiliateBonusResult={affiliateBonusResult}
+                            affiliateBonusData={affiliateBonusData}
+                        />
+                        <Pagination
+                            currentPage={currentPage}
+                            lastPage={lastPage}
+                        />
+                    </div>
                 ) : (
                     !isLoading && <NoDataFound />
                 )}
-                <Pagination
-                    currentPage={currentPage}
-                    lastPage={lastPage}
-                />
             </div>
         </>
     );
