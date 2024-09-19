@@ -36,6 +36,7 @@ const ResaleBonusDetail = ({ resalBonusResult, resalBonusData }) => {
                                         {item?.reference_no || "N/A"}
                                     </td>
                                     <td className="align-middle text-end pe-3">
+                                        ৳ {""}
                                         {item?.earning || "N/A"}
                                     </td>
                                 </tr>
