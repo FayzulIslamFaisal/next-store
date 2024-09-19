@@ -11,11 +11,14 @@ const Login = () => {
     const { status, data: session } = useSession();
     const searchParams = useSearchParams();
     const fromPath = searchParams.get("from");
-    console.log({fromPath});
-    
+
     useEffect(() => {
         async function fetchData() {
-            if (session != undefined && fromPath && typeof fromPath === 'string') {
+            if (
+                session != undefined &&
+                fromPath &&
+                typeof fromPath === "string"
+            ) {
                 router?.push(fromPath);
             }
         }

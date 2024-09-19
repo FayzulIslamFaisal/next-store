@@ -1,100 +1,28 @@
-// import { useEffect, useState } from "react";
+"use client";
 
-// const ClaimRewardModal = ({ show, handleClose }) => {
-//     const [fadeEffect, setFadeEffect] = useState(false);
-//     const [visible, setVisible] = useState(false);
-
-//     useEffect(() => {
-//         if (show) {
-//             setVisible(true);
-//             setTimeout(() => setFadeEffect(true), 10);
-//         } else {
-//             setFadeEffect(false);
-//             setTimeout(() => setVisible(false), 300);
-//         }
-//     }, [show]);
-
-//     const handleOutsideClick = (e) => {
-//         if (e.target.classList.contains("modal")) {
-//             closeModalWithFade();
-//         }
-//     };
-
-//     const closeModalWithFade = () => {
-//         setFadeEffect(false);
-//         setTimeout(() => handleClose(), 300);
-//     };
-
-//     if (!visible) return null;
-//     console.log("rankList", rankList);
-
-//     return (
-//         <div
-//             className={`modal fade ${fadeEffect ? "show" : ""}`}
-//             tabIndex="-1"
-//             role="dialog"
-//             style={{
-//                 display: visible ? "block" : "none",
-//                 background: "rgba(0,0,0,.5)",
-//                 transition: "opacity 0.3s ease",
-//             }}
-//             aria-modal="true"
-//             onMouseDown={handleOutsideClick}
-//         >
-//             <div className="modal-dialog modal-dialog-centered" role="document">
-//                 <div className="modal-content">
-//                     <div className="modal-header">
-//                         <h5 className="modal-title">
-//                             Claim Your Rewards for being Executive
-//                         </h5>
-//                         <button
-//                             type="button"
-//                             className="btn-close"
-//                             onClick={closeModalWithFade}
-//                         ></button>
-//                     </div>
-//                     <div className="modal-body">
-//                         <p>
-//                             Congratulations on reaching a new rank! Claim your
-//                             reward now.
-//                         </p>
-//                     </div>
-//                     <div className="modal-footer d-flex align-items-center justify-content-between ">
-//                         <h4>
-//                             {rankList?.rewards_details ||
-//                                 "No rewards details available"}
-//                         </h4>
-//                         <button
-//                             type="button"
-//                             className="btn btn-secondary"
-//                             onClick={closeModalWithFade}
-//                         >
-//                             Close
-//                         </button>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ClaimRewardModal;
-
+import { postAffiliateRankRewards } from "@/app/services/rankreward/postAffiliateRankRewards";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
     const [fadeEffect, setFadeEffect] = useState(false);
     const [visible, setVisible] = useState(false);
+    const { data: session, status } = useSession();
+
+    console.log("session", session);
 
     useEffect(() => {
+        let fadeTimer;
         if (show) {
             setVisible(true);
-            setTimeout(() => setFadeEffect(true), 10);
+            fadeTimer = setTimeout(() => setFadeEffect(true), 10);
         } else {
             setFadeEffect(false);
-            setTimeout(() => setVisible(false), 300);
+            fadeTimer = setTimeout(() => setVisible(false), 300);
         }
+        return () => clearTimeout(fadeTimer);
     }, [show]);
 
     const handleOutsideClick = (e) => {
@@ -109,6 +37,95 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
     };
 
     if (!visible) return null;
+
+    // Function for claiming reward
+
+    // const handleRewardClaim = async (rewardType, Id) => {
+    //     if (rewardDetails?.status === 1) {
+    //         if (session?.accessToken) {
+    //             console.log("AccessToken: ", session?.accessToken);
+    //             try {
+    //                 const claimRewardData = {
+    //                     rankings_levels_id: rewardDetails?.id,
+    //                     reward_id: Id,
+    //                     reward_type: rewardType,
+    //                     reward_value: rewardDetails?.rewards_money,
+    //                     reward_status: 0,
+    //                     reason: "",
+    //                 };
+
+    //                 const responseReward = await postAffiliateRankRewards(
+    //                     claimRewardData,
+    //                     session?.accessToken
+    //                 );
+
+    //                 if (responseReward?.error) {
+    //                     toast.error(
+    //                         responseReward?.message || "Failed to claim reward."
+    //                     );
+    //                 } else {
+    //                     console.log("responseReward", responseReward?.message);
+    //                     toast.success(
+    //                         responseReward?.message ||
+    //                             "Reward claimed successfully!"
+    //                     );
+    //                 }
+    //             } catch (error) {
+    //                 console.error("Error claiming reward", error);
+    //                 toast.error(
+    //                     "An error occurred while claiming the reward. Please try again."
+    //                 );
+    //             }
+    //         } else {
+    //             toast.warn("You must be logged in to claim rewards.");
+    //         }
+    //     } else {
+    //         toast.error("This reward cannot be claimed ");
+    //     }
+    // };
+
+    const handleRewardClaim = async (rewardType, Id) => {
+        if (rewardDetails?.status !== 1) {
+            toast.error("This reward cannot be claimed");
+            return;
+        }
+
+        if (!session?.accessToken) {
+            toast.warn("You must be logged in to claim rewards.");
+            return;
+        }
+
+        const claimRewardData = {
+            rankings_levels_id: rewardDetails?.id,
+            reward_id: Id,
+            reward_type: rewardType,
+            reward_value: rewardDetails?.rewards_money,
+            reward_status: 0,
+            reason: "",
+        };
+
+        try {
+            const responseReward = await postAffiliateRankRewards(
+                session?.accessToken,
+                claimRewardData
+            );
+
+            if (responseReward?.error) {
+                toast.error(
+                    responseReward?.message || "Failed to claim reward."
+                );
+            } else {
+                toast.success(
+                    responseReward?.message || "Reward claimed successfully!"
+                );
+            }
+        } catch (error) {
+            console.error("Error claiming reward", error);
+            toast.error(
+                "An error occurred while claiming the reward. Please try again."
+            );
+        }
+    };
 
     return (
         <div
@@ -143,10 +160,20 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
                             <div className="rewards-gif-image-item col">
                                 <div className="">
                                     <Image
+                                        style={{
+                                            cursor:
+                                                rewardDetails?.status !== 1
+                                                    ? "not-allowed"
+                                                    : "pointer",
+                                        }}
                                         width={350}
                                         height={350}
                                         src={`/images/Taka.png`}
                                         alt={`${rewardDetails?.level}`}
+                                        onClick={() =>
+                                            rewardDetails?.status === 1 &&
+                                            handleRewardClaim("money", 1)
+                                        }
                                     />
                                 </div>
                             </div>
@@ -162,6 +189,16 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
                                             "/images/placeholder--image.jpg"
                                         }
                                         alt={`${rewardDetails?.level}`}
+                                        onClick={() =>
+                                            rewardDetails?.status === 1 &&
+                                            handleRewardClaim("prize", 2)
+                                        }
+                                        style={{
+                                            cursor:
+                                                rewardDetails?.status !== 1
+                                                    ? "not-allowed"
+                                                    : "pointer",
+                                        }}
                                     />
                                 </div>
                             </div>

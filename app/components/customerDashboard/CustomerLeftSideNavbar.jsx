@@ -227,15 +227,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                         Ranks & Rewards
                                     </Link>
                                 </li>
-                                <li className="dropdown-item customer-dashboard-dropdown-item">
-                                    <Link
-                                        className="dropdown-link customer-dashboard-dropdown-link"
-                                        href="#"
-                                    >
-                                        <span className="dropdown-item-circle"></span>
-                                        My Challenges
-                                    </Link>
-                                </li>
+
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className="dropdown-link customer-dashboard-dropdown-link"
