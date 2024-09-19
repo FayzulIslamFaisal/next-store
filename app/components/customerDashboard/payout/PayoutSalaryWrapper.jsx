@@ -1,6 +1,7 @@
 import PayoutSalaryTop from "./PayoutSalaryTop";
 import PayoutSalaryDate from "./PayoutSalaryDate";
 import PayoutSalaryDetail from "./PayoutSalaryDetail";
+import PayoutSearchForm from "./PayoutSearchForm";
 const PayoutSalaryWrapper = () => {
     return (
         <div className="customer-dashboard-order-history-area h-100">
@@ -8,6 +9,7 @@ const PayoutSalaryWrapper = () => {
                 <PayoutSalaryTop />
                 <div className="customer-dashboard-order-history">
                     <PayoutSalaryDate />
+                    <PayoutSearchForm />
                     <PayoutSalaryDetail />
                 </div>
                 <p className="ps-4">Showing 0 to 0 of 0 entries </p>
