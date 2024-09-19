@@ -77,7 +77,6 @@ const GenerationBonusDetail = ({
                     : 0}{" "}
                 entries{" "}
             </p>
-            <p className="ps-4">pagination</p>
         </>
     );
 };

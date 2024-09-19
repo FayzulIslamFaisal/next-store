@@ -42,7 +42,7 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                         {item?.date_time || "N/A"}
                                     </td>
                                     <td className="align-middle text-end">
-                                        {item?.earning || "N/A"}
+                                    ৳ {item?.earning || "N/A"}
                                     </td>
                                     <td className="align-middle text-end">
                                         {item?.user_name || "N/A"}

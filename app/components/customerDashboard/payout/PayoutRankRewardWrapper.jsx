@@ -6,22 +6,39 @@ import { useEffect, useState } from "react";
 import { getPayoutRankReward } from "@/app/services/affiliatepayout/getPayoutRankReward";
 import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
+import { useSearchParams } from "next/navigation";
+import Pagination from "../../productCategory/Pagination";
+
 const PayoutRankRewardWrapper = () => {
     const [rankRewardResult, setRankRewardResult] = useState({});
     const [rankRewardData, setRankRewardData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { data: session, status } = useSession();
+    const searchParam = useSearchParams();
+    const [lastPage, setLastPage] = useState(1); // New state for last page
+    const [currentPage, setCurrentPage] = useState(1); // New state for current page
+    const limit = 20; //Per Page Category
+
+    useEffect(() => {
+        const page = searchParam.get("page");
+        if (page && parseInt(page) !== currentPage) {
+            setCurrentPage(parseInt(page));
+        }
+    }, [searchParam]);
 
     useEffect(() => {
         if (status === "authenticated" && session.accessToken) {
             const fetchRankReward = async () => {
                 setIsLoading(true);
+                let params = { limit, page: currentPage }
                 try {
                     const response = await getPayoutRankReward(
-                        session.accessToken
+                        session.accessToken,
+                        params
                     );
                     setRankRewardResult(response?.results || {});
                     setRankRewardData(response?.results?.data || []);
+                    setLastPage(response?.results?.last_page); // Set the last page
                 } catch (error) {
                     console.error("Failed to fetch Rank Reward data:", error);
                 } finally {
@@ -30,7 +47,7 @@ const PayoutRankRewardWrapper = () => {
             };
             fetchRankReward();
         }
-    }, [status, session?.accessToken]);
+    }, [status, session?.accessToken, currentPage]);
 
     return (
         <>
@@ -39,15 +56,19 @@ const PayoutRankRewardWrapper = () => {
                 <PayoutRankRewardTop />
                 <div className="customer-dashboard-order-history">
                     {rankRewardData?.length > 0 ? (
-                        <PayoutRankRewardDetail
-                            rankRewardData={rankRewardData}
-                            rankRewardResult={rankRewardResult}
-                        />
+                        <div>
+                            <PayoutRankRewardDetail
+                                rankRewardData={rankRewardData}
+                                rankRewardResult={rankRewardResult}
+                            />
+                            <Pagination
+                                currentPage={currentPage}
+                                lastPage={lastPage}
+                            />
+                        </div>
                     ) : (
                         !isLoading && <NoDataFound />
                     )}
-                    
-
                     <div className="pt-5 ">
                         <p className="ps-4">
                             Showing
@@ -64,7 +85,6 @@ const PayoutRankRewardWrapper = () => {
                                 : 0}{" "}
                             entries
                         </p>
-                        <p className="ps-4">pagination</p>
                     </div>
                 </div>
             </div>
