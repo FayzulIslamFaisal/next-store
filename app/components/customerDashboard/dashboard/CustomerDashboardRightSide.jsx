@@ -161,7 +161,7 @@ const CustomerDashboardRightSide = () => {
                                 Default Shipping Address
                             </h2>
                         </div>
-                        {customerAddress.length ? (
+                        {customerAddress?.length ? (
                             <div className="p-4 d-flex flex-column gap-3 customer-dashboard-address">
                                 {customerAddress?.map((allAddress, index) => (
                                     <div key={index}>

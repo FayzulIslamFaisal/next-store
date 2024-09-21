@@ -18,7 +18,7 @@ import {
     FaUser,
     FaWallet,
 } from "react-icons/fa";
-import { FaBangladeshiTakaSign, FaTicket } from "react-icons/fa6";
+import { FaBangladeshiTakaSign, FaMoneyBillTransfer, FaTicket } from "react-icons/fa6";
 import SignoutBtn from "../SignoutBtn";
 
 const CustomerLeftSideNavbar = ({ authSessionData }) => {
@@ -316,6 +316,104 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             </li>
                         </ul>
                     </li>
+                    <li className="nav-item customer-dashboard-nav-item">
+                        <p
+                            className="nav-link customer-dashboard-nav-link dropdown-btn"
+                            onClick={() => toggleDropdown("finance")}
+                        >
+                            <FaMoneyBillTransfer className="nav-icon me-2" />
+                            Finance
+                            <FaAngleRight
+                                className={`dropdown ${
+                                    activeDropdown === "finance" ? "rotate" : ""
+                                }`}
+                            />
+                        </p>
+                        <ul
+                            className={`dropdown-conteiner ${
+                                activeDropdown === "finance" ? "show" : ""
+                            }`}
+                        >
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-transactions") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-transactions"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    Transactions
+                                </Link>
+                            </li>
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-transfer") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-transfer"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    Transfer
+                                </Link>
+                            </li>
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-transfer-history") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-transfer-history"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    Transfer History
+                                </Link>
+                            </li>
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-withdraw") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-withdraw"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    Withdraw
+                                </Link>
+                            </li>
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-withdraw-history") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-withdraw-history"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    Withdraw History
+                                </Link>
+                            </li>
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-my-bank-details") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-my-bank-details"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    My Bank Details
+                                </Link>
+                            </li>
+                            <li className="dropdown-item customer-dashboard-dropdown-item">
+                                <Link
+                                    className={`${
+                                        isActive("/finance-bank-info") ? "activ-link" : ""
+                                    } nav-link customer-dashboard-nav-link`}
+                                    href="/finance-bank-info"
+                                >
+                                    <span className="dropdown-item-circle"></span>
+                                    Bank Info
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+
                     {/* <li className="nav-item customer-dashboard-nav-item">
                         <Link
                             className="nav-link customer-dashboard-nav-link"

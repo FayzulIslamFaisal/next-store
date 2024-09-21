@@ -966,12 +966,11 @@ const CartPage = () => {
                                                 )}
                                         </p>
                                         <strong
-                                            className="fw-normal"
                                             style={{
-                                                fontSize: "14px",
+                                                fontSize: "16px",
                                             }}
                                         >
-                                            ৳{totalPrice}
+                                            ৳ {totalPrice}
                                         </strong>
                                     </div>
                                     {selectedProductType == 2 ? (
