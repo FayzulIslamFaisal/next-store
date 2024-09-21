@@ -50,7 +50,7 @@ const CustomerDashboardRightSide = () => {
             }
         };
         if (session) handleGetShippingAddress();
-    }, [session, liveUpdate]);
+    }, [session?.accessToken, liveUpdate]);
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -72,7 +72,7 @@ const CustomerDashboardRightSide = () => {
             };
             fetchUserDashboardInfo();
         }
-    }, [status, session]);
+    }, [status, session?.accessToken]);
 
     if (status === "loading") {
         return (
