@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import GenerationBonusDetail from "./GenerationBonusDetail";
 import GenerationBonusTop from "./GenerationBonusTop";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { getAffiliateGenerationCommission } from "@/app/services/affiliatepayout/getAffiliateGenerationCommission";
 import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
@@ -15,12 +15,12 @@ const GenerationBonusWrapper = () => {
     const [generationBonusData, setGenerationBonusData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPending, startTransition] = useTransition();
     const { data: session, status } = useSession();
     const searchParam = useSearchParams();
-    const [lastPage, setLastPage] = useState(1); // New state for last page
-    const [currentPage, setCurrentPage] = useState(1); // New state for current page
-    const router = useRouter()
+    const [lastPage, setLastPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const router = useRouter();
     useEffect(() => {
         const page = searchParam.get("page");
         if (page && parseInt(page) !== currentPage) {
@@ -28,15 +28,17 @@ const GenerationBonusWrapper = () => {
         }
     }, [searchParam]);
 
-    const limit = 20; //Per Page Category
+    const limit = 20;
 
     useEffect(() => {
         if (searchTerm.length >= 3 || searchTerm === "") {
             const handler = setTimeout(() => {
                 const newParams = new URLSearchParams(searchParam);
-                newParams.set('page', 1);
-                const newUrl = `${window.location.pathname}?${newParams.toString()}`;
-                router.push(newUrl);
+                newParams.set("page", 1);
+                const newUrl = `${
+                    window.location.pathname
+                }?${newParams.toString()}`;
+                router.replace(newUrl);
                 setDebouncedSearchTerm(searchTerm);
             }, 500);
             return () => {
@@ -46,21 +48,24 @@ const GenerationBonusWrapper = () => {
     }, [searchTerm]);
 
     const fetchgenerationBonus = async () => {
-        if (status === "authenticated" && session.accessToken) {
-            setIsLoading(true);
-            let params = { search: debouncedSearchTerm, limit, page: currentPage }
+        if (status === "authenticated" && session?.accessToken) {
+            let params = {
+                search: debouncedSearchTerm,
+                limit,
+                page: currentPage,
+            };
             try {
-                const response = await getAffiliateGenerationCommission(
-                    session.accessToken,
-                    params
-                );
-                setGenerationBonusResult(response?.results || {});
-                setGenerationBonusData(response?.results?.data || []);
-                setLastPage(response?.results?.last_page)
+                startTransition(async () => {
+                    const response = await getAffiliateGenerationCommission(
+                        session?.accessToken,
+                        params
+                    );
+                    setGenerationBonusResult(response?.results || {});
+                    setGenerationBonusData(response?.results?.data || []);
+                    setLastPage(response?.results?.last_page);
+                });
             } catch (error) {
                 console.error("Failed to fetch generation bonus data:", error);
-            } finally {
-                setIsLoading(false);
             }
         }
     };
@@ -71,7 +76,7 @@ const GenerationBonusWrapper = () => {
 
     return (
         <>
-            {isLoading && <LodingFixed />}
+            {isPending && <LodingFixed />}
             <div className="customer-dashboard-order-history-area h-100 pb-4">
                 <GenerationBonusTop />
                 <PayoutSearchForm
@@ -88,11 +93,10 @@ const GenerationBonusWrapper = () => {
                         <Pagination
                             currentPage={currentPage}
                             lastPage={lastPage}
-
                         />
                     </>
                 ) : (
-                    !isLoading && <NoDataFound />
+                    !isPending && <NoDataFound />
                 )}
             </div>
         </>

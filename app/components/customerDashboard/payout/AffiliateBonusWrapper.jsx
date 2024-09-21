@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import AffiliateBonusDetail from "./AffiliateBonusDetail";
 import AffiliateBonusTop from "./AffiliateBonusTop";
 import { useSession } from "next-auth/react";
@@ -13,16 +13,16 @@ import Pagination from "../../productCategory/Pagination";
 const AffiliateBonusWrapper = () => {
     const [affiliateBonusResult, setAffiliateBonusResult] = useState({});
     const [affiliateBonusData, setAffiliateBonusData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPending, startTransition] = useTransition();
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
     const { data: session, status } = useSession();
     const searchParam = useSearchParams();
     const router = useRouter();
-    const [lastPage, setLastPage] = useState(1); // New state for last page
-    const [currentPage, setCurrentPage] = useState(1); // New state for current page
-    const limit = 20; //Per Page Category
-    
+    const [lastPage, setLastPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const limit = 20;
+
     useEffect(() => {
         const page = searchParam.get("page");
         if (page && parseInt(page) !== currentPage) {
@@ -33,10 +33,11 @@ const AffiliateBonusWrapper = () => {
     useEffect(() => {
         const handler = setTimeout(() => {
             const newParams = new URLSearchParams(searchParam);
-            newParams.set('page', 1);
-            const newUrl = `${window.location.pathname}?${newParams.toString()}`;
-            router.push(newUrl);
-            // setCurrentPage(1)
+            newParams.set("page", 1);
+            const newUrl = `${
+                window.location.pathname
+            }?${newParams.toString()}`;
+            router.replace(newUrl);
             setDebouncedSearchTerm(searchTerm);
         }, 500);
         return () => {
@@ -46,20 +47,23 @@ const AffiliateBonusWrapper = () => {
 
     const fetchAffiliateBonus = async () => {
         if (status === "authenticated" && session.accessToken) {
-            setIsLoading(true);
-            let params = { search: debouncedSearchTerm, limit, page: currentPage }
+            let params = {
+                search: debouncedSearchTerm,
+                limit,
+                page: currentPage,
+            };
             try {
-                const response = await getPayoutAffiliateBonus(
-                    session.accessToken,
-                    params
-                );
-                setAffiliateBonusResult(response?.results || {});
-                setAffiliateBonusData(response?.results?.data || []);
-                setLastPage(response?.results?.last_page); // Set the last page
+                startTransition(async () => {
+                    const response = await getPayoutAffiliateBonus(
+                        session.accessToken,
+                        params
+                    );
+                    setAffiliateBonusResult(response?.results || {});
+                    setAffiliateBonusData(response?.results?.data || []);
+                    setLastPage(response?.results?.last_page);
+                });
             } catch (error) {
                 console.error("Failed to fetch affiliate bonus data:", error);
-            } finally {
-                setIsLoading(false);
             }
         }
     };
@@ -72,7 +76,7 @@ const AffiliateBonusWrapper = () => {
 
     return (
         <>
-            {isLoading && <LodingFixed />}
+            {isPending && <LodingFixed />}
             <div className="customer-dashboard-order-history-area h-100 pb-4">
                 <AffiliateBonusTop />
                 <PayoutSearchForm
@@ -91,7 +95,7 @@ const AffiliateBonusWrapper = () => {
                         />
                     </div>
                 ) : (
-                    !isLoading && <NoDataFound />
+                    !isPending && <NoDataFound />
                 )}
             </div>
         </>
