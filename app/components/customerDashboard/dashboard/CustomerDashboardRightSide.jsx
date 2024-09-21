@@ -61,7 +61,10 @@ const CustomerDashboardRightSide = () => {
                     const userDashboardResult = userDashboardInfo?.results;
                     setUserDashboard(userDashboardResult);
                 } catch (error) {
-                    console.error("Failed to fetch user dashboard info:", error);
+                    console.error(
+                        "Failed to fetch user dashboard info:",
+                        error
+                    );
                 }
             };
             fetchUserDashboardInfo();
@@ -107,8 +110,6 @@ const CustomerDashboardRightSide = () => {
         }
     };
 
-
-
     const handleSetDefaultAddress = async (id) => {
         const addAddressInfo = {
             address_id: id,
@@ -127,7 +128,6 @@ const CustomerDashboardRightSide = () => {
             toast(error.message);
         }
     };
-
 
     const handleDeleteAddress = async (addressID) => {
         try {
@@ -161,7 +161,7 @@ const CustomerDashboardRightSide = () => {
                                 Default Shipping Address
                             </h2>
                         </div>
-                        {customerAddress.length ? (
+                        {customerAddress?.length ? (
                             <div className="p-4 d-flex flex-column gap-3 customer-dashboard-address">
                                 {customerAddress?.map((allAddress, index) => (
                                     <div key={index}>

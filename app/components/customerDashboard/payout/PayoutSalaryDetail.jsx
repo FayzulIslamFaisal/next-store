@@ -47,6 +47,9 @@ const PayoutSalaryDetail = () => {
                     </tfoot>
                 </table>
             </div>
+            <div className="pt-5">
+                <p className="">Showing 0 to 0 of 0 entries </p>
+            </div>
         </>
     );
 };

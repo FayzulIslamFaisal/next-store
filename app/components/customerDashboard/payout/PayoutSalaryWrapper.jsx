@@ -12,7 +12,7 @@ const PayoutSalaryWrapper = () => {
                     <PayoutSearchForm />
                     <PayoutSalaryDetail />
                 </div>
-                <p className="ps-4">Showing 0 to 0 of 0 entries </p>
+                
                 <p className="ps-4">pagination</p>
             </div>
         </div>

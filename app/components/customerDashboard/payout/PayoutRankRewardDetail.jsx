@@ -38,6 +38,24 @@ const PayoutRankRewardDetail = ({ rankRewardData, rankRewardResult }) => {
                     </tbody>
                 </table>
             </div>
+
+            <div className="pt-5 ">
+                <p className="ps-4">
+                    Showing
+                    {rankRewardResult?.current_page
+                        ? rankRewardResult?.current_page
+                        : 0}
+                    to{" "}
+                    {rankRewardResult?.last_page
+                        ? rankRewardResult?.last_page
+                        : 0}{" "}
+                    of{" "}
+                    {rankRewardResult?.total_page_count
+                        ? rankRewardResult?.total_page_count
+                        : 0}{" "}
+                    entries
+                </p>
+            </div>
         </>
     );
 };
