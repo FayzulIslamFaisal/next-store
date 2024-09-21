@@ -37,7 +37,7 @@ const ShippingOrderSection = ({
                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                 <p>Shipping</p>
                                 <div className="d-flex gap-2 align-items-center">
-                                    <strong>৳{shippingPrice}</strong>
+                                    <strong>৳{shippingPrice || 0}</strong>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +45,7 @@ const ShippingOrderSection = ({
                         <div className="d-flex gap-2 flex-column border-bottom pb-3">
                             <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
                                 <strong>Grand Total</strong>
-                                <p className="total-order-price">৳ {totalPrice + parseInt(shippingPrice)}</p>
+                                <p className="total-order-price">৳ {totalPrice + parseInt(shippingPrice || 0)}</p>
                             </div>
                         </div>
 

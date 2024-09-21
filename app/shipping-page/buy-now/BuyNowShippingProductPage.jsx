@@ -54,7 +54,7 @@ const BuyNowShippingProductPage = () => {
             if (session) {
                 try {
                     const data = await getCustomerAllShippingAddress(session?.accessToken);
-                    setCustomerAddress(data.results);
+                    setCustomerAddress(data.results || []);
                     const defaultAddressInfo = findObjectWithKey(data.results, "set_default", 1);
                     setSelectedDefaultAddressId(defaultAddressInfo?.id);
                 } catch (error) {

@@ -108,7 +108,7 @@ const CustomerAddress = ({
     };
     await updateShippingAddress(addAddressInfo, session?.accessToken);
     const data = await getCustomerAllShippingAddress(session?.accessToken);
-    setCustomerAddress(data.results);
+    setCustomerAddress(data.results || []);
     const defaultAddressInfo = findObjectWithKey(
       data.results,
       "set_default",
@@ -159,7 +159,7 @@ const CustomerAddress = ({
       if (session) {
         try {
           const data = await getCustomerAllShippingAddress(session?.accessToken);
-          setCustomerAddress(data.results);
+          setCustomerAddress(data.results || []);
 
           const defaultAddressInfo = findObjectWithKey(data.results, "set_default", 1);
           setSelectedDefaultAddressId(defaultAddressInfo?.id);
@@ -261,7 +261,7 @@ const CustomerAddress = ({
     };
     await updateShippingAddress(addAddressInfo, session?.accessToken);
     const data = await getCustomerAllShippingAddress(session?.accessToken);
-    setCustomerAddress(data.results);
+    setCustomerAddress(data.results || []);
     const defaultAddressInfo = findObjectWithKey(
       data.results,
       "set_default",
@@ -311,7 +311,7 @@ const CustomerAddress = ({
     await postShippingAddress(addAddressInfo, session?.accessToken);
     // Fetch updated list of shipping addresses
     const data = await getCustomerAllShippingAddress(session?.accessToken);
-    setCustomerAddress(data.results);
+    setCustomerAddress(data.results || []);
     const defaultAddressInfo = findObjectWithKey(
       data.results,
       "set_default",
@@ -598,7 +598,7 @@ const CustomerAddress = ({
       ))}
 
       {/* Add New Address Button */}
-      {customerAddress?.length === 0 && (
+      {customerAddress?.length == 0 && (
         <div className="row new-nh-shipping-row">
           <div className="col-12">
             <div className="new-nh-shipping-area d-flex justify-content-center rounded-2">

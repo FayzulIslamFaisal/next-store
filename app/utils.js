@@ -321,3 +321,14 @@ export function removeRequestPath() {
     }
     return null;
 }
+
+// get oulate localstorage
+
+export function getOutletInfo() {
+    if (typeof window !== "undefined") {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("outletId") || 3;
+        }
+    }
+    return 3;
+}
