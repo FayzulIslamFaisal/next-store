@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +20,7 @@ const CustomerDashboardRightSide = () => {
     const [currentAddress, setCurrentAddress] = useState(null);
     const [userDashboard, setUserDashboard] = useState({});
     const [liveUpdate, setLiveUpdate] = useState(true);
+    const [isPending, startTransition] = useTransition();
 
     const { data: session, status } = useSession();
 
@@ -49,17 +50,19 @@ const CustomerDashboardRightSide = () => {
             }
         };
         if (session) handleGetShippingAddress();
-    }, [session, liveUpdate]);
+    }, [session?.accessToken, liveUpdate]);
 
     useEffect(() => {
         if (status === "authenticated") {
             const fetchUserDashboardInfo = async () => {
                 try {
-                    const userDashboardInfo = await getUserDashboard(
-                        session?.accessToken
-                    );
-                    const userDashboardResult = userDashboardInfo?.results;
-                    setUserDashboard(userDashboardResult);
+                    startTransition(async () => {
+                        const userDashboardInfo = await getUserDashboard(
+                            session?.accessToken
+                        );
+                        const userDashboardResult = userDashboardInfo?.results;
+                        setUserDashboard(userDashboardResult);
+                    });
                 } catch (error) {
                     console.error(
                         "Failed to fetch user dashboard info:",
@@ -69,7 +72,7 @@ const CustomerDashboardRightSide = () => {
             };
             fetchUserDashboardInfo();
         }
-    }, [status, session]);
+    }, [status, session?.accessToken]);
 
     if (status === "loading") {
         return (
@@ -271,7 +274,10 @@ const CustomerDashboardRightSide = () => {
                             session={session}
                         />
                     </div>
-                    <AffiliatePartnerStatus userDashboard={userDashboard} />
+                    <AffiliatePartnerStatus
+                        userDashboard={userDashboard}
+                        isPending={isPending}
+                    />
                 </div>
             </div>
         </>

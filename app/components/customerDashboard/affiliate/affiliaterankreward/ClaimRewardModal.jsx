@@ -38,52 +38,6 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
 
     if (!visible) return null;
 
-    // Function for claiming reward
-
-    // const handleRewardClaim = async (rewardType, Id) => {
-    //     if (rewardDetails?.status === 1) {
-    //         if (session?.accessToken) {
-    //             console.log("AccessToken: ", session?.accessToken);
-    //             try {
-    //                 const claimRewardData = {
-    //                     rankings_levels_id: rewardDetails?.id,
-    //                     reward_id: Id,
-    //                     reward_type: rewardType,
-    //                     reward_value: rewardDetails?.rewards_money,
-    //                     reward_status: 0,
-    //                     reason: "",
-    //                 };
-
-    //                 const responseReward = await postAffiliateRankRewards(
-    //                     claimRewardData,
-    //                     session?.accessToken
-    //                 );
-
-    //                 if (responseReward?.error) {
-    //                     toast.error(
-    //                         responseReward?.message || "Failed to claim reward."
-    //                     );
-    //                 } else {
-    //                     console.log("responseReward", responseReward?.message);
-    //                     toast.success(
-    //                         responseReward?.message ||
-    //                             "Reward claimed successfully!"
-    //                     );
-    //                 }
-    //             } catch (error) {
-    //                 console.error("Error claiming reward", error);
-    //                 toast.error(
-    //                     "An error occurred while claiming the reward. Please try again."
-    //                 );
-    //             }
-    //         } else {
-    //             toast.warn("You must be logged in to claim rewards.");
-    //         }
-    //     } else {
-    //         toast.error("This reward cannot be claimed ");
-    //     }
-    // };
-
     const handleRewardClaim = async (rewardType, Id) => {
         if (rewardDetails?.status !== 1) {
             toast.error("This reward cannot be claimed");
@@ -162,9 +116,9 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
                                     <Image
                                         style={{
                                             cursor:
-                                                rewardDetails?.status !== 1
-                                                    ? "not-allowed"
-                                                    : "pointer",
+                                                rewardDetails?.status === 1
+                                                    ? "pointer "
+                                                    : "not-allowed",
                                         }}
                                         width={350}
                                         height={350}
@@ -195,9 +149,9 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
                                         }
                                         style={{
                                             cursor:
-                                                rewardDetails?.status !== 1
-                                                    ? "not-allowed"
-                                                    : "pointer",
+                                                rewardDetails?.status === 1
+                                                    ? "pointer "
+                                                    : "not-allowed",
                                         }}
                                     />
                                 </div>
