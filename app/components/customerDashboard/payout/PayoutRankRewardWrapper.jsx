@@ -52,7 +52,7 @@ const PayoutRankRewardWrapper = () => {
     return (
         <>
             {isLoading && <LodingFixed />}
-            <div className="customer-dashboard-order-history-area h-100">
+            <div className="customer-dashboard-order-history-area h-100 pb-4">
                 <PayoutRankRewardTop />
                 <div className="customer-dashboard-order-history">
                     {rankRewardData?.length > 0 ? (

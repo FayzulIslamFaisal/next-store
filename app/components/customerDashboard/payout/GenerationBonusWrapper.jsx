@@ -72,7 +72,7 @@ const GenerationBonusWrapper = () => {
     return (
         <>
             {isLoading && <LodingFixed />}
-            <div className="customer-dashboard-order-history-area h-100">
+            <div className="customer-dashboard-order-history-area h-100 pb-4">
                 <GenerationBonusTop />
                 <PayoutSearchForm
                     searchTerm={searchTerm}

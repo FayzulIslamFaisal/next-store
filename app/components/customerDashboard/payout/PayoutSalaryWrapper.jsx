@@ -4,7 +4,7 @@ import PayoutSalaryDetail from "./PayoutSalaryDetail";
 import PayoutSearchForm from "./PayoutSearchForm";
 const PayoutSalaryWrapper = () => {
     return (
-        <div className="customer-dashboard-order-history-area h-100">
+        <div className="customer-dashboard-order-history-area h-100 pb-4">
             <div className="customer-dashboard-order-history-area">
                 <PayoutSalaryTop />
                 <div className="customer-dashboard-order-history">
