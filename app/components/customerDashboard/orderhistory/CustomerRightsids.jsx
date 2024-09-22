@@ -6,6 +6,7 @@ import Pagination from "../../productCategory/Pagination";
 import { postOrderCancel } from "@/app/services/userdashboard/postOrderCancel";
 import { toast } from "react-toastify"; // Import Toastify
 import { useState } from "react";
+import LodingFixed from "../../LodingFixed";
 
 const CustomerRightsids = ({
     customerOrders,
@@ -14,6 +15,7 @@ const CustomerRightsids = ({
     session,
     setOrderCancel,
     orderCancel,
+    isPending,
 }) => {
     const [cancelStatus, setCancelStatus] = useState(null);
 
@@ -43,6 +45,7 @@ const CustomerRightsids = ({
 
     return (
         <>
+            {isPending && <LodingFixed />}
             <div className="customer-dashboard-order-history-area">
                 <div className="customer-dashboard-order-history-title">
                     <h1 className="customer-dashboard-title">Order History</h1>
@@ -148,10 +151,12 @@ const CustomerRightsids = ({
                         />
                     </div>
                 ) : (
-                    <div className="d-flex justify-content-center align-items-center flex-column gap-3 p-4">
-                        <FaRegFaceFrown className="fs-2" />
-                        <p className="fs-5">Nothing Found </p>
-                    </div>
+                    !isPending && (
+                        <div className="d-flex justify-content-center align-items-center flex-column gap-3 p-4">
+                            <FaRegFaceFrown className="fs-2" />
+                            <p className="fs-5">Nothing Found</p>
+                        </div>
+                    )
                 )}
             </div>
         </>

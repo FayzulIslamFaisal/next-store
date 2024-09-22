@@ -9,16 +9,17 @@ const ApexChart = () => {
     const [filterVisible, setFilterVisible] = useState(false);
     const [chartData, setChartData] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState("daily");
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         const fetchChartData = async () => {
-            if (session?.accessToken) {
+            if (status === "authenticated" && session?.accessToken) {
                 try {
                     const chartInfo = await getAffiliateIncomeChart(
-                        session.accessToken,
+                        session?.accessToken,
                         selectedFilter
                     );
+
                     setChartData(chartInfo?.results?.earnings_info || []);
                 } catch (error) {
                     console.error("Error fetching chart data:", error);
@@ -27,7 +28,7 @@ const ApexChart = () => {
         };
 
         fetchChartData();
-    }, [selectedFilter, session?.accessToken]);
+    }, [selectedFilter, session?.accessToken, status]);
 
     const handleFilterClick = (filter) => {
         setSelectedFilter(filter);
