@@ -96,6 +96,12 @@ const RankRewardList = ({ rankList, setStatusChange }) => {
                                                 background:
                                                     items?.status === 0
                                                         ? "gray"
+                                                        : items?.status === 3
+                                                        ? "#D3D3D3"
+                                                        : "",
+                                                color:
+                                                    items?.status === 3
+                                                        ? "#000"
                                                         : "",
                                             }}
                                         >
