@@ -72,10 +72,10 @@ const ClaimRewardModal = ({
                     responseReward?.message || "Failed to claim reward."
                 );
             } else {
-                setStatusChange(true);
                 toast.success(
                     responseReward?.message || "Reward claimed successfully!"
                 );
+                setStatusChange(responseReward);
             }
         } catch (error) {
             console.error("Error claiming reward", error);
