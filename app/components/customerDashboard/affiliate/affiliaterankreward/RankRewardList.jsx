@@ -3,7 +3,7 @@ import Image from "next/image";
 import ClaimRewardModal from "./ClaimRewardModal";
 import { useState } from "react";
 
-const RankRewardList = ({ rankList }) => {
+const RankRewardList = ({ rankList, setStatusChange }) => {
     const [selectedReward, setSelectedReward] = useState(null);
 
     const handleClaimReward = (item) => {
@@ -96,6 +96,12 @@ const RankRewardList = ({ rankList }) => {
                                                 background:
                                                     items?.status === 0
                                                         ? "gray"
+                                                        : items?.status === 3
+                                                        ? "#D3D3D3"
+                                                        : "",
+                                                color:
+                                                    items?.status === 3
+                                                        ? "#000"
                                                         : "",
                                             }}
                                         >
@@ -117,6 +123,7 @@ const RankRewardList = ({ rankList }) => {
             </div>
             {selectedReward && (
                 <ClaimRewardModal
+                    setStatusChange={setStatusChange}
                     show={!!selectedReward}
                     handleClose={handleCloseModal}
                     rewardDetails={selectedReward}

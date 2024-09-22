@@ -6,12 +6,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
+const ClaimRewardModal = ({
+    show,
+    handleClose,
+    rewardDetails,
+    setStatusChange,
+}) => {
     const [fadeEffect, setFadeEffect] = useState(false);
     const [visible, setVisible] = useState(false);
     const { data: session, status } = useSession();
-
-    console.log("session", session);
 
     useEffect(() => {
         let fadeTimer;
@@ -72,6 +75,7 @@ const ClaimRewardModal = ({ show, handleClose, rewardDetails }) => {
                 toast.success(
                     responseReward?.message || "Reward claimed successfully!"
                 );
+                setStatusChange(responseReward);
             }
         } catch (error) {
             console.error("Error claiming reward", error);
