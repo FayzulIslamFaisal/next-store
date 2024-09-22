@@ -13,6 +13,7 @@ const AffiliateRankWrapp = () => {
     const [rankList, setRankList] = useState([]);
     const [affiliateData, setAffiliateData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [statusChange, setStatusChange] = useState(false);
     const { data: session, status } = useSession();
 
     useEffect(() => {
@@ -54,7 +55,10 @@ const AffiliateRankWrapp = () => {
 
                 <div className="customer-dashboard-order-history px-2">
                     {rankList.length > 0 ? (
-                        <RankRewardList rankList={rankList} />
+                        <RankRewardList
+                            rankList={rankList}
+                            setStatusChange={setStatusChange}
+                        />
                     ) : (
                         !isLoading && (
                             <NoDataFound message="No ranks available" />
