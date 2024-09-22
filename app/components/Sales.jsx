@@ -33,21 +33,22 @@ function Sales() {
     }, [districtId]);
 
     useEffect(() => {
-        async function fetchSettingData() {
-            try {
-                const settingData = await getFlashSlaeShowOnHomePage();
-                const settingAllData = settingData?.results;
-                const flashSaleEndTime = settingAllData?.end_time;
-                setFlashSaleEndsTime(flashSaleEndTime);
-            } catch (error) {
-                console.error("Failed to fetch setting data", error);
+        if (flashSaleEndsTime) {
+            async function fetchSettingData() {
+                try {
+                    const settingData = await getFlashSlaeShowOnHomePage();
+                    const settingAllData = settingData?.results;
+                    const flashSaleEndTime = settingAllData?.end_time;
+                    setFlashSaleEndsTime(flashSaleEndTime);
+                } catch (error) {
+                    console.error("Failed to fetch setting data", error);
+                }
             }
+            fetchSettingData();
         }
-        fetchSettingData();
     }, []);
 
     const settings = {
-        // centerPadding: "60px",
         dots: false,
         infinite: flashSaleProductList?.length > 2 ? true : false,
         // infinite: false,
@@ -90,8 +91,7 @@ function Sales() {
 
     return (
         <>
-            {
-                flashSaleProductList?.length > 0 && flashSaleEndsTime &&
+            {flashSaleProductList?.length > 0 && flashSaleEndsTime && (
                 <section className={`flash-sale-area `}>
                     <div className="container">
                         <SectionTitle
@@ -106,23 +106,26 @@ function Sales() {
                         </SectionTitle>
                         <div className="row">
                             <div className="col-md-12">
-                                <div className={`${"flash-sale-content-area-grid "}`}>
+                                <div
+                                    className={`${"flash-sale-content-area-grid "}`}
+                                >
                                     <Slider {...settings}>
                                         {flashSaleProductList?.length > 0 &&
-                                            flashSaleProductList?.map((product) => (
-                                                <ProductCard
-                                                    key={product.id}
-                                                    item={product}
-                                                />
-                                            ))
-                                        }
+                                            flashSaleProductList?.map(
+                                                (product) => (
+                                                    <ProductCard
+                                                        key={product.id}
+                                                        item={product}
+                                                    />
+                                                )
+                                            )}
                                     </Slider>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-            }
+            )}
         </>
     );
 }
