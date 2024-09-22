@@ -92,12 +92,22 @@ const RankRewardList = ({ rankList }) => {
                                                 handleClaimReward(items)
                                             }
                                             className="add-to-cart-link affiliate-rank-btn text-capitalize"
+                                            style={{
+                                                background:
+                                                    items?.status === 0
+                                                        ? "gray"
+                                                        : "",
+                                            }}
                                         >
-                                            {items?.status === 1
+                                            {items?.status === 0
+                                                ? "Rank Not Achieved"
+                                                : items?.status === 1
                                                 ? "Claim Reward"
                                                 : items?.status === 2
-                                                ? "Already Claimed"
-                                                : "Rank Not Achieved"}
+                                                ? "Reward Claimed"
+                                                : items?.status === 3
+                                                ? "Claim Approved"
+                                                : ""}
                                         </button>
                                     </td>
                                 </tr>

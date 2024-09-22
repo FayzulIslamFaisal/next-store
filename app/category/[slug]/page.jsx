@@ -33,7 +33,7 @@ const DynamicCategoryPage = ({ params }) => {
     const limit = 12; // Items per page
 
     useEffect(() => {
-        if (outletId) {
+        if (outletId && slug) {
             const fetchProducts = async () => {
                 try {
                     setLoading(true);
@@ -54,7 +54,7 @@ const DynamicCategoryPage = ({ params }) => {
             };
             fetchProducts();
         }
-    }, [slug, option]);
+    }, [slug, option, outletId]);
 
     const categoryByResult = categoryBySlugData?.results;
     const categoryTitle = categoryByResult?.category;
@@ -75,7 +75,10 @@ const DynamicCategoryPage = ({ params }) => {
         <section className="product-category-wrapper">
             <div className="container">
                 <Breadcrumb />
-                <div className="row product-category-details-row" style={{minHeight:"60vh"}}>
+                <div
+                    className="row product-category-details-row"
+                    style={{ minHeight: "60vh" }}
+                >
                     <div className="col-md-12">
                         <div className="product-category-details">
                             <CategoryLeftSide
