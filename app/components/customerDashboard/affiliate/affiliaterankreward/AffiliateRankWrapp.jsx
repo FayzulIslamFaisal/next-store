@@ -38,7 +38,7 @@ const AffiliateRankWrapp = () => {
         };
 
         fetchData();
-    }, [status, session?.accessToken]);
+    }, [status, session?.accessToken, statusChange]);
 
     const isDataEmpty =
         !affiliateData || Object.keys(affiliateData).length === 0;
