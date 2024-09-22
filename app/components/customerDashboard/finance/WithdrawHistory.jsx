@@ -1,11 +1,12 @@
 import React from 'react'
 import { FaEye } from 'react-icons/fa6'
+import WithdrawHistoryModal from './WithdrawHistoryModal'
 
 const WithdrawHistory = () => {
     return (
         <>
             <div className="table-responsive pt-4">
-                <table className="table">
+                <table className="table" style={{ minWidth: "645px" }}>
                     <thead>
                         <tr >
                             <th>Date</th>
@@ -27,10 +28,16 @@ const WithdrawHistory = () => {
                             <td className='text-end'>4280</td>
                             <td className='text-end'>38522</td>
                             <td className="paid">Completed</td>
-                            <td className='customer-dashboard-order-history-actions text-center'>
-                                <p className=''>
-                                    <FaEye />
-                                </p>
+                            <td className='text-center'>
+                                <div className='customer-dashboard-order-history-actions'>
+                                    <button
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewWithdrawHistoryModal"
+                                    >
+                                        <FaEye />
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -41,10 +48,16 @@ const WithdrawHistory = () => {
                             <td className='text-end'>4280</td>
                             <td className='text-end'>38522</td>
                             <td className="paid">Completed</td>
-                            <td className='customer-dashboard-order-history-actions text-center'>
-                                <p className=''>
-                                    <FaEye />
-                                </p>
+                            <td className='text-center'>
+                                <div className='customer-dashboard-order-history-actions'>
+                                    <button
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewWithdrawHistoryModal"
+                                    >
+                                        <FaEye />
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -55,16 +68,25 @@ const WithdrawHistory = () => {
                             <td className='text-end'>4280</td>
                             <td className='text-end'>38522</td>
                             <td className="paid">Completed</td>
-                            <td className='customer-dashboard-order-history-actions text-center'>
-                                <p className=''>
-                                    <FaEye />
-                                </p>
+                            <td className='text-center'>
+                                <div className='customer-dashboard-order-history-actions'>
+                                    <button
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewWithdrawHistoryModal"
+                                    >
+                                        <FaEye />
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             {/* <p className="pt-3">Pagination</p> */}
+
+            {/* <!-- Modal --> */}
+            <WithdrawHistoryModal />
         </>
     )
 }
