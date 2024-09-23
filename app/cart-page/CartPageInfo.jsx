@@ -672,6 +672,8 @@ const CartPage = () => {
                                             {checkedProductCard.length > 0 ? (
                                                 checkedProductCard.map(
                                                     (item, index) => {
+                                                        console.log({item});
+                                                        
                                                         const price =
                                                             item.price *
                                                             item.quantity;

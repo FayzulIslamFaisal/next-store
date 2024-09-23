@@ -19,7 +19,7 @@ function MainNav({
     authStatus,
 }) {
     const [search, setSearch] = useState("");
-    const [location, setLoction] = useState("Dhaka City, Dhaka");
+    const [location, setLoction] = useState("Dhaka, Dhaka");
     const [searchProduct, setSearchProduct] = useState([]);
     const searchParams = useSearchParams();
     let divisionId = searchParams.get("divisionId");
