@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import LodingFixed from "../../LodingFixed";
 
 // Dynamically import ReactApexChart with SSR disabled
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -12,8 +13,10 @@ const WithdrawChart = ({ chartInfo }) => {
     const [options, setOptions] = useState(null);
 
     useEffect(() => {
-        const chartLabel = chartInfo?.map((item) => item.label) || [];
-        const chartValue = chartInfo?.map((item) => item.value) || [];
+        const chartLabel =
+            chartInfo?.chartData?.map((item) => item.label) || [];
+        const chartValue =
+            chartInfo?.chartData?.map((item) => item.value) || [];
         setSeries(chartValue);
         setOptions({
             chart: {
