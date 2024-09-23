@@ -1,94 +1,79 @@
-import React from 'react'
-import { FaEye } from 'react-icons/fa6'
-import WithdrawHistoryModal from './WithdrawHistoryModal'
+import { FaEye } from 'react-icons/fa6';
+import WithdrawHistoryModal from './WithdrawHistoryModal';
+import { getAffiliateFinanceWithdrawHistory } from '@/app/services/affiliate-finance/getAffiliateFinanceWithdrawHistory';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import NoDataFound from '../../NoDataFound';
 
-const WithdrawHistory = () => {
+const WithdrawHistory = async () => {
+    const session = await getServerSession(authOptions);
+    const response = await getAffiliateFinanceWithdrawHistory(session.accessToken);
+    let withdrawHistoryData = response?.results?.data;
+
+    // State to manage the selected withdrawal for the modal
+    let selectedId = 0;
+
+    // Function to handle setting the selected withdrawal item
+    const handleViewClick = (id) => {
+        selectedId = id;
+    };
+
     return (
         <>
             <div className="table-responsive pt-4">
-                <table className="table" style={{ minWidth: "645px" }}>
-                    <thead>
-                        <tr >
-                            <th>Date</th>
-                            <th>Billing Method</th>
-                            <th>Account ID/Code</th>
-                            <th className='text-end'>Amount</th>
-                            <th className='text-end'>Charge</th>
-                            <th className='text-end'>Payable</th>
-                            <th>Status</th>
-                            <th className='text-center'>View</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>22 Aug, 2024 / 07:23 pm</td>
-                            <td>Nagadhat Agent</td>
-                            <td>347378</td>
-                            <td className='text-end'>42802</td>
-                            <td className='text-end'>4280</td>
-                            <td className='text-end'>38522</td>
-                            <td className="paid">Completed</td>
-                            <td className='text-center'>
-                                <div className='customer-dashboard-order-history-actions'>
-                                    <button
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#viewWithdrawHistoryModal"
-                                    >
-                                        <FaEye />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>22 Aug, 2024 / 07:23 pm</td>
-                            <td>Nagadhat Agent</td>
-                            <td>347378</td>
-                            <td className='text-end'>42802</td>
-                            <td className='text-end'>4280</td>
-                            <td className='text-end'>38522</td>
-                            <td className="paid">Completed</td>
-                            <td className='text-center'>
-                                <div className='customer-dashboard-order-history-actions'>
-                                    <button
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#viewWithdrawHistoryModal"
-                                    >
-                                        <FaEye />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>22 Aug, 2024 / 07:23 pm</td>
-                            <td>Nagadhat Agent</td>
-                            <td>347378</td>
-                            <td className='text-end'>42802</td>
-                            <td className='text-end'>4280</td>
-                            <td className='text-end'>38522</td>
-                            <td className="paid">Completed</td>
-                            <td className='text-center'>
-                                <div className='customer-dashboard-order-history-actions'>
-                                    <button
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#viewWithdrawHistoryModal"
-                                    >
-                                        <FaEye />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                {
+                    withdrawHistoryData?.length === 0 ? (
+                        <NoDataFound />
+                    ) : (
+                        <table className="table" style={{ minWidth: "645px" }}>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Billing Method</th>
+                                    <th>Account ID/Code</th>
+                                    <th className='text-end'>Amount</th>
+                                    <th className='text-end'>Charge</th>
+                                    <th className='text-end'>Payable</th>
+                                    <th>Status</th>
+                                    <th className='text-center'>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {withdrawHistoryData?.map((item) => (
+                                    <tr key={item.id || item.account_number}>
+                                        <td>{item.date_time}</td>
+                                        <td>{item.billing_method}</td>
+                                        <td>{item.account_number}</td>
+                                        <td className='text-end'>{item.amount}</td>
+                                        <td className='text-end'>{item.charge}</td>
+                                        <td className='text-end'>{item.payable}</td>
+                                        <td className={item.status === 'Completed' ? 'paid' : 'pending'}>
+                                            {item.status}
+                                        </td>
+                                        <td className='text-center'>
+                                            <div className='customer-dashboard-order-history-actions'>
+                                                <button
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#viewWithdrawHistoryModal"
+                                                    onClick={() => handleViewClick(item?.id)} // Set selected withdrawal on click
+                                                >
+                                                    <FaEye />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )
+                }
             </div>
-            {/* <p className="pt-3">Pagination</p> */}
 
-            {/* <!-- Modal --> */}
-            <WithdrawHistoryModal />
+            {/* Modal */}
+            <WithdrawHistoryModal selectedId={selectedId} token={session.accessToken} />
         </>
-    )
-}
+    );
+};
 
-export default WithdrawHistory
+export default WithdrawHistory;

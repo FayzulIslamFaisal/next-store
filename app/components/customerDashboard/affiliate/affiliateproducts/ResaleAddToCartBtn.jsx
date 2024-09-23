@@ -41,7 +41,7 @@ const ResaleAddToCartBtn = ({ product }) => {
             regular_price: product.resell_mrp_price,
             discount_type: "",
             discountPrice: 0,
-            price: product.resell_mrp_price,
+            price: product.resell_purchases_price,
             outlet_id: outletId,
             product_thumbnail: product.product_thumbnail || "",
             quantity: newQuantity || 1,

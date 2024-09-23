@@ -99,16 +99,9 @@ const RetailListViewProductInfo = ({
                                                 </div>
                                                 <p className="affiliate-commission">
                                                     Commission:{" "}
-                                                    {`৳ ${
-                                                        product?.calculated_commission ||
-                                                        "0"
-                                                    }`}{" "}
+                                                    {`৳ ${product?.calculated_commission ||"0"}`}{" "}
                                                     <span className="ms-1">
-                                                        (
-                                                        {
-                                                            product?.level_commission
-                                                        }
-                                                        )
+                                                        ({product?.level_commission}%)
                                                     </span>
                                                 </p>
                                             </div>
