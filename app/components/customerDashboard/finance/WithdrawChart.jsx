@@ -3,52 +3,56 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import ReactApexChart with SSR disabled
-const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+    ssr: false,
+});
 
-const WithdrawChart = () => {
-  // Initialize series and options state
-  const [series, setSeries] = useState([]); // Empty array to avoid undefined issues
-  const [options, setOptions] = useState(null); // null initially for options
+const WithdrawChart = ({ chartInfo }) => {
+    const [series, setSeries] = useState([]);
+    const [options, setOptions] = useState(null);
 
-  useEffect(() => {
-    // Set chart series and options
-    setSeries([44, 55, 41, 17]); // Populate series with data
-    setOptions({
-      chart: {
-        type: "donut",
-      },
-      labels: ["Total Earning", "Balance", "Pending", "Withdrawable"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
+    useEffect(() => {
+        const chartLabel = chartInfo?.map((item) => item.label) || [];
+        const chartValue = chartInfo?.map((item) => item.value) || [];
+        setSeries(chartValue);
+        setOptions({
             chart: {
-              width: 200,
+                type: "donut",
             },
-            legend: {
-              position: "bottom",
-            },
-          },
-        },
-      ],
-    });
-  }, []);
+            labels: chartLabel,
+            responsive: [
+                {
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200,
+                        },
+                        legend: {
+                            position: "bottom",
+                        },
+                    },
+                },
+            ],
+        });
+    }, [chartInfo]);
 
-  // Show a loading state if either series or options is not ready
-  if (!series?.length ||series==0 || !series || !options) {
-    return null;
-  }
-  
-
-  return (
-    <div>
-      <div id="chart">
-        <ReactApexChart options={options} series={series} type="donut" height={250} width={320}
- />
-      </div>
-      <div id="html-dist"></div>
-    </div>
-  );
+    if (!series?.length || series == 0 || !series || !options) {
+        return null;
+    }
+    return (
+        <div>
+            <div id="chart">
+                <ReactApexChart
+                    options={options}
+                    series={series}
+                    type="donut"
+                    height={280}
+                    width={350}
+                />
+            </div>
+            <div id="html-dist"></div>
+        </div>
+    );
 };
 
 export default WithdrawChart;
