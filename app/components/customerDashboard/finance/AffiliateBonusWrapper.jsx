@@ -1,15 +1,72 @@
+"use client";
+
 import FinanceTopTitle from "./FinanceTopTitle";
-import WithdrawChart from "./WithdrawChart";
-import mobileBanking from "@/public/images/mobile-banking.png";
-import bank from "@/public/images/bank.png";
-import Image from "next/image";
+// import WithdrawChart from "./WithdrawChart";
+// import mobileBanking from "@/public/images/mobile-banking.png";
+// import bank from "@/public/images/bank.png";
+// import Image from "next/image";
 import FinancePaymentMethod from "./FinancePaymentMethod";
 import AgentWithdrawalModal from "./AgentWithdrawalModal";
 import MobileBankingModal from "./MobileBankingModal";
 import BankWithdrawalModal from "./BankWithdrawalModal";
 import WithdrawTopBanner from "./WithdrawTopBanner";
+import { useSession } from "next-auth/react";
+import { useEffect, useState, useTransition } from "react";
+import { getFinanceMobileBankingInfo } from "@/app/services/affiliate-finance/getFinanceMobileBankingInfo";
+import { getFinanceBankTransferInfo } from "@/app/services/affiliate-finance/getFinanceBankTransferInfo";
 
 const WithdrawWrapper = () => {
+    const [isPending, startTransition] = useTransition();
+    const [mobileBankingInfo, setMobileBankingInfo] = useState({});
+    const [bankTransferInfo, setBankTransferInfo] = useState({});
+
+    const { data: session, status } = useSession();
+
+    // function for mobileBankingInfo
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken) {
+            const fetchMobileBanking = async () => {
+                try {
+                    startTransition(async () => {
+                        const response = await getFinanceMobileBankingInfo(
+                            session?.accessToken
+                        );
+                        console.log("response", response);
+
+                        setMobileBankingInfo(response?.results);
+                    });
+                } catch (error) {
+                    console.error("Error fetching mobile banking data", error);
+                }
+            };
+            fetchMobileBanking();
+        }
+    }, [status, session?.accessToken]);
+
+    console.log("Bank TransferInfo Info=====??", bankTransferInfo);
+    // function for BankTransferInfo
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken) {
+            const fetchBankInfo = async () => {
+                try {
+                    startTransition(async () => {
+                        const response = await getFinanceBankTransferInfo(
+                            session?.accessToken
+                        );
+                        // console.log("response 2", response);
+
+                        setBankTransferInfo(response?.results);
+                    });
+                } catch (error) {
+                    console.error("Error fetching bank transfer data", error);
+                }
+            };
+            fetchBankInfo();
+        }
+    }, [status, session?.accessToken]);
+
+    // console.log("bankTransferInfo", bankTransferInfo);
+
     return (
         <>
             <div className="customer-dashboard-order-history-area">
@@ -25,10 +82,16 @@ const WithdrawWrapper = () => {
                     <AgentWithdrawalModal />
 
                     {/* Modal 2: Mobile Banking */}
-                    <MobileBankingModal />
+                    <MobileBankingModal
+                        mobileBankingInfo={mobileBankingInfo}
+                        isPending={isPending}
+                    />
 
                     {/* Modal 3: Bank */}
-                    <BankWithdrawalModal />
+                    <BankWithdrawalModal
+                        bankTransferInfo={bankTransferInfo}
+                        isPending={isPending}
+                    />
                 </div>
             </div>
         </>
