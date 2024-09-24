@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../../services/getShippingCustomerAddresses";
 import { deleteBuyNowProductData, getBuyNowProductData } from "../../utils";
 import { placeOrder } from "../../services/postPlaceOrder";
-import Link from "next/link";
-import PrivateRoute from "@/app/components/PrivateRoute/PrivateRoute";
 import { showToast } from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -148,7 +146,7 @@ const BuyNowShippingProductPage = () => {
                                 setPickUpIdForOrder={setPickUpIdForOrder}
                                 setShippingPrice={setShippingPrice}
                                 setDeliveryNote={setDeliveryNote}
-                                customerAddress={customerAddress} 
+                                customerAddress={customerAddress}
                                 setCustomerAddress={setCustomerAddress}
                             />
                             <ShippingProduct

@@ -120,7 +120,7 @@ const AddToCartProductShippingPage = () => {
             location_id: districtId,
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: deliveryNote,
-            total_delivery_charge: shippingPrice,
+            total_delivery_charge: shippingPrice || 0,
             total_products_price: totalPrice,
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,

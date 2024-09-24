@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ShippingOrderSection= ({
+const ShippingOrderSectionResale = ({
     subTotal,
     totalPrice,
     handlePlaceOrder,
@@ -88,7 +88,7 @@ const ShippingOrderSection= ({
                                             : 0.5,
                                 }}
                             >
-                                Place Order
+                                Get Product Request
                             </button>
                         </div>
                     </div>
@@ -98,4 +98,4 @@ const ShippingOrderSection= ({
     )
 }
 
-export default ShippingOrderSection;
+export default ShippingOrderSectionResale;

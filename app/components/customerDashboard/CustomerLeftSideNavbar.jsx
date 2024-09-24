@@ -215,7 +215,17 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                         Affiliate Products
                                     </Link>
                                 </li>
-
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        className={`${
+                                            isActive("/affiliat-sell-on-nagadhat") ? "activ-link" : ""
+                                        } nav-link customer-dashboard-nav-link`}
+                                        href="/affiliat-sell-on-nagadhat"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Sell On Nagadhat
+                                    </Link>
+                                </li>
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className={`${
