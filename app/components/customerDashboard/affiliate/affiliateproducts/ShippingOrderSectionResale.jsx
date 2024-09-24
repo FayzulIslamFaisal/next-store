@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ShippingOrderSection = ({
+const ShippingOrderSectionResale = ({
     subTotal,
     totalPrice,
     handlePlaceOrder,
@@ -49,6 +49,21 @@ const ShippingOrderSection = ({
                             </div>
                         </div>
 
+                        <div className="form-check cart-product-terms-condition">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="terms-condition"
+                                onChange={() => setIsTermsChecked(!isTermsChecked)}
+                            />
+                            <label
+                                className="form-check-label"
+                                htmlFor="terms-condition"
+                            >
+                                I agree to the terms and conditions.
+                            </label>
+                        </div>
+
                         <div className="place-order-btn">
                             <button
                                 // href={
@@ -73,23 +88,8 @@ const ShippingOrderSection = ({
                                             : 0.5,
                                 }}
                             >
-                                PLACE ORDER
+                                Get Product Request
                             </button>
-                        </div>
-
-                        <div className="form-check cart-product-terms-condition">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="terms-condition"
-                                onChange={() => setIsTermsChecked(!isTermsChecked)}
-                            />
-                            <label
-                                className="form-check-label"
-                                htmlFor="terms-condition"
-                            >
-                                I agree to the terms and conditions.
-                            </label>
                         </div>
                     </div>
                 </div>
@@ -98,4 +98,4 @@ const ShippingOrderSection = ({
     )
 }
 
-export default ShippingOrderSection
+export default ShippingOrderSectionResale;

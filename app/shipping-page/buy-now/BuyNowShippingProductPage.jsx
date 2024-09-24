@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import CustomerAddress from "@/app/components/shippingPage/customerAddress/CustomerAddress";
 import ShippingProduct from "@/app/components/shippingPage/ShippingProduct";
-import ShippingOrderSection from "@/app/components/shippingPage/ShippingOrderSection";
+import ShippingOrderSection from "@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale";
 
 const BuyNowShippingProductPage = () => {
     const { status, data: session } = useSession();
@@ -148,7 +148,7 @@ const BuyNowShippingProductPage = () => {
                                 setPickUpIdForOrder={setPickUpIdForOrder}
                                 setShippingPrice={setShippingPrice}
                                 setDeliveryNote={setDeliveryNote}
-                                customerAddress={customerAddress} 
+                                customerAddress={customerAddress}
                                 setCustomerAddress={setCustomerAddress}
                             />
                             <ShippingProduct

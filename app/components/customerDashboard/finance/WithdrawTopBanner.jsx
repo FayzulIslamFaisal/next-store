@@ -41,7 +41,7 @@ const WithdrawTopBanner = () => {
                         <h2 className="fw-bold">
                             {chartInfo?.total_withdrawable ?? "N/A"}
                         </h2>
-                        <p className="fs-6">Withdrawn Balance</p>
+                        <p className="fs-6">Withdrawable Balance</p>
                     </div>
                     {isPending ? (
                         <h2 className="text-center w-100">Loding...</h2>

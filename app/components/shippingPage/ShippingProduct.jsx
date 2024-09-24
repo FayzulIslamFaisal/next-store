@@ -2,12 +2,9 @@
 import { NagadhatPublicUrl } from '@/app/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 
 const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
-    const [localTotalPrice, setLocalTotalPrice] = useState(0);
-    const [localSubTotal, setLocalSubTotal] = useState(0);
-
     useEffect(() => {
         let regularPrice = 0;
         let totalPrice = 0;
@@ -17,9 +14,6 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
             regularPrice += item.regular_price * item.quantity;
             totalPrice += price;
         });
-
-        setLocalSubTotal(regularPrice);
-        setLocalTotalPrice(totalPrice);
 
         // Update parent component state
         setSubTotal(regularPrice);

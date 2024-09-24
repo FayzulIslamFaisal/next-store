@@ -19,7 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomerAddress from "@/app/components/shippingPage/customerAddress/CustomerAddress";
 import ShippingProduct from "@/app/components/shippingPage/ShippingProduct";
-import ShippingOrderSection from "@/app/components/shippingPage/ShippingOrderSection";
+import ShippingOrderSection from "@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale";
 
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
@@ -120,7 +120,7 @@ const AddToCartProductShippingPage = () => {
             location_id: districtId,
             shipping_address_id: selectedDefaultAddressId, // Replace with actual shipping address ID if applicable
             delivery_note: deliveryNote,
-            total_delivery_charge: shippingPrice,
+            total_delivery_charge: shippingPrice || 0,
             total_products_price: totalPrice,
             payment_type: "cash_on_delivery",
             shipping_email: userEmail,
