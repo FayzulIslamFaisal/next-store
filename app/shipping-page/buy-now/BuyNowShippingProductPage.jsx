@@ -4,14 +4,12 @@ import React, { useEffect, useState } from "react";
 import { getCustomerAllShippingAddress } from "../../services/getShippingCustomerAddresses";
 import { deleteBuyNowProductData, getBuyNowProductData } from "../../utils";
 import { placeOrder } from "../../services/postPlaceOrder";
-import Link from "next/link";
-import PrivateRoute from "@/app/components/PrivateRoute/PrivateRoute";
 import { showToast } from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import CustomerAddress from "@/app/components/shippingPage/customerAddress/CustomerAddress";
 import ShippingProduct from "@/app/components/shippingPage/ShippingProduct";
-import ShippingOrderSection from "@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale";
+import ShippingOrderSection from "@/app/components/shippingPage/ShippingOrderSection";
 
 const BuyNowShippingProductPage = () => {
     const { status, data: session } = useSession();

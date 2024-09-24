@@ -19,7 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomerAddress from "@/app/components/shippingPage/customerAddress/CustomerAddress";
 import ShippingProduct from "@/app/components/shippingPage/ShippingProduct";
-import ShippingOrderSection from "@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale";
+import ShippingOrderSection from "@/app/components/shippingPage/ShippingOrderSection";
 
 function findObjectWithKey(array, key, value) {
     return array.find((obj) => obj[key] === value);
