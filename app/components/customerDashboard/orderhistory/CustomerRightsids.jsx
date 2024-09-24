@@ -7,6 +7,7 @@ import { postOrderCancel } from "@/app/services/userdashboard/postOrderCancel";
 import { toast } from "react-toastify"; // Import Toastify
 import { useState } from "react";
 import LodingFixed from "../../LodingFixed";
+import SaleOnNagadhatModal from "./SaleOnNagadhatModal";
 
 const CustomerRightsids = ({
     customerOrders,
@@ -81,8 +82,39 @@ const CustomerRightsids = ({
                                                 <td>{order_date}</td>
                                                 <td>{grand_total}</td>
                                                 <td>
-                                                    {order_status ||
-                                                        cancelStatus}
+                                                    {/* {order_status ||
+                                                        cancelStatus} */}
+                                                    <div className="dropdown">
+                                                        <button
+                                                            className="btn border-0 dropdown-toggle"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false"
+                                                        >
+                                                            Process
+                                                        </button>
+                                                        <ul className="dropdown-menu ">
+                                                            <li>
+                                                                <Link
+                                                                    className="dropdown-item"
+                                                                    href={`/shipping-page-resale/${order_id}`}
+                                                                >
+                                                                    Get Product
+                                                                </Link>
+                                                            </li>
+                                                            <li>
+                                                                <button
+                                                                    type="button"
+                                                                    className="dropdown-item"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#sale-on-nagadhat-modal"
+                                                                >
+                                                                    sale on
+                                                                    nagadhat
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </td>
                                                 <td className="paid">
                                                     {order_status !==
@@ -159,6 +191,8 @@ const CustomerRightsids = ({
                     )
                 )}
             </div>
+
+            <SaleOnNagadhatModal />
         </>
     );
 };
