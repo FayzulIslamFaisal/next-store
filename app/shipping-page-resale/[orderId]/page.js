@@ -7,9 +7,14 @@ import { getResaleOrderByOrderId } from '@/app/services/affiliate/getResaleOrder
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
 import ShippingOrderSectionResale from '@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale';
+import { updateResalePlaceOrder } from '@/app/services/affiliate/affiliateproducts/UpdateResalePlaceOrder';
+import { useRouter } from 'next/navigation';
+import LodingFixed from '@/app/components/LodingFixed';
 
 const page = ({ params }) => {
     const [customerAddress, setCustomerAddress] = useState([]);
+    const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
+        useState(null);
     const [deliveryNote, setDeliveryNote] = useState("");
     const [cartProduct, setCartProduct] = useState([]);
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
@@ -19,21 +24,58 @@ const page = ({ params }) => {
     const [subTotal, setSubTotal] = useState(0);
     const { status, data: session } = useSession();
     const orderId = params?.orderId;
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        // Set default address ID when customerAddress changes
+        const defaultAddress = customerAddress.find(address => address.set_default === 1);
+        if (defaultAddress) {
+            setSelectedDefaultAddressId(defaultAddress.id);
+        }
+        if (pickUpIdForOrder) {
+            setSelectedDefaultAddressId(null);
+        }
+        console.log({selectedDefaultAddressId, pickUpIdForOrder});
+    }, [customerAddress, pickUpIdForOrder]);
 
-    const handlePlaceOrder = () => {
-        // Place order logic goes here
-        console.log("Place order called");
+    const handlePlaceOrder = async () => {
+        if (session.accessToken) {
+            setLoading(true);
+            try {
+                const data ={
+                    shipping_address_id: selectedDefaultAddressId,
+                    outlet_pickup_point_id: pickUpIdForOrder,
+                    delivery_note: deliveryNote
+                }
+                console.log(data);
+                const response = await updateResalePlaceOrder(session.accessToken, data);
+                console.log(response);
+                if (response.code === 200) {
+                    router.push(`/thankyou?orderId=${response?.results?.order_id}`);
+                }else{
+                    toastr.error(response.message)
+                    console.log(response.message);
+                }
+            } catch (error) {
+                console.error("Error fetching IP information:", error);
+            }finally{
+                setLoading(false);
+            }
+        }else{
+            console.log("User not logged in");
+        }
+        
     };
 
     // Fetch Order information
     useEffect(() => {
         const fetchOrderDetails = async () => {
             try {
+                setLoading(true);
                 if (session?.accessToken && orderId) {
                     // Fetch Order information from API
                     const response = await getResaleOrderByOrderId(session.accessToken, orderId);
-                    console.log({ response });
                     setSubTotal(response?.results.sub_total);
                     setTotalPrice(response?.results.grand_total);
                     // Assuming response contains the product list, set cartProduct accordingly
@@ -41,6 +83,8 @@ const page = ({ params }) => {
                 }
             } catch (error) {
                 console.error(error);
+            }finally{
+                setLoading(false);
             }
         };
 
@@ -50,6 +94,7 @@ const page = ({ params }) => {
     return (
         <>
             <section className="shipping-section-area nh-new-shipping-wrapper">
+                {loading && <LodingFixed/>}
                 <div className="container">
                     <div className="row gy-5 gy-lg-0 gx-0 gx-lg-5">
                         <div className="col-lg-8">

@@ -35,8 +35,7 @@ const AddToCartProductShippingPage = () => {
     const [pickUpIdForOrder, setPickUpIdForOrder] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
     const [districtsData, setDistrictsData] = useState([]);
-    const [selectedDefaultAddressId, setSelectedDefaultAddressId] =
-        useState(null);
+    const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [redirectPath, setRedirectPath] = useState("#");
     const [isTermsChecked, setIsTermsChecked] = useState(false);

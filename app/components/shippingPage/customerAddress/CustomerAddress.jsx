@@ -115,6 +115,7 @@ const CustomerAddress = ({
       1
     );
     setSelectedDefaultAddressId(defaultAddressInfo?.id);
+    setPickUpIdForOrder(null)
     fetchShippingCharge();
 
     const modalElement = document.getElementById(
@@ -384,6 +385,7 @@ const CustomerAddress = ({
                                 id={`radio${index}`}
                                 type="radio"
                                 name="license-radios"
+                                value={allAddress?.set_default}
                                 className="shipping-delivery-address-radio"
                                 defaultChecked={allAddress.set_default === 1}
                                 onChange={() => handleSetDefaultAddress(allAddress?.id)}
