@@ -1,6 +1,11 @@
+import SellOnNgadhatDetailWrapp from "@/app/components/customerDashboard/affiliate/saleonnagadhatdetail/SellOnNgadhatDetailWrapp";
+
 const SellOnNgadhatDetailsPage = ({ params }) => {
-    
-    return <div>SellOnNgadhatDetailsPage {params.id}</div>;
+    return (
+        <>
+            <SellOnNgadhatDetailWrapp />
+        </>
+    );
 };
 
 export default SellOnNgadhatDetailsPage;
