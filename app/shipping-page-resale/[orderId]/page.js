@@ -1,15 +1,14 @@
 "use client"
 import ResaleShippingProduct from '@/app/components/customerDashboard/affiliate/affiliateproducts/ResaleShippingProduct';
 import CustomerAddress from '@/app/components/shippingPage/customerAddress/CustomerAddress';
-import ShippingOrderSection from '@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale';
-import ShippingProduct from '@/app/components/shippingPage/ShippingProduct';
 import { getResaleOrderByOrderId } from '@/app/services/affiliate/getResaleOrderByOrderId';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
 import ShippingOrderSectionResale from '@/app/components/customerDashboard/affiliate/affiliateproducts/ShippingOrderSectionResale';
-import { updateResalePlaceOrder } from '@/app/services/affiliate/affiliateproducts/UpdateResalePlaceOrder';
+
 import { useRouter } from 'next/navigation';
 import LodingFixed from '@/app/components/LodingFixed';
+import { updateResalePlaceOrder } from '@/app/services/affiliate/affiliateproducts/updateResalePlaceOrder';
 
 const page = ({ params }) => {
     const [customerAddress, setCustomerAddress] = useState([]);
@@ -47,10 +46,8 @@ const page = ({ params }) => {
                     shipping_address_id: selectedDefaultAddressId,
                     outlet_pickup_point_id: pickUpIdForOrder,
                     delivery_note: deliveryNote
-                }
-                console.log(data);
+                };
                 const response = await updateResalePlaceOrder(session.accessToken, data);
-                console.log(response);
                 if (response.code === 200) {
                     router.push(`/thankyou?orderId=${response?.results?.order_id}`);
                 }else{
