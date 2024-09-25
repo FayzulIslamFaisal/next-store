@@ -19,6 +19,7 @@ const CustomerRightsids = ({
     isPending,
 }) => {
     const [cancelStatus, setCancelStatus] = useState(null);
+    const [resaleOrderID, setResaleOrderID] = useState(null);
 
     const handleOrderCanceled = async (orderID) => {
         try {
@@ -81,41 +82,56 @@ const CustomerRightsids = ({
                                                 <td>{invoice_id}</td>
                                                 <td>{order_date}</td>
                                                 <td>{grand_total}</td>
+
                                                 <td>
-                                                    {/* {order_status ||
-                                                        cancelStatus} */}
-                                                    <div className="dropdown">
-                                                        <button
-                                                            className="btn border-0 dropdown-toggle"
-                                                            type="button"
-                                                            data-bs-toggle="dropdown"
-                                                            aria-expanded="false"
-                                                        >
-                                                            Process
-                                                        </button>
-                                                        <ul className="dropdown-menu ">
-                                                            <li>
-                                                                <Link
-                                                                    className="dropdown-item"
-                                                                    href={`/shipping-page-resale/${order_id}`}
-                                                                >
-                                                                    Get Product
-                                                                </Link>
-                                                            </li>
-                                                            <li>
-                                                                <button
-                                                                    type="button"
-                                                                    className="dropdown-item"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#sale-on-nagadhat-modal"
-                                                                >
-                                                                    sale on
-                                                                    nagadhat
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    {order_status ==
+                                                        "Processing" &&
+                                                    orderItem?.order_product_type ===
+                                                        "2" ? (
+                                                        <div className="dropdown">
+                                                            <button
+                                                                className="btn border-0 dropdown-toggle ps-0"
+                                                                type="button"
+                                                                data-bs-toggle="dropdown"
+                                                                aria-expanded="false"
+                                                            >
+                                                                {order_status ||
+                                                                    "Processing"}
+                                                            </button>
+                                                            <ul className="dropdown-menu">
+                                                                <li>
+                                                                    <Link
+                                                                        className="dropdown-item"
+                                                                        href={`/shipping-page-resale/${order_id}`}
+                                                                    >
+                                                                        Get
+                                                                        Product
+                                                                    </Link>
+                                                                </li>
+                                                                <li>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="dropdown-item"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#sale-on-nagadhat-modal"
+                                                                        onClick={() =>
+                                                                            setResaleOrderID(
+                                                                                order_id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Sale on
+                                                                        Nagadhat
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    ) : (
+                                                        order_status ||
+                                                        "Pending"
+                                                    )}
                                                 </td>
+
                                                 <td className="paid">
                                                     {order_status !==
                                                         "Canceled" &&
@@ -192,7 +208,7 @@ const CustomerRightsids = ({
                 )}
             </div>
 
-            <SaleOnNagadhatModal />
+            <SaleOnNagadhatModal resaleOrderID={resaleOrderID} />
         </>
     );
 };

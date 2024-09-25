@@ -6,13 +6,43 @@ import SaleOnNagadhatHeader from "./SaleOnNagadhatHeader";
 import SaleOnNagadhatTop from "./SaleOnNagadhatTop";
 import SaleOnNagadhatBottom from "./SaleOnNagadhatBottom";
 import DeviceDetector from "device-detector-js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { getLocalIpAddress } from "@/app/services/affiliate/getLocalIpAddress";
+import { useSession } from "next-auth/react";
+import { getSaleOnNagadhat } from "@/app/services/affiliate/getSaleOnNagadhat";
+import LodingFixed from "../../LodingFixed";
+import NoDataFound from "../../NoDataFound";
 
-const SaleOnNagadhatModal = () => {
+const SaleOnNagadhatModal = ({ resaleOrderID }) => {
+    const [isPending, startTransition] = useTransition();
     const [checkTermsCondition, setCheckTermsCondition] = useState(false);
+    const [saleOnNagadhatData, setsaleOnNagadhatData] = useState({});
     const [ipAddress, setIpAddress] = useState(null);
     const [deviceInfo, setDeviceInfo] = useState(null);
+
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken) {
+            const fetchSaleOnNagadhatData = async () => {
+                try {
+                    startTransition(async () => {
+                        const response = await getSaleOnNagadhat(
+                            resaleOrderID,
+                            session?.accessToken
+                        );
+                        setsaleOnNagadhatData(response?.results || {});
+                    });
+                } catch (error) {}
+            };
+            fetchSaleOnNagadhatData();
+        }
+    }, [status, session?.accessToken, resaleOrderID]);
+
+    const saleOnLength =
+        saleOnNagadhatData && Object.keys(saleOnNagadhatData).length > 0;
+
+    console.log("saleOnLength", saleOnLength);
 
     // Function to get IP address
     const fetchIpAddress = async () => {
@@ -59,19 +89,34 @@ const SaleOnNagadhatModal = () => {
             >
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                     <div className="modal-content">
+                        {isPending && <LodingFixed />}
                         <SaleOnNagadhatHeader />
-                        <div className="modal-body">
-                            <SaleOnNagadhatTop />
-                            <SaleOnNagadhatInvoice />
-                            <SaleOnNagadhatWallet />
-                            <SaleOnNagadhatBottom />
+                        <div className="modal-body px-5">
+                            {saleOnLength ? (
+                                <>
+                                    <SaleOnNagadhatTop
+                                        saleOnNagadhatData={saleOnNagadhatData}
+                                    />
+                                    <SaleOnNagadhatInvoice
+                                        saleOnNagadhatData={saleOnNagadhatData}
+                                    />
+                                    <SaleOnNagadhatWallet
+                                        saleOnNagadhatData={saleOnNagadhatData}
+                                    />
+                                    <SaleOnNagadhatBottom
+                                        saleOnNagadhatData={saleOnNagadhatData}
+                                    />
+                                </>
+                            ) : (
+                                <NoDataFound />
+                            )}
 
                             <div className=" d-flex gap-4 justify-content-between">
                                 <div className="">
                                     <div className="mb-3 d-flex align-items-center gap-2">
                                         <input
                                             type="checkbox"
-                                            className="form-check-input bg-success "
+                                            className="form-check-input border-2 border-info"
                                             id="terms-condition"
                                             style={{
                                                 width: "25px",
@@ -88,20 +133,10 @@ const SaleOnNagadhatModal = () => {
                                         </label>
                                     </div>
                                     <h4 className=" fs-4">প্রথম পক্ষ</h4>
-                                    <div className="pt-2 pb-4">
-                                        {/* <QRCode
-                                            size={256}
-                                            style={{
-                                                height: "auto",
-                                                maxWidth: "100px",
-                                                width: "100%",
-                                            }}
-                                            value={`hello world`}
-                                        /> */}
-                                    </div>
                                     <p>
                                         <strong className="fs-5">
-                                            Saiful Islam Akundo
+                                            {saleOnNagadhatData?.first_name ||
+                                                "N/A"}
                                         </strong>
                                     </p>
                                 </div>
