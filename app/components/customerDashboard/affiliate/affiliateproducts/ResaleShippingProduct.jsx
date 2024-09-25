@@ -5,23 +5,6 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 
 const ResaleShippingProduct = ({ cartProduct }) => {
-    // useEffect(() => {
-    //     let regularPrice = 0;
-    //     let totalPrice = 0;
-
-    //     cartProduct.forEach(item => {
-    //         const price = parseInt(item.product_unit_price) * parseInt(item.product_quantity);
-    //         regularPrice += parseInt(item.product_regular_price) * parseInt(item.product_quantity);
-    //         totalPrice += price;
-    //     });
-
-    //     // Update parent component state
-    //     setSubTotal(regularPrice);
-    //     setTotalPrice(totalPrice);
-    //     console.log({regularPrice, totalPrice});
-        
-
-    // }, [cartProduct, setTotalPrice, setSubTotal]);
 
     return (
         <div className="row new-nh-shipping-product-row">
@@ -46,7 +29,7 @@ const ResaleShippingProduct = ({ cartProduct }) => {
                                             <div>
                                                 <p className="product-cart-text">
                                                     <Link
-                                                        href={`/products/${item.product_slug}`}
+                                                        href={`/resale-product-details/${item.product_id}`}
                                                     >
                                                         {item.product_name}
                                                     </Link>
