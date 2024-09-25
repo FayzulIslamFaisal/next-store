@@ -1,5 +1,5 @@
-import React from 'react'
-import { FaCheckCircle } from 'react-icons/fa'
+import React from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
 const SellOnNagadhatHistory = () => {
     return (
@@ -18,7 +18,7 @@ const SellOnNagadhatHistory = () => {
                             <th>Monthly Return</th>
                             <th>Instalment</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th className="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,11 +32,19 @@ const SellOnNagadhatHistory = () => {
                             <td>৳ 976</td>
                             <td>৳ 2.04</td>
                             <td>
-                                <FaCheckCircle className='text-success' />{' '}
-                                Yes
+                                <FaCheckCircle className="text-success" /> Yes
                             </td>
-                            <td><span className="text-success">Active</span></td>
-                            <td><a href="#" className="btn">View</a></td>
+                            <td>
+                                <span className="text-success">Active</span>
+                            </td>
+                            <td>
+                                <a
+                                    href="/affiliat-sell-on-nagadhat/id"
+                                    className="btn"
+                                >
+                                    View
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <td>2</td>
@@ -48,11 +56,19 @@ const SellOnNagadhatHistory = () => {
                             <td>৳ 20000</td>
                             <td>৳ 666.67</td>
                             <td>
-                                <FaCheckCircle className='text-success' />{' '}
-                                Yes
+                                <FaCheckCircle className="text-success" /> Yes
                             </td>
-                            <td><span className="text-info">Completed</span></td>
-                            <td><a href="#" className="btn">View</a></td>
+                            <td>
+                                <span className="text-info">Completed</span>
+                            </td>
+                            <td>
+                                <a
+                                    href="/affiliat-sell-on-nagadhat/id"
+                                    className="btn"
+                                >
+                                    View
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <td>3</td>
@@ -64,17 +80,25 @@ const SellOnNagadhatHistory = () => {
                             <td>৳ 2000</td>
                             <td>৳ 133.33</td>
                             <td>
-                                <FaCheckCircle className='text-success' />{' '}
-                                Yes
+                                <FaCheckCircle className="text-success" /> Yes
                             </td>
-                            <td><span className="text-info">Completed</span></td>
-                            <td><a href="#" className="btn">View</a></td>
+                            <td>
+                                <span className="text-info">Completed</span>
+                            </td>
+                            <td>
+                                <a
+                                    href="/affiliat-sell-on-nagadhat/id"
+                                    className="btn"
+                                >
+                                    View
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default SellOnNagadhatHistory;
