@@ -1,19 +1,54 @@
 "use client";
 import Image from "next/image";
-import QRCode from "react-qr-code";
 import SaleOnNagadhatInvoice from "./SaleOnNagadhatInvoice";
 import SaleOnNagadhatWallet from "./SaleOnNagadhatWallet";
 import SaleOnNagadhatHeader from "./SaleOnNagadhatHeader";
 import SaleOnNagadhatTop from "./SaleOnNagadhatTop";
 import SaleOnNagadhatBottom from "./SaleOnNagadhatBottom";
-import { useState } from "react";
+import DeviceDetector from "device-detector-js";
+import { useEffect, useState } from "react";
+import { getLocalIpAddress } from "@/app/services/affiliate/getLocalIpAddress";
 
 const SaleOnNagadhatModal = () => {
     const [checkTermsCondition, setCheckTermsCondition] = useState(false);
+    const [ipAddress, setIpAddress] = useState(null);
+    const [deviceInfo, setDeviceInfo] = useState(null);
+
+    // Function to get IP address
+    const fetchIpAddress = async () => {
+        try {
+            const response = await getLocalIpAddress();
+            setIpAddress(response?.ip);
+        } catch (error) {
+            console.error("Error fetching IP address:" || error);
+        }
+    };
+
+    // Function to get device information
+    const getDeviceInfo = () => {
+        const deviceDetector = new DeviceDetector();
+        const userAgent = navigator.userAgent;
+        const deviceInfo = deviceDetector.parse(userAgent);
+        setDeviceInfo(
+            `Device: ${deviceInfo?.device?.type || "N/A"}, Brand: ${
+                deviceInfo?.device?.brand || "N/A"
+            }, Model: ${deviceInfo?.device?.model || "N/A"}, Browser Name:${
+                deviceInfo?.client?.name || "N/A"
+            }`
+        );
+    };
 
     const handleTermsCondition = () => {
         setCheckTermsCondition(!checkTermsCondition);
     };
+
+    useEffect(() => {
+        if (checkTermsCondition) {
+            fetchIpAddress();
+            getDeviceInfo();
+        }
+    }, [checkTermsCondition]);
+
     return (
         <>
             <div
@@ -33,10 +68,7 @@ const SaleOnNagadhatModal = () => {
 
                             <div className=" d-flex gap-4 justify-content-between">
                                 <div className="">
-                                    <div
-                                        className="mb-3 d-flex align-items-center gap-2"
-                                        onClick={handleTermsCondition}
-                                    >
+                                    <div className="mb-3 d-flex align-items-center gap-2">
                                         <input
                                             type="checkbox"
                                             className="form-check-input bg-success "
@@ -45,6 +77,8 @@ const SaleOnNagadhatModal = () => {
                                                 width: "25px",
                                                 height: "25px",
                                             }}
+                                            checked={checkTermsCondition}
+                                            onChange={handleTermsCondition}
                                         />
                                         <label
                                             className="form-check-label fs-5 fw-bold "
@@ -55,7 +89,7 @@ const SaleOnNagadhatModal = () => {
                                     </div>
                                     <h4 className=" fs-4">প্রথম পক্ষ</h4>
                                     <div className="pt-2 pb-4">
-                                        <QRCode
+                                        {/* <QRCode
                                             size={256}
                                             style={{
                                                 height: "auto",
@@ -63,7 +97,7 @@ const SaleOnNagadhatModal = () => {
                                                 width: "100%",
                                             }}
                                             value={`hello world`}
-                                        />
+                                        /> */}
                                     </div>
                                     <p>
                                         <strong className="fs-5">
@@ -103,9 +137,12 @@ const SaleOnNagadhatModal = () => {
                                 type="button"
                                 className="btn btn-success"
                                 style={{
-                                    opacity: checkTermsCondition ? 1 : 0.5,
+                                    opacity: checkTermsCondition ? 1 : 0.2,
+                                    cursor: checkTermsCondition
+                                        ? "pointer"
+                                        : "not-allowed",
                                 }}
-                                // disabled={!checkTermsCondition}
+                                disabled={!checkTermsCondition}
                             >
                                 I agreed to a sale on Nagadhat.
                             </button>
