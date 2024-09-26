@@ -45,18 +45,6 @@ const ProductSinglePage = ({ params }) => {
                         variations,
                         max_quantity,
                     } = productDetails;
-                    const recentViewProductInformation = {
-                        id: id,
-                        product_name,
-                        mrp_price:
-                            price?.original?.results?.discounted_price !== 0
-                                ? price?.original?.results?.discounted_price
-                                : price?.original?.results?.regular_price,
-                        outlet_id: outlet_id,
-                        product_thumbnail: product_thumbnail,
-                        variations: variations,
-                        max_quantity: max_quantity,
-                    };
 
                     const productInfoRecentView = {
                         product_id: id,
@@ -70,7 +58,7 @@ const ProductSinglePage = ({ params }) => {
                         );
                     }
 
-                    storeProductId(recentViewProductInformation.id);
+                    storeProductId(id);
 
                     setProductInfo(productDetails);
                 }
@@ -116,8 +104,8 @@ const ProductSinglePage = ({ params }) => {
                             </h5>
                             <h6>Available locations:</h6>
                             <ul>
-                                {outletInfo.map((item) => (
-                                    <li key={item.id}>{item.name}</li>
+                                {outletInfo.map((item, index) => (
+                                    <li key={index}>{item.name}</li>
                                 ))}
                             </ul>
                         </div>

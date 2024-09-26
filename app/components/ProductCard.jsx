@@ -29,33 +29,29 @@ function ProductCard({ item }) {
     };
 
     const productPrice = {
-        prices: "",
-        discountPrice: "",
+        prices: 0,
+        discountPrice: 0,
     };
     let productStoke;
 
     if (item?.variations?.length > 0) {
         productPrice.prices =
-            defaultVariant?.discount_amount > 0
-                ? defaultVariant?.mrp_price - defaultVariant?.discount_amount
+            defaultVariant?.price?.discounted_price > 0
+                ? defaultVariant?.price?.discounted_price
                 : defaultVariant?.mrp_price;
 
         productPrice.discountPrice =
-            defaultVariant?.discount_amount > 0
-                ? defaultVariant?.mrp_price
-                : "";
+            defaultVariant?.discount_amount;
         productStoke =
             defaultVariant?.variation_max_quantity === null
                 ? 0
                 : defaultVariant?.variation_max_quantity;
     } else {
         (productPrice.prices =
-            item?.price?.discounted_price !== 0
+            item?.price?.discounted_price > 0
                 ? item?.price?.discounted_price
                 : item?.price?.regular_price),
-            (productPrice.discountPrice =
-                item?.price?.discounted_price > 0 &&
-                item?.price?.regular_price);
+            productPrice.discountPrice = item?.price?.discount_amount;
         productStoke = item?.max_quantity === null ? 0 : item?.max_quantity;
     }
 
