@@ -14,11 +14,14 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState, useTransition } from "react";
 import { getFinanceMobileBankingInfo } from "@/app/services/affiliate-finance/getFinanceMobileBankingInfo";
 import { getFinanceBankTransferInfo } from "@/app/services/affiliate-finance/getFinanceBankTransferInfo";
+import { getAffiliateFinanceAgents } from "@/app/services/affiliate-finance/getAffiliateFinanceAgents";
+import LastFiveWithdrawHistory from "./LastFiveWithdrawHistory";
 
 const WithdrawWrapper = () => {
     const [isPending, startTransition] = useTransition();
     const [mobileBankingInfo, setMobileBankingInfo] = useState({});
     const [bankTransferInfo, setBankTransferInfo] = useState({});
+    const [financeAgentInfo, setFinanceAgentInfo] = useState({});
 
     const { data: session, status } = useSession();
 
@@ -31,8 +34,6 @@ const WithdrawWrapper = () => {
                         const response = await getFinanceMobileBankingInfo(
                             session?.accessToken
                         );
-                        console.log("response", response);
-
                         setMobileBankingInfo(response?.results);
                     });
                 } catch (error) {
@@ -43,7 +44,6 @@ const WithdrawWrapper = () => {
         }
     }, [status, session?.accessToken]);
 
-    console.log("Bank TransferInfo Info=====??", bankTransferInfo);
     // function for BankTransferInfo
     useEffect(() => {
         if (status === "authenticated" && session?.accessToken) {
@@ -53,9 +53,7 @@ const WithdrawWrapper = () => {
                         const response = await getFinanceBankTransferInfo(
                             session?.accessToken
                         );
-                        // console.log("response 2", response);
-
-                        setBankTransferInfo(response?.results);
+                        setBankTransferInfo(response?.results || {});
                     });
                 } catch (error) {
                     console.error("Error fetching bank transfer data", error);
@@ -65,7 +63,26 @@ const WithdrawWrapper = () => {
         }
     }, [status, session?.accessToken]);
 
-    // console.log("bankTransferInfo", bankTransferInfo);
+    // function for FinanceAgentInfo
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken) {
+            const fetchFinanceAgents = async () => {
+                try {
+                    startTransition(async () => {
+                        const response = await getAffiliateFinanceAgents(
+                            session?.accessToken
+                        );
+                        setFinanceAgentInfo(response?.results || {});
+                    });
+                } catch (error) {
+                    console.error("Error fetching Finance Agent data", error);
+                }
+            };
+            fetchFinanceAgents();
+        }
+    }, [status, session?.accessToken]);
+
+    const mobileBankingList = mobileBankingInfo?.data;
 
     return (
         <>
@@ -79,19 +96,18 @@ const WithdrawWrapper = () => {
                     <FinancePaymentMethod />
 
                     {/* Modal 1: Agent Withdrawal */}
-                    <AgentWithdrawalModal />
+                    <AgentWithdrawalModal
+                        financeAgentInfo={financeAgentInfo}
+                        mobileBankingList={mobileBankingList}
+                        bankTransferData={bankTransferInfo}
+                    />
 
                     {/* Modal 2: Mobile Banking */}
-                    <MobileBankingModal
-                        mobileBankingInfo={mobileBankingInfo}
-                        isPending={isPending}
-                    />
+                    <MobileBankingModal mobileBankingInfo={mobileBankingInfo} />
 
                     {/* Modal 3: Bank */}
-                    <BankWithdrawalModal
-                        bankTransferInfo={bankTransferInfo}
-                        isPending={isPending}
-                    />
+                    <BankWithdrawalModal bankTransferInfo={bankTransferInfo} />
+                    <LastFiveWithdrawHistory />
                 </div>
             </div>
         </>

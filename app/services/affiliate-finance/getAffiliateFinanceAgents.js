@@ -1,11 +1,11 @@
 import { apiBaseUrl } from "@/app/utils";
 
-export const getAffiliateFinanceWithdraw = async (token) => {
+export const getAffiliateFinanceAgents = async (token) => {
     if (!token) {
-        console.error("Token is missing. Cannot fetch finance withdraw data.");
+        console.error("Token is missing. Cannot fetch finance Agents data.");
         return null;
     }
-    const url = `${apiBaseUrl}/affiliate-finance-withdraw`;
+    const url = `${apiBaseUrl}/affiliate-finance-agents`;
     try {
         const response = await fetch(url, {
             method: "GET",
@@ -19,7 +19,7 @@ export const getAffiliateFinanceWithdraw = async (token) => {
         return await response.json();
     } catch (error) {
         console.error(
-            "Something went wrong fetching affiliate finance withdraw Data"
+            "Something went wrong fetching affiliate finance Agents Data"
         );
         console.info(error);
         return null;

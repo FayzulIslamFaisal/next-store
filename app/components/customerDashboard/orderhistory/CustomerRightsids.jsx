@@ -90,7 +90,7 @@ const CustomerRightsids = ({
                                                         "2" ? (
                                                         <div className="dropdown">
                                                             <button
-                                                                className="btn border-0 dropdown-toggle ps-0"
+                                                                className="btn text-success border-0 dropdown-toggle ps-0"
                                                                 type="button"
                                                                 data-bs-toggle="dropdown"
                                                                 aria-expanded="false"
@@ -151,7 +151,10 @@ const CustomerRightsids = ({
 
                                                 <td>
                                                     <div className="customer-dashboard-order-history-actions">
-                                                        <button title="Order View">
+                                                        <button
+                                                            title="Order View"
+                                                            className="border-0"
+                                                        >
                                                             <Link
                                                                 href={`/orderview?orderid=${order_id}`}
                                                                 style={{

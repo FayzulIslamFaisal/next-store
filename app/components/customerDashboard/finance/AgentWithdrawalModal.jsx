@@ -1,7 +1,19 @@
+"use client";
 import agent from "@/public/images/agent.png";
 import Image from "next/image";
+import { useState } from "react";
 
-const AgentWithdrawalModal = () => {
+const AgentWithdrawalModal = ({
+    financeAgentInfo,
+    mobileBankingList,
+    bankTransferData,
+}) => {
+    const [mobileBankingInfo, setMobileBankingInfo] = useState(false);
+    const [bankTransferInfo, setBankTransferInfo] = useState(false);
+    const handleAgentMethodChange = (methodName) => {
+        setMobileBankingInfo(methodName === "mobile_banking");
+        setBankTransferInfo(methodName === "bank_transfer");
+    };
     return (
         <div
             className="modal fade"
@@ -47,16 +59,22 @@ const AgentWithdrawalModal = () => {
                                     name="agent_id"
                                     required
                                 >
-                                    <option value="">Select Agent</option>
-                                    <option value="2">
-                                        Agent Frank - 017629798710
+                                    <option defaultValue="Select Agent">
+                                        Select Agent
                                     </option>
-                                    <option value="13901">
-                                        MAK Babu - 01322514241
-                                    </option>
-                                    <option value="25275">
-                                        PS International - 01610578765
-                                    </option>
+                                    {financeAgentInfo?.agents &&
+                                        financeAgentInfo?.agents?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option
+                                                        key={index}
+                                                        value={item?.name}
+                                                    >
+                                                        {item?.name || "N/A"}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
                                 </select>
                             </div>
                             <div id="payment_getway_selector">
@@ -67,6 +85,9 @@ const AgentWithdrawalModal = () => {
                                             defaultChecked
                                             name="slug_tier_1"
                                             value="Cash"
+                                            onChange={() =>
+                                                handleAgentMethodChange("cash")
+                                            }
                                         />
                                         Cash
                                     </label>
@@ -74,7 +95,12 @@ const AgentWithdrawalModal = () => {
                                         <input
                                             type="radio"
                                             name="slug_tier_1"
-                                            value="Mobile Banking"
+                                            value="Mobile_Banking"
+                                            onChange={() =>
+                                                handleAgentMethodChange(
+                                                    "mobile_banking"
+                                                )
+                                            }
                                         />
                                         Mobile Banking
                                     </label>
@@ -83,64 +109,91 @@ const AgentWithdrawalModal = () => {
                                             type="radio"
                                             name="slug_tier_1"
                                             value="Bank"
+                                            onChange={() =>
+                                                handleAgentMethodChange(
+                                                    "bank_transfer"
+                                                )
+                                            }
                                         />
-                                        Bank
+                                        Bank Transfer
                                     </label>
                                 </div>
                             </div>
-                            <div
-                                className="form-group"
-                                id="mobile_banking_billing_method_selector"
-                            >
-                                <label
-                                    className="form-label"
-                                    htmlFor="withdrawto"
+                            {mobileBankingInfo && (
+                                <div
+                                    className="form-group"
+                                    id="mobile_banking_billing_method_selector"
                                 >
-                                    Billing Method
-                                </label>
-                                <select
-                                    className="custom-select form-control"
-                                    name="mobile_banking_billing_method"
+                                    <label
+                                        className="form-label"
+                                        htmlFor="withdrawto"
+                                    >
+                                        Mobile Billing Method
+                                    </label>
+                                    <select
+                                        className="custom-select form-control"
+                                        name="mobile_banking_billing_method"
+                                    >
+                                        <option defaultValue="Select Billing Method">
+                                            Select Billing Method
+                                        </option>
+                                        {mobileBankingList &&
+                                        mobileBankingList?.length > 0 ? (
+                                            mobileBankingList?.map(
+                                                (item, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={item?.name}
+                                                    >
+                                                        {item?.name}
+                                                    </option>
+                                                )
+                                            )
+                                        ) : (
+                                            <option
+                                                defaultValue=" No data found"
+                                                disabled
+                                            >
+                                                No data found
+                                            </option>
+                                        )}
+                                    </select>
+                                </div>
+                            )}
+
+                            {bankTransferInfo && (
+                                <div
+                                    className="form-group"
+                                    id="bank_billing_method_selector"
                                 >
-                                    <option value="">
-                                        Select Billing Method
-                                    </option>
-                                    <option value="Bkash">
-                                        Bkash - 01819879787
-                                    </option>
-                                    <option value="Nagad">
-                                        Nagad - 01819879787
-                                    </option>
-                                    <option value="Rocket">
-                                        Rocket - 018198797874
-                                    </option>
-                                </select>
-                            </div>
-                            <div
-                                className="form-group"
-                                id="bank_billing_method_selector"
-                            >
-                                <label
-                                    className="form-label"
-                                    htmlFor="withdrawto"
-                                >
-                                    Billing Method
-                                </label>
-                                <select
-                                    className="custom-select form-control"
-                                    name="bank_billing_method"
-                                >
-                                    <option value="">
-                                        Select Billing Method
-                                    </option>
-                                    <option value="Bank">
-                                        Ific Bank ltd - 0190338922811
-                                    </option>
-                                </select>
-                            </div>
+                                    <label
+                                        className="form-label"
+                                        htmlFor="withdrawto"
+                                    >
+                                        Bank Billing Method
+                                    </label>
+                                    <select
+                                        className="custom-select form-control"
+                                        name="bank_billing_method"
+                                    >
+                                        <option defaultValue="Select Billing Method">
+                                            Select Billing Method
+                                        </option>
+                                        <option value={bankTransferData?.bank}>
+                                            {bankTransferData?.bank}
+                                        </option>
+                                    </select>
+                                </div>
+                            )}
+
                             <div className="form-group">
                                 <label className="form-label">
-                                    Amount <strong>Balance: 5611.28</strong>
+                                    Amount{" "}
+                                    <strong>
+                                        Balance:{" "}
+                                        {financeAgentInfo?.total_withdrawable ||
+                                            "N/A"}
+                                    </strong>
                                 </label>
                                 <div className="input-group">
                                     <div className="input-group-prepend">
