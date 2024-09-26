@@ -73,7 +73,7 @@ function AddToCartButton({
     selectedVariantProductInfo,
     isDetailsPage = false,
     productStoke,
-}) {
+}) {  
     const { status, data: session } = useSession();
     const [loading, setLoading] = useState(false);
     const [outletId, setOutletId] = useState(() => {
@@ -91,6 +91,7 @@ function AddToCartButton({
     });
     const dispatch = useDispatch();
     const router = useRouter();
+
     // Function to handle the "Add To Cart" button click event
     const handleAddToCard = async (e, title) => {
         e.preventDefault();
@@ -122,8 +123,8 @@ function AddToCartButton({
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
-                            regular_price: productPrice?.discountPrice,
-                            outlet_id: productInfo?.outlet_id,
+                            regular_price: productInfo?.mrp_price,
+                            outlet_id: outletId,
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
                             selectedVariants: selectedVariants,
@@ -194,12 +195,11 @@ function AddToCartButton({
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
-                        regular_price: productPrice?.discountPrice,
-                        outlet_id: productInfo?.outlet_id,
+                        regular_price: productInfo?.mrp_price,
+                        outlet_id: outletId,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
                         location_id: districtId,
-                        outlet_id: productInfo?.outlet_id,
                         order_type: "Regular",
                         product_variation_id: null,
                         discount_type: productInfo?.discount_type,
@@ -293,8 +293,8 @@ function AddToCartButton({
                             product_id: productInfo?.id,
                             product_name: productInfo?.product_name,
                             price: productPrice?.prices,
-                            regular_price: productPrice?.discountPrice,
-                            outlet_id: productInfo?.outlet_id,
+                            regular_price: productInfo?.mrp_price,
+                            outlet_id: outletId,
                             product_thumbnail: productInfo?.product_thumbnail,
                             quantity: quantity,
                             selectedVariants: selectedVariants,
@@ -320,8 +320,8 @@ function AddToCartButton({
                         product_id: productInfo?.id,
                         product_name: productInfo?.product_name,
                         price: productPrice?.prices,
-                        regular_price: productPrice?.discountPrice,
-                        outlet_id: productInfo?.outlet_id,
+                        regular_price: productInfo?.mrp_price,
+                        outlet_id: outletId,
                         product_thumbnail: productInfo?.product_thumbnail,
                         quantity: quantity,
                         location_id: districtId,

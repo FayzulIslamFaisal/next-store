@@ -35,7 +35,6 @@ const page = ({ params }) => {
         if (pickUpIdForOrder) {
             setSelectedDefaultAddressId(null);
         }
-        console.log({selectedDefaultAddressId, pickUpIdForOrder});
     }, [customerAddress, pickUpIdForOrder]);
 
     const handlePlaceOrder = async () => {

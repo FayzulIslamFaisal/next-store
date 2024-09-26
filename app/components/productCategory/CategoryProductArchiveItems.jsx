@@ -46,35 +46,31 @@ const CategoryProductArchiveItems = ({ productItem }) => {
         discount_amount: defaultVariant?.discount_amount,
     };
 
-    const productPrice = {
-        prices: "",
-        discountPrice: "",
+    let productPrice = {
+        prices: 0,
+        discountPrice: 0,
     };
     let productStoke;
 
     if (productItem?.variations?.length > 0) {
         productPrice.prices =
             defaultVariant?.discount_amount > 0
-                ? defaultVariant?.mrp_price - defaultVariant?.discount_amount
-                : defaultVariant?.mrp_price;
+                ? defaultVariant?.price?.discounted_price
+                : defaultVariant?.price?.regular_price;
 
-        productPrice.discountPrice =
-            defaultVariant?.discount_amount > 0
-                ? defaultVariant?.mrp_price
-                : "";
+        productPrice.discountPrice =defaultVariant?.price?.regular_price - defaultVariant?.price?.discounted_price;
         productStoke =
             defaultVariant?.variation_max_quantity === null
                 ? 0
                 : defaultVariant?.variation_max_quantity;
     } else {
-        (productPrice.prices =
-            productItem?.discount_price !== 0
-                ? productItem?.discount_price
-                : productItem?.mrp_price),
-            (productPrice.discountPrice =
-                productItem?.discount_price > 0 && productItem?.mrp_price);
-        productStoke =
-            productItem?.max_quantity === null ? 0 : productItem?.max_quantity;
+        productPrice.prices =
+        productItem?.price?.discounted_price > 0
+                ? productItem?.price?.discounted_price
+                : productItem?.mrp_price;
+        // (productPrice.discountPrice = productItem?.discount_price > 0 && productItem?.mrp_price);
+        (productPrice.discountPrice = productItem?.price?.regular_price - productItem?.price?.discounted_price);
+        productStoke = productItem?.max_quantity === null ? 0 : productItem?.max_quantity;
     }
 
     const selectedVariants = [];

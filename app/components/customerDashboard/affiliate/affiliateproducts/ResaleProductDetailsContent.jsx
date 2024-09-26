@@ -14,8 +14,6 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
     const [totalPrice, setTotalPrice] = useState(productPrice * quantity);
     const [totalMRPPrice, setTotalMRPPrice] = useState(productMRP * quantity);
 
-    console.log({ quantity });
-
     // Function to update prices based on quantity
     const updatePrices = (newQuantity) => {
         setTotalPrice(productPrice * newQuantity);
