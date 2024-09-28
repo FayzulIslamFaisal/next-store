@@ -1,7 +1,8 @@
-import React from "react";
+import Link from "next/link";
 import { FaCheckCircle } from "react-icons/fa";
+import { FcCancel } from "react-icons/fc";
 
-const SellOnNagadhatHistory = () => {
+const SellOnNagadhatHistory = ({ sellOnData }) => {
     return (
         <div>
             <div className="table-responsive pt-4">
@@ -22,78 +23,55 @@ const SellOnNagadhatHistory = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Daily Needs Package 2</td>
-                            <td>2022-05-14</td>
-                            <td>24</td>
-                            <td>24 / 24</td>
-                            <td>৳ 927</td>
-                            <td>৳ 976</td>
-                            <td>৳ 2.04</td>
-                            <td>
-                                <FaCheckCircle className="text-success" /> Yes
-                            </td>
-                            <td>
-                                <span className="text-success">Active</span>
-                            </td>
-                            <td>
-                                <a
-                                    href="/affiliat-sell-on-nagadhat/id"
-                                    className="btn"
-                                >
-                                    View
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Disposable 3ply Facial Protective Mask</td>
-                            <td>2022-05-29</td>
-                            <td>30</td>
-                            <td>26 / 30</td>
-                            <td>৳ 12000</td>
-                            <td>৳ 20000</td>
-                            <td>৳ 666.67</td>
-                            <td>
-                                <FaCheckCircle className="text-success" /> Yes
-                            </td>
-                            <td>
-                                <span className="text-info">Completed</span>
-                            </td>
-                            <td>
-                                <a
-                                    href="/affiliat-sell-on-nagadhat/id"
-                                    className="btn"
-                                >
-                                    View
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Disposable Medical Mask</td>
-                            <td>2021-12-24</td>
-                            <td>15</td>
-                            <td>15 / 15</td>
-                            <td>৳ 1000</td>
-                            <td>৳ 2000</td>
-                            <td>৳ 133.33</td>
-                            <td>
-                                <FaCheckCircle className="text-success" /> Yes
-                            </td>
-                            <td>
-                                <span className="text-info">Completed</span>
-                            </td>
-                            <td>
-                                <a
-                                    href="/affiliat-sell-on-nagadhat/id"
-                                    className="btn"
-                                >
-                                    View
-                                </a>
-                            </td>
-                        </tr>
+                        {sellOnData?.map((item, index) => {
+                            return (
+                                <tr key={item?.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{item?.package_invoice || "N/A"}</td>
+                                    <td>{item?.start_date || "N/A"}</td>
+                                    <td>{item?.duration || "N/A"} </td>
+                                    <td>{item?.completed_months || "N/A"}</td>
+                                    <td>৳ {item?.order_value || "N/A"} </td>
+                                    <td>৳ {item?.mrp_value || "N/A"} </td>
+                                    <td>{item?.monthly_bonus || "N/A"}</td>
+                                    <td>
+                                        {item?.is_instalment === 1 ? (
+                                            <>
+                                                <FaCheckCircle className="text-success" />
+                                                Yes
+                                            </>
+                                        ) : (
+                                            <>
+                                                <FcCancel className="text-danger" />
+                                                No
+                                            </>
+                                        )}
+                                    </td>
+                                    <td>
+                                        {item?.is_instalment === 0 ? (
+                                            <span className="text-primary">
+                                                Active
+                                            </span>
+                                        ) : (
+                                            <>
+                                                <span className="text-success">
+                                                    Completed
+                                                </span>
+                                            </>
+                                        )}
+                                    </td>
+                                    <td>
+                                        <Link
+                                            // href="/affiliat-sell-on-nagadhat/id"
+                                            href={`/affiliate-buyback-policy-details/${item?.id}`}
+                                            className="btn"
+                                        >
+                                            View
+                                        </Link>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

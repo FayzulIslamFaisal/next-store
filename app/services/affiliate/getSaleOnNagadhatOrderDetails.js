@@ -1,15 +1,13 @@
-
-
-
 import { apiBaseUrl } from "@/app/utils";
 
-export const getSaleOnNagadhat = async (orderId, token) => {
-    if (!orderId || !token) {
+export const getSaleOnNagadhatOrderDetails = async (token, saleOnId) => {
+    if (!token) {
         return null;
     }
+
     try {
         const response = await fetch(
-            `${apiBaseUrl}/sale-on-nagadhat/${orderId}`,
+            `${apiBaseUrl}/sale-on-nagadhat-order-details/${saleOnId}`,
             {
                 method: "GET",
                 headers: {
@@ -22,7 +20,7 @@ export const getSaleOnNagadhat = async (orderId, token) => {
         return await response.json();
     } catch (error) {
         console.error(
-            "Something went wrong fetching Sale On Nagadhat data"
+            "Something went wrong fetching SaleOn Nagadhat Order Details data"
         );
         console.info(error);
     }
