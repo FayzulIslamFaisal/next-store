@@ -6,32 +6,38 @@ import SaleOnNagadhatHeader from "./SaleOnNagadhatHeader";
 import SaleOnNagadhatTop from "./SaleOnNagadhatTop";
 import SaleOnNagadhatBottom from "./SaleOnNagadhatBottom";
 import DeviceDetector from "device-detector-js";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { getLocalIpAddress } from "@/app/services/affiliate/getLocalIpAddress";
 import { useSession } from "next-auth/react";
 import { getSaleOnNagadhat } from "@/app/services/affiliate/getSaleOnNagadhat";
 import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
+import { postSaleOnNagadhat } from "@/app/services/affiliate/postSaleOnNagadhat";
+import { useRouter } from "next/navigation";
 
 const SaleOnNagadhatModal = ({ resaleOrderID }) => {
     const [isPending, startTransition] = useTransition();
     const [checkTermsCondition, setCheckTermsCondition] = useState(false);
-    const [saleOnNagadhatData, setsaleOnNagadhatData] = useState({});
+    const [saleOnNagadhatData, setSaleOnNagadhatData] = useState({});
     const [ipAddress, setIpAddress] = useState(null);
-    const [deviceInfo, setDeviceInfo] = useState(null);
+    const [deviceName, setDeviceName] = useState(null);
+    const [browserInfo, setBrowserInfo] = useState(null);
+    const [ipNumber, setIpNumber] = useState(null);
+    const modalRef = useRef(null);
 
     const { data: session, status } = useSession();
+    const router = useRouter();
 
     useEffect(() => {
         if (status === "authenticated" && session?.accessToken) {
             const fetchSaleOnNagadhatData = async () => {
                 try {
-                    startTransition(async () => {
-                        const response = await getSaleOnNagadhat(
-                            resaleOrderID,
-                            session?.accessToken
-                        );
-                        setsaleOnNagadhatData(response?.results || {});
+                    const response = await getSaleOnNagadhat(
+                        resaleOrderID,
+                        session?.accessToken
+                    );
+                    startTransition(() => {
+                        setSaleOnNagadhatData(response?.results || {});
                     });
                 } catch (error) {}
             };
@@ -42,15 +48,24 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
     const saleOnLength =
         saleOnNagadhatData && Object.keys(saleOnNagadhatData).length > 0;
 
-    console.log("saleOnLength", saleOnLength);
-
     // Function to get IP address
     const fetchIpAddress = async () => {
         try {
             const response = await getLocalIpAddress();
-            setIpAddress(response?.ip);
+            const ipNumber = response?.ip;
+
+            if (!ipNumber) {
+                console.error("IP number not found");
+                return;
+            }
+            const fullAddressResponse = await fetch(
+                `http://ip-api.com/json/${ipNumber}`
+            );
+            const fullAddress = await fullAddressResponse.json();
+            setIpNumber(ipNumber);
+            setIpAddress(fullAddress);
         } catch (error) {
-            console.error("Error fetching IP address:" || error);
+            console.error("Error fetching IP address:", error);
         }
     };
 
@@ -59,13 +74,8 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
         const deviceDetector = new DeviceDetector();
         const userAgent = navigator.userAgent;
         const deviceInfo = deviceDetector.parse(userAgent);
-        setDeviceInfo(
-            `Device: ${deviceInfo?.device?.type || "N/A"}, Brand: ${
-                deviceInfo?.device?.brand || "N/A"
-            }, Model: ${deviceInfo?.device?.model || "N/A"}, Browser Name:${
-                deviceInfo?.client?.name || "N/A"
-            }`
-        );
+        setDeviceName(`${deviceInfo?.device?.type || "N/A"}`);
+        setBrowserInfo(`${deviceInfo?.client?.name || "N/A"}`);
     };
 
     const handleTermsCondition = () => {
@@ -79,9 +89,40 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
         }
     }, [checkTermsCondition]);
 
+    // Function for handleAgreement
+    const handleAgreement = async () => {
+        try {
+            const saleOnData = {
+                order_id: resaleOrderID,
+                product_id: saleOnNagadhatData?.product_id,
+                total_tp: saleOnNagadhatData?.total_tp,
+                total_mrp: saleOnNagadhatData?.total_mrp,
+                duration: saleOnNagadhatData?.duration,
+                ip_address: ipNumber || "",
+                device: deviceName || "",
+                browser: browserInfo || "",
+                address: ipAddress || "",
+            };
+            const response = await postSaleOnNagadhat(
+                saleOnData,
+                session?.accessToken
+            );
+            if (!response?.error) {
+                const modal = bootstrap.Modal.getInstance(modalRef.current);
+                if (modal) {
+                    modal.hide();
+                    router.push(`/thankyou?orderId=${resaleOrderID}`);
+                }
+            }
+        } catch (error) {
+            console.error("Error handling agreement:", error);
+        }
+    };
+
     return (
         <>
             <div
+                ref={modalRef}
                 className="modal fade"
                 id="sale-on-nagadhat-modal"
                 tabIndex="-1"
@@ -178,6 +219,7 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
                                         : "not-allowed",
                                 }}
                                 disabled={!checkTermsCondition}
+                                onClick={handleAgreement}
                             >
                                 I agreed to a sale on Nagadhat.
                             </button>
