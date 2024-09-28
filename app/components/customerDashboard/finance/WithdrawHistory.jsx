@@ -49,14 +49,11 @@ const WithdrawHistory = async () => {
                                     >
                                         {item.status}
                                     </td>
-                                    <td className="text-center">
-                                        <div className="customer-dashboard-order-history-actions justify-content-center">
+                                    
                                             <WithdrawHistoryBtn
                                                 item={item}
                                                 token={session.accessToken}
                                             />
-                                        </div>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>
