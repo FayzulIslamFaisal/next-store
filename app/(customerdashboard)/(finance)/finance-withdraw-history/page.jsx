@@ -1,4 +1,4 @@
-import WithdrawWrapper from "@/app/components/customerDashboard/finance/AffiliateBonusWrapper";
+import WithdrawWrapper from "@/app/components/customerDashboard/finance/WithdrawWrapper";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
 import WithdrawHistory from "@/app/components/customerDashboard/finance/WithdrawHistory";
 import WithdrawTopBanner from "@/app/components/customerDashboard/finance/WithdrawTopBanner";

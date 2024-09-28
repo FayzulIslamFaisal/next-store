@@ -1,4 +1,4 @@
-import WithdrawWrapper from "@/app/components/customerDashboard/finance/AffiliateBonusWrapper";
+import WithdrawWrapper from "@/app/components/customerDashboard/finance/WithdrawWrapper";
 
 const FinanceWithdraw = () => {
     return <WithdrawWrapper />;

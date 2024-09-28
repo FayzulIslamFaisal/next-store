@@ -25,6 +25,9 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                             <th scope="col" className="text-end">
                                 Level
                             </th>
+                            <th scope="col" className="text-end">
+                                Type
+                            </th>
                             <th scope="col" className="text-end pe-3">
                                 Status
                             </th>
@@ -42,7 +45,7 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                         {item?.date_time || "N/A"}
                                     </td>
                                     <td className="align-middle text-end">
-                                    ৳ {item?.earning || "N/A"}
+                                        ৳ {item?.earning || "N/A"}
                                     </td>
                                     <td className="align-middle text-end">
                                         {item?.user_name || "N/A"}
@@ -52,6 +55,9 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                     </td>
                                     <td className="align-middle text-end">
                                         {item?.level || "N/A"}
+                                    </td>
+                                    <td className="align-middle text-end">
+                                        {item?.payout_type || "N/A"}
                                     </td>
                                     <td className="align-middle text-end pe-3">
                                         {item?.purpose || "N/A"}
@@ -94,7 +100,7 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                     : 0}{" "}
                 entries{" "}
             </p>
-            
+
         </div>
     );
 };
