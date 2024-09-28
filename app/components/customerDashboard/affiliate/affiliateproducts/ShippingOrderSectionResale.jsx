@@ -34,12 +34,12 @@ const ShippingOrderSectionResale = ({
                                     <p className="total-order-price">৳ {totalPrice}</p>
                                 </div>
                             </div>
-                            <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
+                            {/* <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                 <p>Shipping</p>
                                 <div className="d-flex gap-2 align-items-center">
                                     <strong>৳{shippingPrice || 0}</strong>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="d-flex gap-2 flex-column border-bottom pb-3">

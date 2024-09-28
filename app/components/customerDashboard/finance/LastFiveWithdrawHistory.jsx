@@ -44,63 +44,65 @@ const LastFiveWithdrawHistory = () => {
                 <div>
                     <h3 className="text-center">Loading...</h3>
                 </div>
-            ):(<div className="table-responsive pt-4">
-                <table className="table" style={{ minWidth: "645px" }}>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Billing Method</th>
-                            <th>Account ID/Code</th>
-                            <th className="text-end">Amount</th>
-                            <th className="text-end">Charge</th>
-                            <th className="text-end">Payable</th>
-                            <th>Status</th>
-                            <th className="text-center">View</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {lastFiveData?.length > 0 ? (
-                            lastFiveData?.map((item) => (
-                                <tr key={item.id || item.account_number}>
-                                    <td>{item.date_time}</td>
-                                    <td>{item.billing_method}</td>
-                                    <td>{item.account_number}</td>
-                                    <td className="text-end">{item.amount}</td>
-                                    <td className="text-end">{item.charge}</td>
-                                    <td className="text-end">{item.payable}</td>
-                                    <td
-                                        className={
-                                            item.status === "Completed"
-                                                ? "paid"
-                                                : "pending"
-                                        }
-                                    >
-                                        {item.status}
-                                    </td>
-                                    <td className="text-center">
-                                        <div className="customer-dashboard-order-history-actions justify-content-center">
-                                            <button
-                                                type="button"
-                                                className="border-0 "
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#viewWithdrawHistoryModal"
-                                                onClick={() =>
-                                                    handleViewClick(item?.id)
-                                                }
-                                            >
-                                                <FaEye />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : ( !isPending &&
-                            <NoDataFound />
-                        )}
-                    </tbody>
-                </table>
+            ) : (<div className="table-responsive pt-4">
+                {lastFiveData?.length > 0 ? (
+                    <table className="table" style={{ minWidth: "645px" }}>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Billing Method</th>
+                                <th>Account ID/Code</th>
+                                <th className="text-end">Amount</th>
+                                <th className="text-end">Charge</th>
+                                <th className="text-end">Payable</th>
+                                <th>Status</th>
+                                <th className="text-center">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                lastFiveData?.map((item) => (
+                                    <tr key={item.id || item.account_number}>
+                                        <td>{item.date_time}</td>
+                                        <td>{item.billing_method}</td>
+                                        <td>{item.account_number}</td>
+                                        <td className="text-end">{item.amount}</td>
+                                        <td className="text-end">{item.charge}</td>
+                                        <td className="text-end">{item.payable}</td>
+                                        <td
+                                            className={
+                                                item.status === "Completed"
+                                                    ? "paid"
+                                                    : "pending"
+                                            }
+                                        >
+                                            {item.status}
+                                        </td>
+                                        <td className="text-center">
+                                            <div className="customer-dashboard-order-history-actions justify-content-center">
+                                                <button
+                                                    type="button"
+                                                    className="border-0 "
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#viewWithdrawHistoryModal"
+                                                    onClick={() =>
+                                                        handleViewClick(item?.id)
+                                                    }
+                                                >
+                                                    <FaEye />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                ) : (!isPending &&
+                    <NoDataFound />
+                )}
             </div>)}
-            
+
             {/* Modal */}
             <WithdrawHistoryModal
                 selectedId={selectedId}
