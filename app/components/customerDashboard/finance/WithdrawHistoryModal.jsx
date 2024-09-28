@@ -45,7 +45,7 @@ const WithdrawHistoryModal = ({ selectedId, token }) => {
                             </h1>
                             <button
                                 type="button"
-                                className="btn-close rounded-0  "
+                                className="btn-close rounded-0"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
@@ -54,78 +54,104 @@ const WithdrawHistoryModal = ({ selectedId, token }) => {
                             {withdrawData ? (
                                 <table className="table table-bordered table-hover">
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">
-                                                Withdraw Method:
-                                            </th>
-                                            <td>
-                                                {withdrawData.withdraw_method ||
-                                                    "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Withdraw By:</th>
-                                            <td>
-                                                {withdrawData.withdraw_by ||
-                                                    "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Billing Method:</th>
-                                            <td>
-                                                {withdrawData.billing_method ||
-                                                    "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Account number:</th>
-                                            <td>
-                                                {withdrawData.account_number ||
-                                                    "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Updated On:</th>
-                                            <td>
-                                                {withdrawData.update_on || "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Amount:</th>
-                                            <td>
-                                                {withdrawData.amount || "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Charge:</th>
-                                            <td>
-                                                {withdrawData.charge || "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Payable:</th>
-                                            <td>
-                                                {withdrawData.payable || "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Requested On:</th>
-                                            <td>
-                                                {withdrawData.request_on ||
-                                                    "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Transaction Id:</th>
-                                            <td>
-                                                {withdrawData.transection_id ||
-                                                    "--"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Payment Script:</th>
-                                            <td>
-                                                {withdrawData.script_pic ? (
+                                        {withdrawData.withdraw_method && (
+                                            <tr>
+                                                <th scope="row">
+                                                    Withdraw Method:
+                                                </th>
+                                                <td>
+                                                    {
+                                                        withdrawData.withdraw_method
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.withdraw_by && (
+                                            <tr>
+                                                <th scope="row">
+                                                    Withdraw By:
+                                                </th>
+                                                <td>{withdrawData.withdraw_by}</td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.billing_method && (
+                                            <tr>
+                                                <th scope="row">
+                                                    Billing Method:
+                                                </th>
+                                                <td>
+                                                    {
+                                                        withdrawData.billing_method
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.account_number && (
+                                            <tr>
+                                                <th scope="row">
+                                                    Account number:
+                                                </th>
+                                                <td>
+                                                    {
+                                                        withdrawData.account_number
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.amount && (
+                                            <tr>
+                                                <th scope="row">Amount:</th>
+                                                <td>{withdrawData.amount}</td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.charge && (
+                                            <tr>
+                                                <th scope="row">Charge:</th>
+                                                <td>{withdrawData.charge}</td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.payable && (
+                                            <tr>
+                                                <th scope="row">Payable:</th>
+                                                <td>{withdrawData.payable}</td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.request_on && (
+                                            <tr>
+                                                <th scope="row">Requested On:</th>
+                                                <td>{withdrawData.request_on}</td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.update_on && (
+                                            <tr>
+                                                <th scope="row">
+                                                Completed Date:
+                                                </th>
+                                                <td>
+                                                    {
+                                                        withdrawData.update_on
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.transection_id && (
+                                            <tr>
+                                                <th scope="row">
+                                                    Transaction Id:
+                                                </th>
+                                                <td>
+                                                    {
+                                                        withdrawData.transection_id
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {withdrawData.script_pic !== "Not Attached" && (
+                                            <tr>
+                                                <th scope="row">
+                                                    Payment Script:
+                                                </th>
+                                                <td>
                                                     <a
                                                         href={`/path-to-script-pics/${withdrawData.script_pic}`}
                                                         target="_blank"
@@ -133,11 +159,9 @@ const WithdrawHistoryModal = ({ selectedId, token }) => {
                                                     >
                                                         View Script
                                                     </a>
-                                                ) : (
-                                                    "Not attached"
-                                                )}
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             ) : (
