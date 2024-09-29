@@ -369,7 +369,7 @@ const CartPage = () => {
         }
     };
 
-    const handleIncrement = async (indexId) => {
+    const handleIncrement = async (indexId, type) => {
         try {
             if (session) {
                 const checkingProductFilter = isAnyChecked(checkedProductCard);
@@ -381,6 +381,7 @@ const CartPage = () => {
                     cart_id: indexId,
                     outlet_id: outletId,
                     quantity: "increment",
+
                 };
                 try {
                     setQuantityUpdateLoader(true)
@@ -843,9 +844,8 @@ const CartPage = () => {
                                                                             className="quantity-increase"
                                                                             onClick={() =>
                                                                                 handleDecrement(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
+                                                                                    session? item?.cart_id : index,
+                                                                                    item.cart_product_type
                                                                                 )
                                                                             }
                                                                             disabled={
@@ -871,14 +871,11 @@ const CartPage = () => {
                                                                             type="button"
                                                                             onClick={() =>
                                                                                 handleIncrement(
-                                                                                    session
-                                                                                        ? item?.cart_id
-                                                                                        : index
+                                                                                    session? item?.cart_id : index,
+                                                                                    item.cart_product_type
                                                                                 )
                                                                             }
-                                                                            disabled={
-                                                                                quanticUpdateLoader
-                                                                            }
+                                                                            disabled={quanticUpdateLoader}
                                                                         >
                                                                             <FaPlus />
                                                                         </button>
