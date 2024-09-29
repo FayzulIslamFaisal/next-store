@@ -58,9 +58,9 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
                                                             return (
                                                                 <React.Fragment key={inx}>
                                                                     <p>
-                                                                        <span>{keyDisplay}</span>:
+                                                                        <span> { keyDisplay }  </span>:{" "}
                                                                         <span className="cart-prodect-variants-item">
-                                                                            <label>{value}</label>
+                                                                            <label>{" "} {value} </label>
                                                                         </span>
                                                                     </p>
                                                                 </React.Fragment>
@@ -76,8 +76,8 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
                                         </td>
                                         <td>
                                             <div className="d-flex gap-2 new-nh-product-price">
-                                                <p>৳ {item.price * item.quantity}</p>
-                                                <del className="rounded-1">৳ {item.regular_price * item.quantity}</del>
+                                                <p>৳ {item.price * item.quantity} </p>
+                                                <del className="rounded-1">৳ {item.regular_price * item.quantity} </del>
                                             </div>
                                         </td>
                                     </tr>

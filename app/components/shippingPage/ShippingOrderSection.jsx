@@ -22,11 +22,11 @@ const ShippingOrderSection= ({
                         <div className="d-flex gap-2 flex-column border-bottom pb-3">
                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                 <p>Subtotal</p>
-                                <strong>৳{subTotal}</strong>
+                                <strong>৳ {subTotal}</strong>
                             </div>
                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                 <p>Discount</p>
-                                <strong>৳{subTotal - totalPrice}</strong>
+                                <strong>৳ {subTotal - totalPrice}</strong>
                             </div>
                             <div className="d-flex gap-2 flex-column border-top pt-3">
                                 <div className="d-flex gap-3 justify-content-between align-items-center shopping-price-area custom-shopping-price">
@@ -37,7 +37,7 @@ const ShippingOrderSection= ({
                             <div className="d-flex gap-3 justify-content-between shopping-price-area custom-shopping-price">
                                 <p>Shipping</p>
                                 <div className="d-flex gap-2 align-items-center">
-                                    <strong>৳{shippingPrice || 0}</strong>
+                                    <strong>৳ {shippingPrice || 0}</strong>
                                 </div>
                             </div>
                         </div>

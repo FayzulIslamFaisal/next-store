@@ -342,12 +342,12 @@ const CustomerAddress = ({
           <div className="col-md-12">
             <div className="nhn-shipping-deliver-detail rounded-2 flex-column d-flex gap-2">
               <div className="nhn-shipping-deliver-title">
-                <p>Deliver to: {address?.full_name}</p>
+                <p>Deliver to: {address?.full_name} </p>
               </div>
               <div className="nhn-shipping-deliver-detail-info">
                 <p>
                   <span className="text-capitalize">Mobile</span>{" "}
-                  <small>{address?.phone}</small> | {address?.address}
+                  <small> {address?.phone} {" "} </small> | {address?.address} {" "}
                   <button
                     type="button"
                     data-bs-toggle="modal"
