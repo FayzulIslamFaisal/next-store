@@ -78,7 +78,7 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                                 )}
                             </td>
                             <td
-                                colSpan={4}
+                                colSpan={5}
                                 className="align-middle text-center"
                             ></td>
                         </tr>
@@ -100,7 +100,6 @@ const AffiliateBonusDetail = ({ affiliateBonusResult, affiliateBonusData }) => {
                     : 0}{" "}
                 entries{" "}
             </p>
-
         </div>
     );
 };

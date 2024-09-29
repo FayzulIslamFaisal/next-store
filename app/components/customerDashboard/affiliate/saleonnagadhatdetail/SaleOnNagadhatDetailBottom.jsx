@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import QRCode from "react-qr-code";
-const SaleOnNagadhatDetailBottom = () => {
+const SaleOnNagadhatDetailBottom = ({ saleOnNagadhatData, orderId }) => {
     return (
         <>
             <div className="d-flex gap-4 justify-content-between px-4 pt-0 pb-5">
@@ -18,7 +19,9 @@ const SaleOnNagadhatDetailBottom = () => {
                         />
                     </div>
                     <p>
-                        <strong className="fs-5">Saiful Islam Akundo</strong>
+                        <strong className="fs-5">
+                            {saleOnNagadhatData?.first_name || "N/A"}
+                        </strong>
                     </p>
                 </div>
                 <div className="">
@@ -38,6 +41,21 @@ const SaleOnNagadhatDetailBottom = () => {
                         <br /> নগদহাট বাংলাদেশ লিমিটেড।
                     </p>
                 </div>
+            </div>
+            <div className=" d-flex align-items-center justify-content-center gap-3 pb-4">
+                <button
+                    onClick={() => window.print()}
+                    className="btn btn-dark"
+                    download
+                >
+                    Download
+                </button>
+                <button
+                    className="btn btn-success"
+                    onClick={() => window.print()}
+                >
+                    Print
+                </button>
             </div>
         </>
     );

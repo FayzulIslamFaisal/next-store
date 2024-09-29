@@ -8,7 +8,7 @@ const PayoutSearchForm = ({ searchTerm, setSearchTerm }) => {
 
     return (
         <>
-            <div className=" pt-3 ">
+            <div className=" pt-3 pe-3">
                 <div className=" d-flex justify-content-end">
                     <div
                         className="input-group affiliate-products-search"

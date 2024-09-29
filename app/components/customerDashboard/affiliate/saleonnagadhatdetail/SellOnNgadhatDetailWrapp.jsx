@@ -33,15 +33,28 @@ const SellOnNgadhatDetailWrapp = ({ orderId }) => {
     const saleOnLength =
         saleOnNagadhatData && Object.keys(saleOnNagadhatData).length > 0;
 
+    console.log("saleOnNagadhatData", saleOnNagadhatData);
+
     return (
         <>
             <div className="customer-dashboard-order-history-area">
                 <SaleOnNagadhatDetailHeader />
-                <SaleOnNagadhatDetailTop />
-                <SaleOnNagadhatDetailInvoice />
-                <SaleOnNagadhatDetailPay />
-                <SaleOnNagadhatDetailNomini />
-                <SaleOnNagadhatDetailBottom />
+                <SaleOnNagadhatDetailTop
+                    saleOnNagadhatData={saleOnNagadhatData}
+                />
+                <SaleOnNagadhatDetailInvoice
+                    saleOnNagadhatData={saleOnNagadhatData}
+                />
+                <SaleOnNagadhatDetailPay
+                    saleOnNagadhatData={saleOnNagadhatData}
+                />
+                <SaleOnNagadhatDetailNomini
+                    saleOnNagadhatData={saleOnNagadhatData}
+                />
+                <SaleOnNagadhatDetailBottom
+                    saleOnNagadhatData={saleOnNagadhatData}
+                    orderId={orderId}
+                />
             </div>
         </>
     );

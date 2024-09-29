@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 const PayoutSalaryDetail = () => {
     return (
         <>
-            <div className="table-responsive">
+            <div className="table-responsive px-3">
                 <table className="table">
                     <thead>
                         <tr>

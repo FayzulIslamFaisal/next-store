@@ -46,7 +46,11 @@ const SaleOnNagadhatWallet = ({ saleOnNagadhatData }) => {
                                     }
                                 )
                             ) : (
-                                <NoDataFound />
+                                <tr>
+                                    <td colSpan={4}>
+                                        <NoDataFound />
+                                    </td>
+                                </tr>
                             )}
                         </tbody>
                     </table>
