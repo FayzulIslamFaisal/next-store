@@ -4,12 +4,20 @@ import OrderShippingAddress from "./OrderShippingAddress";
 import TrackYourOrderBtn from "./TrackYourOrderBtn";
 
 const OrderSummaryLeft = ({ orderSummary }) => {
+    const messages = {
+        1: "Thank you for your purchase!",
+        2: "Thank you for your Sale On Nagadhat Product purchase!",
+        3: "Thank you for your Container Product purchase!",
+    };
+
+    const message = messages[orderSummary?.order_product_type];
+
     return (
         <>
             <div className="col-lg-5">
                 <div className="order-billing-info">
                     <div className="thank-you">
-                        <h1>Thank you for your purchase!</h1>
+                        {message && <h1>{message}</h1>}
                         <p>
                             Your order will be processed within 24 hours during
                             working days. We will notify you by email once your
