@@ -10,9 +10,9 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
     const productMRP = parseFloat(productDetails?.resell_mrp_price) || 0;
 
     // State to manage quantity, total price, and total MRP price
-    const [quantity, setQuantity] = useState(productDetails?.min_quantity ?? 1);
-    const [totalPrice, setTotalPrice] = useState(productPrice * quantity);
-    const [totalMRPPrice, setTotalMRPPrice] = useState(productMRP * quantity);
+    const [quantity, setQuantity] = useState(1);  // Initial quantity set to 1 or fallback
+    const [totalPrice, setTotalPrice] = useState(0); 
+    const [totalMRPPrice, setTotalMRPPrice] = useState(0); 
 
     // Function to update prices based on quantity
     const updatePrices = (newQuantity) => {
@@ -38,8 +38,12 @@ const ResaleProductDetailsContent = ({ productDetails }) => {
 
     // Update prices when the product price, MRP, or quantity changes
     useEffect(() => {
-        updatePrices(quantity);
-    }, [productPrice, productMRP, quantity]);
+        if (productDetails) {
+            const initialQuantity = productDetails?.min_quantity || 1;
+            setQuantity(initialQuantity);
+            updatePrices(initialQuantity);
+        }
+    }, [productDetails, productPrice, productMRP]);
 
     return (
         <>

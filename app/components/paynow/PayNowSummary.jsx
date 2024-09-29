@@ -70,7 +70,7 @@ const PayNowSummary = () => {
                             className="pay-now-summary-info d-flex align-items-center justify-content-between"
                         >
                             <p>{productItem?.product_name}</p>
-                            <p>৳ {productItem?.unit_price}</p>
+                            <p>৳ {(productItem?.regular_price || 0) * (productItem?.quantity || 1)}</p>
                         </div>
                     ))}
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">

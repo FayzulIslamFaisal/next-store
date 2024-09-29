@@ -13,13 +13,14 @@ const Registration = () => {
     const [toggleSponsored, setToggleSponsored] = useState("self");
     const [affiliateSignup, setAffiliateSignup] = useState([]);
     const [selectedChildName, setSelectedChildName] = useState("");
+    const [selectedPlacementChildId, setSelectedPlacementChildId] = useState(0);
     const [selectedPlacementId, setSelectedPlacementId] = useState(0);
     const router = useRouter();
     const searchParams = useSearchParams();
     const referralId = searchParams.get("id");
     const referral = searchParams.get("referral");
     const refName = searchParams.get("ref_name");
-const fromPath = searchParams.get("from");
+    const fromPath = searchParams.get("from");
     const { status, data: session } = useSession();
 
     const [referrerID, setReferrerID] = useState(() => {
@@ -54,10 +55,11 @@ const fromPath = searchParams.get("from");
         setFormData((prevFormData) => ({
             ...prevFormData,
             referrer_id:
-                parseInt(referral) || parseInt(referralId) || referrerID || "",
-            placement_user_id: parseInt(selectedPlacementId) || "",
+                parseInt(referral) || parseInt(referralId) || referrerID || 0,
+            placement_user_id: parseInt(selectedPlacementChildId) || 0,
+            dropdown_child_user_id : parseInt(selectedPlacementId) || 0,
         }));
-    }, [selectedPlacementId, referralId, referral, referrerID]);
+    }, [selectedPlacementChildId, referralId, referral, referrerID, selectedPlacementId]);
 
     useEffect(() => {
         // console.log("formData========>", { formData });
@@ -79,13 +81,13 @@ const fromPath = searchParams.get("from");
         }
     };
     useEffect(() => {
-        if (affiliateSignup && selectedPlacementId) {
+        if (affiliateSignup && selectedPlacementChildId) {
             let selectedUser = affiliateSignup.find(
-                (user) => user.child.id === parseInt(selectedPlacementId)
+                (user) => user.child.id === parseInt(selectedPlacementChildId)
             );
             setSelectedChildName(selectedUser?.child);
         }
-    }, [selectedPlacementId]);
+    }, [selectedPlacementChildId]);
 
     const fetchAffiliateNewSignup = async () => {
         if (status === "authenticated") {
@@ -101,7 +103,7 @@ const fromPath = searchParams.get("from");
         }
     };
     useEffect(() => {
-        if (toggleSponsored) {
+        if (toggleSponsored == "self") {
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 referrer_id:
@@ -110,10 +112,19 @@ const fromPath = searchParams.get("from");
                     referrerID ||
                     "",
                 placement_user_id: "",
+                dropdown_child_user_id: "",
             }));
             fetchAffiliateNewSignup();
+        }else{
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                referrer_id:
+                    parseInt(referral) || parseInt(referralId) || referrerID || 0,
+                placement_user_id: parseInt(selectedPlacementChildId) || 0,
+                dropdown_child_user_id : parseInt(selectedPlacementId) || 0,
+            }));
         }
-    }, [toggleSponsored, status, session]);
+    }, [toggleSponsored]);
 
     const valideateInput = (formValue) => {
         for (const input in formValue) {
@@ -193,6 +204,16 @@ const fromPath = searchParams.get("from");
         };
         checkPhoneNumberValidity();
     }, [formData.phone]);
+
+    const handleSetPlacemnt = (e) => {
+        const selectedUserId = e.target.value;
+        const selectedUser = affiliateSignup.find(
+            (user) => user.child?.id == selectedUserId
+        );
+
+        setSelectedPlacementChildId(selectedUser?.child?.id);
+        setSelectedPlacementId(selectedUser?.id)
+    }
 
     return (
         <div className="container">
@@ -379,11 +400,7 @@ const fromPath = searchParams.get("from");
                                             className="form-select"
                                             aria-label="Default select example"
                                             id="placement"
-                                            onChange={(e) =>
-                                                setSelectedPlacementId(
-                                                    e.target.value
-                                                )
-                                            }
+                                            onChange={(e) => handleSetPlacemnt(e)}
                                         >
                                             <option>Select</option>
 

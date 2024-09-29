@@ -47,7 +47,7 @@ const ResaleBuyNowBtn = ({ product }) => {
             outlet_id: outletId,
             location_id: districtId,
             sub_total: product.resell_mrp_price * (newQuantity || 1),
-            discount_amount: 0,
+            discount_amount: (product.resell_mrp_price * newQuantity) - (product.resell_purchases_price * newQuantity),
             total_products_price: product.resell_purchases_price * (newQuantity || 1),
             total_delivery_charge: 0,
             grand_total: product.resell_purchases_price * (newQuantity || 1),
