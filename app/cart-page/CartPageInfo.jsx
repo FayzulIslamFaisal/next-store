@@ -804,18 +804,12 @@ const CartPage = () => {
                                                                 <div>
                                                                     <p>
                                                                         <strong className="product-cart-price">
-                                                                            ৳
-                                                                            {
-                                                                                price
-                                                                            }
+                                                                            ৳{" "} {price}
                                                                         </strong>
                                                                     </p>
                                                                     <p>
                                                                         <del className="product-cart-discount-price">
-                                                                            ৳
-                                                                            {
-                                                                                regularPrice
-                                                                            }
+                                                                            ৳{" "} {regularPrice}
                                                                         </del>
                                                                     </p>
 
@@ -909,6 +903,7 @@ const CartPage = () => {
                             </div>
                         </div>
                     </div>
+                    
                     <div className="col-lg-3">
                         <div className="row promo-code-section">
                             <div className="col-12">
@@ -961,7 +956,7 @@ const CartPage = () => {
                                                             fontWeight: "400",
                                                         }}
                                                     >
-                                                        (Item {selectedCount})
+                                                        ( Item {selectedCount} )
                                                     </span>
                                                 )}
                                         </p>
