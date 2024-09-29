@@ -1,7 +1,7 @@
 const PayoutSalaryDate = () => {
     return (
         <>
-            <div className="row pb-2 row-gap-2">
+            <div className="row pb-2 row-gap-2 px-3">
                 <div className="col-md-4">
                     <div className="px-3 rounded py-2 border">
                         <p>

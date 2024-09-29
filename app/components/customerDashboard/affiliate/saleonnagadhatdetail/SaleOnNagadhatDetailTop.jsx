@@ -1,4 +1,4 @@
-const SaleOnNagadhatDetailTop = () => {
+const SaleOnNagadhatDetailTop = ({ saleOnNagadhatData }) => {
     return (
         <>
             <div className="resal-top-areass p-4">
@@ -6,9 +6,13 @@ const SaleOnNagadhatDetailTop = () => {
                     <h1 className="mb-4 bg-success d-inline-block text-white px-4 py-2 fs-4 font-width-medium rounded-4 ">
                         রিসেল/পুনঃবিক্রয় চুক্তি
                     </h1>
-                    <p>
-                        এই চুক্তিটি অদ্য <strong>29 May, 2022</strong> ইং তারিখে
-                        নিম্নের দুই পক্ষের মধ্যে ঢাকায় সম্পাদিত হচ্ছে।
+                    <p className="fs-6">
+                        এই চুক্তিটি অদ্য
+                        <strong>
+                            {" "}
+                            {saleOnNagadhatData?.agreement_date || "N/A"}{" "}
+                        </strong>
+                        ইং তারিখে নিম্নের দুই পক্ষের মধ্যে ঢাকায় সম্পাদিত হচ্ছে।
                     </p>
                 </div>
                 <div className="pb-4">
@@ -16,12 +20,18 @@ const SaleOnNagadhatDetailTop = () => {
                         <strong className="bg-success px-3 text-white py-2 rounded-2 me-2">
                             প্রথম পক্ষঃ
                         </strong>
-                        <strong>Saiful Islam Akundo</strong> মোবাইল নং-{" "}
-                        <strong>01819879787</strong>, জাতিয় পরিচয় পত্র নম্বর:{" "}
-                        <strong>5513915826</strong> , ঠিকানা:{" "}
                         <strong>
-                            Mirpur Bus Stand, Dhaka, Dhaka-, Bangladesh,
-                        </strong>
+                            নাম: {saleOnNagadhatData?.first_name || "N/A"}
+                        </strong>{" "}
+                        মোবাইল নং-
+                        <strong> {saleOnNagadhatData?.phone || "N/A"} </strong>
+                        ,জাতিয় পরিচয় পত্র নম্বর:
+                        <strong>
+                            {" "}
+                            {saleOnNagadhatData?.nid_no || "N/A"}{" "}
+                        </strong>{" "}
+                        ,ঠিকানা:
+                        <strong> {saleOnNagadhatData?.address || "N/A"}</strong>
                     </p>
                 </div>
                 <div className=" pb-4">
@@ -29,7 +39,7 @@ const SaleOnNagadhatDetailTop = () => {
                         <strong className="bg-success px-3 text-white py-2 rounded-2 me-2">
                             দ্বিতীয় পক্ষঃ
                         </strong>
-                        <strong>নগদহাট বাংলাদেশ লিমিটেড,</strong>
+                        <strong> নগদহাট বাংলাদেশ লিমিটেড,</strong>
                         (পরবর্তীতে শুধু নগদহাট হিসাবে উল্লেখ করা হবে যেটি
                         কোম্পানি এ্যাক্ট ১৯৯৪ এর অধীনে গঠিত একটি প্রাইভেট
                         লিমিটেড কোম্পানি) এর পক্ষে প্রতিষ্ঠানের ব্যবস্থাপনা
@@ -43,7 +53,7 @@ const SaleOnNagadhatDetailTop = () => {
                     <p className="fs-6 lh-lg">
                         <strong className="bg-success px-3 text-white py-2 rounded-2 me-2">
                             চুক্তির উদ্দেশ্যঃ
-                        </strong>
+                        </strong>{" "}
                         নগদহাট একটি ই-কমার্স মার্কেটপ্লেস। নগদহাট বাংলাদেশ
                         লিমিটেড তার ই-কমার্স মার্কেটলেসে বিভিন্ন ভেন্ডরের পণ্য
                         B2B এর আওতায় ক্রয়-বিক্রয় করে থাকেন। প্রথম পক্ষ,

@@ -2,8 +2,6 @@ import { FcCancel } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 
 const BuybackPolicyData = ({ saleOnDetails }) => {
-    console.log("saleOnDetails", { saleOnDetails });
-
     return (
         <>
             <div className="row pb-4 px-4">
@@ -13,44 +11,31 @@ const BuybackPolicyData = ({ saleOnDetails }) => {
                             <tbody>
                                 <tr>
                                     <td>Invoice</td>
-                                    <td>
-                                        {saleOnDetails?.order_invoice || "N/A"}
-                                    </td>
+                                    <td>{saleOnDetails?.order_invoice}</td>
                                 </tr>
                                 <tr>
                                     <td>Referance No.</td>
-                                    <td>
-                                        {saleOnDetails?.package_invoice ||
-                                            "N/A"}
-                                    </td>
+                                    <td>{saleOnDetails?.package_invoice}</td>
                                 </tr>
                                 <tr>
                                     <td>Duration:</td>
-                                    <td>{saleOnDetails?.duration || "N/A"}</td>
+                                    <td>{saleOnDetails?.duration}</td>
                                 </tr>
                                 <tr>
                                     <td>Completed:</td>
-                                    <td>
-                                        {saleOnDetails?.completed_months ||
-                                            "N/A"}
-                                    </td>
+                                    <td>{saleOnDetails?.completed_months}</td>
                                 </tr>
                                 <tr>
                                     <td>Remaining:</td>
-                                    <td>
-                                        {saleOnDetails?.remaining_months ||
-                                            "N/A"}
-                                    </td>
+                                    <td>{saleOnDetails?.remaining_months}</td>
                                 </tr>
                                 <tr>
                                     <td>Date of activation:</td>
-                                    <td>
-                                        {saleOnDetails?.start_date || "N/A"}
-                                    </td>
+                                    <td>{saleOnDetails?.start_date}</td>
                                 </tr>
                                 <tr>
                                     <td>Date of completion:</td>
-                                    <td>{saleOnDetails?.end_date || "N/A"}</td>
+                                    <td>{saleOnDetails?.end_date}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -70,15 +55,11 @@ const BuybackPolicyData = ({ saleOnDetails }) => {
                                 </tr>
                                 <tr>
                                     <td>Order Value:</td>
-                                    <td>
-                                        ৳ {saleOnDetails?.order_value || "N/A"}
-                                    </td>
+                                    <td>৳ {saleOnDetails?.order_value}</td>
                                 </tr>
                                 <tr>
                                     <td>MRP Value:</td>
-                                    <td>
-                                        ৳ {saleOnDetails?.mrp_value || "N/A"}
-                                    </td>
+                                    <td>৳ {saleOnDetails?.mrp_value}</td>
                                 </tr>
                                 <tr>
                                     <td>Instalment:</td>
@@ -91,31 +72,26 @@ const BuybackPolicyData = ({ saleOnDetails }) => {
                                         ) : (
                                             <>
                                                 <FcCancel className="text-danger" />
-                                                No
+                                                After Duration:{" "}
+                                                {saleOnDetails?.duration}
                                             </>
                                         )}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Monthly Return:</td>
-                                    <td>
-                                        ৳{" "}
-                                        {saleOnDetails?.monthly_bonus || "N/A"}
-                                    </td>
+                                    <td>৳ {saleOnDetails?.monthly_bonus}</td>
                                 </tr>
                                 <tr>
                                     <td>Total Returned:</td>
-                                    <td>
-                                        ৳ {saleOnDetails?.total_given || "N/A"}
-                                    </td>
+                                    <td>৳ {saleOnDetails?.total_given}</td>
                                 </tr>
                                 <tr>
                                     <td className="text-success">
                                         Next bonus on:
                                     </td>
                                     <td className="text-success">
-                                        {saleOnDetails?.next_bonus_date ||
-                                            "N/A"}
+                                        {saleOnDetails?.next_bonus_date}
                                     </td>
                                 </tr>
                             </tbody>

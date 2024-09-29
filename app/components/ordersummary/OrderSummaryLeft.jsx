@@ -17,8 +17,8 @@ const OrderSummaryLeft = ({ orderSummary }) => {
             <div className="col-lg-5">
                 <div className="order-billing-info">
                     <div className="thank-you">
-                        {message && <h1>{message}</h1>}
-                        <p>
+                        {message && <h1 className="text-warning">{message}</h1>}
+                        <p className="text-warning">
                             Your order will be processed within 24 hours during
                             working days. We will notify you by email once your
                             order has been shipped.
