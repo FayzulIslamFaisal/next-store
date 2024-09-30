@@ -29,7 +29,7 @@ const SaleOnNagadhatWallet = ({ saleOnNagadhatData }) => {
                                 saleOnNagadhatData?.payment_history.map(
                                     (item, index) => {
                                         return (
-                                            <tr key={item?.id}>
+                                            <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
                                                 <td>
                                                     {item?.date_time || "N/A"}
