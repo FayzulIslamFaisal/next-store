@@ -1,4 +1,6 @@
+import { postWithdrawMobileBanking } from "@/app/services/affiliate-finance/postWithdrawMobileBanking";
 import mobileBankingImg from "@/public/images/mobile-banking.png";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -8,12 +10,12 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
     const [charge, setCharge] = useState(0);
     const [payable, setPayable] = useState(0);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const { data: session } = useSession();
 
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
         const maxAmount = parseInt(mobileBankingInfo?.total_withdrawable) || 0; // Get max withdrawable amount
-        console.log(maxAmount);
-        
+
         if (isNaN(inputAmount) || inputAmount <= 0) {
             setAmount("");
             setCharge(0);
@@ -21,30 +23,46 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
             setIsButtonDisabled(true);
             return;
         }
-    
+
         // If the input amount exceeds the maximum, reset to max value
         if (inputAmount > maxAmount) {
             setAmount(maxAmount);
         } else {
             setAmount(inputAmount);
         }
-    
+
         const chargeAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) * 0.1; // 10% charge
         const payableAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) - chargeAmount;
-    
+
         setCharge(chargeAmount);
         setPayable(payableAmount);
-    
+
         // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
-        if (inputAmount < 500 || 
-            inputAmount > maxAmount ||
-            !mobileBanking
-        ) {
+        if (inputAmount <= 500 || inputAmount > maxAmount || !mobileBanking) {
             setIsButtonDisabled(true);
         } else {
             setIsButtonDisabled(false);
         }
     };
+
+    const handleWithdrawRequest = async () => {
+        const selectedAccount = mobileBankingInfo?.data?.find(item => item.type == mobileBanking)?.account_number;
+
+        const data = {
+            bank_id: mobileBankingInfo?.bank_id,
+            billing_method: parseInt(mobileBanking),
+            account_number: selectedAccount,
+            amount: amount
+        };
+
+        try {
+            const response = await postWithdrawMobileBanking(session?.accessToken, data);
+            console.log("Withdrawal successful", response);
+        } catch (error) {
+            console.error("Error while withdrawing:", error);
+        }
+    };
+
     return (
         <div
             className="modal fade"
@@ -56,10 +74,7 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
             <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5
-                            className="modal-title"
-                            id="mobileBankingModalLabel"
-                        >
+                        <h5 className="modal-title" id="mobileBankingModalLabel">
                             Withdraw With Mobile Banking
                         </h5>
                         <button
@@ -82,40 +97,29 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label
-                                    className="form-label"
-                                    htmlFor="withdrawto"
-                                >
+                                <label className="form-label" htmlFor="withdrawto">
                                     Withdraw to
                                 </label>
                                 <select
                                     className="custom-select form-control"
                                     name="billing_method"
                                     required
-                                    onChange={(e)=>setMobileBanking(e.target.value)}
+                                    onChange={(e) => setMobileBanking(e.target.value)}
                                 >
                                     <option value="">
                                         Select Payment Gateway
                                     </option>
-                                    {mobileBankingInfo?.data?.map(
-                                        (item, index) => {
-                                            return (
-                                                <option
-                                                    key={index}
-                                                    value={item?.name}
-                                                >
-                                                    {item?.name}
-                                                    {item?.number}
-                                                </option>
-                                            );
-                                        }
-                                    )}
+                                    {mobileBankingInfo?.data?.map((item, index) => (
+                                        <option key={index} value={item?.type}>
+                                            {item?.name} - {item?.account_number}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="form-group">
                                 <label className="form-label">
                                     Amount{" "}
-                                    <span className="praymary-color">
+                                    <span className="primary-color">
                                         (Balance: {mobileBankingInfo?.total_withdrawable || "N/A"})
                                     </span>
                                 </label>
@@ -144,8 +148,8 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
                             </div>
 
                             <button
+                                onClick={handleWithdrawRequest}
                                 className={`w-100 add-to-cart-link border-0 ${isButtonDisabled ? 'disabled-button' : ''}`}
-                                type="submit"
                                 disabled={isButtonDisabled}
                             >
                                 Continue

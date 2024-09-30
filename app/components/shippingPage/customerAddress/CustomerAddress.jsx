@@ -15,15 +15,19 @@ import { pickUpPontes } from "@/app/services/pickupPoint";
 import { getDistrictForShipping } from "@/app/services/getDistrictForShipping";
 import DeliveryAddressModal from "./DeliveryAddressModal";
 import AddNewDeliveryAddress from "./AddNewDeliveryAddress";
+import { getAllPickUpPontes } from "@/app/services/getAllPickupPoint";
 
 const CustomerAddress = ({
   setPickUpIdForOrder,
   setShippingPrice,
   setDeliveryNote,
   customerAddress, 
-  setCustomerAddress
+  setCustomerAddress,
+  selectedDefaultAddressId, 
+  setSelectedDefaultAddressId,
+  cartProduct, 
+  setCartProduct
 }) => {
-
   const { status, data: session } = useSession();
 
   // State variables
@@ -38,7 +42,7 @@ const CustomerAddress = ({
   });
   const [isOpen, setIsOpen] = useState(false);
   const [editedAddressId, setEditAddressId] = useState(null);
-  const [cartProduct, setCartProduct] = useState([]);
+  // const [cartProduct, setCartProduct] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const [userEmail, setUserEmail] = useState("");
   const [tempEmail, setTempEmail] = useState("");
@@ -46,7 +50,7 @@ const CustomerAddress = ({
   const [pickUpPoint, setPickUpPoint] = useState([]);
   const [pickUpId, setPickUpPointId] = useState(null);
   const [districtsData, setDistrictsData] = useState([]);
-  const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(null);
+  // const [selectedDefaultAddressId, setSelectedDefaultAddressId] = useState(null);
   const [outletId, setOutletId] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("outletId") || 3;
@@ -82,7 +86,6 @@ const CustomerAddress = ({
 
 
   const handleSetDefaultAddress = (id) => {
-    setSelectedDefaultAddressId(id);
     const address = customerAddress.find((address) => address.id === id);
     setFormData({
       fullName: address?.full_name,
@@ -165,7 +168,9 @@ const CustomerAddress = ({
           const defaultAddressInfo = findObjectWithKey(data.results, "set_default", 1);
           setSelectedDefaultAddressId(defaultAddressInfo?.id);
 
-          const pickUpPoint = await pickUpPontes(outletId);
+          // const pickUpPoint = await pickUpPontes(outletId);
+          // setPickUpPoint(pickUpPoint);
+          const pickUpPoint = await getAllPickUpPontes();
           setPickUpPoint(pickUpPoint);
 
           const totalDistrict = await getDistrictForShipping();
@@ -183,28 +188,27 @@ const CustomerAddress = ({
     setUserEmail(savedEmail);
   }, [session]);
 
-  useEffect(() => {
-    const buyNowData = async () => {
-      const cartProducts = getBuyNowProductData();
-      setCartProduct(cartProducts);
-    };
-    buyNowData();
-  }, [session]);
+  // useEffect(() => {
+  //   const buyNowData = async () => {
+  //     const cartProducts = getBuyNowProductData();
+  //     setCartProduct(cartProducts);
+  //   };
+  //   buyNowData();
+  // }, [session]);
 
   const fetchShippingCharge = async () => {
-    if (cartProduct?.length > 0) {
+    if (cartProduct?.length > 0 && selectedDefaultAddressId) {
       const shippingChargeFinder = await shippingChare(
         cartProduct[0]?.product_id,
         session?.accessToken
       );
-      const shippingChargeFind =
-        shippingChargeFinder?.results?.shipping_charge;
+      const shippingChargeFind = shippingChargeFinder?.results?.shipping_charge;
       setShippingPrice(shippingChargeFind);
     }
   };
   useEffect(() => {
     fetchShippingCharge();
-  }, [cartProduct]);
+  }, [cartProduct, selectedDefaultAddressId]);
 
   // Helper functions
   const resetFormData = () => {

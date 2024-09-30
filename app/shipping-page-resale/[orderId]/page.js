@@ -102,6 +102,8 @@ const page = ({ params }) => {
                                 setDeliveryNote={setDeliveryNote}
                                 customerAddress={customerAddress}
                                 setCustomerAddress={setCustomerAddress}
+                                selectedDefaultAddressId={selectedDefaultAddressId} setSelectedDefaultAddressId={setSelectedDefaultAddressId}
+                                cartProduct={cartProduct}
                             />
 
                             {/* shows add to card product */}
