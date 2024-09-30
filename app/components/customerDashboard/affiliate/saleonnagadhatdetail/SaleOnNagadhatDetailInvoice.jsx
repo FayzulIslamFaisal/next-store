@@ -1,4 +1,4 @@
-const SaleOnNagadhatDetailInvoice = () => {
+const SaleOnNagadhatDetailInvoice = ({ saleOnNagadhatData }) => {
     return (
         <>
             <div className="resale-invoice-areass text-center p-4 pt-0">
@@ -21,24 +21,30 @@ const SaleOnNagadhatDetailInvoice = () => {
                         <tbody>
                             <tr>
                                 <th scope="row">1</th>
-                                <td>REG40626698 (29 May, 2022 | 01:08 PM)</td>
-                                <td>20,000.00</td>
-                                <td>12,000.00</td>
-                                <td className=" text-end">12,000.00</td>
+                                <td>
+                                    {saleOnNagadhatData?.invoice_no || "N/A"} (
+                                    {saleOnNagadhatData?.order_time || "N/A"})
+                                </td>
+                                <td>
+                                    {saleOnNagadhatData?.total_mrp || "N/A"}
+                                </td>
+                                <td>
+                                    {saleOnNagadhatData?.discount_amount ||
+                                        "N/A"}
+                                </td>
+                                <td className=" text-end">
+                                    {saleOnNagadhatData?.total_tp || "N/A"}
+                                </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>REG40626698 (29 May, 2022 | 01:08 PM)</td>
-                                <td>20,000.00</td>
-                                <td>12,000.00</td>
-                                <td className=" text-end">12,000.00</td>
-                            </tr>
+
                             <tr>
                                 <td colSpan={`4`} className=" text-end">
                                     <strong>Total Paid Amount</strong>
                                 </td>
                                 <td className=" text-end">
-                                    <strong>12,000.00</strong>{" "}
+                                    <strong>
+                                        {saleOnNagadhatData?.total_tp || "N/A"}
+                                    </strong>
                                 </td>
                             </tr>
                         </tbody>

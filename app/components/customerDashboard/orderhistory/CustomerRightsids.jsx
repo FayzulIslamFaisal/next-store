@@ -84,7 +84,7 @@ const CustomerRightsids = ({
                                                 <td>{grand_total}</td>
 
                                                 <td>
-                                                    {order_status ==
+                                                    {order_status ===
                                                         "Processing" &&
                                                     orderItem?.order_product_type ===
                                                         "2" ? (

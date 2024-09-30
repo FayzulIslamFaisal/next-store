@@ -1,4 +1,6 @@
-const SaleOnNagadhatDetailPay = () => {
+import NoDataFound from "@/app/components/NoDataFound";
+
+const SaleOnNagadhatDetailPay = ({ saleOnNagadhatData }) => {
     return (
         <>
             <div className=" text-center p-4 pt-0">
@@ -23,27 +25,35 @@ const SaleOnNagadhatDetailPay = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>2022-06-29</td>
-                                <td>666.67</td>
-                                <td>600.00</td>
-                                <td>Pending</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>2022-06-29</td>
-                                <td>666.67</td>
-                                <td>600.00</td>
-                                <td>Unpaid</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>2022-06-29</td>
-                                <td>666.67</td>
-                                <td>600.00</td>
-                                <td>Paid</td>
-                            </tr>
+                            {saleOnNagadhatData?.payment_history &&
+                            saleOnNagadhatData?.payment_history?.length > 0 ? (
+                                saleOnNagadhatData?.payment_history.map(
+                                    (item, index) => {
+                                        return (
+                                            <tr key={item?.id}>
+                                                <th scope="row">{index + 1}</th>
+                                                <td>
+                                                    {item?.date_time || "N/A"}
+                                                </td>
+                                                <td>
+                                                    {item?.transaction_amount ||
+                                                        "N/A"}
+                                                </td>
+                                                <td>
+                                                    {item?.payable || "N/A"}
+                                                </td>
+                                                <td> {item?.payment_status}</td>
+                                            </tr>
+                                        );
+                                    }
+                                )
+                            ) : (
+                                <tr>
+                                    <td colSpan={5}>
+                                        <NoDataFound />
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
