@@ -98,9 +98,10 @@ const SaleOnNagadhatDetailNomini = ({ saleOnNagadhatData }) => {
                             </div>
                         </div>
                     </div>
-                    <h5 className="fs-6 fw-semibold text-warning ">
-                        চুক্তির সকল শর্ত বুঝে, সুস্থ্য মস্তিষ্কে ও বিনা
-                        প্ররোচনায় স্বাক্ষীগণের উপস্থিতিতে স্বাক্ষর করিলাম,
+                    <h5 className="fs-6 fw-semibold ">
+                        উপরোক্ত সকল শর্ত বুঝে, সুস্থ মস্তিষ্কে ও বিনা
+                        প্ররোচনায়, স্বাক্ষীগণের উপস্থিতিতে আমি আমার ডিজিটাল
+                        স্বাক্ষর প্রদান করিলাম।
                     </h5>
                 </div>
             </div>

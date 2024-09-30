@@ -63,7 +63,7 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
             );
             const fullAddress = await fullAddressResponse.json();
             setIpNumber(ipNumber);
-            setIpAddress(fullAddress);
+            setIpAddress(fullAddress?.city);
         } catch (error) {
             console.error("Error fetching IP address:", error);
         }
@@ -101,7 +101,7 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
                 ip_address: ipNumber || "",
                 device: deviceName || "",
                 browser: browserInfo || "",
-                address: ipAddress || "",
+                browsing_address: ipAddress || "",
             };
             const response = await postSaleOnNagadhat(
                 saleOnData,

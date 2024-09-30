@@ -15,7 +15,7 @@ const SaleOnNagadhatDetailBottom = ({ saleOnNagadhatData }) => {
                                 maxWidth: "100px",
                                 width: "100%",
                             }}
-                            value={`Name: ${saleOnNagadhatData?.first_name} , Phone: ${saleOnNagadhatData?.phone} , Address: ${saleOnNagadhatData?.address} , NID: ${saleOnNagadhatData?.nid_no},  Agreement Date: ${saleOnNagadhatData?.agreement_date},  IP: ${saleOnNagadhatData?.ip_address}, Device: ${saleOnNagadhatData?.device}, Browser: ${saleOnNagadhatData?.browser}, Ip Address: ${saleOnNagadhatData?.browsing_address}`}
+                            value={`Name: ${saleOnNagadhatData?.first_name} , Phone: ${saleOnNagadhatData?.phone} , Address: ${saleOnNagadhatData?.address} , NID: ${saleOnNagadhatData?.nid_no},  Agreement Date: ${saleOnNagadhatData?.agreement_date_qr},  IP: ${saleOnNagadhatData?.ip_address}, Device: ${saleOnNagadhatData?.device}, Browser: ${saleOnNagadhatData?.browser}, Ip Address: ${saleOnNagadhatData?.browsing_address}`}
                         />
                     </div>
                     <p>

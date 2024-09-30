@@ -5,8 +5,7 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const PayNowSummary = () => {
-    const [orderSummary, setOrderSummary] = useState({});
+const PayNowSummary = ({ setOrderSummary, orderSummary }) => {
     const [orderProduct, setOrderProduct] = useState([]);
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
@@ -70,7 +69,11 @@ const PayNowSummary = () => {
                             className="pay-now-summary-info d-flex align-items-center justify-content-between"
                         >
                             <p>{productItem?.product_name}</p>
-                            <p>৳ {(productItem?.regular_price || 0) * (productItem?.quantity || 1)}</p>
+                            <p>
+                                ৳{" "}
+                                {(productItem?.regular_price || 0) *
+                                    (productItem?.quantity || 1)}
+                            </p>
                         </div>
                     ))}
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
