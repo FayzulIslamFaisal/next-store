@@ -3,7 +3,7 @@ import NoDataFound from "@/app/components/NoDataFound";
 const SaleOnNagadhatDetailPay = ({ saleOnNagadhatData }) => {
     return (
         <>
-            <div className=" text-center p-4 pt-0">
+            <div className="saleon-nagadhat-detail-pay text-center p-4 pt-0">
                 <h1 className="mb-4 bg-success d-inline-block text-white px-4 py-2 fs-6 font-width-medium rounded-4 ">
                     নগদহাট ডিজিটাল মার্কেট প্লেসে বিক্রিতব্য/বিক্রয়কৃত পণ্যের
                     টাকা প্রদানের সম্ভাব্য তারিখ ও টাকার বিবরণ
@@ -30,7 +30,7 @@ const SaleOnNagadhatDetailPay = ({ saleOnNagadhatData }) => {
                                 saleOnNagadhatData?.payment_history.map(
                                     (item, index) => {
                                         return (
-                                            <tr key={item?.id}>
+                                            <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
                                                 <td>
                                                     {item?.date_time || "N/A"}
