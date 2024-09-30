@@ -1,5 +1,5 @@
 "use client";
-import agent from "@/public/images/agent.png";
+import agentImg from "@/public/images/agent.png";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -10,10 +10,58 @@ const AgentWithdrawalModal = ({
 }) => {
     const [mobileBankingInfo, setMobileBankingInfo] = useState(false);
     const [bankTransferInfo, setBankTransferInfo] = useState(false);
+    const [agent, setAgent] = useState("");
+    const [amount, setAmount] = useState("");
+    const [charge, setCharge] = useState(0);
+    const [payable, setPayable] = useState(0);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
     const handleAgentMethodChange = (methodName) => {
         setMobileBankingInfo(methodName === "mobile_banking");
         setBankTransferInfo(methodName === "bank_transfer");
+        setIsButtonDisabled(!methodName); // Ensure a payment method is selected
     };
+
+    console.log(financeAgentInfo);
+
+    const handleAmountChange = (e) => {
+        const inputAmount = parseFloat(e.target.value);
+        const maxAmount = parseInt(financeAgentInfo?.total_withdrawable) || 0; // Get max withdrawable amount
+        console.log(maxAmount);
+        
+        if (isNaN(inputAmount) || inputAmount <= 0) {
+            setAmount("");
+            setCharge(0);
+            setPayable(0);
+            setIsButtonDisabled(true);
+            return;
+        }
+    
+        // If the input amount exceeds the maximum, reset to max value
+        if (inputAmount > maxAmount) {
+            setAmount(maxAmount);
+        } else {
+            setAmount(inputAmount);
+        }
+    
+        const chargeAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) * 0.1; // 10% charge
+        const payableAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) - chargeAmount;
+    
+        setCharge(chargeAmount);
+        setPayable(payableAmount);
+    
+        // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
+        if (inputAmount < 500 || 
+            inputAmount > maxAmount ||
+            !agent
+        ) {
+            setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(false);
+        }
+    };
+    
+
     return (
         <div
             className="modal fade"
@@ -43,18 +91,16 @@ const AgentWithdrawalModal = ({
                                     width={300}
                                     className="img-fluid"
                                     style={{ width: "50%" }}
-                                    src={agent}
+                                    src={agentImg}
                                     alt="Pay with agent"
                                 />
                             </div>
                             <div className="form-group">
-                                <label
-                                    className="form-label"
-                                    htmlFor="AgentName"
-                                >
+                                <label className="form-label" htmlFor="AgentName">
                                     Withdraw by
                                 </label>
                                 <select
+                                    onChange={(e) => setAgent(e.target.value)}
                                     className="custom-select form-control"
                                     name="agent_id"
                                     required
@@ -62,19 +108,11 @@ const AgentWithdrawalModal = ({
                                     <option defaultValue="Select Agent">
                                         Select Agent
                                     </option>
-                                    {financeAgentInfo?.agents &&
-                                        financeAgentInfo?.agents?.map(
-                                            (item, index) => {
-                                                return (
-                                                    <option
-                                                        key={index}
-                                                        value={item?.name}
-                                                    >
-                                                        {item?.name || "N/A"}
-                                                    </option>
-                                                );
-                                            }
-                                        )}
+                                    {financeAgentInfo?.agents?.map((item, index) => (
+                                        <option key={index} value={item?.name}>
+                                            {item?.name} {item?.number}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div id="payment_getway_selector">
@@ -82,12 +120,10 @@ const AgentWithdrawalModal = ({
                                     <label className="text-center p-1 d-flex gap-2 align-items-center">
                                         <input
                                             type="radio"
-                                            defaultChecked
                                             name="slug_tier_1"
                                             value="Cash"
-                                            onChange={() =>
-                                                handleAgentMethodChange("cash")
-                                            }
+                                            onChange={() => handleAgentMethodChange("cash")}
+                                            defaultChecked
                                         />
                                         Cash
                                     </label>
@@ -96,11 +132,7 @@ const AgentWithdrawalModal = ({
                                             type="radio"
                                             name="slug_tier_1"
                                             value="Mobile_Banking"
-                                            onChange={() =>
-                                                handleAgentMethodChange(
-                                                    "mobile_banking"
-                                                )
-                                            }
+                                            onChange={() => handleAgentMethodChange("mobile_banking")}
                                         />
                                         Mobile Banking
                                     </label>
@@ -109,78 +141,43 @@ const AgentWithdrawalModal = ({
                                             type="radio"
                                             name="slug_tier_1"
                                             value="Bank"
-                                            onChange={() =>
-                                                handleAgentMethodChange(
-                                                    "bank_transfer"
-                                                )
-                                            }
+                                            onChange={() => handleAgentMethodChange("bank_transfer")}
                                         />
                                         Bank Transfer
                                     </label>
                                 </div>
                             </div>
                             {mobileBankingInfo && (
-                                <div
-                                    className="form-group"
-                                    id="mobile_banking_billing_method_selector"
-                                >
-                                    <label
-                                        className="form-label"
-                                        htmlFor="withdrawto"
-                                    >
+                                <div className="form-group" id="mobile_banking_billing_method_selector">
+                                    <label className="form-label" htmlFor="withdrawto">
                                         Mobile Billing Method
                                     </label>
-                                    <select
-                                        className="custom-select form-control"
-                                        name="mobile_banking_billing_method"
-                                    >
+                                    <select className="custom-select form-control" name="mobile_banking_billing_method">
                                         <option defaultValue="Select Billing Method">
                                             Select Billing Method
                                         </option>
-                                        {mobileBankingList &&
-                                        mobileBankingList?.length > 0 ? (
-                                            mobileBankingList?.map(
-                                                (item, index) => (
-                                                    <option
-                                                        key={index}
-                                                        value={item?.name}
-                                                    >
-                                                        {item?.name}
-                                                    </option>
-                                                )
-                                            )
-                                        ) : (
-                                            <option
-                                                defaultValue=" No data found"
-                                                disabled
-                                            >
-                                                No data found
+                                        {mobileBankingList?.map((item, index) => (
+                                            <option key={index} value={item?.name}>
+                                                {item?.name}
+                                                {item?.number}
                                             </option>
-                                        )}
+                                        ))}
                                     </select>
                                 </div>
                             )}
 
                             {bankTransferInfo && (
-                                <div
-                                    className="form-group"
-                                    id="bank_billing_method_selector"
-                                >
-                                    <label
-                                        className="form-label"
-                                        htmlFor="withdrawto"
-                                    >
+                                <div className="form-group" id="bank_billing_method_selector">
+                                    <label className="form-label" htmlFor="withdrawto">
                                         Bank Billing Method
                                     </label>
-                                    <select
-                                        className="custom-select form-control"
-                                        name="bank_billing_method"
-                                    >
+                                    <select className="custom-select form-control" name="bank_billing_method">
                                         <option defaultValue="Select Billing Method">
                                             Select Billing Method
                                         </option>
                                         <option value={bankTransferData?.bank}>
                                             {bankTransferData?.bank}
+                                            {bankTransferData?.number}
                                         </option>
                                     </select>
                                 </div>
@@ -189,17 +186,13 @@ const AgentWithdrawalModal = ({
                             <div className="form-group">
                                 <label className="form-label">
                                     Amount{" "}
-                                    <strong>
-                                        Balance:{" "}
-                                        {financeAgentInfo?.total_withdrawable ||
-                                            "N/A"}
-                                    </strong>
+                                    <span className="praymary-color">
+                                       (Balance: {financeAgentInfo?.total_withdrawable || "N/A"})
+                                    </span>
                                 </label>
                                 <div className="input-group">
                                     <div className="input-group-prepend">
-                                        <span className="input-group-text">
-                                            ৳
-                                        </span>
+                                        <span className="input-group-text">৳</span>
                                     </div>
                                     <input
                                         type="number"
@@ -207,24 +200,30 @@ const AgentWithdrawalModal = ({
                                         name="amount"
                                         required
                                         placeholder="Enter Amount"
+                                        value={amount}
+                                        onChange={handleAmountChange}
+                                        max={financeAgentInfo?.total_withdrawable || 0} // Set maximum allowed value
+                                        min={500} // Set minimum allowed value
                                     />
                                 </div>
                             </div>
+
                             <div className="form-group paySheet">
-                                <p className="mb-0">Amount: 600</p>
-                                <p className="mb-0">Charge: 100</p>
-                                <p className="mb-0">Payable: 500</p>
+                                <p className="mb-0">Amount: {amount || 0}</p>
+                                <p className="mb-0">Charge: {charge.toFixed(2)}</p>
+                                <p className="mb-0">Payable: {payable.toFixed(2)}</p>
                             </div>
+
                             <button
-                                className="w-100 add-to-cart-link border-0"
+                                className={`w-100 add-to-cart-link border-0 ${isButtonDisabled ? 'disabled-button' : ''}`}
                                 type="submit"
+                                disabled={isButtonDisabled}
                             >
                                 Continue
                             </button>
+
                             <div>
-                                <p className="text-muted">
-                                    10% service charge applicable.
-                                </p>
+                                <p className="text-muted">10% service charge applicable.</p>
                                 <p className="text-muted">
                                     Minimum withdrawal Amount 500.00 ৳
                                 </p>

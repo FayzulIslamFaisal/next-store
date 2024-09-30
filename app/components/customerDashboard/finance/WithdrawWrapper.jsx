@@ -103,7 +103,10 @@ const WithdrawWrapper = () => {
                     />
 
                     {/* Modal 2: Mobile Banking */}
-                    <MobileBankingModal mobileBankingInfo={mobileBankingInfo} />
+                    <MobileBankingModal
+                        mobileBankingInfo={mobileBankingInfo}
+                        financeAgentInfo={financeAgentInfo}
+                    />
 
                     {/* Modal 3: Bank */}
                     <BankWithdrawalModal bankTransferInfo={bankTransferInfo} />

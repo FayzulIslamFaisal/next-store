@@ -1,7 +1,50 @@
 import bank from "@/public/images/bank.png";
 import Image from "next/image";
+import { useState } from "react";
 
 const BankWithdrawalModal = ({ bankTransferInfo }) => {
+    const [Bank, setBank] = useState('');
+    const [amount, setAmount] = useState("");
+    const [charge, setCharge] = useState(0);
+    const [payable, setPayable] = useState(0);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+    const handleAmountChange = (e) => {
+        const inputAmount = parseFloat(e.target.value);
+        const maxAmount = parseInt(bankTransferInfo?.total_withdrawable) || 0; // Get max withdrawable amount
+        console.log(maxAmount);
+        
+        if (isNaN(inputAmount) || inputAmount <= 0) {
+            setAmount("");
+            setCharge(0);
+            setPayable(0);
+            setIsButtonDisabled(true);
+            return;
+        }
+    
+        // If the input amount exceeds the maximum, reset to max value
+        if (inputAmount > maxAmount) {
+            setAmount(maxAmount);
+        } else {
+            setAmount(inputAmount);
+        }
+    
+        const chargeAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) * 0.1; // 10% charge
+        const payableAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) - chargeAmount;
+    
+        setCharge(chargeAmount);
+        setPayable(payableAmount);
+    
+        // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
+        if (inputAmount < 500 || 
+            inputAmount > maxAmount ||
+            !bank
+        ) {
+            setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(false);
+        }
+    };
     return (
         <div
             className="modal fade"
@@ -23,6 +66,7 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                             aria-label="Close"
                         ></button>
                     </div>
+
                     <div className="modal-body">
                         <div className="container d-flex gap-3 flex-column">
                             <div className="text-center">
@@ -46,28 +90,27 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                                     className="custom-select form-control"
                                     name="bank_billing_method"
                                     required
+                                    onChange={(e)=>setBank(e.target.value)}
                                 >
                                     <option defaultValue="">
                                         Select Payment Gateway
                                     </option>
                                     <option value={`${bankTransferInfo?.bank}`}>
                                         {bankTransferInfo?.bank}
+                                        {bankTransferInfo?.number}
                                     </option>
                                 </select>
                             </div>
                             <div className="form-group">
                                 <label className="form-label">
                                     Amount{" "}
-                                    <strong className="praymary-color">
-                                        ({bankTransferInfo?.total_withdrawable})
-                                    </strong>
+                                    <span className="praymary-color">
+                                        (Balance:{bankTransferInfo?.total_withdrawable})
+                                    </span>
                                 </label>
                                 <div className="input-group">
                                     <div className="input-group-prepend">
-                                        {" "}
-                                        <span className="input-group-text">
-                                            ৳
-                                        </span>{" "}
+                                        <span className="input-group-text">৳</span>
                                     </div>
                                     <input
                                         type="number"
@@ -75,27 +118,31 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                                         name="amount"
                                         required
                                         placeholder="Enter Amount"
+                                        value={amount}
+                                        onChange={handleAmountChange}
+                                        max={bankTransferInfo?.total_withdrawable || 0} // Set maximum allowed value
+                                        min={500} // Set minimum allowed value
                                     />
                                 </div>
                             </div>
+
                             <div className="form-group paySheet">
-                                <p className="mb-0">Amount: 600</p>
-                                <p className="mb-0">Charge: 100</p>
-                                <p className="mb-0">Payable: 500</p>
+                                <p className="mb-0">Amount: {amount || 0}</p>
+                                <p className="mb-0">Charge: {charge.toFixed(2)}</p>
+                                <p className="mb-0">Payable: {payable.toFixed(2)}</p>
                             </div>
+
                             <button
-                                className="w-100 add-to-cart-link border-0"
+                                className={`w-100 add-to-cart-link border-0 ${isButtonDisabled ? 'disabled-button' : ''}`}
                                 type="submit"
+                                disabled={isButtonDisabled}
                             >
                                 Continue
                             </button>
+
                             <div>
-                                <p className="text-muted">
-                                    10% service charge applicable.
-                                </p>
-                                <p className="text-muted">
-                                    Minimum withdrawal Amount 500.00 ৳
-                                </p>
+                                <p className="text-muted">10% service charge applicable.</p>
+                                <p className="text-muted">Minimum withdrawal Amount 500.00 ৳</p>
                             </div>
                         </div>
                     </div>
