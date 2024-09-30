@@ -331,3 +331,7 @@ body {
 .category-product-price .fpnh-resale-pricess span {
     color: var(--color-44BC9D);
 }
+.disabled-button {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important; /* Optional, for a visual cue */
+}
