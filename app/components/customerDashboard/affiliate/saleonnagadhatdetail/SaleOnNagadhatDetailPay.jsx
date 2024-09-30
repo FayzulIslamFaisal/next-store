@@ -42,7 +42,7 @@ const SaleOnNagadhatDetailPay = ({ saleOnNagadhatData }) => {
                                                 <td>
                                                     {item?.payable || "N/A"}
                                                 </td>
-                                                <td>------</td>
+                                                <td> {item?.payment_status}</td>
                                             </tr>
                                         );
                                     }

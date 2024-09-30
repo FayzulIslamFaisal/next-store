@@ -8,6 +8,8 @@ import SaleOnNagadhatDetailPay from "./SaleOnNagadhatDetailPay";
 import SaleOnNagadhatDetailTop from "./SaleOnNagadhatDetailTop";
 import { getSaleOnNagadhat } from "@/app/services/affiliate/getSaleOnNagadhat";
 import { useEffect, useState, useTransition } from "react";
+import LodingFixed from "@/app/components/LodingFixed";
+import NoDataFound from "@/app/components/NoDataFound";
 
 const SellOnNgadhatDetailWrapp = ({ orderId }) => {
     const [isPending, startTransition] = useTransition();
@@ -17,11 +19,12 @@ const SellOnNgadhatDetailWrapp = ({ orderId }) => {
         if (status === "authenticated" && session?.accessToken) {
             const fetchSaleOnNagadhatData = async () => {
                 try {
-                    const response = await getSaleOnNagadhat(
-                        orderId,
-                        session?.accessToken
-                    );
-                    startTransition(() => {
+                    startTransition(async () => {
+                        const response = await getSaleOnNagadhat(
+                            orderId,
+                            session?.accessToken
+                        );
+
                         setSaleOnNagadhatData(response?.results || {});
                     });
                 } catch (error) {}
@@ -33,28 +36,34 @@ const SellOnNgadhatDetailWrapp = ({ orderId }) => {
     const saleOnLength =
         saleOnNagadhatData && Object.keys(saleOnNagadhatData).length > 0;
 
-    console.log("saleOnNagadhatData", saleOnNagadhatData);
-
     return (
         <>
             <div className="customer-dashboard-order-history-area">
                 <SaleOnNagadhatDetailHeader />
-                <SaleOnNagadhatDetailTop
-                    saleOnNagadhatData={saleOnNagadhatData}
-                />
-                <SaleOnNagadhatDetailInvoice
-                    saleOnNagadhatData={saleOnNagadhatData}
-                />
-                <SaleOnNagadhatDetailPay
-                    saleOnNagadhatData={saleOnNagadhatData}
-                />
-                <SaleOnNagadhatDetailNomini
-                    saleOnNagadhatData={saleOnNagadhatData}
-                />
-                <SaleOnNagadhatDetailBottom
-                    saleOnNagadhatData={saleOnNagadhatData}
-                    orderId={orderId}
-                />
+                {isPending ? (
+                    <LodingFixed />
+                ) : saleOnLength ? (
+                    <>
+                        <SaleOnNagadhatDetailTop
+                            saleOnNagadhatData={saleOnNagadhatData}
+                        />
+                        <SaleOnNagadhatDetailInvoice
+                            saleOnNagadhatData={saleOnNagadhatData}
+                        />
+                        <SaleOnNagadhatDetailPay
+                            saleOnNagadhatData={saleOnNagadhatData}
+                        />
+                        <SaleOnNagadhatDetailNomini
+                            saleOnNagadhatData={saleOnNagadhatData}
+                        />
+                        <SaleOnNagadhatDetailBottom
+                            saleOnNagadhatData={saleOnNagadhatData}
+                            orderId={orderId}
+                        />
+                    </>
+                ) : (
+                    <NoDataFound />
+                )}
             </div>
         </>
     );
