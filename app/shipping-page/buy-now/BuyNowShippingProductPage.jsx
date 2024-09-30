@@ -48,6 +48,17 @@ const BuyNowShippingProductPage = () => {
     }
 
     useEffect(() => {
+        // Set default address ID when customerAddress changes
+        const defaultAddress = customerAddress.find(address => address.set_default === 1);
+        if (defaultAddress) {
+            setSelectedDefaultAddressId(defaultAddress.id);
+        }
+        if (pickUpIdForOrder) {
+            setSelectedDefaultAddressId(null);
+        }
+    }, [customerAddress, pickUpIdForOrder]);
+
+    useEffect(() => {
         const fetchData = async () => {
             if (session) {
                 try {
@@ -98,10 +109,10 @@ const BuyNowShippingProductPage = () => {
             product_variation_id: item.product_variation_id,
             product_shipping_charge: "", // Replace with actual shipping charge if applicable
             product_discount_type: item.discount_type,
-            product_discount_amount: item?.regular_price,
+            product_discount_amount: item?.discountPrice,
             vendor_id: "", // Replace with actual vendor ID if applicable
             thumbnail: item.product_thumbnail,
-            product_regular_price: item.discountPrice,
+            product_regular_price: item.regular_price,
         }));
 
         const payload = {
@@ -148,6 +159,8 @@ const BuyNowShippingProductPage = () => {
                                 setDeliveryNote={setDeliveryNote}
                                 customerAddress={customerAddress}
                                 setCustomerAddress={setCustomerAddress}
+                                selectedDefaultAddressId={selectedDefaultAddressId} setSelectedDefaultAddressId={setSelectedDefaultAddressId}
+                                cartProduct={cartProduct}
                             />
                             <ShippingProduct
                                 cartProduct={cartProduct}

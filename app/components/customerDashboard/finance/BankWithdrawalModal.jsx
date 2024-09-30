@@ -12,7 +12,6 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
         const maxAmount = parseInt(bankTransferInfo?.total_withdrawable) || 0; // Get max withdrawable amount
-        console.log(maxAmount);
         
         if (isNaN(inputAmount) || inputAmount <= 0) {
             setAmount("");
