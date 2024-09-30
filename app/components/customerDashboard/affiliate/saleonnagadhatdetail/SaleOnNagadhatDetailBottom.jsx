@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 const SaleOnNagadhatDetailBottom = ({ saleOnNagadhatData }) => {
     return (
         <>
-            <div className="d-flex gap-4 justify-content-between px-4 pt-0 pb-5">
+            <div className="saleon-nagadhat-detail-bottom d-flex gap-4 justify-content-between px-4 pt-0 pb-5">
                 <div className="">
                     <h4 className=" fs-4">প্রথম পক্ষ</h4>
                     <div className="pt-2 pb-4">
@@ -42,7 +42,7 @@ const SaleOnNagadhatDetailBottom = ({ saleOnNagadhatData }) => {
                     </p>
                 </div>
             </div>
-            <div className=" sale-on-agreement-print d-flex align-items-center justify-content-center gap-3 pb-4">
+            <div className="sale-on-agreement-print d-flex align-items-center justify-content-center gap-3 pb-4">
                 <button
                     onClick={() => window.print()}
                     className="btn btn-dark"

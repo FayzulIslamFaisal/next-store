@@ -38,7 +38,7 @@ const SellOnNgadhatDetailWrapp = ({ orderId }) => {
 
     return (
         <>
-            <div className="customer-dashboard-order-history-area">
+            <div className="customer-dashboard-order-history-area main-sale-on-sections">
                 <SaleOnNagadhatDetailHeader />
                 {isPending ? (
                     <LodingFixed />
@@ -58,7 +58,6 @@ const SellOnNgadhatDetailWrapp = ({ orderId }) => {
                         />
                         <SaleOnNagadhatDetailBottom
                             saleOnNagadhatData={saleOnNagadhatData}
-                            orderId={orderId}
                         />
                     </>
                 ) : (
