@@ -1,7 +1,8 @@
 "use client";
+import { postAgentWithdraw } from "@/app/services/affiliate-finance/postAgentWithdraw";
 import agentImg from "@/public/images/agent.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AgentWithdrawalModal = ({
     financeAgentInfo,
@@ -22,11 +23,10 @@ const AgentWithdrawalModal = ({
         setIsButtonDisabled(!methodName); // Ensure a payment method is selected
     };
 
-    console.log(financeAgentInfo);
+    const maxAmount = parseInt(financeAgentInfo?.total_withdrawable) || 0; // Get max withdrawable amount
 
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
-        const maxAmount = parseInt(financeAgentInfo?.total_withdrawable) || 0; // Get max withdrawable amount
         console.log(maxAmount);
         
         if (isNaN(inputAmount) || inputAmount <= 0) {
@@ -58,6 +58,34 @@ const AgentWithdrawalModal = ({
             setIsButtonDisabled(true);
         } else {
             setIsButtonDisabled(false);
+        }
+    };
+
+    useEffect(()=>{
+        // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
+        if (amount < 500 || amount > maxAmount || !agent) {
+            setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(false);
+        }
+    },[amount, agent])
+
+    const handleWithdrawRequest = async () => {
+        const selectedAccount = mobileBankingInfo?.data?.find(item => item.type == agent)?.account_number;
+
+        const data = {
+            bank_id: mobileBankingInfo?.bank_id,
+            agent_id: 18,
+            billing_method: parseInt(agent),
+            account_number: selectedAccount,
+            amount: amount
+        };
+
+        try {
+            const response = await postAgentWithdraw(session?.accessToken, data);
+            console.log("Withdrawal successful", response);
+        } catch (error) {
+            console.error("Error while withdrawing:", error);
         }
     };
     
@@ -109,8 +137,8 @@ const AgentWithdrawalModal = ({
                                         Select Agent
                                     </option>
                                     {financeAgentInfo?.agents?.map((item, index) => (
-                                        <option key={index} value={item?.name}>
-                                            {item?.name} {item?.number}
+                                        <option key={index} value={item?.type}>
+                                            {item?.name} - {item?.phone}
                                         </option>
                                     ))}
                                 </select>
@@ -158,8 +186,7 @@ const AgentWithdrawalModal = ({
                                         </option>
                                         {mobileBankingList?.map((item, index) => (
                                             <option key={index} value={item?.name}>
-                                                {item?.name}
-                                                {item?.number}
+                                                {item?.name} - {item?.account_number}
                                             </option>
                                         ))}
                                     </select>
@@ -176,8 +203,7 @@ const AgentWithdrawalModal = ({
                                             Select Billing Method
                                         </option>
                                         <option value={bankTransferData?.bank}>
-                                            {bankTransferData?.bank}
-                                            {bankTransferData?.number}
+                                            {bankTransferData?.name} - {bankTransferData?.account_number}
                                         </option>
                                     </select>
                                 </div>
@@ -215,6 +241,7 @@ const AgentWithdrawalModal = ({
                             </div>
 
                             <button
+                                onClick={handleWithdrawRequest}
                                 className={`w-100 add-to-cart-link border-0 ${isButtonDisabled ? 'disabled-button' : ''}`}
                                 type="submit"
                                 disabled={isButtonDisabled}
