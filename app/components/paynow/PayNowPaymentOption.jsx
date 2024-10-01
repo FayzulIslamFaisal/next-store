@@ -35,6 +35,26 @@ const PayNowPaymentOption = ({ orderSummary }) => {
         { id: "sslcommerz", src: "/images/sslcommerz.png", alt: "SSLCommerz" },
     ];
 
+    //filteredPaymentOptions order_product_type === "2"
+
+    const filteredPaymentOptions =
+        orderSummary?.order_product_type === "2"
+            ? paymentOptions
+                  .map((option) =>
+                      option.id === "cashOnDelivery"
+                          ? {
+                                id: "cashOnDelivery",
+                                src: "/images/Pay-Later.png",
+                                alt: "Pay later",
+                            }
+                          : option
+                  )
+                  .filter(
+                      (option) =>
+                          option.id !== "bkash" && option.id !== "sslcommerz"
+                  )
+            : paymentOptions;
+
     const handleOptionClick = (optionId) => {
         if (optionId === "cashOnDelivery") {
             setSelectedOption(optionId);
@@ -79,13 +99,14 @@ const PayNowPaymentOption = ({ orderSummary }) => {
 
     return (
         <div className="col-lg-8 col-md-12">
+            <ToastContainer />
             <div className="pay-now-payment-option-bg bg-white">
                 <div className="pay-now-payment-option-title">
                     <h1>Select a payment option</h1>
                 </div>
 
                 <div className="pay-now-payment-option-img">
-                    {paymentOptions.map((option) => (
+                    {filteredPaymentOptions.map((option) => (
                         <div
                             key={option.id}
                             className={`pay-now-payment-option-img-box rounded-3 ${
@@ -156,8 +177,6 @@ const PayNowPaymentOption = ({ orderSummary }) => {
                     orderSummary={orderSummary}
                 />
             )}
-
-            <ToastContainer />
         </div>
     );
 };

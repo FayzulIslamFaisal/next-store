@@ -1,21 +1,96 @@
+"use client";
+import { getAffiliateFinanceAgents } from "@/app/services/affiliate-finance/getAffiliateFinanceAgents";
+import { postOrderFullPaymentWithAgent } from "@/app/services/placeorder/postOrderFullPaymentWithAgent";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { toast, ToastContainer } from "react-toastify";
+import { useEffect, useState, useTransition } from "react";
+
 const PayWithAgentModal = ({
     showAgentModal,
     setShowAgentModal,
     orderSummary,
 }) => {
-    // const handleSubmitAgentPayment = () => {
-    //     setShowModal(false);
-    //     toast.success("Agent payment details submitted.");
-    // };
+    const [financeAgentInfo, setFinanceAgentInfo] = useState([]);
+    const [isPending, startTransition] = useTransition();
+    const [selectedAgent, setSelectedAgent] = useState(null);
+    const [referenceNote, setReferenceNote] = useState("");
+
+    const { status, data: session } = useSession();
+    // function for FinanceAgentInfo
+    useEffect(() => {
+        if (status === "authenticated" && session?.accessToken) {
+            const fetchFinanceAgents = async () => {
+                try {
+                    startTransition(async () => {
+                        const response = await getAffiliateFinanceAgents(
+                            session?.accessToken
+                        );
+                        setFinanceAgentInfo(response?.results?.agents || []);
+                    });
+                } catch (error) {
+                    console.error("Error fetching Finance Agent data", error);
+                }
+            };
+            fetchFinanceAgents();
+        }
+    }, [status, session?.accessToken]);
+
+    const handleSelectAgent = (event) => {
+        const agentId = parseInt(event.target.value);
+        const selectedAgent = financeAgentInfo.find(
+            (agent) => agent?.agent_id === agentId
+        );
+        setSelectedAgent(selectedAgent);
+    };
+
+    //function for handleSubmitAgentPayment
+    const handleSubmitAgentPayment = async (event) => {
+        event.preventDefault();
+        if (!selectedAgent) {
+            toast.error("Please select an agent before confirming payment.");
+            return;
+        }
+        try {
+            const agentPayData = {
+                order_id: orderSummary?.order_id,
+                nh_agent_id: selectedAgent?.agent_id,
+                payment_getway: "Pay With Agent",
+                note_1: referenceNote,
+            };
+
+            const response = await postOrderFullPaymentWithAgent(
+                agentPayData,
+                session?.accessToken
+            );
+            if (!response?.error) {
+                toast.success(
+                    "Agent payment details submitted successfully.",
+                    response?.message
+                );
+                setShowAgentModal(false);
+            } else {
+                toast.error(response?.message);
+            }
+        } catch (error) {
+            toast.error("Failed to submit agent payment details.");
+            console.error("Error submitting agent payment details:", error);
+        }
+    };
+
     return (
         <>
+            <ToastContainer />
             <div
                 className={`modal fade ${showAgentModal ? "show" : ""}`}
                 tabIndex="-1"
                 role="dialog"
                 style={{ display: showAgentModal ? "block" : "none" }}
             >
-                <div className="modal-dialog modal-dialog-centered" role="document">
+                <div
+                    className="modal-dialog modal-dialog-centered"
+                    role="document"
+                >
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
                             <h5 className="modal-title">Pay with Agent</h5>
@@ -28,49 +103,66 @@ const PayWithAgentModal = ({
                             </button>
                         </div>
                         <div className="modal-body">
+                            <div className="mx-auto py-3 d-flex justify-content-center align-content-center px-3">
+                                <Image
+                                    width={230}
+                                    height={75}
+                                    src="/images/Agent-Pay-1.png"
+                                    alt="Agent-Pay Image"
+                                    className=" d-block"
+                                    style={{ objectFit: "fill" }}
+                                />
+                            </div>
                             <form>
                                 <div className="form-group pb-3">
                                     <label className="pb-2">Invoice</label>
                                     <input
                                         type="text"
+                                        value={orderSummary?.invoice}
                                         className="form-control focus-ring focus-ring-light"
-                                        // value={agentPaymentDetails.agentId}
-                                        // onChange={(e) =>
-                                        //     setAgentPaymentDetails((prev) => ({
-                                        //         ...prev,
-                                        //         agentId: e.target.value,
-                                        //     }))
-                                        // }
+                                        readOnly
+                                        disabled
                                     />
                                 </div>
                                 <div className="form-group pb-3">
                                     <label className="pb-2">Agent</label>
-                                    <select class="form-select focus-ring focus-ring-light">
-                                        <option>IFIC select</option>
-                                        <option>Bkash select</option>
-                                        <option>Nagad select</option>
+                                    <select
+                                        className="form-select focus-ring focus-ring-light"
+                                        onChange={handleSelectAgent}
+                                    >
+                                        <option>Select Agent</option>
+                                        {financeAgentInfo.length > 0 ? (
+                                            financeAgentInfo.map((item) => (
+                                                <option
+                                                    key={item.agent_id}
+                                                    value={item.agent_id}
+                                                >
+                                                    {item.name} ({item.phone})
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option disabled>
+                                                No agents available
+                                            </option>
+                                        )}
                                     </select>
-                                    {/* <input
-                                        type="text"
-                                        className="form-control"
-                                        value={agentPaymentDetails.agentName}
-                                        onChange={(e) =>
-                                            setAgentPaymentDetails((prev) => ({
-                                                ...prev,
-                                                agentName: e.target.value,
-                                            }))
-                                        }
-                                    /> */}
                                 </div>
-                                <div className="form-group pb-3">
-                                    <h5>Payment Summary:</h5>
-                                    <p>
-                                        Please pay ৳ 500000 to the following
-                                        agent and wait for confirmation.
-                                    </p>
-                                    <p>Agent Name: Alisha Affairs,</p>
-                                    <p>Phone: 01868062329.</p>
-                                </div>
+                                {selectedAgent && (
+                                    <div className="form-group pb-3">
+                                        <h5>Payment Summary:</h5>
+                                        <p>
+                                            Please pay ৳{" "}
+                                            {orderSummary?.grand_total} to the
+                                            following agent and wait for
+                                            confirmation.
+                                        </p>
+                                        <p>
+                                            Agent Name: {selectedAgent?.name},
+                                        </p>
+                                        <p>Phone: {selectedAgent?.phone}</p>
+                                    </div>
+                                )}
+
                                 <div className="form-group pb-3">
                                     <label className="pb-2">
                                         Reference (optional)
@@ -78,15 +170,11 @@ const PayWithAgentModal = ({
                                     <input
                                         type="text"
                                         className="form-control focus-ring focus-ring-light"
-                                        // value={
-                                        //     agentPaymentDetails.transactionId
-                                        // }
-                                        // onChange={(e) =>
-                                        //     setAgentPaymentDetails((prev) => ({
-                                        //         ...prev,
-                                        //         transactionId: e.target.value,
-                                        //     }))
-                                        // }
+                                        name="note_1"
+                                        value={referenceNote}
+                                        onChange={(e) =>
+                                            setReferenceNote(e.target.value)
+                                        }
                                     />
                                 </div>
                             </form>
@@ -100,9 +188,14 @@ const PayWithAgentModal = ({
                                 Close
                             </button>
                             <button
-                                type="button"
+                                type="submit"
+                                onClick={handleSubmitAgentPayment}
+                                style={{
+                                    cursor: selectedAgent
+                                        ? "pointer"
+                                        : "not-allowed",
+                                }}
                                 className="add-to-cart-link border-0 rounded-2"
-                                // onClick={handleSubmitAgentPayment}
                             >
                                 Confirm Payment
                             </button>
