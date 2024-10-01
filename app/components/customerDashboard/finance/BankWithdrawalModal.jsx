@@ -1,18 +1,24 @@
-import bank from "@/public/images/bank.png";
+import { postWithdrawWithBank } from "@/app/services/affiliate-finance/postWithdrawWithBank";
+import bankImg from "@/public/images/bank.png";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 const BankWithdrawalModal = ({ bankTransferInfo }) => {
-    const [Bank, setBank] = useState('');
-    const [amount, setAmount] = useState("");
+    const [bank, setBank] = useState('');
+    const [amount, setAmount] = useState('');
     const [charge, setCharge] = useState(0);
     const [payable, setPayable] = useState(0);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const { data: session } = useSession();
+    const route = useRouter();
+    const modalRef = useRef(null); // Reference for modal
+
+    const maxAmount = parseInt(bankTransferInfo?.total_withdrawable) || 0; // Get max withdrawable amount
 
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
-        const maxAmount = parseInt(bankTransferInfo?.total_withdrawable) || 0; // Get max withdrawable amount
-        
         if (isNaN(inputAmount) || inputAmount <= 0) {
             setAmount("");
             setCharge(0);
@@ -20,30 +26,54 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
             setIsButtonDisabled(true);
             return;
         }
-    
         // If the input amount exceeds the maximum, reset to max value
         if (inputAmount > maxAmount) {
             setAmount(maxAmount);
         } else {
             setAmount(inputAmount);
         }
-    
+
         const chargeAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) * 0.1; // 10% charge
         const payableAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) - chargeAmount;
-    
         setCharge(chargeAmount);
         setPayable(payableAmount);
-    
+    };
+
+    useEffect(() => {
         // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
-        if (inputAmount < 500 || 
-            inputAmount > maxAmount ||
-            !bank
-        ) {
+        if (amount < 500 || amount > maxAmount || !bank) {
             setIsButtonDisabled(true);
         } else {
             setIsButtonDisabled(false);
         }
+    }, [amount, bank])
+
+    const handleWithdrawRequest = async () => {
+        const data = {
+            bank_id: bankTransferInfo?.bank_id,
+            billing_method: "Bank",
+            account_number: bank,
+            amount: amount
+        };
+
+        try {
+            const response = await postWithdrawWithBank(session?.accessToken, data);
+            console.log("Withdrawal successful", response);
+            if (response.code === 200) {
+                // Close modal programmatically
+                const modalElement = modalRef.current;
+                if (modalElement) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide(); // Close modal
+                }
+                // Redirect to withdraw request page with withdrawal ID as parameter
+                route.push(`/finance-withdraw-request/${response.results.id}`);
+            }
+        } catch (error) {
+            console.error("Error while withdrawing:", error);
+        }
     };
+
     return (
         <div
             className="modal fade"
@@ -51,6 +81,7 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
             tabIndex="-1"
             aria-labelledby="bankModalLabel"
             aria-hidden="true"
+            ref={modalRef} // Attach ref here
         >
             <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
@@ -74,7 +105,7 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                                     width={300}
                                     className="img-fluid"
                                     style={{ width: "50%" }}
-                                    src={bank}
+                                    src={bankImg}
                                     alt="Withdraw to bank"
                                 />
                             </div>
@@ -89,14 +120,13 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                                     className="custom-select form-control"
                                     name="bank_billing_method"
                                     required
-                                    onChange={(e)=>setBank(e.target.value)}
+                                    onChange={(e) => setBank(e.target.value)}
                                 >
                                     <option defaultValue="">
                                         Select Payment Gateway
                                     </option>
-                                    <option value={`${bankTransferInfo?.bank}`}>
-                                        {bankTransferInfo?.bank}
-                                        {bankTransferInfo?.number}
+                                    <option value={`${bankTransferInfo?.account_number}`}>
+                                        {bankTransferInfo?.name} - {bankTransferInfo?.account_number}
                                     </option>
                                 </select>
                             </div>
@@ -132,8 +162,8 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                             </div>
 
                             <button
+                                onClick={handleWithdrawRequest}
                                 className={`w-100 add-to-cart-link border-0 ${isButtonDisabled ? 'disabled-button' : ''}`}
-                                type="submit"
                                 disabled={isButtonDisabled}
                             >
                                 Continue

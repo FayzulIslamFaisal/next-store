@@ -1,15 +1,19 @@
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
 
-const FinanceWithdraw = () => {
+const FinanceWithdraw = ({ params }) => {
+
+    const { id } = params;
+    console.log(id);
+    
     return (
         <div className="customer-dashboard-order-history-area">
             <FinanceTopTitle title="Withdraw Request Varifiction" />
             <div className="p-4">
-                <div class="">
-                    <h3 class=" mb-3">Summery!</h3>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <table class="table table-bordered">
+                <div>
+                    <h3 className="mb-3">Summery!</h3>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <table className="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <th>Withdraw Method :</th>
@@ -22,8 +26,8 @@ const FinanceWithdraw = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-md-6">
-                            <table class="table table-bordered">
+                        <div className="col-md-6">
+                            <table className="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <td>Amount :</td>
@@ -41,19 +45,19 @@ const FinanceWithdraw = () => {
                             </table>
                         </div>
                     </div>
-                    <hr class="py-2" />
-                    {/* <p class="text-danger">* Enter your tansaction pin to proceed.</p> */}
-                    <label for="" class="form-label">Enter your tansaction PIN to proceed. *</label>
-                    <form class="form">
-                        <div class="form-group pb-3 d-flex gap-3 align-items-center">
-                            {/* <label for="" class="form-label">PIN</label> */}
-                            <input type="number" required="" class="form-control" name="otp" placeholder="PIN"  />
-                            <button type="submit" class="ms-auto add-to-cart-link border-0">Continue</button>
+                    <hr className="py-2" />
+                    {/* <p className="text-danger">* Enter your tansaction pin to proceed.</p> */}
+                    <label for="" className="form-label">Enter your tansaction PIN to proceed. <span className="text-danger fs-5">*</span></label>
+                    <form className="form">
+                        <div className="form-group pb-3 d-flex gap-3 align-items-center">
+                            {/* <label for="" className="form-label">PIN</label> */}
+                            <input type="number" required="" className="form-control" name="otp" placeholder="PIN"  />
+                            <button type="submit" className="ms-auto add-to-cart-link border-0">Continue</button>
                         </div>
                         
-                        {/* <div class="input-group affiliate-products-search w-100">
-                            <input class="form-control" placeholder="PIN" type="search" value="" name="search" />
-                            <button class="input-group-text" id="search" >
+                        {/* <div className="input-group affiliate-products-search w-100">
+                            <input className="form-control" placeholder="PIN" type="search" value="" name="search" />
+                            <button className="input-group-text" id="search" >
                                 Continue
                             </button>
                         </div> */}

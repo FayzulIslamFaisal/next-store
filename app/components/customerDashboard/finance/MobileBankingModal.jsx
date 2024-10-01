@@ -2,7 +2,8 @@ import { postWithdrawMobileBanking } from "@/app/services/affiliate-finance/post
 import mobileBankingImg from "@/public/images/mobile-banking.png";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
 
 const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
     const [mobileBanking, setMobileBanking] = useState('');
@@ -11,10 +12,13 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
     const [payable, setPayable] = useState(0);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const { data: session } = useSession();
+    const route = useRouter();
+    const modalRef = useRef(null); // Reference for modal
+
+    const maxAmount = parseInt(mobileBankingInfo?.total_withdrawable) || 0; // Get max withdrawable amount
 
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
-        const maxAmount = parseInt(mobileBankingInfo?.total_withdrawable) || 0; // Get max withdrawable amount
 
         if (isNaN(inputAmount) || inputAmount <= 0) {
             setAmount("");
@@ -36,14 +40,16 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
 
         setCharge(chargeAmount);
         setPayable(payableAmount);
+    };
 
+    useEffect(() => {
         // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
-        if (inputAmount <= 500 || inputAmount > maxAmount || !mobileBanking) {
+        if (amount < 500 || amount > maxAmount || !mobileBanking) {
             setIsButtonDisabled(true);
         } else {
             setIsButtonDisabled(false);
         }
-    };
+    }, [amount, mobileBanking]);
 
     const handleWithdrawRequest = async () => {
         const selectedAccount = mobileBankingInfo?.data?.find(item => item.type == mobileBanking)?.account_number;
@@ -58,6 +64,17 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
         try {
             const response = await postWithdrawMobileBanking(session?.accessToken, data);
             console.log("Withdrawal successful", response);
+            if (response.code === 200) {
+                // Close modal programmatically
+                const modalElement = modalRef.current;
+                if (modalElement) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide(); // Close modal
+                }
+
+                // Redirect to withdraw request page with withdrawal ID as parameter
+                route.push(`/finance-withdraw-request/${response.results.id}`);
+            }
         } catch (error) {
             console.error("Error while withdrawing:", error);
         }
@@ -70,6 +87,7 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
             tabIndex="-1"
             aria-labelledby="mobileBankingModalLabel"
             aria-hidden="true"
+            ref={modalRef} // Attach ref here
         >
             <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
