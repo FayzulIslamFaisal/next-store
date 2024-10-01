@@ -4,10 +4,11 @@ import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
 import { truncateTitle } from "@/app/utils";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
-const PayNowSummary = ({ setOrderSummary, orderSummary }) => {
+const PayNowSummary = ({ setOrderSummary, orderSummary, startTransition }) => {
     const [orderProduct, setOrderProduct] = useState([]);
+
     const { data: session, status } = useSession();
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderId");
@@ -17,25 +18,30 @@ const PayNowSummary = ({ setOrderSummary, orderSummary }) => {
         if (status === "authenticated" && orderId) {
             const fetchOrderSummary = async () => {
                 try {
-                    let orderData;
-                    if (orderProductType === "3") {
-                        orderData = await getContainerOrderSummery(
-                            orderId,
-                            session?.accessToken
-                        );
-                    } else {
-                        orderData = await getProductOrderSummery(
-                            orderId,
-                            session?.accessToken
-                        );
-                    }
+                    startTransition(async () => {
+                        let orderData;
+                        if (orderProductType === "3") {
+                            orderData = await getContainerOrderSummery(
+                                orderId,
+                                session?.accessToken
+                            );
+                        } else {
+                            orderData = await getProductOrderSummery(
+                                orderId,
+                                session?.accessToken
+                            );
+                        }
 
-                    if (orderData && orderData?.results) {
-                        setOrderSummary(orderData?.results);
-                        setOrderProduct(orderData?.results?.products || []);
-                    } else {
-                        console.error("Invalid response format:", orderData);
-                    }
+                        if (orderData && orderData?.results) {
+                            setOrderSummary(orderData?.results);
+                            setOrderProduct(orderData?.results?.products || []);
+                        } else {
+                            console.error(
+                                "Invalid response format:",
+                                orderData
+                            );
+                        }
+                    });
                 } catch (error) {
                     console.error("Failed to fetch order summary:", error);
                 }
