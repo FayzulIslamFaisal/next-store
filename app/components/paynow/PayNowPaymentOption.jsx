@@ -8,10 +8,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { postOderPayment } from "@/app/services/postOderPayment";
 import { useSession } from "next-auth/react";
 import PayWithAgentModal from "./PayWithAgentModal";
+import DefaultLoader from "../defaultloader/DefaultLoader";
 
-const PayNowPaymentOption = ({ orderSummary }) => {
+const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     const [selectedOption, setSelectedOption] = useState("");
     const [showAgentModal, setShowAgentModal] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderId");
     const { status, data: session } = useSession();
@@ -56,6 +58,11 @@ const PayNowPaymentOption = ({ orderSummary }) => {
             : paymentOptions;
 
     const handleOptionClick = (optionId) => {
+        if (!isTermsChecked) {
+            toast.error("Please first check the terms and conditions.");
+            setErrorMsg("Please first check the terms and conditions.");
+            return; // Exit early if terms are not checked
+        }
         if (optionId === "cashOnDelivery") {
             setSelectedOption(optionId);
         } else if (optionId === "payWithAgent") {
@@ -104,31 +111,39 @@ const PayNowPaymentOption = ({ orderSummary }) => {
                 <div className="pay-now-payment-option-title">
                     <h1>Select a payment option</h1>
                 </div>
-
-                <div className="pay-now-payment-option-img">
-                    {filteredPaymentOptions.map((option) => (
-                        <div
-                            key={option.id}
-                            className={`pay-now-payment-option-img-box rounded-3 ${
-                                selectedOption === option.id ? "selected" : ""
-                            }`}
-                            onClick={() => handleOptionClick(option.id)}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <div className="pay-now-payment-option-img-item">
-                                <Image
-                                    fill={true}
-                                    src={option.src}
-                                    className="img-fluid"
-                                    alt={option.alt}
-                                />
+                {isPending ? (
+                    <DefaultLoader />
+                ) : (
+                    <div className="pay-now-payment-option-img">
+                        {filteredPaymentOptions.map((option) => (
+                            <div
+                                key={option.id}
+                                className={`pay-now-payment-option-img-box rounded-3 ${
+                                    selectedOption === option.id
+                                        ? "selected"
+                                        : ""
+                                }`}
+                                onClick={() => handleOptionClick(option.id)}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <div className="pay-now-payment-option-img-item">
+                                    <Image
+                                        fill={true}
+                                        src={option.src}
+                                        className="img-fluid"
+                                        alt={option.alt}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <div className="pay-now-terms-condition-area">
                 <div className="pay-now-terms-condition">
+                    {errorMsg && !isTermsChecked && (
+                        <p className="text-danger pb-2">{errorMsg}</p>
+                    )}
                     <div className="mb-3 form-check">
                         <input
                             type="checkbox"
