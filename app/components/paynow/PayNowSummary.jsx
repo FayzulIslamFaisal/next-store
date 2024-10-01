@@ -1,6 +1,7 @@
 "use client";
 import { getContainerOrderSummery } from "@/app/services/affiliate/getContainerOrderSummery";
 import { getProductOrderSummery } from "@/app/services/getProductOrderSummery";
+import { truncateTitle } from "@/app/utils";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -54,10 +55,12 @@ const PayNowSummary = ({ setOrderSummary, orderSummary }) => {
                 </div>
                 <div className="pay-now-summary-body">
                     <div className="pay-now-summary-cash-on-bg">
-                        <p className="rounded-1">
-                            Only cash on delivery is available for these
-                            products
-                        </p>
+                        {setOrderSummary?.order_product_type === "1" && (
+                            <p className="rounded-1">
+                                Only cash on delivery is available for these
+                                products
+                            </p>
+                        )}
                     </div>
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
                         <strong>Product</strong>
@@ -68,7 +71,9 @@ const PayNowSummary = ({ setOrderSummary, orderSummary }) => {
                             key={index}
                             className="pay-now-summary-info d-flex align-items-center justify-content-between"
                         >
-                            <p>{productItem?.product_name}</p>
+                            <p>
+                                {truncateTitle(productItem?.product_name, 24)}
+                            </p>
                             <p>
                                 ৳{" "}
                                 {(productItem?.regular_price || 0) *
@@ -99,12 +104,15 @@ const PayNowSummary = ({ setOrderSummary, orderSummary }) => {
                             {/* <button className="btn btn-dark">Apply</button> */}
                         </div>
                     </div>
-                    <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
-                        <strong>
-                            Total Shipping <br /> (*Applicable)
-                        </strong>
-                        <p>৳ {orderSummary?.total_delivery_charge}</p>
-                    </div>
+                    {setOrderSummary?.order_product_type === "1" && (
+                        <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
+                            <strong>
+                                Total Shipping <br /> (*Applicable)
+                            </strong>
+                            <p>৳ {orderSummary?.total_delivery_charge}</p>
+                        </div>
+                    )}
+
                     <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
                         <strong>Total</strong>
                         <strong>৳ {orderSummary?.grand_total}</strong>

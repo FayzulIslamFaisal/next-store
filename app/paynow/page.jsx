@@ -11,8 +11,8 @@ const PayNowPage = () => {
                     <div className="container">
                         <PayNowTopIcon />
                         <PayNowDetails />
-                        <Service  />
                     </div>
+                    <Service />
                 </div>
             </PrivateRoute>
         </>

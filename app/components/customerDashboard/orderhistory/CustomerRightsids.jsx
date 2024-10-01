@@ -135,18 +135,20 @@ const CustomerRightsids = ({
                                                 <td className="paid">
                                                     {order_status !==
                                                         "Canceled" &&
-                                                        payment_status ===
-                                                            "Unpaid" && (
-                                                            <>
-                                                                {payment_status}
-                                                                <Link
-                                                                    href={`/paynow?orderId=${order_id}`}
-                                                                    className="customer-dashboard-order-history-pay"
-                                                                >
-                                                                    Pay Now
-                                                                </Link>
-                                                            </>
-                                                        )}
+                                                    payment_status !==
+                                                        "Paid" ? (
+                                                        <>
+                                                            {payment_status}
+                                                            <Link
+                                                                href={`/paynow?orderId=${order_id}`}
+                                                                className="customer-dashboard-order-history-pay"
+                                                            >
+                                                                Pay Now
+                                                            </Link>
+                                                        </>
+                                                    ) : (
+                                                        payment_status
+                                                    )}
                                                 </td>
 
                                                 <td>
