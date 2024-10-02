@@ -70,6 +70,7 @@ const PayWithAgentModal = ({
                     response?.message
                 );
                 setShowAgentModal(false);
+                router.push(`/thankyou?orderId=${orderId}`);
             } else {
                 toast.error(response?.message);
             }

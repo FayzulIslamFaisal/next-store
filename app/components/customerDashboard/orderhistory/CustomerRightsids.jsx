@@ -135,8 +135,9 @@ const CustomerRightsids = ({
                                                 <td className="paid">
                                                     {order_status !==
                                                         "Canceled" &&
+                                                    payment_status !== "Paid" &&
                                                     payment_status !==
-                                                        "Paid" ? (
+                                                        "Under Review" ? (
                                                         <>
                                                             {payment_status}
                                                             <Link
