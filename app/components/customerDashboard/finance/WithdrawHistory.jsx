@@ -40,20 +40,13 @@ const WithdrawHistory = async () => {
                                     <td className="text-end">{item.amount}</td>
                                     <td className="text-end">{item.charge}</td>
                                     <td className="text-end">{item.payable}</td>
-                                    <td
-                                        className={
-                                            item.status === "Completed"
-                                                ? "paid"
-                                                : "pending"
-                                        }
-                                    >
+                                    <td className={item.status === "Completed"? "paid" : "pending"}>
                                         {item.status}
                                     </td>
-                                    
-                                            <WithdrawHistoryBtn
-                                                item={item}
-                                                token={session.accessToken}
-                                            />
+                                    <WithdrawHistoryBtn
+                                        item={item}
+                                        token={session.accessToken}
+                                    />
                                 </tr>
                             ))}
                         </tbody>
