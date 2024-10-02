@@ -44,13 +44,6 @@ const MobileNav = () => {
         }
     }, []);
 
-    if (status === "loading") {
-        return (
-            <div className=" d-flex align-items-center justify-content-center vh-100">
-                <h1 className="text-center">Loading... </h1>;
-            </div>
-        );
-    }
 
     return (
         <div className="row mobile-nav-row-area">

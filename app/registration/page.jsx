@@ -154,12 +154,15 @@ const Registration = () => {
                 const res = await registerUser(formData);
 
                 if (res?.success != true) {
+                    // if (res.message == "Phone Already Exists! You do not verify your OTP OT Delete Customer API Call!") {
+                    //     router.push(`/otp?phone=${formData.phone}`);
+                    //     return;
+                    // }
                     alert(res.message);
                     return;
                 }
 
                 localStorage.removeItem("referrerID");
-
                 router.push(`/otp?phone=${formData.phone}`);
             } catch (error) {
                 alert("Something went wrong. Please try after sometime");
