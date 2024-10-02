@@ -1,34 +1,35 @@
 "use client";
 import { postAgentWithdraw } from "@/app/services/affiliate-finance/postAgentWithdraw";
 import agentImg from "@/public/images/agent.png";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const AgentWithdrawalModal = ({
     financeAgentInfo,
     mobileBankingList,
     bankTransferData,
 }) => {
-    const [mobileBankingInfo, setMobileBankingInfo] = useState(false);
-    const [bankTransferInfo, setBankTransferInfo] = useState(false);
-    const [agent, setAgent] = useState("");
+    const [agentWithdrawMethod, setAgentWithdrawMethod] = useState(1);
+    const [agentId, setAgentId] = useState(null);
     const [amount, setAmount] = useState("");
     const [charge, setCharge] = useState(0);
     const [payable, setPayable] = useState(0);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const { data: session } = useSession();
+    const route = useRouter();
+    const modalRef = useRef(null); // Reference for modal
 
-    const handleAgentMethodChange = (methodName) => {
-        setMobileBankingInfo(methodName === "mobile_banking");
-        setBankTransferInfo(methodName === "bank_transfer");
-        setIsButtonDisabled(!methodName); // Ensure a payment method is selected
-    };
+    console.log(financeAgentInfo);
 
     const maxAmount = parseInt(financeAgentInfo?.total_withdrawable) || 0; // Get max withdrawable amount
 
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
         console.log(maxAmount);
-        
+
         if (isNaN(inputAmount) || inputAmount <= 0) {
             setAmount("");
             setCharge(0);
@@ -36,24 +37,24 @@ const AgentWithdrawalModal = ({
             setIsButtonDisabled(true);
             return;
         }
-    
+
         // If the input amount exceeds the maximum, reset to max value
         if (inputAmount > maxAmount) {
             setAmount(maxAmount);
         } else {
             setAmount(inputAmount);
         }
-    
+
         const chargeAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) * 0.1; // 10% charge
         const payableAmount = (inputAmount > maxAmount ? maxAmount : inputAmount) - chargeAmount;
-    
+
         setCharge(chargeAmount);
         setPayable(payableAmount);
-    
+
         // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
-        if (inputAmount < 500 || 
+        if (inputAmount < 500 ||
             inputAmount > maxAmount ||
-            !agent
+            !agentId
         ) {
             setIsButtonDisabled(true);
         } else {
@@ -61,34 +62,44 @@ const AgentWithdrawalModal = ({
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         // Disable button if amount is less than minimum, exceeds balance, or agent is not selected
-        if (amount < 500 || amount > maxAmount || !agent) {
+        if (amount < 500 || amount > maxAmount || !agentId || !agentWithdrawMethod) {
             setIsButtonDisabled(true);
         } else {
             setIsButtonDisabled(false);
         }
-    },[amount, agent])
+    }, [amount, agentId, agentWithdrawMethod])
 
     const handleWithdrawRequest = async () => {
-        const selectedAccount = mobileBankingInfo?.data?.find(item => item.type == agent)?.account_number;
-
         const data = {
-            bank_id: mobileBankingInfo?.bank_id,
-            agent_id: 18,
-            billing_method: parseInt(agent),
-            account_number: selectedAccount,
+            bank_id: financeAgentInfo?.bank_id,
+            agent_id: parseInt(agentId),
+            billing_method: "Nagadhat Agent",
+            account_number: agentWithdrawMethod,
             amount: amount
         };
 
         try {
             const response = await postAgentWithdraw(session?.accessToken, data);
-            console.log("Withdrawal successful", response);
+            if (response.code === 200) {
+                // Close modal programmatically
+                const modalElement = modalRef.current;
+                if (modalElement) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide(); // Close modal
+                }
+                // Redirect to withdraw request page with withdrawal ID as parameter
+                route.push(`/finance-withdraw-request/${response.results.id}`);
+            } else {
+                toast.error(response.message)
+                console.log("Withdrawal error", response);
+            }
         } catch (error) {
             console.error("Error while withdrawing:", error);
         }
     };
-    
+
 
     return (
         <div
@@ -97,6 +108,7 @@ const AgentWithdrawalModal = ({
             tabIndex="-1"
             aria-labelledby="agentModalLabel"
             aria-hidden="true"
+            ref={modalRef} // Attach ref here
         >
             <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
@@ -128,7 +140,7 @@ const AgentWithdrawalModal = ({
                                     Withdraw by
                                 </label>
                                 <select
-                                    onChange={(e) => setAgent(e.target.value)}
+                                    onChange={(e) => setAgentId(e.target.value)}
                                     className="custom-select form-control"
                                     name="agent_id"
                                     required
@@ -136,8 +148,8 @@ const AgentWithdrawalModal = ({
                                     <option defaultValue="Select Agent">
                                         Select Agent
                                     </option>
-                                    {financeAgentInfo?.agents?.map((item, index) => (
-                                        <option key={index} value={item?.type}>
+                                    {financeAgentInfo?.agents?.map((item) => (
+                                        <option key={item?.agent_id} value={item?.agent_id}>
                                             {item?.name} - {item?.phone}
                                         </option>
                                     ))}
@@ -150,7 +162,7 @@ const AgentWithdrawalModal = ({
                                             type="radio"
                                             name="slug_tier_1"
                                             value="Cash"
-                                            onChange={() => handleAgentMethodChange("cash")}
+                                            onChange={() => setAgentWithdrawMethod(1)}
                                             defaultChecked
                                         />
                                         Cash
@@ -160,7 +172,7 @@ const AgentWithdrawalModal = ({
                                             type="radio"
                                             name="slug_tier_1"
                                             value="Mobile_Banking"
-                                            onChange={() => handleAgentMethodChange("mobile_banking")}
+                                            onChange={() => setAgentWithdrawMethod(2)}
                                         />
                                         Mobile Banking
                                     </label>
@@ -169,13 +181,13 @@ const AgentWithdrawalModal = ({
                                             type="radio"
                                             name="slug_tier_1"
                                             value="Bank"
-                                            onChange={() => handleAgentMethodChange("bank_transfer")}
+                                            onChange={() => setAgentWithdrawMethod(3)}
                                         />
                                         Bank Transfer
                                     </label>
                                 </div>
                             </div>
-                            {mobileBankingInfo && (
+                            {agentWithdrawMethod == 2 && (
                                 <div className="form-group" id="mobile_banking_billing_method_selector">
                                     <label className="form-label" htmlFor="withdrawto">
                                         Mobile Billing Method
@@ -193,7 +205,7 @@ const AgentWithdrawalModal = ({
                                 </div>
                             )}
 
-                            {bankTransferInfo && (
+                            {agentWithdrawMethod == 3 && (
                                 <div className="form-group" id="bank_billing_method_selector">
                                     <label className="form-label" htmlFor="withdrawto">
                                         Bank Billing Method
@@ -213,7 +225,7 @@ const AgentWithdrawalModal = ({
                                 <label className="form-label">
                                     Amount{" "}
                                     <span className="praymary-color">
-                                       (Balance: {financeAgentInfo?.total_withdrawable || "N/A"})
+                                        (Balance: {financeAgentInfo?.total_withdrawable || "N/A"})
                                     </span>
                                 </label>
                                 <div className="input-group">
@@ -234,11 +246,13 @@ const AgentWithdrawalModal = ({
                                 </div>
                             </div>
 
-                            <div className="form-group paySheet">
-                                <p className="mb-0">Amount: {amount || 0}</p>
-                                <p className="mb-0">Charge: {charge.toFixed(2)}</p>
-                                <p className="mb-0">Payable: {payable.toFixed(2)}</p>
-                            </div>
+                            { amount && (
+                                <div className="form-group paySheet">
+                                    <p className="mb-0">Amount: {amount || 0}</p>
+                                    <p className="mb-0">Charge: {charge.toFixed(2)}</p>
+                                    <p className="mb-0">Payable: {payable.toFixed(2)}</p>
+                                </div>
+                            )}
 
                             <button
                                 onClick={handleWithdrawRequest}

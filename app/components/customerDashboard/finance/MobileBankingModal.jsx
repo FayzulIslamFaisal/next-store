@@ -159,11 +159,13 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group paySheet">
-                                <p className="mb-0">Amount: {amount || 0}</p>
-                                <p className="mb-0">Charge: {charge.toFixed(2)}</p>
-                                <p className="mb-0">Payable: {payable.toFixed(2)}</p>
-                            </div>
+                            { amount && (
+                                <div className="form-group paySheet">
+                                    <p className="mb-0">Amount: {amount || 0}</p>
+                                    <p className="mb-0">Charge: {charge.toFixed(2)}</p>
+                                    <p className="mb-0">Payable: {payable.toFixed(2)}</p>
+                                </div>
+                            )}
 
                             <button
                                 onClick={handleWithdrawRequest}
