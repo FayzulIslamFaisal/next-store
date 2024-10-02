@@ -78,7 +78,6 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
             setShowAgentModal(true);
         } else if (optionId === "bankDeposit") {
             setSelectedOption(optionId);
-            setShowBankModal(true);
         } else {
             toast.error("This payment option is not available at the moment.");
         }
@@ -147,16 +146,6 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                )}
-                {selectedOption === "bankDeposit" && (
-                    <div className="d-flex justify-content-center pb-5">
-                        <button
-                            onClick={() => setShowBankModal(true)}
-                            className="add-to-cart-link border-0"
-                        >
-                            Pay With Payment
-                        </button>
                     </div>
                 )}
             </div>

@@ -1,3 +1,9 @@
+import dynamic from "next/dynamic";
+import PayWithBankModalLeft from "./PayWithBankModalLeft";
+const PayWithBankModalRight = dynamic(() => import("./PayWithBankModalRight"), {
+    ssr: false,
+});
+
 const PayWithBankModal = ({ setShowBankModal, showBankModal }) => {
     return (
         <>
@@ -8,10 +14,12 @@ const PayWithBankModal = ({ setShowBankModal, showBankModal }) => {
                 aria-hidden="true"
                 style={{ display: showBankModal ? "block" : "none" }}
             >
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5">Modal title</h1>
+                            <h1 className="modal-title fs-5">
+                                Submit Payment Details
+                            </h1>
                             <button
                                 type="button"
                                 className="btn-close"
@@ -20,18 +28,20 @@ const PayWithBankModal = ({ setShowBankModal, showBankModal }) => {
                                 onClick={() => setShowBankModal(false)}
                             ></button>
                         </div>
-                        <div className="modal-body">...</div>
+                        <div className="modal-body">
+                            <div className="row">
+                                <PayWithBankModalLeft />
+                                <PayWithBankModalRight />
+                            </div>
+                        </div>
                         <div className="modal-footer">
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="btn btn-danger"
                                 data-bs-dismiss="modal"
                                 onClick={() => setShowBankModal(false)}
                             >
                                 Close
-                            </button>
-                            <button type="button" className="btn btn-primary">
-                                Save changes
                             </button>
                         </div>
                     </div>
