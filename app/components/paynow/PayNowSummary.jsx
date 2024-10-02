@@ -51,7 +51,7 @@ const PayNowSummary = ({ setOrderSummary, orderSummary, startTransition }) => {
     }, [session?.accessToken, orderId, orderProductType]);
 
     return (
-        <div className="col-lg-4 col-md-12">
+        <div className="col-lg-4">
             <div className="pay-now-payment-option-bg bg-white">
                 <div className="pay-now-summary-title d-flex align-items-center justify-content-between">
                     <h2 className="text-capitalize fw-medium">Summary</h2>
