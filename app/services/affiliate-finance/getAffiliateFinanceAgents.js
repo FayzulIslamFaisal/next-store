@@ -18,9 +18,8 @@ export const getAffiliateFinanceAgents = async (token) => {
 
         return await response.json();
     } catch (error) {
-        console.error(
-            "Something went wrong fetching affiliate finance Agents Data"
-        );
+        console.log(error);
+        console.error(error);
         console.info(error);
         return null;
     }

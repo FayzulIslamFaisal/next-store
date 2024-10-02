@@ -44,7 +44,7 @@ function Header() {
     useEffect(() => {
         const handleScrollPosition = () => {
             let scrollPosition = 0;
-            let scrollPositionWidth = 0;
+            let scrollPositionWidth = 5;
             if (typeof window !== "undefined") {
                 scrollPosition = window.scrollY;
                 scrollPositionWidth = window.innerWidth;

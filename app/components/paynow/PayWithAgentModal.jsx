@@ -19,7 +19,7 @@ const PayWithAgentModal = ({
     const { status, data: session } = useSession();
     // function for FinanceAgentInfo
     useEffect(() => {
-        if (status === "authenticated" && session?.accessToken) {
+        if (session?.accessToken) {
             const fetchFinanceAgents = async () => {
                 try {
                     startTransition(async () => {
@@ -34,7 +34,7 @@ const PayWithAgentModal = ({
             };
             fetchFinanceAgents();
         }
-    }, [status, session?.accessToken]);
+    }, [session?.accessToken]);
 
     const handleSelectAgent = (event) => {
         const agentId = parseInt(event.target.value);
