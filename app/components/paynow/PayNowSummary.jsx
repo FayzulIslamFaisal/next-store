@@ -48,7 +48,7 @@ const PayNowSummary = ({ setOrderSummary, orderSummary, startTransition }) => {
             };
             fetchOrderSummary();
         }
-    }, [session, status, orderId, orderProductType]);
+    }, [session?.accessToken, orderId, orderProductType]);
 
     return (
         <div className="col-lg-4 col-md-12">

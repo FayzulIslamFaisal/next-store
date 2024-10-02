@@ -1,7 +1,11 @@
 "use client";
 import Link from "next/link";
 import { FaChevronLeft } from "react-icons/fa6";
-import PayNowPaymentOption from "./PayNowPaymentOption";
+import dynamic from "next/dynamic";
+const PayNowPaymentOption = dynamic(() => import("./PayNowPaymentOption"), {
+    ssr: false,
+});
+
 import PayNowSummary from "./PayNowSummary";
 import { useState, useTransition } from "react";
 

@@ -1,7 +1,14 @@
+import dynamic from "next/dynamic";
 import PayNowTopIcon from "../components/paynow/PayNowTopIcon";
-import PayNowDetails from "../components/paynow/PayNowDetails";
 import Service from "../components/Service";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+
+const PayNowDetails = dynamic(
+    () => import("../components/paynow/PayNowDetails"),
+    {
+        ssr: false,
+    }
+);
 
 const PayNowPage = () => {
     return (

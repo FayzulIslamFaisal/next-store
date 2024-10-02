@@ -1,14 +1,17 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { postOderPayment } from "@/app/services/postOderPayment";
 import { useSession } from "next-auth/react";
-import PayWithAgentModal from "./PayWithAgentModal";
 import DefaultLoader from "../defaultloader/DefaultLoader";
+const PayWithAgentModal = dynamic(() => import("./PayWithAgentModal"), {
+    ssr: false,
+});
 
 const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     const [selectedOption, setSelectedOption] = useState("");
