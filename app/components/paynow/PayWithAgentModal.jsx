@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState, useTransition } from "react";
+import { getPayAgentLists } from "@/app/services/affiliate-finance/getPayAgentLists";
 
 const PayWithAgentModal = ({
     showAgentModal,
@@ -23,7 +24,7 @@ const PayWithAgentModal = ({
             const fetchFinanceAgents = async () => {
                 try {
                     startTransition(async () => {
-                        const response = await getAffiliateFinanceAgents(
+                        const response = await getPayAgentLists(
                             session?.accessToken
                         );
                         setFinanceAgentInfo(response?.results?.agents || []);

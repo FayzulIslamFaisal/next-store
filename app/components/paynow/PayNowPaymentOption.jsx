@@ -9,6 +9,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { postOderPayment } from "@/app/services/postOderPayment";
 import { useSession } from "next-auth/react";
 import DefaultLoader from "../defaultloader/DefaultLoader";
+const PayWithBankModal = dynamic(() => import("./PayWithBankModal"), {
+    ssr: false,
+});
 const PayWithAgentModal = dynamic(() => import("./PayWithAgentModal"), {
     ssr: false,
 });
@@ -16,7 +19,9 @@ const PayWithAgentModal = dynamic(() => import("./PayWithAgentModal"), {
 const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     const [selectedOption, setSelectedOption] = useState("");
     const [showAgentModal, setShowAgentModal] = useState(false);
+    const [showBankModal, setShowBankModal] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+
     const searchParams = useSearchParams();
     const orderId = searchParams.get("orderId");
     const { status, data: session } = useSession();
@@ -64,13 +69,16 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
         if (!isTermsChecked) {
             toast.error("Please first check the terms and conditions.");
             setErrorMsg("Please first check the terms and conditions.");
-            return; // Exit early if terms are not checked
+            return;
         }
         if (optionId === "cashOnDelivery") {
             setSelectedOption(optionId);
         } else if (optionId === "payWithAgent") {
             setSelectedOption(optionId);
             setShowAgentModal(true);
+        } else if (optionId === "bankDeposit") {
+            setSelectedOption(optionId);
+            setShowBankModal(true);
         } else {
             toast.error("This payment option is not available at the moment.");
         }
@@ -108,7 +116,7 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     };
 
     return (
-        <div className="col-lg-8 col-md-12">
+        <div className="col-lg-8">
             <ToastContainer />
             <div className="pay-now-payment-option-bg bg-white">
                 <div className="pay-now-payment-option-title">
@@ -139,6 +147,16 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+                {selectedOption === "bankDeposit" && (
+                    <div className="d-flex justify-content-center pb-5">
+                        <button
+                            onClick={() => setShowBankModal(true)}
+                            className="add-to-cart-link border-0"
+                        >
+                            Pay With Payment
+                        </button>
                     </div>
                 )}
             </div>
@@ -193,6 +211,13 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                     showAgentModal={showAgentModal}
                     setShowAgentModal={setShowAgentModal}
                     orderSummary={orderSummary}
+                />
+            )}
+            {/* Bootstrap Modal for Pay with Bank */}
+            {showBankModal && (
+                <PayWithBankModal
+                    showBankModal={showBankModal}
+                    setShowBankModal={setShowBankModal}
                 />
             )}
         </div>
