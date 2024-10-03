@@ -69,7 +69,6 @@ const AgentWithdrawalModal = ({
             setIsButtonDisabled(false);
         }
     }, [amount, agentId, agentWithdrawMethod])
-    console.log(accountType);
     
     const handleWithdrawRequest = async () => {
         let selectedAccount = null;
@@ -78,9 +77,8 @@ const AgentWithdrawalModal = ({
         }else if (agentWithdrawMethod == 2){
             selectedAccount = mobileBankingList?.find(item => item.name == accountType)?.account_number;
         }else{
-            selectedAccount=0;
+            selectedAccount = null;
         }
-        console.log(selectedAccount);
          
         const data = {
             bank_id: financeAgentInfo?.bank_id,
@@ -260,6 +258,7 @@ const AgentWithdrawalModal = ({
                                         onChange={handleAmountChange}
                                         max={financeAgentInfo?.total_withdrawable || 0} // Set maximum allowed value
                                         min={500} // Set minimum allowed value
+                                        defaultValue={500}
                                     />
                                 </div>
                             </div>

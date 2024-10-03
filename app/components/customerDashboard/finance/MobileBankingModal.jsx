@@ -52,11 +52,11 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
     }, [amount, mobileBanking]);
 
     const handleWithdrawRequest = async () => {
-        const selectedAccount = mobileBankingInfo?.data?.find(item => item.type == mobileBanking)?.account_number;
+        const selectedAccount = mobileBankingInfo?.data?.find(item => item.name == mobileBanking)?.account_number;
 
         const data = {
             bank_id: mobileBankingInfo?.bank_id,
-            billing_method: parseInt(mobileBanking),
+            billing_method: mobileBanking,
             account_number: selectedAccount,
             amount: amount
         };
@@ -128,7 +128,7 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
                                         Select Payment Gateway
                                     </option>
                                     {mobileBankingInfo?.data?.map((item, index) => (
-                                        <option key={index} value={item?.type}>
+                                        <option key={index} value={item?.name}>
                                             {item?.name} - {item?.account_number}
                                         </option>
                                     ))}
@@ -155,6 +155,7 @@ const MobileBankingModal = ({ mobileBankingInfo, financeAgentInfo }) => {
                                         onChange={handleAmountChange}
                                         max={mobileBankingInfo?.total_withdrawable || 0} // Set maximum allowed value
                                         min={500} // Set minimum allowed value
+                                        defaultValue={500}
                                     />
                                 </div>
                             </div>
