@@ -1,6 +1,5 @@
 "use client";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
-import NoDataFound from "@/app/components/NoDataFound";
 import { getActiveResourcesInformation } from "@/app/services/affiliate-finance/getActiveResourcesInformation";
 import { postOTPWithdrawVerification } from "@/app/services/affiliate-finance/postOTPWithdrawVerification";
 import { useSession } from "next-auth/react";
@@ -14,7 +13,6 @@ const FinanceWithdraw = ({ params }) => {
     const { data: session } = useSession();
     const { id } = params;
     const route = useRouter();
-    console.log(withdrawRequestData);
 
     // Fetch withdraw details
     useEffect(() => {
@@ -75,10 +73,33 @@ const FinanceWithdraw = ({ params }) => {
                                         <th>Withdraw Method :</th>
                                         <td>{withdrawRequestData?.billing_method}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Withdraw By :</th>
-                                        <td>Mahahmuda Trading</td>
-                                    </tr>
+                                    {withdrawRequestData?.user?.agent_name &&
+                                        <tr>
+                                            <th>Withdraw By :</th>
+                                            <td>{withdrawRequestData?.user?.agent_name}</td>
+                                        </tr>
+                                    }
+                                    {withdrawRequestData?.account_number &&
+                                        <tr>
+                                            <th>Account Number :</th>
+                                            <td>{withdrawRequestData?.account_number}</td>
+                                        </tr>
+                                    }
+
+                                    {withdrawRequestData?.billing_method == "Bank" && (<>
+                                        <tr>
+                                            <th>Bank Name :</th>
+                                            <td>{withdrawRequestData?.bank.bank_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Account Holder Name :</th>
+                                            <td>{withdrawRequestData?.bank?.account_holder_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Branch Name :</th>
+                                            <td>{withdrawRequestData?.bank?.branch_name}</td>
+                                        </tr>
+                                    </>)}
                                 </tbody>
                             </table>
                         </div>
@@ -86,15 +107,15 @@ const FinanceWithdraw = ({ params }) => {
                             <table className="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Amount :</td>
+                                        <th>Amount :</th>
                                         <td>{withdrawRequestData?.amount}</td>
                                     </tr>
                                     <tr>
-                                        <td>Charge :</td>
+                                        <th>Charge :</th>
                                         <td>{withdrawRequestData?.charge}</td>
                                     </tr>
                                     <tr>
-                                        <td>Payable :</td>
+                                        <th>Payable :</th>
                                         <td>{withdrawRequestData?.payable}</td>
                                     </tr>
                                 </tbody>

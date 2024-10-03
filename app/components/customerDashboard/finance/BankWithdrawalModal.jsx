@@ -151,6 +151,7 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                                         onChange={handleAmountChange}
                                         max={bankTransferInfo?.total_withdrawable || 0} // Set maximum allowed value
                                         min={500} // Set minimum allowed value
+                                        defaultValue={500}
                                     />
                                 </div>
                             </div>
