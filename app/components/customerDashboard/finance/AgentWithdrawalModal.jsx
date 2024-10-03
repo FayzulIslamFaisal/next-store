@@ -14,6 +14,7 @@ const AgentWithdrawalModal = ({
 }) => {
     const [agentWithdrawMethod, setAgentWithdrawMethod] = useState(1);
     const [agentId, setAgentId] = useState(null);
+    const [accountType, setAccountType] = useState('');
     const [amount, setAmount] = useState("");
     const [charge, setCharge] = useState(0);
     const [payable, setPayable] = useState(0);
@@ -21,8 +22,6 @@ const AgentWithdrawalModal = ({
     const { data: session } = useSession();
     const route = useRouter();
     const modalRef = useRef(null); // Reference for modal
-
-    console.log(financeAgentInfo);
 
     const maxAmount = parseInt(financeAgentInfo?.total_withdrawable) || 0; // Get max withdrawable amount
 
@@ -70,13 +69,26 @@ const AgentWithdrawalModal = ({
             setIsButtonDisabled(false);
         }
     }, [amount, agentId, agentWithdrawMethod])
-
+    console.log(accountType);
+    
     const handleWithdrawRequest = async () => {
+        let selectedAccount = null;
+        if (agentWithdrawMethod == 3) {
+            selectedAccount = bankTransferData.account_number;
+        }else if (agentWithdrawMethod == 2){
+            selectedAccount = mobileBankingList?.find(item => item.name == accountType)?.account_number;
+        }else{
+            selectedAccount=0;
+        }
+        console.log(selectedAccount);
+         
         const data = {
             bank_id: financeAgentInfo?.bank_id,
             agent_id: parseInt(agentId),
             billing_method: "Nagadhat Agent",
-            account_number: agentWithdrawMethod,
+            billing_type: agentWithdrawMethod,
+            account_type: accountType,
+            account_number: selectedAccount,
             amount: amount
         };
 
@@ -192,7 +204,10 @@ const AgentWithdrawalModal = ({
                                     <label className="form-label" htmlFor="withdrawto">
                                         Mobile Billing Method
                                     </label>
-                                    <select className="custom-select form-control" name="mobile_banking_billing_method">
+                                    <select
+                                        className="custom-select form-control" name="mobile_banking_billing_method"
+                                        onChange={(e) => setAccountType(e.target.value)}
+                                    >
                                         <option defaultValue="Select Billing Method">
                                             Select Billing Method
                                         </option>
@@ -210,11 +225,14 @@ const AgentWithdrawalModal = ({
                                     <label className="form-label" htmlFor="withdrawto">
                                         Bank Billing Method
                                     </label>
-                                    <select className="custom-select form-control" name="bank_billing_method">
+                                    <select
+                                        className="custom-select form-control" name="bank_billing_method"
+                                        onChange={(e) => setAccountType(e.target.value)}
+                                    >
                                         <option defaultValue="Select Billing Method">
                                             Select Billing Method
                                         </option>
-                                        <option value={bankTransferData?.bank}>
+                                        <option value={bankTransferData?.name}>
                                             {bankTransferData?.name} - {bankTransferData?.account_number}
                                         </option>
                                     </select>
@@ -246,7 +264,7 @@ const AgentWithdrawalModal = ({
                                 </div>
                             </div>
 
-                            { amount && (
+                            {amount && (
                                 <div className="form-group paySheet">
                                     <p className="mb-0">Amount: {amount || 0}</p>
                                     <p className="mb-0">Charge: {charge.toFixed(2)}</p>

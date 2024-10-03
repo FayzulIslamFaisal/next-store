@@ -1,23 +1,79 @@
+"use client";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
+import NoDataFound from "@/app/components/NoDataFound";
+import { getActiveResourcesInformation } from "@/app/services/affiliate-finance/getActiveResourcesInformation";
+import { postOTPWithdrawVerification } from "@/app/services/affiliate-finance/postOTPWithdrawVerification";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const FinanceWithdraw = ({ params }) => {
-
+    const [withdrawRequestData, setWithdrawRequestData] = useState(null);
+    const { data: session } = useSession();
     const { id } = params;
-    console.log(id);
-    
+    const route = useRouter();
+    console.log(withdrawRequestData);
+
+    // Fetch withdraw details
+    useEffect(() => {
+        const fetchWithdrawDetails = async () => {
+            try {
+                if (session?.accessToken && id) {
+                    const request = await getActiveResourcesInformation(session.accessToken, id);
+                    if (request.code === 200) {
+                        setWithdrawRequestData(request?.results);
+                    } else {
+                        toast.error(request.message);
+                        console.log(request.message);
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchWithdrawDetails();
+    }, [session?.accessToken, id]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const otp = e.target.otp.value;
+        try {
+            const request = await postOTPWithdrawVerification(session.accessToken, { otp })
+            if (request.code === 200) {
+                Swal.fire({
+                    // position: "top-end",
+                    icon: "success",
+                    title: "Your OTP Varifaticon Success",
+                    showConfirmButton: true,
+                    timer: 2000
+                });
+                route.push(`/finance-withdraw`);
+            } else {
+                toast.error(request.message);
+                console.log("PIN request:", request);
+            }
+        } catch (error) {
+            console.log("PIN request error:", error);
+            toast.error(error.message)
+        }
+    };
+
     return (
         <div className="customer-dashboard-order-history-area">
-            <FinanceTopTitle title="Withdraw Request Varifiction" />
+            <FinanceTopTitle title="Withdraw Request Verification" />
             <div className="p-4">
                 <div>
-                    <h3 className="mb-3">Summery!</h3>
+                    <h3 className="mb-3">Summary</h3>
                     <div className="row">
                         <div className="col-md-6">
                             <table className="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <th>Withdraw Method :</th>
-                                        <td>Nagadhat Agent</td>
+                                        <td>{withdrawRequestData?.billing_method}</td>
                                     </tr>
                                     <tr>
                                         <th>Withdraw By :</th>
@@ -31,40 +87,44 @@ const FinanceWithdraw = ({ params }) => {
                                 <tbody>
                                     <tr>
                                         <td>Amount :</td>
-                                        <td>500</td>
+                                        <td>{withdrawRequestData?.amount}</td>
                                     </tr>
                                     <tr>
                                         <td>Charge :</td>
-                                        <td>50</td>
+                                        <td>{withdrawRequestData?.charge}</td>
                                     </tr>
                                     <tr>
                                         <td>Payable :</td>
-                                        <td>450</td>
+                                        <td>{withdrawRequestData?.payable}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <hr className="py-2" />
-                    {/* <p className="text-danger">* Enter your tansaction pin to proceed.</p> */}
-                    <label for="" className="form-label">Enter your tansaction PIN to proceed. <span className="text-danger fs-5">*</span></label>
-                    <form className="form">
+                    <label htmlFor="otp" className="form-label">
+                        Enter your transaction PIN to proceed. <span className="text-danger fs-5">*</span>
+                    </label>
+                    <form className="form" onSubmit={handleSubmit}>
                         <div className="form-group pb-3 d-flex gap-3 align-items-center">
-                            {/* <label for="" className="form-label">PIN</label> */}
-                            <input type="number" required="" className="form-control" name="otp" placeholder="PIN"  />
-                            <button type="submit" className="ms-auto add-to-cart-link border-0">Continue</button>
-                        </div>
-                        
-                        {/* <div className="input-group affiliate-products-search w-100">
-                            <input className="form-control" placeholder="PIN" type="search" value="" name="search" />
-                            <button className="input-group-text" id="search" >
+                            <input
+                                type="number"
+                                required
+                                className="form-control"
+                                name="otp"
+                                placeholder="PIN"
+                            />
+                            <button
+                                type="submit"
+                                className="ms-auto add-to-cart-link border-0"
+                            >
                                 Continue
                             </button>
-                        </div> */}
+                        </div>
                     </form>
-                </div >
-            </div >
-        </div >
+                </div>
+            </div>
+        </div>
     );
 };
 
