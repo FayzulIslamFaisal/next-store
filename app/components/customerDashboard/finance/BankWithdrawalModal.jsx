@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const BankWithdrawalModal = ({ bankTransferInfo }) => {
     const [bank, setBank] = useState('');
@@ -68,6 +69,8 @@ const BankWithdrawalModal = ({ bankTransferInfo }) => {
                 }
                 // Redirect to withdraw request page with withdrawal ID as parameter
                 route.push(`/finance-withdraw-request/${response.results.id}`);
+            }else{
+                toast.error(response.message)
             }
         } catch (error) {
             console.error("Error while withdrawing:", error);
