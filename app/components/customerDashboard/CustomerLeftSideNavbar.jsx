@@ -407,7 +407,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                     href="/finance-my-bank-details"
                                 >
                                     <span className="dropdown-item-circle"></span>
-                                    My Bank Details
+                                    My Payment Information
                                 </Link>
                             </li>
                             <li className="dropdown-item customer-dashboard-dropdown-item">

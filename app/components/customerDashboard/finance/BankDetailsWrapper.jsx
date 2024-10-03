@@ -5,7 +5,7 @@ const BankDetailsWrapper = () => {
     return (
         <>
             <div className="customer-manage-profile-title">
-                <h1 className="customer-dashboard-title">My Bank Details</h1>
+                <h1 className="customer-dashboard-title">My Payment Information</h1>
             </div>
             <div className="customer-manage-profile-info">
                 <div
