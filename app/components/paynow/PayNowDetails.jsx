@@ -1,6 +1,4 @@
 "use client";
-import Link from "next/link";
-import { FaChevronLeft } from "react-icons/fa6";
 import dynamic from "next/dynamic";
 const PayNowPaymentOption = dynamic(() => import("./PayNowPaymentOption"), {
     ssr: false,

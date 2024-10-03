@@ -5,10 +5,12 @@ import dynamic from "next/dynamic";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useRouter, useSearchParams } from "next/navigation";
-import { postOderPayment } from "@/app/services/postOderPayment";
+import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import DefaultLoader from "../defaultloader/DefaultLoader";
+const PayCompletedOrderBtn = dynamic(() => import("./PayCompletedOrderBtn"), {
+    ssr: false,
+});
 const PayWithBankModal = dynamic(() => import("./PayWithBankModal"), {
     ssr: false,
 });
@@ -26,17 +28,16 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     const orderId = searchParams.get("orderId");
     const { status, data: session } = useSession();
     const [isTermsChecked, setIsTermsChecked] = useState(false);
-    const router = useRouter();
 
     const paymentOptions = [
-        { id: "payWithAgent", src: "/images/Agent-Pay.png", alt: "Agent Pay" },
+        { id: "With Agent", src: "/images/Agent-Pay.png", alt: "Agent Pay" },
         {
-            id: "bankDeposit",
+            id: "With Bank",
             src: "/images/bank-deposit.png",
             alt: "Bank Deposit",
         },
         {
-            id: "cashOnDelivery",
+            id: "Cash On Delivery",
             src: "/images/cash-on.png",
             alt: "Cash on Delivery",
         },
@@ -51,9 +52,9 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
         orderSummary?.order_product_type === "2"
             ? paymentOptions
                   .map((option) =>
-                      option.id === "cashOnDelivery"
+                      option.id === "Cash On Delivery"
                           ? {
-                                id: "cashOnDelivery",
+                                id: "Cash On Delivery",
                                 src: "/images/Pay-Later.png",
                                 alt: "Pay later",
                             }
@@ -71,46 +72,22 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
             setErrorMsg("Please first check the terms and conditions.");
             return;
         }
-        if (optionId === "cashOnDelivery") {
-            setSelectedOption(optionId);
-        } else if (optionId === "payWithAgent") {
-            setSelectedOption(optionId);
-            setShowAgentModal(true);
-        } else if (optionId === "bankDeposit") {
-            setSelectedOption(optionId);
-        } else {
-            toast.error("This payment option is not available at the moment.");
-        }
-    };
 
-    const handleSubmit = async () => {
-        if (!session || !orderId) {
-            toast.error("Order not found.");
-            return;
-        }
-        const paymentData = {
-            order_id: orderId,
-            user_name: session?.user?.name || "",
-            transaction_amount: 0,
-            payment_getway: selectedOption,
-            payment_method: "",
-            bank_name: "",
-            transaction_id: "",
-        };
-
-        try {
-            const orderPayment = await postOderPayment(
-                session?.accessToken,
-                paymentData
-            );
-            if (!orderPayment?.error) {
-                router.push(`/thankyou?orderId=${orderId}`);
-            } else {
-                toast.error("Failed to process payment. Please try again.");
-            }
-        } catch (error) {
-            console.error("Error submitting the order:", error);
-            toast.error("Failed to process payment. Please try again.");
+        switch (optionId) {
+            case "Cash On Delivery":
+                setSelectedOption(optionId);
+                break;
+            case "With Agent":
+                setSelectedOption(optionId);
+                break;
+            case "With Bank":
+                setSelectedOption(optionId);
+                break;
+            default:
+                toast.error(
+                    "This payment option is not available at the moment."
+                );
+                break;
         }
     };
 
@@ -178,19 +155,16 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                             Return to Shop
                         </Link>
                     </div>
-                    <button
-                        className="add-to-cart-link border-0"
-                        onClick={handleSubmit}
-                        style={{
-                            pointerEvents:
-                                isTermsChecked && selectedOption
-                                    ? "auto"
-                                    : "none",
-                            opacity: isTermsChecked && selectedOption ? 1 : 0.5,
-                        }}
-                    >
-                        Complete order
-                    </button>
+
+                    <PayCompletedOrderBtn
+                        session={session}
+                        orderId={orderId}
+                        selectedOption={selectedOption}
+                        setShowAgentModal={setShowAgentModal}
+                        setShowBankModal={setShowBankModal}
+                        isTermsChecked={isTermsChecked}
+                        orderSummary={orderSummary}
+                    />
                 </div>
             </div>
 
@@ -207,6 +181,7 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                 <PayWithBankModal
                     showBankModal={showBankModal}
                     setShowBankModal={setShowBankModal}
+                    orderSummary={orderSummary}
                 />
             )}
         </div>
