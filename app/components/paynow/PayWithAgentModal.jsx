@@ -6,6 +6,7 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState, useTransition } from "react";
 import { getPayAgentLists } from "@/app/services/affiliate-finance/getPayAgentLists";
+import { useRouter } from "next/navigation";
 
 const PayWithAgentModal = ({
     showAgentModal,
@@ -18,6 +19,8 @@ const PayWithAgentModal = ({
     const [referenceNote, setReferenceNote] = useState("");
 
     const { status, data: session } = useSession();
+    const router = useRouter();
+
     // function for FinanceAgentInfo
     useEffect(() => {
         if (session?.accessToken) {
@@ -70,7 +73,7 @@ const PayWithAgentModal = ({
                     response?.message
                 );
                 setShowAgentModal(false);
-                router.push(`/thankyou?orderId=${orderId}`);
+                router.push(`/thankyou?orderId=${orderSummary?.order_id}`);
             } else {
                 toast.error(response?.message);
             }

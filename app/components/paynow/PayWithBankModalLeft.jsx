@@ -1,6 +1,6 @@
-import React from "react";
+import NoDataFound from "../NoDataFound";
 
-const PayWithBankModalLeft = () => {
+const PayWithBankModalLeft = ({ bankList, isPending }) => {
     return (
         <>
             <div className="col-md-4 ">
@@ -10,46 +10,41 @@ const PayWithBankModalLeft = () => {
                             Please Transfer your payment to this account
                         </h6>
                     </div>
-                    <ul className="modal-header flex-column justify-content-center align-items-start">
-                        <li className="pb-1 fs-6">
-                            <strong>Bank Name: </strong>Brac Bank
-                        </li>
-                        <li className="pb-1 fs-6">
-                            <strong>Account Name: </strong>
-                            Nagadhat Bangladesh limited
-                        </li>
-                        <li className="pb-1 fs-6">
-                            <strong>Account Number: </strong>
-                            1507204822484001
-                        </li>
-                        <li className="pb-1 fs-6">
-                            <strong>Routing Number: </strong>
-                            060260435
-                        </li>
-                        <li className="fs-6">
-                            <strong>Branch: </strong>Banani Branch
-                        </li>
-                    </ul>
-                    <ul className="modal-header flex-column justify-content-center align-items-start">
-                        <li className="pb-1 fs-6">
-                            <strong>Bank Name: </strong>IFIC
-                        </li>
-                        <li className="pb-1 fs-6">
-                            <strong>Account Name: </strong>
-                            Nagadhat Bangladesh limited
-                        </li>
-                        <li className="pb-1 fs-6">
-                            <strong>Account Number: </strong>
-                            0190338981001
-                        </li>
-                        <li className="pb-1 fs-6">
-                            <strong>Routing Number: </strong>
-                            120260120
-                        </li>
-                        <li className="fs-6">
-                            <strong>Branch: </strong>Gabtoli Bagbari
-                        </li>
-                    </ul>
+                    {isPending ? (
+                        <div className="text-center h-100 d-flex align-items-center justify-content-center py-5 ">
+                            <h4>Loading...</h4>
+                        </div>
+                    ) : bankList && bankList.length > 0 ? (
+                        bankList.map((item) => (
+                            <ul
+                                key={item.id}
+                                className="modal-header flex-column justify-content-center align-items-start"
+                            >
+                                <li className="pb-1 fs-6">
+                                    <strong>Bank Name: </strong>
+                                    {item?.bank_name || "N/A"}
+                                </li>
+                                <li className="pb-1 fs-6">
+                                    <strong>Account Name: </strong>
+                                    {item?.account_name || "N/A"}
+                                </li>
+                                <li className="pb-1 fs-6">
+                                    <strong>Account Number: </strong>
+                                    {item?.account_number || "N/A"}
+                                </li>
+                                <li className="pb-1 fs-6">
+                                    <strong>Routing Number: </strong>
+                                    {item?.routing_number || "N/A"}
+                                </li>
+                                <li className="fs-6">
+                                    <strong>Branch: </strong>
+                                    {item.branch || "N/A"}
+                                </li>
+                            </ul>
+                        ))
+                    ) : (
+                        <NoDataFound />
+                    )}
                 </div>
             </div>
         </>

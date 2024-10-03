@@ -1,10 +1,37 @@
+"use client";
 import dynamic from "next/dynamic";
 import PayWithBankModalLeft from "./PayWithBankModalLeft";
+import { useEffect, useState, useTransition } from "react";
+import { getBankLists } from "@/app/services/bank/getBankLists";
+const PayWithBankModalTop = dynamic(() => import("./PayWithBankModalTop"), {
+    ssr: false,
+});
 const PayWithBankModalRight = dynamic(() => import("./PayWithBankModalRight"), {
     ssr: false,
 });
 
-const PayWithBankModal = ({ setShowBankModal, showBankModal }) => {
+const PayWithBankModal = ({
+    setShowBankModal,
+    showBankModal,
+    orderSummary,
+}) => {
+    const [isPending, startTransition] = useTransition();
+    const [bankList, setBankList] = useState([]);
+
+    useEffect(() => {
+        const fetchBankList = async () => {
+            try {
+                startTransition(async () => {
+                    const response = await getBankLists();
+                    setBankList(response?.results?.banks || []);
+                });
+            } catch (error) {
+                console.error("", error);
+            }
+        };
+        fetchBankList();
+    }, []);
+
     return (
         <>
             <div
@@ -16,33 +43,21 @@ const PayWithBankModal = ({ setShowBankModal, showBankModal }) => {
             >
                 <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5">
-                                Submit Payment Details
-                            </h1>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                                onClick={() => setShowBankModal(false)}
-                            ></button>
-                        </div>
+                        <PayWithBankModalTop
+                            setShowBankModal={setShowBankModal}
+                        />
                         <div className="modal-body">
                             <div className="row">
-                                <PayWithBankModalLeft />
-                                <PayWithBankModalRight />
+                                <PayWithBankModalLeft
+                                    bankList={bankList}
+                                    isPending={isPending}
+                                />
+                                <PayWithBankModalRight
+                                    orderSummary={orderSummary}
+                                    bankList={bankList}
+                                    setShowBankModal={setShowBankModal}
+                                />
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                data-bs-dismiss="modal"
-                                onClick={() => setShowBankModal(false)}
-                            >
-                                Close
-                            </button>
                         </div>
                     </div>
                 </div>
