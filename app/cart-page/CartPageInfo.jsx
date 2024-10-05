@@ -505,7 +505,7 @@ const CartPage = () => {
                 return (
                     sum +
                     parseFloat(product.regular_price || product.price) *
-                        product.quantity
+                    product.quantity
                 );
             },
             0
@@ -519,7 +519,7 @@ const CartPage = () => {
                             ? product.regular_price
                             : product.price) - product.price
                     ) *
-                        product.quantity
+                    product.quantity
                 );
             },
             0
@@ -630,7 +630,7 @@ const CartPage = () => {
                                             name="allSelect"
                                             checked={
                                                 checkedProductCard?.length >
-                                                    0 &&
+                                                0 &&
                                                 !checkedProductCard.some(
                                                     (item) =>
                                                         item?.isChecked !== true
@@ -740,12 +740,12 @@ const CartPage = () => {
                                                                                             if (
                                                                                                 variant &&
                                                                                                 typeof variant ===
-                                                                                                    "object" &&
+                                                                                                "object" &&
                                                                                                 Object.entries(
                                                                                                     variant
                                                                                                 )
                                                                                                     .length >
-                                                                                                    0
+                                                                                                0
                                                                                             ) {
                                                                                                 const [
                                                                                                     key,
@@ -794,7 +794,7 @@ const CartPage = () => {
                                                                             :
                                                                             <span className="cart-prodect-variants-item">
                                                                                 {item.cart_product_type ==
-                                                                                2
+                                                                                    2
                                                                                     ? "Resale"
                                                                                     : "Retail"}
                                                                             </span>
@@ -808,12 +808,13 @@ const CartPage = () => {
                                                                             ৳{" "} {price}
                                                                         </strong>
                                                                     </p>
-                                                                    <p>
-                                                                        <del className="product-cart-discount-price">
-                                                                            ৳{" "} {regularPrice}
-                                                                        </del>
-                                                                    </p>
-
+                                                                    {price !== regularPrice && (
+                                                                        <p>
+                                                                            <del className="product-cart-discount-price">
+                                                                                ৳{" "} {regularPrice}
+                                                                            </del>
+                                                                        </p>
+                                                                    )}
                                                                     <div className="d-flex gap-2">
                                                                         <button
                                                                             className="product-cart-remov-btn"
@@ -844,7 +845,7 @@ const CartPage = () => {
                                                                             className="quantity-increase"
                                                                             onClick={() =>
                                                                                 handleDecrement(
-                                                                                    session? item?.cart_id : index,
+                                                                                    session ? item?.cart_id : index,
                                                                                     item.cart_product_type
                                                                                 )
                                                                             }
@@ -871,7 +872,7 @@ const CartPage = () => {
                                                                             type="button"
                                                                             onClick={() =>
                                                                                 handleIncrement(
-                                                                                    session? item?.cart_id : index,
+                                                                                    session ? item?.cart_id : index,
                                                                                     item.cart_product_type
                                                                                 )
                                                                             }
@@ -900,7 +901,7 @@ const CartPage = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="col-lg-3">
                         <div className="row promo-code-section">
                             <div className="col-12">
@@ -975,12 +976,12 @@ const CartPage = () => {
                                             style={{
                                                 pointerEvents:
                                                     totalPrice &&
-                                                    !isButtonDisabled
+                                                        !isButtonDisabled
                                                         ? "auto"
                                                         : "none",
                                                 opacity:
                                                     totalPrice &&
-                                                    !isButtonDisabled
+                                                        !isButtonDisabled
                                                         ? 1
                                                         : 0.5,
                                             }}
@@ -999,12 +1000,12 @@ const CartPage = () => {
                                             style={{
                                                 pointerEvents:
                                                     totalPrice &&
-                                                    !isButtonDisabled
+                                                        !isButtonDisabled
                                                         ? "auto"
                                                         : "none",
                                                 opacity:
                                                     totalPrice &&
-                                                    !isButtonDisabled
+                                                        !isButtonDisabled
                                                         ? 1
                                                         : 0.5,
                                             }}
@@ -1026,7 +1027,7 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 };
 

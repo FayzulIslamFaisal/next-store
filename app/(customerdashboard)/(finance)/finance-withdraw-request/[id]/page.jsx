@@ -124,7 +124,8 @@ const FinanceWithdraw = ({ params }) => {
                     </div>
                     <hr className="py-2" />
                     <label htmlFor="otp" className="form-label">
-                        Enter your transaction PIN to proceed. <span className="text-danger fs-5">*</span>
+                        Enter your transaction OTP to proceed. 
+                        <span className="text-danger fs-5">*</span>
                     </label>
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="form-group pb-3 d-flex gap-3 align-items-center">
@@ -133,7 +134,7 @@ const FinanceWithdraw = ({ params }) => {
                                 required
                                 className="form-control"
                                 name="otp"
-                                placeholder="PIN"
+                                placeholder="OTP"
                             />
                             <button
                                 type="submit"

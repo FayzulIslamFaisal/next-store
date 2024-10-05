@@ -2,7 +2,7 @@
 import { NagadhatPublicUrl } from '@/app/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
     useEffect(() => {
@@ -58,7 +58,7 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
                                                             return (
                                                                 <React.Fragment key={inx}>
                                                                     <p>
-                                                                        <span> { keyDisplay }  </span>:{" "}
+                                                                        <span> {keyDisplay}  </span>:{" "}
                                                                         <span className="cart-prodect-variants-item">
                                                                             <label>{" "} {value} </label>
                                                                         </span>
@@ -77,7 +77,9 @@ const ShippingProduct = ({ cartProduct, setTotalPrice, setSubTotal }) => {
                                         <td>
                                             <div className="d-flex gap-2 new-nh-product-price">
                                                 <p>৳ {item.price * item.quantity} </p>
-                                                <del className="rounded-1">৳ {item.regular_price * item.quantity} </del>
+                                                {(item.price != item.regular_price) && (
+                                                    <del className="rounded-1">৳ {item.regular_price * item.quantity} </del>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
