@@ -27,7 +27,6 @@ const AgentWithdrawalModal = ({
 
     const handleAmountChange = (e) => {
         const inputAmount = parseFloat(e.target.value);
-        console.log(maxAmount);
 
         if (isNaN(inputAmount) || inputAmount <= 0) {
             setAmount("");
@@ -109,7 +108,6 @@ const AgentWithdrawalModal = ({
             console.error("Error while withdrawing:", error);
         }
     };
-
 
     return (
         <div
