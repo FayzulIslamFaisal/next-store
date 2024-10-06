@@ -1,5 +1,4 @@
-import { FaSearch } from "react-icons/fa";
-const PayoutSalaryDetail = () => {
+const PayoutSalaryDetail = ({ salaryList, salaryResult }) => {
     return (
         <>
             <div className="table-responsive px-3">
@@ -16,39 +15,29 @@ const PayoutSalaryDetail = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td scope="row">1</td>
-                            <td>24/05/2024</td>
-                            <td>#1345656</td>
-                            <td>Speciel Bonus</td>
-                            <td className="text-end">৳ 400 </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td>24/05/2024</td>
-                            <td>#1345656</td>
-                            <td>Speciel Bonus</td>
-                            <td className="text-end">৳ 400 </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">3</td>
-                            <td>24/05/2024</td>
-                            <td>#1345656</td>
-                            <td>Speciel Bonus</td>
-                            <td className="text-end">৳ 400 </td>
-                        </tr>
+                        {salaryList &&
+                            salaryList?.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item?.date_time}</td>
+                                        <td>{item?.rank}</td>
+                                        <td>{item?.purpose}</td>
+                                        <td className="text-end">
+                                            ৳ {item?.balance}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colSpan="5" className="text-end fs-5 ">
-                                Total: ৳ 100
+                                Total: ৳ {salaryResult?.total_salary}
                             </td>
                         </tr>
                     </tfoot>
                 </table>
-            </div>
-            <div className="pt-5">
-                <p className="">Showing 0 to 0 of 0 entries </p>
             </div>
         </>
     );
