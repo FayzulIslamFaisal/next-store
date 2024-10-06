@@ -1,4 +1,9 @@
-import PayoutSalaryWrapper from "@/app/components/customerDashboard/payout/PayoutSalaryWrapper";
+import dynamic from "next/dynamic";
+const PayoutSalaryWrapper = dynamic(
+    () =>
+        import("@/app/components/customerDashboard/payout/PayoutSalaryWrapper"),
+    { ssr: false }
+);
 
 const payoutSalaryPage = () => {
     return (
