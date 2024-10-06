@@ -1,7 +1,9 @@
 "use client";
 import { getAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/getAffiliateFinanceBankInfo";
+import { updateAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/updatBankPementInfo";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const BankDetailsInfo = () => {
     const [bankInfo, setBankInfo] = useState({
@@ -13,6 +15,7 @@ const BankDetailsInfo = () => {
         routing_number: ''
     });
     const [districts, setDistricts] = useState([]); // Store all districts from API
+    const [update, setUpdate] = useState(true);
     const { data: session } = useSession();
 
     useEffect(() => {
@@ -41,17 +44,24 @@ const BankDetailsInfo = () => {
         };
 
         fetchBankInfo();
-    }, [session?.accessToken]);
+    }, [session?.accessToken, update]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setBankInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add logic to handle form submission, e.g., updating bank details
-        console.log('Updated bank details', bankInfo);
+        // Update bank details 
+        const response = await updateAffiliateFinanceBankInfo(session.accessToken, bankInfo);
+        if (response.code === 200) {
+            toast.success('Bank details updated successfully');
+            setUpdate(!update)
+        } else {
+            toast.error(response.message);
+            console.error('Error updating bank details', response.message);
+        }
     };
 
     return (
