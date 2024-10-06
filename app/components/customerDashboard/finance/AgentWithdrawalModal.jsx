@@ -280,9 +280,7 @@ const AgentWithdrawalModal = ({
 
                             <div>
                                 <p className="text-muted">10% service charge applicable.</p>
-                                <p className="text-muted">
-                                    Minimum withdrawal Amount 500.00 ৳
-                                </p>
+                                <p className="text-muted">Minimum withdrawal Amount 500.00 ৳</p>
                             </div>
                         </div>
                     </div>
