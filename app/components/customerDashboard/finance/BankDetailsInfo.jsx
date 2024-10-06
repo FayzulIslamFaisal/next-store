@@ -1,6 +1,6 @@
 "use client";
 import { getAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/getAffiliateFinanceBankInfo";
-import { updateAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/updatBankPementInfo";
+import { updateAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/updateAffiliateFinanceBankInfo";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
