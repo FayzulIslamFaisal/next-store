@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { getAffiliateFinanceMobileBankingInfo } from "@/app/services/affiliate-finance/getAffiliateFinanceMobileBankingInfo";
 import { useSession } from "next-auth/react";
+import { updateAffiliateFinanceMobileBankInfo } from "@/app/services/affiliate-finance/updateAffiliateFinanceMobileBankInfo";
+import { toast } from "react-toastify";
 
 const MobileBankingInfo = () => {
     const { data: session } = useSession();
@@ -12,6 +14,7 @@ const MobileBankingInfo = () => {
         agent_banking: ""
     });
     const [isEditable, setIsEditable] = useState(true);
+    const [update, setUpdate] = useState(true);
 
     useEffect(() => {
         const fetchMobileBankInfo = async () => {
@@ -35,7 +38,7 @@ const MobileBankingInfo = () => {
         };
 
         fetchMobileBankInfo();
-    }, [session?.accessToken]);
+    }, [session?.accessToken, update]);
 
     const handleInputChange = (e) => {
         setMobileBankingInfo({
@@ -44,10 +47,18 @@ const MobileBankingInfo = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission here
         console.log(mobileBankingInfo);
+        const response = await updateAffiliateFinanceMobileBankInfo(session.accessToken, mobileBankingInfo);
+        if (response.code === 200) {
+            toast.success('Mobile Banking details updated successfully');
+            setUpdate(!update)
+        } else {
+            toast.error(response.message);
+            console.error('Error updating mobile banking details', response.message);
+        }
     };
 
     return (
@@ -137,15 +148,14 @@ const MobileBankingInfo = () => {
                                     * You cannot update this information anymore.
                                 </span>
                             </div>
-                            {isEditable && (
-                                <div className="">
-                                    <input
-                                        className="add-to-cart-link border-0 mx-auto"
-                                        type="submit"
-                                        value="Update Info"
-                                    />
-                                </div>
-                            )}
+                            <div className="">
+                                <input
+                                    className="add-to-cart-link border-0 mx-auto"
+                                    type="submit"
+                                    value="Update Info"
+                                    disabled={!isEditable}
+                                />
+                            </div>
                         </form>
                     </div>
                 </div>
