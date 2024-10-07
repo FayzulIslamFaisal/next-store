@@ -12,8 +12,7 @@ const PayWithBankModalRight = ({
     bankList,
     setShowBankModal,
 }) => {
-    let paymentAmount =
-        orderSummary?.total_products_price - orderSummary?.total_paid;
+    let paymentAmount = orderSummary?.grand_total - orderSummary?.total_paid;
     let depositorName = orderSummary?.customer_name || "";
     let phone = orderSummary?.customer_phone || "";
     let orderId = orderSummary?.order_id;
@@ -48,17 +47,13 @@ const PayWithBankModalRight = ({
             setFormError("Please select a bank.");
             return;
         }
-        if (!paymentSlip) {
-            setFormError("Please upload a payment slip.");
-            return;
-        }
 
         const formData = new FormData();
         formData.append("order_id", orderId);
         formData.append("account_head_id", selectedBank);
         formData.append("payment_getway", "Bank Payment");
         formData.append("note_1", paymentNote);
-        formData.append("payment_slip", paymentSlip);
+        formData.append("payment_slip", paymentSlip || "");
 
         try {
             const response = await PostOrderFullPaymentWithBank(
