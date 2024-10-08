@@ -16,6 +16,7 @@ const BankDetailsInfo = () => {
     });
     const [districts, setDistricts] = useState([]); // Store all districts from API
     const [update, setUpdate] = useState(true);
+    const [isEditable, setIsEditable] = useState(true);
     const { data: session } = useSession();
 
     useEffect(() => {
@@ -24,6 +25,7 @@ const BankDetailsInfo = () => {
                 if (session?.accessToken) {
                     const response = await getAffiliateFinanceBankInfo(session.accessToken);
                     const bankData = response.results.data;
+                    console.log(response);
 
                     // Prefill the form with the data received from the API
                     setBankInfo({
@@ -34,7 +36,7 @@ const BankDetailsInfo = () => {
                         account_number: bankData.account_number,
                         routing_number: bankData.routing_number
                     });
-
+                    setIsEditable(response.results.bank_edit === 1);
                     // Set all available districts for the dropdown
                     setDistricts(response.results.districts);
                 }
@@ -98,6 +100,7 @@ const BankDetailsInfo = () => {
                                     placeholder="Enter Account Holder Name.."
                                     value={bankInfo.holdername}
                                     onChange={handleInputChange}
+                                    disabled={!isEditable}
                                 />
                             </div>
 
@@ -113,6 +116,7 @@ const BankDetailsInfo = () => {
                                     placeholder="Enter Bank Name..."
                                     value={bankInfo.bank_name}
                                     onChange={handleInputChange}
+                                    disabled={!isEditable}
                                 />
                             </div>
 
@@ -126,6 +130,7 @@ const BankDetailsInfo = () => {
                                     id="district"
                                     value={bankInfo.district}
                                     onChange={handleInputChange}
+                                    disabled={!isEditable}
                                 >
                                     <option value="">Select District</option>
                                     {districts.map((district) => (
@@ -148,6 +153,7 @@ const BankDetailsInfo = () => {
                                     placeholder="Enter Branch Name..."
                                     value={bankInfo.branch_name}
                                     onChange={handleInputChange}
+                                    disabled={!isEditable}
                                 />
                             </div>
 
@@ -163,6 +169,7 @@ const BankDetailsInfo = () => {
                                     placeholder="Enter Account Number..."
                                     value={bankInfo.account_number}
                                     onChange={handleInputChange}
+                                    disabled={!isEditable}
                                 />
                             </div>
 
@@ -178,20 +185,24 @@ const BankDetailsInfo = () => {
                                     placeholder="Enter Routing Number..."
                                     value={bankInfo.routing_number}
                                     onChange={handleInputChange}
+                                    disabled={!isEditable}
                                 />
                             </div>
 
                             <div className="pb-2">
                                 <span className="text-danger">
-                                    * Please note, you can update this information only once.
+                                    {isEditable ?
+                                        "* You can update this information only once time." :
+                                        "* You cannot update this information anymore."}
                                 </span>
                             </div>
 
                             <div className="">
                                 <input
-                                    className="add-to-cart-link border-0 mx-auto"
+                                    className={`add-to-cart-link border-0 mx-auto ${!isEditable && "disabled-button"}`}
                                     type="submit"
                                     value="Update Info"
+                                    disabled={!isEditable}
                                 />
                             </div>
                         </form>
