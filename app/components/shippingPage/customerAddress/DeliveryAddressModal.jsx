@@ -33,6 +33,7 @@ const DeliveryAddressModal = ({
                                 <div className="col-md-6 pb-3">
                                     <label htmlFor="full-name" className="form-label">
                                         Full Name
+                                        <span className="text-danger fw-bold">*</span>
                                     </label>
                                     <input
                                         type="text"
@@ -93,6 +94,7 @@ const DeliveryAddressModal = ({
                                 <div className="col-md-6 pb-3">
                                     <label htmlFor="city" className="form-label">
                                         City
+                                        <span className="text-danger fw-bold">*</span>
                                     </label>
                                     <input
                                         type="text"
@@ -111,6 +113,7 @@ const DeliveryAddressModal = ({
                                 <div className="col-md-12 pb-3">
                                     <label htmlFor="address" className="form-label">
                                         Address
+                                        <span className="text-danger fw-bold">*</span>
                                     </label>
                                     <textarea
                                         name="address"
