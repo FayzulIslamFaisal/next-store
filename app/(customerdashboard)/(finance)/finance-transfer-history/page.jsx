@@ -14,7 +14,6 @@ const FinanceTransferHistory = async () => {
     const data = await geAffiliateFinanceTransferHistory(session?.accessToken);
     // render the component with the fetched data
     console.log(data);
-    
 
     return (
         <div className="customer-dashboard-order-history-area">
