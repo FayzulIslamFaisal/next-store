@@ -57,7 +57,7 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                                       ?.account_head
                                                                       ?.bank_name
                                                             : item?.nh_agent_id
-                                                            ? "Agent: " + item.agent?.user
+                                                            ? "Agent: " + item.user_agent
                                                                   ?.name
                                                             : payment_method}`}
                                                     </td>
