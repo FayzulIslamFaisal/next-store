@@ -15,7 +15,7 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                     <th>Paid On</th>
                                     <th>Payment Gateway</th>
                                     <th>Payment Method</th>
-                                    <th>Bank name</th>
+                                    {/* <th>Bank name</th> */}
                                     <th>TxId/DC</th>
                                     <th>Amount</th>
                                 </tr>
@@ -34,6 +34,8 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                 transaction_amount,
                                                 transaction_id,
                                             } = item;
+                                            console.log("item", { item });
+
                                             return (
                                                 <tr key={id}>
                                                     <td>
@@ -45,17 +47,19 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                             : "N/A"}
                                                     </td>
                                                     <td>
-                                                        {item?.nh_agent_id !==
-                                                        null
-                                                            ? item?.agent?.user
+                                                        {item?.account_head_id
+                                                            ? (item?.account_head?.assign_type == 1 ? item?.account_head?.head_name: item?.account_head?.bank_name )
+                                                            : item?.nh_agent_id
+                                                            ? item.agent?.user
                                                                   ?.name
                                                             : payment_method}
                                                     </td>
-                                                    <td>
+
+                                                    {/* <td>
                                                         {bank_name
                                                             ? bank_name
                                                             : "N/A"}
-                                                    </td>
+                                                    </td> */}
                                                     <td>
                                                         {transaction_id
                                                             ? transaction_id
@@ -65,7 +69,7 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                         ৳{" "}
                                                         {transaction_amount
                                                             ? transaction_amount
-                                                            : "N/A"}
+                                                            : "0"}
                                                     </td>
                                                 </tr>
                                             );
