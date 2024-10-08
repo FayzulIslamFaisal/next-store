@@ -140,7 +140,7 @@ const MobileNav = () => {
                         </form>
                     </div>
                     <aside
-                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${
+                        className={`customer-dashboard-side-navbar-mobile d-xl-none left-100 ${
                             isSidebarOpen ? "start-0" : "left-100"
                         } `}
                     >
