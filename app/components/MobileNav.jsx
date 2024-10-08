@@ -2,15 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { FaBars, FaXmark } from "react-icons/fa6";
+import { FaBars, FaCartShopping, FaUser, FaXmark } from "react-icons/fa6";
 import CustomerLeftSideNavbar from "./customerDashboard/CustomerLeftSideNavbar";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const MobileNav = () => {
     const [popupSearch, setPopupSearch] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const searchAreaRef = useRef(null);
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
+    const router = useRouter();
 
     const toggleSearchField = () => {
         setPopupSearch(!popupSearch);
@@ -31,19 +33,12 @@ const MobileNav = () => {
         };
 
         if (typeof window !== "undefined") {
-            document.body.addEventListener(
-                "click",
-                searchPopupClickOutsideHide
-            );
+            document.addEventListener("click", searchPopupClickOutsideHide);
             return () => {
-                document.body.removeEventListener(
-                    "click",
-                    searchPopupClickOutsideHide
-                );
+                document.removeEventListener("click", searchPopupClickOutsideHide);
             };
         }
     }, []);
-
 
     return (
         <div className="row mobile-nav-row-area">
@@ -51,12 +46,13 @@ const MobileNav = () => {
                 <div className="mobile-nav-col-area">
                     <div className="mobile-nav-holder d-flex align-items-center justify-content-between">
                         <div className="mobile-nav-item">
-                            <div className="mobile-logo">
+                            <div className="mobile-logo" style={{ position: "relative", width: "100px", height: "auto" }}>
                                 <Link href="/">
                                     <Image
                                         src="/images/logo.svg"
                                         alt="logo"
-                                        fill={true}
+                                        fill
+                                        aria-label="Navigate to homepage"
                                     />
                                 </Link>
                             </div>
@@ -66,6 +62,7 @@ const MobileNav = () => {
                                 className="mobile-nav-location-img"
                                 data-bs-toggle="modal"
                                 data-bs-target="#district-Modal"
+                                aria-label="Change location"
                             >
                                 <Image
                                     src="/images/location-footer.svg"
@@ -77,6 +74,7 @@ const MobileNav = () => {
                             <div
                                 className="mobile-nav-search-img"
                                 onClick={toggleSearchField}
+                                aria-label="Open search field"
                             >
                                 <Image
                                     src="/images/search-icon.svg"
@@ -85,12 +83,28 @@ const MobileNav = () => {
                                     height={21}
                                 />
                             </div>
-                            {session && (
+                            <div
+                                className="fs-4 text-white dashboard-side-navbar-togol"
+                                onClick={() => router.push("/cart-page")}
+                                aria-label="Go to cart page"
+                            >
+                                <FaCartShopping />
+                            </div>
+                            {session ? (
                                 <div
-                                    className="fs-2 text-white dashboard-side-navbar-togol"
+                                    className="fs-4 text-white dashboard-side-navbar-togol"
                                     onClick={toggleSidebar}
+                                    aria-label="Open sidebar menu"
                                 >
                                     <FaBars />
+                                </div>
+                            ) : (
+                                <div
+                                    className="fs-6 text-white dashboard-side-navbar-togol"
+                                    onClick={() => router.push("/login")}
+                                    aria-label="Go to login page"
+                                >
+                                    <FaUser />
                                 </div>
                             )}
                         </div>
@@ -107,16 +121,18 @@ const MobileNav = () => {
                                     type="text"
                                     placeholder="Search in Nagadhat..."
                                     className="form-control"
+                                    aria-label="Search in Nagadhat"
                                 />
                                 <div className="mobile-popup-search-back-arrow">
                                     <div
                                         className="mobile-popup-search-back"
                                         onClick={toggleSearchField}
+                                        aria-label="Close search field"
                                     >
                                         <Image
                                             src="/images/left-arrow-back.png"
                                             alt="left arrow"
-                                            fill={true}
+                                            fill
                                         />
                                     </div>
                                 </div>
@@ -124,13 +140,15 @@ const MobileNav = () => {
                         </form>
                     </div>
                     <aside
-                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${
-                            isSidebarOpen ? "start-0" : "left-100"
-                        } `}
+                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow ${
+                            isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+                        }`}
+                        style={{ transition: "transform 0.3s ease" }}
                     >
                         <div
                             className="fs-2 dashboard-side-navbar-togol-mobile"
                             onClick={toggleSidebar}
+                            aria-label="Close sidebar menu"
                         >
                             <FaXmark />
                         </div>
