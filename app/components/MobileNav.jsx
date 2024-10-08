@@ -30,12 +30,13 @@ const MobileNav = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
-                searchAreaRef.current &&
-                !searchAreaRef.current.contains(event.target) &&
-                searchResultRef.current &&
-                !searchResultRef.current.contains(event.target)
+                (searchAreaRef.current &&
+                    !searchAreaRef.current.contains(event.target)) ||
+                (searchResultRef.current &&
+                    !searchResultRef.current.contains(event.target))
             ) {
                 setPopupSearch(false);
+                setSearchProduct([]);
             }
         };
 
@@ -170,7 +171,7 @@ const MobileNav = () => {
                                     >
                                         <Image
                                             src="/images/left-arrow-back.png"
-                                            alt="left arrow" 
+                                            alt="left arrow"
                                             fill={true}
                                         />
                                     </div>
