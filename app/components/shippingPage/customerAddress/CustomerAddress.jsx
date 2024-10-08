@@ -91,7 +91,7 @@ const CustomerAddress = ({
       fullName: address?.full_name,
       phone: address?.phone,
       district: address?.district?.id,
-      city: address?.city?.id,
+      city: address?.city,
       address: address?.address,
       note: address?.note,
       setDefault: true,
@@ -134,11 +134,13 @@ const CustomerAddress = ({
     const findDefaultAddress = customerAddress?.find(
       (address, index) => address.id == id
     );
+    console.log(findDefaultAddress);
+    
     setFormData({
       fullName: findDefaultAddress?.full_name,
       phone: findDefaultAddress?.phone,
       district: findDefaultAddress?.district?.id,
-      city: findDefaultAddress?.city?.id,
+      city: findDefaultAddress?.city,
       address: findDefaultAddress?.address,
       note: findDefaultAddress?.note,
       setDefault: true,
