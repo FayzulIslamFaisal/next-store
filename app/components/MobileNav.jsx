@@ -46,12 +46,12 @@ const MobileNav = () => {
                 <div className="mobile-nav-col-area">
                     <div className="mobile-nav-holder d-flex align-items-center justify-content-between">
                         <div className="mobile-nav-item">
-                            <div className="mobile-logo" style={{ position: "relative", width: "100px", height: "auto" }}>
+                            <div className="mobile-logo">
                                 <Link href="/">
                                     <Image
                                         src="/images/logo.svg"
                                         alt="logo"
-                                        fill
+                                        fill = {true}
                                         aria-label="Navigate to homepage"
                                     />
                                 </Link>
@@ -132,7 +132,7 @@ const MobileNav = () => {
                                         <Image
                                             src="/images/left-arrow-back.png"
                                             alt="left arrow"
-                                            fill
+                                            fill ={true}
                                         />
                                     </div>
                                 </div>
@@ -140,15 +140,13 @@ const MobileNav = () => {
                         </form>
                     </div>
                     <aside
-                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow ${
-                            isSidebarOpen ? "sidebar-open" : "sidebar-closed"
-                        }`}
-                        style={{ transition: "transform 0.3s ease" }}
+                        className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${
+                            isSidebarOpen ? "start-0" : "left-100"
+                        } `}
                     >
                         <div
                             className="fs-2 dashboard-side-navbar-togol-mobile"
                             onClick={toggleSidebar}
-                            aria-label="Close sidebar menu"
                         >
                             <FaXmark />
                         </div>
