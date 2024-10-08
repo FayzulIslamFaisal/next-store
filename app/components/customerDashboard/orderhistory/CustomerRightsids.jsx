@@ -83,7 +83,14 @@ const CustomerRightsids = ({
                                                 <td>{order_date}</td>
                                                 <td>{grand_total}</td>
 
-                                                <td>
+                                                <td
+                                                    className={`${
+                                                        order_status ===
+                                                        "Canceled"
+                                                            ? "text-danger fw-bolder"
+                                                            : ""
+                                                    }`}
+                                                >
                                                     {order_status ===
                                                         "Processing" &&
                                                     orderItem?.order_product_type ===
@@ -132,7 +139,14 @@ const CustomerRightsids = ({
                                                     )}
                                                 </td>
 
-                                                <td className="paid">
+                                                <td
+                                                    className={`paid ${
+                                                        payment_status ===
+                                                        "Under Review"
+                                                            ? "text-warning"
+                                                            : ""
+                                                    }`}
+                                                >
                                                     {order_status !==
                                                         "Canceled" &&
                                                     payment_status !== "Paid" &&
