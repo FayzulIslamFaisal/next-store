@@ -8,6 +8,7 @@ import { NagadhatPublicUrl } from "../../utils";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getHomeSearchProduct } from "@/app/services/getHomeSearchProduct";
+import { ToastContainer } from "react-toastify";
 
 const CategoryProductArchiveItems = ({ productItem }) => {
     const searchParams = useSearchParams();
@@ -94,6 +95,7 @@ const CategoryProductArchiveItems = ({ productItem }) => {
 
     return (
         <div className="flash-sale-content-item">
+            <ToastContainer/>
             <Link
                 href={`/products/get-product-details?outlet_id=${outletId}&product_id=${id}`}
             >
