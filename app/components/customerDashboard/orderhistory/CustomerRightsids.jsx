@@ -139,7 +139,14 @@ const CustomerRightsids = ({
                                                     )}
                                                 </td>
 
-                                                <td className="paid">
+                                                <td
+                                                    className={`paid ${
+                                                        payment_status ===
+                                                        "Under Review"
+                                                            ? "text-warning"
+                                                            : ""
+                                                    }`}
+                                                >
                                                     {order_status !==
                                                         "Canceled" &&
                                                     payment_status !== "Paid" &&
