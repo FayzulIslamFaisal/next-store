@@ -109,6 +109,9 @@
 }
 
 @media (max-width: 1199px) {
+    .shopping-info-area {
+        padding: 18px 10px;
+    }
     .nh-view-all-product {
         -ms-grid-columns: 1fr 0 1fr 0 1fr 0 1fr 0 1fr;
         grid-template-columns: repeat(5, 1fr);

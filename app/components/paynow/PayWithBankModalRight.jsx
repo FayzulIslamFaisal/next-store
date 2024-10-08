@@ -26,15 +26,6 @@ const PayWithBankModalRight = ({
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    // Generate a unique deposit code using crypto or fallback
-    useEffect(() => {
-        if (window.crypto && crypto.randomUUID) {
-            setDepositCode(crypto.randomUUID().slice(-8));
-        } else {
-            setDepositCode(Math.random().toString(36).substring(2, 10));
-        }
-    }, []);
-
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
@@ -47,12 +38,17 @@ const PayWithBankModalRight = ({
             setFormError("Please select a bank.");
             return;
         }
+        if (!depositCode) {
+            setFormError("Please Enter a Deposit Code.");
+            return;
+        }
 
         const formData = new FormData();
         formData.append("order_id", orderId);
         formData.append("account_head_id", selectedBank);
         formData.append("payment_getway", "Bank Payment");
         formData.append("note_1", paymentNote);
+        formData.append("d_code", depositCode);
         formData.append("payment_slip", paymentSlip || "");
 
         try {
@@ -176,9 +172,13 @@ const PayWithBankModalRight = ({
                             >
                                 Deposit Code (DC)
                             </label>
-                            <p className="form-control" id="deposit_code">
-                                {depositCode}
-                            </p>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="deposit_code"
+                                value={depositCode}
+                                onChange={(e) => setDepositCode(e.target.value)}
+                            />
                         </div>
                     </div>
 

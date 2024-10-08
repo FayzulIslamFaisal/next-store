@@ -94,81 +94,89 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     return (
         <div className="col-lg-8">
             <ToastContainer />
-            <div className="pay-now-payment-option-bg bg-white">
-                <div className="pay-now-payment-option-title">
-                    <h1>Select a payment option</h1>
-                </div>
-                {isPending ? (
-                    <DefaultLoader />
-                ) : (
-                    <div className="pay-now-payment-option-img">
-                        {filteredPaymentOptions.map((option) => (
-                            <div
-                                key={option.id}
-                                className={`pay-now-payment-option-img-box rounded-3 ${
-                                    selectedOption === option.id
-                                        ? "selected"
-                                        : ""
-                                }`}
-                                onClick={() => handleOptionClick(option.id)}
-                                style={{ cursor: "pointer" }}
-                            >
-                                <div className="pay-now-payment-option-img-item">
-                                    <Image
-                                        fill={true}
-                                        src={option.src}
-                                        className="img-fluid"
-                                        alt={option.alt}
-                                    />
+            {isPending ? (
+                <DefaultLoader />
+            ) : orderSummary?.payment_status === "Unpaid" ||
+              orderSummary?.payment_status === "Partial" ? (
+                <>
+                    <div className="pay-now-payment-option-bg bg-white">
+                        <div className="pay-now-payment-option-title">
+                            <h1>Select a payment option</h1>
+                        </div>
+                        <div className="pay-now-payment-option-img">
+                            {filteredPaymentOptions.map((option) => (
+                                <div
+                                    key={option.id}
+                                    className={`pay-now-payment-option-img-box rounded-3 ${
+                                        selectedOption === option.id
+                                            ? "selected"
+                                            : ""
+                                    }`}
+                                    onClick={() => handleOptionClick(option.id)}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <div className="pay-now-payment-option-img-item">
+                                        <Image
+                                            fill={true}
+                                            src={option.src}
+                                            className="img-fluid"
+                                            alt={option.alt}
+                                        />
+                                    </div>
                                 </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="pay-now-terms-condition-area">
+                        <div className="pay-now-terms-condition">
+                            {errorMsg && !isTermsChecked && (
+                                <p className="text-danger pb-2">{errorMsg}</p>
+                            )}
+                            <div className="mb-3 form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="exampleCheck1"
+                                    onChange={() =>
+                                        setIsTermsChecked(!isTermsChecked)
+                                    }
+                                />
+                                <label
+                                    className="form-check-label"
+                                    htmlFor="exampleCheck1"
+                                >
+                                    I agree to the terms and conditions, return
+                                    policy, and privacy policy
+                                </label>
                             </div>
-                        ))}
+                        </div>
+
+                        <div className="pay-now-return-shop d-flex align-items-center justify-content-between">
+                            <div className="pay-now-return-shop-item">
+                                <Link href="/">
+                                    <FaChevronLeft />
+                                    Return to Shop
+                                </Link>
+                            </div>
+
+                            <PayCompletedOrderBtn
+                                session={session}
+                                orderId={orderId}
+                                selectedOption={selectedOption}
+                                setShowAgentModal={setShowAgentModal}
+                                setShowBankModal={setShowBankModal}
+                                isTermsChecked={isTermsChecked}
+                                orderSummary={orderSummary}
+                            />
+                        </div>
                     </div>
-                )}
-            </div>
-            <div className="pay-now-terms-condition-area">
-                <div className="pay-now-terms-condition">
-                    {errorMsg && !isTermsChecked && (
-                        <p className="text-danger pb-2">{errorMsg}</p>
-                    )}
-                    <div className="mb-3 form-check">
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="exampleCheck1"
-                            onChange={() => setIsTermsChecked(!isTermsChecked)}
-                        />
-                        <label
-                            className="form-check-label"
-                            htmlFor="exampleCheck1"
-                        >
-                            I agree to the terms and conditions, return policy,
-                            and privacy policy
-                        </label>
-                    </div>
+                </>
+            ) : (
+                <div className="d-flex align-items-center justify-content-center h-100">
+                    <h4>Already Paid</h4>
                 </div>
+            )}
 
-                <div className="pay-now-return-shop d-flex align-items-center justify-content-between">
-                    <div className="pay-now-return-shop-item">
-                        <Link href="/">
-                            <FaChevronLeft />
-                            Return to Shop
-                        </Link>
-                    </div>
-
-                    <PayCompletedOrderBtn
-                        session={session}
-                        orderId={orderId}
-                        selectedOption={selectedOption}
-                        setShowAgentModal={setShowAgentModal}
-                        setShowBankModal={setShowBankModal}
-                        isTermsChecked={isTermsChecked}
-                        orderSummary={orderSummary}
-                    />
-                </div>
-            </div>
-
-            {/* Bootstrap Modal for Pay with Agent */}
             {showAgentModal && (
                 <PayWithAgentModal
                     showAgentModal={showAgentModal}
@@ -176,7 +184,6 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                     orderSummary={orderSummary}
                 />
             )}
-            {/* Bootstrap Modal for Pay with Bank */}
             {showBankModal && (
                 <PayWithBankModal
                     showBankModal={showBankModal}
