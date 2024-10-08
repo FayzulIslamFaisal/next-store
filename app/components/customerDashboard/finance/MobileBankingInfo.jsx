@@ -49,15 +49,18 @@ const MobileBankingInfo = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log(mobileBankingInfo);
-        const response = await updateAffiliateFinanceMobileBankInfo(session.accessToken, mobileBankingInfo);
-        if (response.code === 200) {
-            toast.success('Mobile Banking details updated successfully');
-            setUpdate(!update)
-        } else {
-            toast.error(response.message);
-            console.error('Error updating mobile banking details', response.message);
+        try {
+            const response = await updateAffiliateFinanceMobileBankInfo(session.accessToken, mobileBankingInfo);
+            if (response.code === 200) {
+                toast.success('Mobile Banking details updated successfully');
+                setUpdate(!update)
+            } else {
+                toast.error(response.message);
+                console.log('Error updating mobile banking details', response.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+            console.log('Error updating mobile banking details', error);
         }
     };
 
@@ -144,13 +147,15 @@ const MobileBankingInfo = () => {
                                 />
                             </div>
                             <div className="pb-2">
-                                <span className="text-danger">
-                                    * You cannot update this information anymore.
+                                <span className="text-danger ">
+                                    {isEditable ?
+                                        "* You can update this information only once time." :
+                                        "* You cannot update this information anymore."}
                                 </span>
                             </div>
                             <div className="">
                                 <input
-                                    className="add-to-cart-link border-0 mx-auto"
+                                    className={`add-to-cart-link border-0 mx-auto ${!isEditable && "disabled-button"}`}
                                     type="submit"
                                     value="Update Info"
                                     disabled={!isEditable}
