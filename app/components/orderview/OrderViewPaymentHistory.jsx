@@ -16,7 +16,7 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                     <th>Payment Gateway</th>
                                     <th>Payment Method</th>
                                     {/* <th>Bank name</th> */}
-                                    <th>TxId/DC</th>
+                                    <th>TxId/DC/VC</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -34,7 +34,6 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                 transaction_amount,
                                                 transaction_id,
                                             } = item;
-                                            console.log("item", { item });
 
                                             return (
                                                 <tr key={id}>
@@ -47,12 +46,20 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                             : "N/A"}
                                                     </td>
                                                     <td>
-                                                        {item?.account_head_id
-                                                            ? (item?.account_head?.assign_type == 1 ? item?.account_head?.head_name: item?.account_head?.bank_name )
+                                                        {`${item?.account_head_id
+                                                            ? item?.account_head
+                                                                  ?.assign_type ==
+                                                              1
+                                                                ? "Office: " + item
+                                                                      ?.account_head
+                                                                      ?.head_name
+                                                                : "Bank: " + item
+                                                                      ?.account_head
+                                                                      ?.bank_name
                                                             : item?.nh_agent_id
-                                                            ? item.agent?.user
+                                                            ? "Agent: " + item.agent?.user
                                                                   ?.name
-                                                            : payment_method}
+                                                            : payment_method}`}
                                                     </td>
 
                                                     {/* <td>
@@ -61,9 +68,7 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                             : "N/A"}
                                                     </td> */}
                                                     <td>
-                                                        {transaction_id
-                                                            ? transaction_id
-                                                            : "N/A"}
+                                                        {payment_getway == "Office Cash" ? "VC: " : payment_getway == "Bank Payment" ? 'DC: ' : 'TxId: '  } { transaction_id || id}
                                                     </td>
                                                     <td>
                                                         ৳{" "}
