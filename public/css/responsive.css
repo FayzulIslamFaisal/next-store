@@ -329,6 +329,9 @@
 }
 
 @media (max-width: 767px) {
+    .table-responsive-md table {
+        min-width: 700px;
+    }
     .order-summary-area {
         margin-left: 0 !important;
         margin-right: 0 !important;

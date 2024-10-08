@@ -14,9 +14,9 @@ const PayNowPage = () => {
     return (
         <>
             <PrivateRoute>
-                <div className="pay-now-wrapper">
+                <div className="pay-now-wrapper pt-4">
                     <div className="container">
-                        <PayNowTopIcon />
+                        {/* <PayNowTopIcon /> */}
                         <PayNowDetails />
                     </div>
                     <Service />
