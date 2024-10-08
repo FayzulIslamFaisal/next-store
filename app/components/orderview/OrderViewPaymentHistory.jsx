@@ -1,6 +1,6 @@
-"use client";
-
 const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
+    console.log("orderPaymentHistory", { orderPaymentHistory });
+
     return (
         <>
             <div className="card mt-4">
@@ -42,27 +42,30 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                     <td>
                                                         {payment_getway
                                                             ? payment_getway
-                                                            : null}
+                                                            : "N/A"}
                                                     </td>
                                                     <td>
-                                                        {payment_method
-                                                            ? payment_method
-                                                            : null}
+                                                        {item?.nh_agent_id !==
+                                                        null
+                                                            ? item?.agent?.user
+                                                                  ?.name
+                                                            : payment_method}
                                                     </td>
                                                     <td>
                                                         {bank_name
                                                             ? bank_name
-                                                            : null}
+                                                            : "N/A"}
                                                     </td>
                                                     <td>
                                                         {transaction_id
                                                             ? transaction_id
-                                                            : null}
+                                                            : "N/A"}
                                                     </td>
                                                     <td>
+                                                        ৳{" "}
                                                         {transaction_amount
                                                             ? transaction_amount
-                                                            : null}
+                                                            : "N/A"}
                                                     </td>
                                                 </tr>
                                             );
@@ -70,7 +73,7 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                     )
                                 ) : (
                                     <tr>
-                                        <td>
+                                        <td colSpan={6}>
                                             <h6>No Data Found</h6>
                                         </td>
                                     </tr>
