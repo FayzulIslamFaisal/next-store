@@ -1,10 +1,13 @@
-"use client"
+"use client";
 import { useState } from "react";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
 
 const FinanceTransfer = () => {
     const [transferFrom, setTransferFrom] = useState("");
     const [transferTo, setTransferTo] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [charge, setCharge] = useState(0);
+    const [payable, setPayable] = useState(0);
 
     const handleTransferFromChange = (e) => {
         setTransferFrom(e.target.value);
@@ -21,6 +24,21 @@ const FinanceTransfer = () => {
             setTransferFrom("Cash Balance");
         } else if (e.target.value === "Cash Balance") {
             setTransferFrom("Shopping Balance");
+        }
+    };
+
+    const handleAmountChange = (e) => {
+        const enteredAmount = parseFloat(e.target.value);
+        setAmount(enteredAmount);
+
+        // Apply 7% charge only if transferring from Cash Balance to Shopping Balance
+        if (transferFrom === "Cash Balance" && transferTo === "Shopping Balance") {
+            const calculatedCharge = (enteredAmount * 7) / 100;
+            setCharge(calculatedCharge);
+            setPayable(enteredAmount - calculatedCharge);
+        } else {
+            setCharge(0);
+            setPayable(enteredAmount);
         }
     };
 
@@ -65,22 +83,19 @@ const FinanceTransfer = () => {
                                 required
                             >
                                 <option value="">Select Transfer To</option>
-                                {/* {transferFrom === "Shopping Balance" ? ( */}
                                 <option value="Cash Balance">
                                     Cash Balance
                                 </option>
-                                {/* ) : ( */}
                                 <option value="Shopping Balance">
                                     Shopping Balance
                                 </option>
-                                {/* )} */}
                             </select>
                         </div>
 
                         <div className="form-group">
-                            <label className="form-label">\
+                            <label className="form-label">
                                 Amount:
-                                <span className="praymary-color">
+                                <span className="primary-color">
                                     (Balance: {500 || "N/A"})
                                 </span>
                             </label>
@@ -94,18 +109,21 @@ const FinanceTransfer = () => {
                                     name="amount"
                                     required
                                     placeholder="Enter Amount"
+                                    onChange={handleAmountChange}
                                 />
                             </div>
                         </div>
-                        {amount && (
+                        {charge && (
                             <div className="form-group paySheet">
-                                <p className="mb-0">Amount: {amount || 0}</p>
+                                <p className="mb-0">Amount: {amount}</p>
                                 <p className="mb-0">Charge: {charge.toFixed(2)}</p>
                                 <p className="mb-0">Payable: {payable.toFixed(2)}</p>
                             </div>
                         )}
+                        <p>7% service charge applicable when transferring from Cash Balance to Shopping Balance</p>
                         <button
                             className="w-100 add-to-cart-link border-0 mt-3"
+                            disabled={!amount}
                         >
                             Continue
                         </button>

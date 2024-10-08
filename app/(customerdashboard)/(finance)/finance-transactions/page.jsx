@@ -1,18 +1,18 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
+import Pagination from "@/app/components/productCategory/Pagination";
 import { geAffiliateFinanceTransitions } from "@/app/services/affiliate-finance/geAffiliateFinanceTransitions";
 import { getServerSession } from "next-auth";
 
-const FinanceTransactions = async () => {
+const FinanceTransactions = async ({ searchParams }) => {
     // get server session
     const session = await getServerSession(authOptions);
-    console.log(session);
-
+    const currentPage = parseInt(searchParams.page) || 1;
+    const limit = 4; //Per Page Category
+    
     // fetch affiliate finance transfer history data
-    const data = await geAffiliateFinanceTransitions(session?.accessToken);
-    console.log(data);
-
-    // check if the results exist
+    const data = await geAffiliateFinanceTransitions(session?.accessToken, currentPage, limit);
+    const lastPage = data?.results?.last_page || 1;
     const transactions = data?.results?.data || [];
 
     return (
@@ -39,9 +39,9 @@ const FinanceTransactions = async () => {
                                     <td>{index + 1}</td>
                                     <td>{transaction.date_time}</td>
                                     <td>{transaction.purpose}</td>
-                                    <td>{transaction.debit !== "0.00" ? transaction.debit : "--"}</td>
-                                    <td>{transaction.credit !== "0.00" ? transaction.credit : "--"}</td>
-                                    <td>{transaction.balance}</td>
+                                    <td className="text-end">{transaction.debit ? transaction.debit : "--"}</td>
+                                    <td className="text-end">{transaction.credit ? transaction.credit : "--"}</td>
+                                    <td className="text-end">{transaction.balance}</td>
                                     <td>
                                         <span
                                             className={
@@ -62,6 +62,10 @@ const FinanceTransactions = async () => {
                         )}
                     </tbody>
                 </table>
+                <Pagination 
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                />
             </div>
         </div>
     );
