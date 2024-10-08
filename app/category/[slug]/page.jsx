@@ -7,6 +7,7 @@ import Breadcrumb from "@/app/components/productDetail/Breadcrumb";
 import { getCategorydetailBySlug } from "@/app/services/getCategorydetailBySlug";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 const DynamicCategoryPage = ({ params }) => {
     const searchParams = useSearchParams();
@@ -80,6 +81,7 @@ const DynamicCategoryPage = ({ params }) => {
                     style={{ minHeight: "60vh" }}
                 >
                     <div className="col-md-12">
+                        <ToastContainer/>
                         <div className="product-category-details">
                             <CategoryLeftSide
                                 categoryByBrand={categoryByBrand}
