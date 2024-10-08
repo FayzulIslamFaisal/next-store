@@ -131,7 +131,7 @@ const PayNowSummary = ({ setOrderSummary, orderSummary, startTransition }) => {
                         <strong>Due</strong>
                         <strong>
                             ৳{" "}
-                            {orderSummary?.total_products_price -
+                            {orderSummary?.grand_total -
                                 orderSummary?.total_paid}{" "}
                         </strong>
                     </div>
