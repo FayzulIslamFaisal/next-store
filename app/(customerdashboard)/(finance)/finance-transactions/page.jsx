@@ -1,12 +1,25 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
+import { geAffiliateFinanceTransitions } from "@/app/services/affiliate-finance/geAffiliateFinanceTransitions";
+import { getServerSession } from "next-auth";
 
+const FinanceTransactions = async () => {
+    // get server session
+    const session = await getServerSession(authOptions);
+    console.log(session);
 
-const FinanceTransactions = () => {
+    // fetch affiliate finance transfer history data
+    const data = await geAffiliateFinanceTransitions(session?.accessToken);
+    console.log(data);
+
+    // check if the results exist
+    const transactions = data?.results?.data || [];
+
     return (
         <div className="customer-dashboard-order-history-area">
             <FinanceTopTitle title="Transactions" />
             <div className="p-4 overflow-x-scroll">
-                {/*Transactions section */}
+                {/* Transactions section */}
                 <table className="table table-hover" style={{ minWidth: "645px" }}>
                     <thead>
                         <tr>
@@ -20,29 +33,33 @@ const FinanceTransactions = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>24 Aug, 2024 / 01:38 pm</td>
-                            <td>Special Bonus</td>
-                            <td>--</td>
-                            <td>800</td>
-                            <td>5,509.41</td>
-                            <td>
-                                <span className="text-success">Completed</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>24 Aug, 2024 / 01:38 pm</td>
-                            <td>Generation Bonus</td>
-                            <td>--</td>
-                            <td>800</td>
-                            <td>5,509.41</td>
-                            <td>
-                                <span className="text-success">Completed</span>
-                            </td>
-                        </tr>
-                        {/* Add more transaction rows */}
+                        {transactions.length > 0 ? (
+                            transactions.map((transaction, index) => (
+                                <tr key={transaction.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{transaction.date_time}</td>
+                                    <td>{transaction.purpose}</td>
+                                    <td>{transaction.debit !== "0.00" ? transaction.debit : "--"}</td>
+                                    <td>{transaction.credit !== "0.00" ? transaction.credit : "--"}</td>
+                                    <td>{transaction.balance}</td>
+                                    <td>
+                                        <span
+                                            className={
+                                                transaction.status === "Completed"
+                                                    ? "text-success"
+                                                    : "text-warning"
+                                            }
+                                        >
+                                            {transaction.status}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="7">No transactions found</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

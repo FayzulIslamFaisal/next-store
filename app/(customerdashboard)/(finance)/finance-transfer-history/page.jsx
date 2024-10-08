@@ -1,8 +1,21 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FinanceTopTitle from "@/app/components/customerDashboard/finance/FinanceTopTitle";
 import WithdrawHistoryModal from "@/app/components/customerDashboard/finance/WithdrawHistoryModal";
+import { geAffiliateFinanceTransferHistory } from "@/app/services/affiliate-finance/geAffiliateFinanceTransferHistory";
+import { getServerSession } from "next-auth";
 import { FaEye } from "react-icons/fa6";
 
-const FinanceTransferHistory = () => {
+const FinanceTransferHistory = async () => {
+    // get server session
+    const session = await getServerSession(authOptions);
+    console.log(session);
+    
+    // fetch affiliate finance transfer history data
+    const data = await geAffiliateFinanceTransferHistory(session?.accessToken);
+    // render the component with the fetched data
+    console.log(data);
+    
+
     return (
         <div className="customer-dashboard-order-history-area">
             <FinanceTopTitle title="Transfer History" />
