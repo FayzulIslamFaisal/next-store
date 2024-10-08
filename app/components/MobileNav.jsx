@@ -5,40 +5,78 @@ import { useState, useRef, useEffect } from "react";
 import { FaBars, FaCartShopping, FaUser, FaXmark } from "react-icons/fa6";
 import CustomerLeftSideNavbar from "./customerDashboard/CustomerLeftSideNavbar";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getHomeSearchProduct } from "../services/getHomeSearchProduct";
+import ProductSearchResult from "./ProductSearchResult";
 
 const MobileNav = () => {
     const [popupSearch, setPopupSearch] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [search, setSearch] = useState("");
+    const [searchProduct, setSearchProduct] = useState([]);
+
     const searchAreaRef = useRef(null);
+    const searchResultRef = useRef(null);
     const { data: session } = useSession();
     const router = useRouter();
 
-    const toggleSearchField = () => {
-        setPopupSearch(!popupSearch);
-    };
+    const searchParams = useSearchParams();
+    let districtId = searchParams.get("districtId");
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
     useEffect(() => {
-        const searchPopupClickOutsideHide = (event) => {
+        const handleClickOutside = (event) => {
             if (
                 searchAreaRef.current &&
-                !searchAreaRef.current.contains(event.target)
+                !searchAreaRef.current.contains(event.target) &&
+                searchResultRef.current &&
+                !searchResultRef.current.contains(event.target)
             ) {
                 setPopupSearch(false);
             }
         };
 
-        if (typeof window !== "undefined") {
-            document.addEventListener("click", searchPopupClickOutsideHide);
-            return () => {
-                document.removeEventListener("click", searchPopupClickOutsideHide);
-            };
-        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
     }, []);
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        const fetchSearchProduct = async () => {
+            if (!search || search.length < 3) {
+                setSearchProduct([]);
+                return;
+            }
+
+            if (!districtId) {
+                districtId = 47;
+            }
+
+            const productData = await getHomeSearchProduct(districtId, search);
+            const searchResults =
+                productData?.results?.search_result?.original?.results;
+
+            if (searchResults) {
+                setSearchProduct(searchResults);
+            }
+        };
+        fetchSearchProduct();
+    }, [search, districtId]);
+
+    const isSearchProductAvailable = () => {
+        return searchProduct.length !== 0;
+    };
+    const clearSearch = () => {
+        setSearch("");
+    };
 
     return (
         <div className="row mobile-nav-row-area">
@@ -51,7 +89,7 @@ const MobileNav = () => {
                                     <Image
                                         src="/images/logo.svg"
                                         alt="logo"
-                                        fill = {true}
+                                        fill={true}
                                         aria-label="Navigate to homepage"
                                     />
                                 </Link>
@@ -73,7 +111,7 @@ const MobileNav = () => {
                             </div>
                             <div
                                 className="mobile-nav-search-img"
-                                onClick={toggleSearchField}
+                                onClick={() => setPopupSearch(true)}
                                 aria-label="Open search field"
                             >
                                 <Image
@@ -122,23 +160,32 @@ const MobileNav = () => {
                                     placeholder="Search in Nagadhat..."
                                     className="form-control"
                                     aria-label="Search in Nagadhat"
+                                    onChange={handleSearchChange}
                                 />
                                 <div className="mobile-popup-search-back-arrow">
                                     <div
                                         className="mobile-popup-search-back"
-                                        onClick={toggleSearchField}
+                                        onClick={() => setPopupSearch(false)}
                                         aria-label="Close search field"
                                     >
                                         <Image
                                             src="/images/left-arrow-back.png"
-                                            alt="left arrow"
-                                            fill ={true}
+                                            alt="left arrow" 
+                                            fill={true}
                                         />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
+                    {search && isSearchProductAvailable() && (
+                        <div ref={searchResultRef}>
+                            <ProductSearchResult
+                                searchProduct={searchProduct}
+                                clearSearch={clearSearch}
+                            />
+                        </div>
+                    )}
                     <aside
                         className={`customer-dashboard-side-navbar-mobile d-xl-none shadow left-100 ${
                             isSidebarOpen ? "start-0" : "left-100"
