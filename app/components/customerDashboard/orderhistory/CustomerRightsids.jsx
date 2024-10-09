@@ -191,9 +191,13 @@ const CustomerRightsids = ({
                                                                 <FaDownload />
                                                             </Link>
                                                         </button>
-                                                        {order_status ===
-                                                        "Canceled" ? (
-                                                            ""
+                                                        {/* {order_status ==
+                                                            "Paid" ||
+                                                        order_status ==
+                                                            "Processing" ||
+                                                        order_status ==
+                                                            "Canceled" ? (
+                                                            " "
                                                         ) : (
                                                             <button
                                                                 title="Order Cancel"
@@ -205,7 +209,24 @@ const CustomerRightsids = ({
                                                             >
                                                                 <FaXmark />
                                                             </button>
-                                                        )}
+                                                        )} */}
+                                                        {payment_status !==
+                                                            "Paid" &&
+                                                            order_status !==
+                                                                "Processing" &&
+                                                            order_status !==
+                                                                "Canceled" && (
+                                                                <button
+                                                                    title="Order Cancel"
+                                                                    onClick={() =>
+                                                                        handleOrderCanceled(
+                                                                            order_id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <FaXmark />
+                                                                </button>
+                                                            )}
                                                     </div>
                                                 </td>
                                             </tr>
