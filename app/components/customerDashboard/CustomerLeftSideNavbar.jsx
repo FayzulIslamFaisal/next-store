@@ -18,7 +18,11 @@ import {
     FaUser,
     FaWallet,
 } from "react-icons/fa";
-import { FaBangladeshiTakaSign, FaMoneyBillTransfer, FaTicket } from "react-icons/fa6";
+import {
+    FaBangladeshiTakaSign,
+    FaMoneyBillTransfer,
+    FaTicket,
+} from "react-icons/fa6";
 import SignoutBtn from "../SignoutBtn";
 
 const CustomerLeftSideNavbar = ({ authSessionData }) => {
@@ -185,7 +189,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className={`${
-                                            isActive("/affiliatedashboard") ? "activ-link" : ""
+                                            isActive("/affiliatedashboard")
+                                                ? "activ-link"
+                                                : ""
                                         } nav-link customer-dashboard-nav-link`}
                                         href="/affiliatedashboard"
                                     >
@@ -196,7 +202,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className={`${
-                                            isActive("/affiliateteam") ? "activ-link" : ""
+                                            isActive("/affiliateteam")
+                                                ? "activ-link"
+                                                : ""
                                         } nav-link customer-dashboard-nav-link`}
                                         href="/affiliateteam"
                                     >
@@ -207,7 +215,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className={`${
-                                            isActive("/affiliateproducts") ? "activ-link" : ""
+                                            isActive("/affiliateproducts")
+                                                ? "activ-link"
+                                                : ""
                                         } nav-link customer-dashboard-nav-link`}
                                         href="/affiliateproducts"
                                     >
@@ -218,7 +228,11 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className={`${
-                                            isActive("/affiliat-sell-on-nagadhat") ? "activ-link" : ""
+                                            isActive(
+                                                "/affiliat-sell-on-nagadhat"
+                                            )
+                                                ? "activ-link"
+                                                : ""
                                         } nav-link customer-dashboard-nav-link`}
                                         href="/affiliat-sell-on-nagadhat"
                                     >
@@ -229,7 +243,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                                 <li className="dropdown-item customer-dashboard-dropdown-item">
                                     <Link
                                         className={`${
-                                            isActive("/affiliaterankreward") ? "activ-link" : ""
+                                            isActive("/affiliaterankreward")
+                                                ? "activ-link"
+                                                : ""
                                         } nav-link customer-dashboard-nav-link`}
                                         href="/affiliaterankreward"
                                     >
@@ -272,7 +288,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/payout-affiliate-bonus") ? "activ-link" : ""
+                                        isActive("/payout-affiliate-bonus")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/payout-affiliate-bonus"
                                 >
@@ -283,7 +301,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/payout-resale-bonus") ? "activ-link" : ""
+                                        isActive("/payout-resale-bonus")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/payout-resale-bonus"
                                 >
@@ -294,7 +314,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/payout-generation-bonus") ? "activ-link" : ""
+                                        isActive("/payout-generation-bonus")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/payout-generation-bonus"
                                 >
@@ -305,7 +327,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/payout-rank-&-reward") ? "activ-link" : ""
+                                        isActive("/payout-rank-&-reward")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/payout-rank-&-reward"
                                 >
@@ -316,7 +340,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/payout-salary") ? "activ-link" : ""
+                                        isActive("/payout-salary")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/payout-salary"
                                 >
@@ -347,7 +373,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-transactions") ? "activ-link" : ""
+                                        isActive("/finance-transactions")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-transactions"
                                 >
@@ -358,7 +386,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-transfer") ? "activ-link" : ""
+                                        isActive("/finance-transfer")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-transfer"
                                 >
@@ -369,7 +399,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-transfer-history") ? "activ-link" : ""
+                                        isActive("/finance-transfer-history")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-transfer-history"
                                 >
@@ -380,7 +412,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-withdraw") ? "activ-link" : ""
+                                        isActive("/finance-withdraw")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-withdraw"
                                 >
@@ -391,7 +425,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-withdraw-history") ? "activ-link" : ""
+                                        isActive("/finance-withdraw-history")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-withdraw-history"
                                 >
@@ -402,7 +438,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-my-bank-details") ? "activ-link" : ""
+                                        isActive("/finance-my-bank-details")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-my-bank-details"
                                 >
@@ -413,12 +451,14 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/finance-bank-info") ? "activ-link" : ""
+                                        isActive("/finance-bank-info")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/finance-bank-info"
                                 >
                                     <span className="dropdown-item-circle"></span>
-                                    Bank Info
+                                    Company Bank Information
                                 </Link>
                             </li>
                         </ul>
@@ -477,7 +517,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/passwordtxnotp") ? "activ-link" : ""
+                                        isActive("/passwordtxnotp")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/passwordtxnotp"
                                 >
@@ -488,7 +530,9 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className={`${
-                                        isActive("/customershippingaddress") ? "activ-link" : ""
+                                        isActive("/customershippingaddress")
+                                            ? "activ-link"
+                                            : ""
                                     } nav-link customer-dashboard-nav-link`}
                                     href="/customershippingaddress"
                                 >

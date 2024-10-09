@@ -1,9 +1,11 @@
-import React from 'react'
+import CompanyBankInfoWrapp from "@/app/components/customerDashboard/finance/CompanyBankInfoWrapp";
 
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+    return (
+        <>
+            <CompanyBankInfoWrapp />
+        </>
+    );
+};
 
-export default page
+export default page;
