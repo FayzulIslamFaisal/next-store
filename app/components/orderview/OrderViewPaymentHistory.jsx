@@ -1,27 +1,28 @@
+import NoDataFound from "../NoDataFound";
+
 const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
     return (
         <>
-            <div className="card mt-4">
-                <div className="card-header">
-                    <b className="fs-15">Payment History</b>
-                </div>
-                <div className="card-body pb-0">
-                    <div className="table-responsive">
-                        <table className="table table-borderless table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>Paid On</th>
-                                    <th>Payment Gateway</th>
-                                    <th>Payment Method</th>
-                                    {/* <th>Bank name</th> */}
-                                    <th>TxId/DC/VC</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {orderPaymentHistory?.payment_history?.length >
-                                0 ? (
-                                    orderPaymentHistory?.payment_history.map(
+            {orderPaymentHistory?.payment_history?.length > 0 ? (
+                <div className="card mt-4">
+                    <div className="card-header">
+                        <b className="fs-15">Payment History</b>
+                    </div>
+                    <div className="card-body pb-0">
+                        <div className="table-responsive">
+                            <table className="table table-borderless table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Paid On</th>
+                                        <th>Payment Gateway</th>
+                                        <th>Payment Method</th>
+                                        {/* <th>Bank name</th> */}
+                                        <th>TxId/DC/VC</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {orderPaymentHistory?.payment_history.map(
                                         (item) => {
                                             const {
                                                 id,
@@ -91,21 +92,15 @@ const OrderViewPaymentHistory = ({ orderPaymentHistory }) => {
                                                 </tr>
                                             );
                                         }
-                                    )
-                                ) : (
-                                    <tr>
-                                        <td colSpan={6}>
-                                            <h6 className="text-center">
-                                                No Data Found
-                                            </h6>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <NoDataFound title="No Payment History " />
+            )}
         </>
     );
 };
