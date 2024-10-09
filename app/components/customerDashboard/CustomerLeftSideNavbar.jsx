@@ -138,7 +138,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/discount-partners-page"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Discount Partner
