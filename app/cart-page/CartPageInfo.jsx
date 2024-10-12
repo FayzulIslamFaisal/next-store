@@ -589,6 +589,9 @@ const CartPage = () => {
             cart_items: cartItems,
         };
 
+        // Calculate the total quantity of the selected products
+        const quantityTotal = getTotalQuantity(checkingProductFilter);
+        const quantityTotalAll = getTotalQuantity(checkedProductCard);
 
         try {
             if (session) {
@@ -597,6 +600,12 @@ const CartPage = () => {
                 if (order.code == 200) {
                     deleteBuyNowProductData();
                     router.push(`/paynow?orderId=${order?.results?.order_id}`);
+                    dispatch(
+                        setAddToCart({
+                            hasSession: true,
+                            length: quantityTotalAll - quantityTotal,
+                        })
+                    );
                 } else {
                     showToast(order.message, "error");
                 }
