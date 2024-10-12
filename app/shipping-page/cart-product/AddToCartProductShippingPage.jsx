@@ -145,7 +145,7 @@ const AddToCartProductShippingPage = () => {
             districtId
         );
         const quantityTotal = getTotalQuantity(cartProductsItem?.data);
-
+        
         setCartProduct(cartProductsItem?.data);
 
         if (order.code == 200) {
