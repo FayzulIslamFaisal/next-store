@@ -1,6 +1,4 @@
 const ProductOrderPriceSummary = ({ orderSummary }) => {
-    console.log(orderSummary);
-
     return (
         <>
             <div className="user-product-order-price-summary">

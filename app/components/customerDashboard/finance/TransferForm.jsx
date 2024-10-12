@@ -26,7 +26,6 @@ const TransferForm = () => {
         // get transfer details
         const transferResponse = await postaffiliateFundTransfer(session?.accessToken, selectedTransfer);
         setTransferDetails(transferResponse.results);
-        console.log(transferDetails);
     };
 
     useEffect(() => {
@@ -71,9 +70,9 @@ const TransferForm = () => {
             } else {
                 toast.error(response.message);
             }
-            console.log(response);
         } catch (error) {
             // handle error
+            console.error("Error while making transfer request:", error);
         }
     };
 
@@ -140,8 +139,8 @@ const TransferForm = () => {
                 {transfer === "C2S" && amount && (
                     <div className="form-group paySheet">
                         <p className="mb-0">Amount: {amount}</p>
-                        <p className="mb-0">Charge: {(charge || 0).toFixed(2)}</p>
-                        <p className="mb-0">Payable: {(payable || 0).toFixed(2)}</p>
+                        <p className="mb-0">Charge: {Number(charge || 0).toFixed(2)}</p>
+                        <p className="mb-0">Payable: {Number(payable || 0).toFixed(2)}</p>
                     </div>
                 )}
                 {transfer === "C2S" && (
