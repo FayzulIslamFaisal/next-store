@@ -10,7 +10,7 @@ const DiscountPartnerInfo = () => {
                         className=" position-relative w-100 mb-3"
                         style={{ height: "160px" }}
                     >
-                        <Link href={`#`}>
+                        <Link href={`/discount-partners-page/1`}>
                             <Image
                                 fill
                                 src={`/images/flash-img4.jpg`}
@@ -21,7 +21,7 @@ const DiscountPartnerInfo = () => {
                     </div>
                     <div className=" ">
                         <h4 className="mb-3">
-                            <Link href="#">
+                            <Link href={`/discount-partners-page/1`}>
                                 Bangladesh Spine & Orthopaedic Hospital (BSOH)
                             </Link>
                         </h4>
@@ -31,7 +31,10 @@ const DiscountPartnerInfo = () => {
                             at 10 Main Road, Kallyanpur Bus Stand, Dhaka.
                             Solving spinal and orthopedic problems is taken
                             seri...{" "}
-                            <Link href="#" className=" fw-semibold">
+                            <Link
+                                href={`/discount-partners-page/1`}
+                                className=" fw-semibold"
+                            >
                                 Reade More
                             </Link>
                         </p>
@@ -44,7 +47,7 @@ const DiscountPartnerInfo = () => {
                         className=" position-relative w-100 mb-3"
                         style={{ height: "160px" }}
                     >
-                        <Link href={`#`}>
+                        <Link href={`/discount-partners-page/2`}>
                             <Image
                                 fill
                                 src={`/images/flash-img5.jpg`}
@@ -55,7 +58,7 @@ const DiscountPartnerInfo = () => {
                     </div>
                     <div className=" ">
                         <h4 className="mb-3">
-                            <Link href="#">
+                            <Link href={`/discount-partners-page/2`}>
                                 Bangladesh Spine & Orthopaedic Hospital (BSOH)
                             </Link>
                         </h4>
@@ -65,7 +68,10 @@ const DiscountPartnerInfo = () => {
                             at 10 Main Road, Kallyanpur Bus Stand, Dhaka.
                             Solving spinal and orthopedic problems is taken
                             seri...{" "}
-                            <Link href="#" className=" fw-semibold">
+                            <Link
+                                href={`/discount-partners-page/2`}
+                                className=" fw-semibold"
+                            >
                                 Reade More
                             </Link>
                         </p>
@@ -78,7 +84,7 @@ const DiscountPartnerInfo = () => {
                         className=" position-relative w-100 mb-3"
                         style={{ height: "160px" }}
                     >
-                        <Link href={`#`}>
+                        <Link href={`/discount-partners-page/3`}>
                             <Image
                                 fill
                                 src={`/images/flash-img2.jpg`}
@@ -89,7 +95,7 @@ const DiscountPartnerInfo = () => {
                     </div>
                     <div className=" ">
                         <h4 className="mb-3">
-                            <Link href="#">
+                            <Link href={`/discount-partners-page/3`}>
                                 Bangladesh Spine & Orthopaedic Hospital (BSOH)
                             </Link>
                         </h4>
@@ -99,7 +105,10 @@ const DiscountPartnerInfo = () => {
                             at 10 Main Road, Kallyanpur Bus Stand, Dhaka.
                             Solving spinal and orthopedic problems is taken
                             seri...{" "}
-                            <Link href="#" className=" fw-semibold">
+                            <Link
+                                href={`/discount-partners-page/3`}
+                                className=" fw-semibold"
+                            >
                                 Reade More
                             </Link>
                         </p>
@@ -112,7 +121,7 @@ const DiscountPartnerInfo = () => {
                         className=" position-relative w-100 mb-3"
                         style={{ height: "160px" }}
                     >
-                        <Link href={`#`}>
+                        <Link href={`/discount-partners-page/4`}>
                             <Image
                                 fill
                                 src={`/images/flash-img3.jpg`}
@@ -123,7 +132,7 @@ const DiscountPartnerInfo = () => {
                     </div>
                     <div className=" ">
                         <h4 className="mb-3">
-                            <Link href="#">
+                            <Link href={`/discount-partners-page/4`}>
                                 Bangladesh Spine & Orthopaedic Hospital (BSOH)
                             </Link>
                         </h4>
@@ -133,7 +142,10 @@ const DiscountPartnerInfo = () => {
                             at 10 Main Road, Kallyanpur Bus Stand, Dhaka.
                             Solving spinal and orthopedic problems is taken
                             seri...{" "}
-                            <Link href="#" className=" fw-semibold">
+                            <Link
+                                href={`/discount-partners-page/4`}
+                                className=" fw-semibold"
+                            >
                                 Reade More
                             </Link>
                         </p>
