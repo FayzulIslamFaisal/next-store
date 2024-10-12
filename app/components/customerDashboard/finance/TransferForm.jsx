@@ -25,7 +25,7 @@ const TransferForm = () => {
         setTransfer(selectedTransfer);
         // get transfer details
         const transferResponse = await postaffiliateFundTransfer(session?.accessToken, selectedTransfer);
-        setTransferDetails(transferResponse.results);
+        setTransferDetails(transferResponse?.results);
     };
 
     useEffect(() => {
@@ -117,9 +117,11 @@ const TransferForm = () => {
                 <div className="form-group">
                     <label className="form-label">
                         Amount:
-                        <span className="praymary-color">
-                            (Balance: {transfer === "C2S" ? transferDetails?.cash_balance : transferDetails?.shopping_balance})
-                        </span>
+                        {transfer ? (
+                            <span className="praymary-color">
+                                (Balance: {transfer === "C2S" ? transferDetails?.cash_balance : transferDetails?.shopping_balance})
+                            </span>
+                        ):""}
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -132,7 +134,7 @@ const TransferForm = () => {
                             required
                             placeholder="Enter Amount"
                             value={enteredAmount}
-                            onChange={(e)=>setEnteredAmount(e.target.value)}
+                            onChange={(e) => setEnteredAmount(e.target.value)}
                         />
                     </div>
                 </div>
@@ -157,10 +159,10 @@ const TransferForm = () => {
             <TransferVerifyOTPModal transferRequestData={transferRequestData} />
             {/* Transactions section */}
             {
-                transferDetails?.transfer_history.length  > 0 && (
+                transferDetails?.transfer_history?.length > 0 && (
                     <div className="mt-3">
                         <h4>Transaction History</h4>
-                        <FinanceHistoryModalTable data={transferDetails?.transfer_history}/>
+                        <FinanceHistoryModalTable data={transferDetails?.transfer_history} />
                         <Link className="load-more-btn text-center" href={"/finance-transfer-history"}>View all ...</Link>
                     </div>
                 )
