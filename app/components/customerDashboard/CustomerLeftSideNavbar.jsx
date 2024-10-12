@@ -129,7 +129,7 @@ const CustomerLeftSideNavbar = ({ authSessionData }) => {
                             <li className="dropdown-item customer-dashboard-dropdown-item">
                                 <Link
                                     className="dropdown-link customer-dashboard-dropdown-link"
-                                    href="#"
+                                    href="/privilege-card-dashboard"
                                 >
                                     <span className="dropdown-item-circle"></span>
                                     Privilege Dashboard
