@@ -11,7 +11,7 @@ const FilterCategories = () => {
                 <select
                     className="form-select py-2 border-1 btn-outline-light focus-ring focus-ring-light"
                     id="category"
-                    defaultValue="" // Set a default value that matches an option value
+                    defaultValue="" 
                 >
                     <option value="" disabled>
                         Open this select menu
