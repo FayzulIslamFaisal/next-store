@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import TransferVerifyOTPModal from "./TransferVerifyOTPModal";
 import { toast, ToastContainer } from "react-toastify";
 import { postVerifyTransferOtpRequest } from "@/app/services/affiliate-finance/postVerifyTransferOtp copy";
+import FinanceHistoryModalTable from "./FinanceHistoryModalTable";
+import Link from "next/link";
 
 const TransferForm = () => {
     const [transfer, setTransfer] = useState("");
@@ -13,7 +15,7 @@ const TransferForm = () => {
     const [payable, setPayable] = useState(0);
     const [transferDetails, setTransferDetails] = useState(null);
     const [transferRequestData, setTransferRequestData] = useState(null);
-    const [isAmountValid, setIsAmountValid] = useState(true); // new state to track amount validity
+    const [enteredAmount, setEnteredAmount] = useState(null);
 
     const { data: session, status } = useSession();
 
@@ -27,22 +29,15 @@ const TransferForm = () => {
         console.log(transferDetails);
     };
 
-    const handleAmountChange = (e) => {
-        const enteredAmount = parseFloat(e?.target?.value || 0);
-
+    useEffect(() => {
         // Check if entered amount exceeds balance
         const availableBalance = transfer === "C2S" ? transferDetails?.cash_balance : transferDetails?.shopping_balance;
         if (enteredAmount > availableBalance) {
-            setIsAmountValid(false);
             toast.error("Entered amount exceeds available balance");
-            setAmount(availableBalance)
+            setEnteredAmount(availableBalance)
         } else {
             setAmount(enteredAmount);
-            setIsAmountValid(true);
         }
-    };
-
-    useEffect(() => {
         // Apply 7% charge only if transferring from Cash Balance to Shopping Balance
         if (transfer === "C2S" && amount) {
             const calculatedCharge = (amount * 7) / 100;
@@ -52,7 +47,7 @@ const TransferForm = () => {
             setCharge(0);
             setPayable(amount);
         }
-    }, [transfer, amount]);
+    }, [transfer, amount, enteredAmount]);
 
     const handleTransferRequest = async (e) => {
         e.preventDefault();
@@ -137,29 +132,40 @@ const TransferForm = () => {
                             name="amount"
                             required
                             placeholder="Enter Amount"
-                            onChange={handleAmountChange}
+                            value={enteredAmount}
+                            onChange={(e)=>setEnteredAmount(e.target.value)}
                         />
                     </div>
                 </div>
-                {transfer === "C2S" && amount && isAmountValid && (
+                {transfer === "C2S" && amount && (
                     <div className="form-group paySheet">
                         <p className="mb-0">Amount: {amount}</p>
-                        <p className="mb-0">Charge: {charge.toFixed(2)}</p>
-                        <p className="mb-0">Payable: {payable.toFixed(2)}</p>
+                        <p className="mb-0">Charge: {(charge || 0).toFixed(2)}</p>
+                        <p className="mb-0">Payable: {(payable || 0).toFixed(2)}</p>
                     </div>
                 )}
                 {transfer === "C2S" && (
                     <p>7% service charge applicable when transferring from Cash Balance to Shopping Balance</p>
                 )}
                 <button
-                    className={`w-100 add-to-cart-link border-0 mt-3 ${(isAmountValid && transfer && amount) ? "" : "disabled-button"}`}
-                    disabled={!isAmountValid || !(transfer && amount)}
+                    className={`w-100 add-to-cart-link border-0 mt-3 ${(transfer && amount) ? "" : "disabled-button"}`}
+                    disabled={!(transfer && amount)}
                     onClick={handleTransferRequest}
                 >
                     Continue
                 </button>
             </form>
             <TransferVerifyOTPModal transferRequestData={transferRequestData} />
+            {/* Transactions section */}
+            {
+                transferDetails?.transfer_history.length  > 0 && (
+                    <div className="mt-3">
+                        <h4>Transaction History</h4>
+                        <FinanceHistoryModalTable data={transferDetails?.transfer_history}/>
+                        <Link className="load-more-btn text-center" href={"/finance-transfer-history"}>View all ...</Link>
+                    </div>
+                )
+            }
         </>
     );
 };
