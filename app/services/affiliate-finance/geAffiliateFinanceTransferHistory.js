@@ -1,7 +1,7 @@
 import { apiBaseUrl } from "@/app/utils";
 
 export const geAffiliateFinanceTransferHistory = async (token) => {
-    const url = `${apiBaseUrl}/affiliate-finance-transfer-history`;
+    const url = `${apiBaseUrl}/affiliate-fund-transfer-history`;
     try {
         const response = await fetch(url, {
             method: "GET",
