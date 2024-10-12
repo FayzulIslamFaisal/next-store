@@ -25,7 +25,7 @@ const TransferForm = () => {
         setTransfer(selectedTransfer);
         // get transfer details
         const transferResponse = await postaffiliateFundTransfer(session?.accessToken, selectedTransfer);
-        setTransferDetails(transferResponse.results);
+        setTransferDetails(transferResponse?.results);
     };
 
     useEffect(() => {
@@ -159,7 +159,7 @@ const TransferForm = () => {
             <TransferVerifyOTPModal transferRequestData={transferRequestData} />
             {/* Transactions section */}
             {
-                transferDetails?.transfer_history.length > 0 && (
+                transferDetails?.transfer_history?.length > 0 && (
                     <div className="mt-3">
                         <h4>Transaction History</h4>
                         <FinanceHistoryModalTable data={transferDetails?.transfer_history} />
