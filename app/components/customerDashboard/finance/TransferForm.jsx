@@ -147,7 +147,7 @@ const TransferForm = () => {
                 )}
                 {transfer === "C2S" && (
                     <p>7% service charge applicable when transferring from Cash Balance to Shopping Balance</p>
-                )}
+                )} 
                 <button
                     className={`w-100 add-to-cart-link border-0 mt-3 ${(transfer && amount) ? "" : "disabled-button"}`}
                     disabled={!(transfer && amount)}
