@@ -110,7 +110,7 @@ const PayNowSummary = ({ setOrderSummary, orderSummary, startTransition }) => {
                             {/* <button className="btn btn-dark">Apply</button> */}
                         </div>
                     </div>
-                    {setOrderSummary?.order_product_type === "1" && (
+                    {orderSummary?.order_product_type === "1" && (
                         <div className="pay-now-summary-info d-flex align-items-center justify-content-between">
                             <strong>
                                 Total Shipping <br /> (*Applicable)
