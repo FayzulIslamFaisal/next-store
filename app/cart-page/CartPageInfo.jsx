@@ -576,7 +576,7 @@ const CartPage = () => {
             location_id: districtId,
             sub_total: subTotalPrice,
             discount_amount: totalDiscount,
-            total_products_price: subTotalPrice,
+            total_products_price: totalPrice,
             total_delivery_charge: 0,
             grand_total: totalPrice,
             delivery_note: "",
