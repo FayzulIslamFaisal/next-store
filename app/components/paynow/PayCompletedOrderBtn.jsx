@@ -51,9 +51,6 @@ const PayCompletedOrderBtn = ({
         }
     };
 
-    console.log("session", { session });
-    console.log("orderSummary", { orderSummary });
-
     return (
         <>
             <button

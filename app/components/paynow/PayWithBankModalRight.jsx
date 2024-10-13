@@ -118,7 +118,8 @@ const PayWithBankModalRight = ({
                     <div className="mb-3 d-flex gap-2">
                         <div className="col">
                             <label htmlFor="select_bank" className="form-label">
-                                Select Bank
+                                Select Bank{" "}
+                                <span className="text-danger">*</span>
                             </label>
                             <select
                                 className="form-select"
@@ -128,6 +129,7 @@ const PayWithBankModalRight = ({
                                 onChange={(e) =>
                                     setSelectedBank(e.target.value)
                                 }
+                                required
                             >
                                 <option value="" disabled>
                                     Select a bank
@@ -170,7 +172,8 @@ const PayWithBankModalRight = ({
                                 htmlFor="deposit_code"
                                 className="form-label"
                             >
-                                Deposit Code (DC)
+                                Deposit Code (DC){" "}
+                                <span className="text-danger ">*</span>
                             </label>
                             <input
                                 type="text"
@@ -178,6 +181,7 @@ const PayWithBankModalRight = ({
                                 id="deposit_code"
                                 value={depositCode}
                                 onChange={(e) => setDepositCode(e.target.value)}
+                                required
                             />
                         </div>
                     </div>
@@ -207,7 +211,7 @@ const PayWithBankModalRight = ({
                                 htmlFor="payment_slip"
                                 className="form-label"
                             >
-                                Upload Payment Slip
+                                Upload Payment Slip (Optional)
                             </label>
                             <input
                                 className="form-control"
