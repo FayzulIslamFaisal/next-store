@@ -1,4 +1,4 @@
-import PrivilegeCardModal from "./privilegeCardModal";
+import PrivilegeCardModal from "./PrivilegeCardModal";
 import PrivilegeCardProduct from "./PrivilegeCardProduct";
 import PrivilegeMainCard from "./PrivilegeMainCard";
 
