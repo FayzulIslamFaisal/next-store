@@ -2,8 +2,8 @@ import Image from "next/image";
 import { TfiClose } from "react-icons/tfi";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
-import PrivilegeProductDetailModal from "./PrivilegeProductDetailModal";
 import PrivilegeCardProductSummary from "./PrivilegeCardProductSummary";
+import PrivilegeProductDetailModal from "./PrivilegeProductDetailModal";
 
 const PrivilegeCardProductTable = () => {
     return (

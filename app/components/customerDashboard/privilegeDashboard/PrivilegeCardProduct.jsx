@@ -1,5 +1,5 @@
-import PrivilegeCardProductTop from "./PrivilegeCardProductTop";
 import PrivilegeCardProductTable from "./PrivilegeCardProductTable";
+import PrivilegeCardProductTop from "./PrivilegeCardProductTop";
 
 const PrivilegeCardProduct = () => {
     return (
