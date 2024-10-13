@@ -46,10 +46,10 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
         { id: "sslcommerz", src: "/images/sslcommerz.png", alt: "SSLCommerz" },
     ];
 
-    //filteredPaymentOptions order_product_type === "2"
+    //filteredPaymentOptions order_product_type !== "1"
 
     const filteredPaymentOptions =
-        orderSummary?.order_product_type === "2"
+        orderSummary?.order_product_type !== "1"
             ? paymentOptions
                   .map((option) =>
                       option.id === "Cash On Delivery"
