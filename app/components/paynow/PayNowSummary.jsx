@@ -20,17 +20,11 @@ const PayNowSummary = ({ setOrderSummary, orderSummary, startTransition }) => {
                 try {
                     startTransition(async () => {
                         let orderData;
-                        if (orderProductType === "3") {
-                            orderData = await getContainerOrderSummery(
-                                orderId,
-                                session?.accessToken
-                            );
-                        } else {
-                            orderData = await getProductOrderSummery(
-                                orderId,
-                                session?.accessToken
-                            );
-                        }
+
+                        orderData = await getProductOrderSummery(
+                            orderId,
+                            session?.accessToken
+                        );
 
                         if (orderData && orderData?.results) {
                             setOrderSummary(orderData?.results);
