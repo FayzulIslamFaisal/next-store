@@ -17,6 +17,7 @@ const MobileNav = () => {
 
     const searchAreaRef = useRef(null);
     const searchResultRef = useRef(null);
+    const sidebarRef = useRef(null);  // Create ref for the sidebar
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -37,6 +38,13 @@ const MobileNav = () => {
             ) {
                 setPopupSearch(false);
                 setSearchProduct([]);
+            }
+
+            if (
+                sidebarRef.current &&
+                !sidebarRef.current.contains(event.target)
+            ) {
+                setIsSidebarOpen(false); // Close sidebar when clicking outside
             }
         };
 
@@ -96,7 +104,7 @@ const MobileNav = () => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="mobile-nav-item mobile-nav-item-search d-flex align-items-center">
+                        <div className="mobile-nav-item mobile-nav-item-search gap-2 gap-md-3 d-flex align-items-center">
                             <div
                                 className="mobile-nav-location-img"
                                 data-bs-toggle="modal"
@@ -191,6 +199,7 @@ const MobileNav = () => {
                         className={`customer-dashboard-side-navbar-mobile d-xl-none left-100 ${
                             isSidebarOpen ? "start-0" : "left-100"
                         } `}
+                        ref={sidebarRef} // Sidebar ref
                     >
                         <div
                             className="fs-2 dashboard-side-navbar-togol-mobile"
@@ -198,7 +207,7 @@ const MobileNav = () => {
                         >
                             <FaXmark />
                         </div>
-                        <CustomerLeftSideNavbar authSessionData={session} />
+                        <CustomerLeftSideNavbar authSessionData={session} toggleSidebar ={toggleSidebar} />
                     </aside>
                 </div>
             </div>
