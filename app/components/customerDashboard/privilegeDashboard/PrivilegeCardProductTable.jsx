@@ -39,7 +39,7 @@ const PrivilegeCardProductTable = () => {
                             <td>
                                 <button
                                     type="button"
-                                    className="border-0 "
+                                    className="border-0 bg-transparent "
                                     data-bs-toggle="modal"
                                     data-bs-target="#pivilegeProDetails"
                                 >
@@ -104,7 +104,7 @@ const PrivilegeCardProductTable = () => {
                             <td>
                                 <button
                                     type="button"
-                                    className="border-0 "
+                                    className="border-0 bg-transparent"
                                     data-bs-toggle="modal"
                                     data-bs-target="#pivilegeProDetails"
                                 >
@@ -169,7 +169,7 @@ const PrivilegeCardProductTable = () => {
                             <td>
                                 <button
                                     type="button"
-                                    className="border-0 "
+                                    className="border-0 bg-transparent"
                                     data-bs-toggle="modal"
                                     data-bs-target="#pivilegeProDetails"
                                 >
@@ -234,7 +234,7 @@ const PrivilegeCardProductTable = () => {
                             <td>
                                 <button
                                     type="button"
-                                    className="border-0 "
+                                    className="border-0 bg-transparent"
                                     data-bs-toggle="modal"
                                     data-bs-target="#pivilegeProDetails"
                                 >

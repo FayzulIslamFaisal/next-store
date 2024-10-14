@@ -14,6 +14,7 @@ import LodingFixed from "../../LodingFixed";
 import NoDataFound from "../../NoDataFound";
 import { postSaleOnNagadhat } from "@/app/services/affiliate/postSaleOnNagadhat";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
 
 const SaleOnNagadhatModal = ({ resaleOrderID }) => {
     const [isPending, startTransition] = useTransition();
@@ -92,6 +93,10 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
     // Function for handleAgreement
     const handleAgreement = async () => {
         try {
+            if (!saleOnNagadhatData || !resaleOrderID) {
+                toast.error("Missing necessary order or product data.");
+                return;
+            }
             const saleOnData = {
                 order_id: resaleOrderID,
                 product_id: saleOnNagadhatData?.product_id,
@@ -109,18 +114,24 @@ const SaleOnNagadhatModal = ({ resaleOrderID }) => {
             );
             if (!response?.error) {
                 const modal = bootstrap.Modal.getInstance(modalRef.current);
-                if (modal) {
-                    modal.hide();
-                    router.push(`/thankyou?orderId=${resaleOrderID}`);
-                }
+                if (modal) modal.hide();
+                router.push(`/thankyou?orderId=${resaleOrderID}`);
+            } else {
+                toast.error(
+                    response?.message || "Failed to process the sale agreement."
+                );
             }
         } catch (error) {
             console.error("Error handling agreement:", error);
+            toast.error(
+                "An unexpected error occurred while processing the agreement."
+            );
         }
     };
 
     return (
         <>
+            <ToastContainer />
             <div
                 ref={modalRef}
                 className="modal fade"
