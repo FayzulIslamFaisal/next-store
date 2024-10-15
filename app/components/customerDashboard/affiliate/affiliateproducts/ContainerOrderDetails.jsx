@@ -16,7 +16,7 @@ const ContainerOrderDetails = ({
     availableQuantity,
     availableValue,
     session,
-    getTotalQuantity
+    getTotalQuantity,
 }) => {
     const [outletId, setOutletId] = useState(0);
     const [districtId, setDistrictId] = useState(null);
@@ -35,7 +35,7 @@ const ContainerOrderDetails = ({
 
     const handleIncrease = (productId) => {
         const totalQuantity = getTotalQuantity();
-        if (totalQuantity < availableQuantity ) {
+        if (totalQuantity < availableQuantity) {
             setSelectedProducts((prevProducts) =>
                 prevProducts.map((product) =>
                     product.id === productId
@@ -96,14 +96,14 @@ const ContainerOrderDetails = ({
             (acc, product) => acc + product.pivot.mrp_price * product.quantity,
             0
         );
-    
+
         const discount = selectedProducts.reduce(
             (acc, product) => acc + product.pivot.profit * product.quantity,
             0
         );
-    
+
         const finalTotal = totalPrice - discount;
-    
+
         return { totalPrice, discount, finalTotal };
     };
     const { totalPrice, discount, finalTotal } = calculateTotals();
@@ -135,8 +135,14 @@ const ContainerOrderDetails = ({
                 container_order_items: selectedProducts.map((product) => ({
                     product_id: product?.id,
                     product_quantity: product?.quantity,
+                    product_regular_price: 0,
+                    product_variation_id: null,
+                    product_shipping_charge: 0,
+                    product_discount_type: "",
+                    product_discount_amount: 0,
                     product_unit_price: product?.pivot?.mrp_price,
                     vendor_id: product.vendor_id || "",
+                    thumbnail: "",
                 })),
             };
 
@@ -161,8 +167,8 @@ const ContainerOrderDetails = ({
             } catch (error) {
                 console.error(error);
                 toast.error("Error occurred while placing the order.");
-            }finally {
-                 setLoading(false);
+            } finally {
+                setLoading(false);
             }
         } else {
             toast.error("Cannot proceed: total exceeds available value.");
@@ -210,7 +216,11 @@ const ContainerOrderDetails = ({
                                                 <button
                                                     type="button"
                                                     className="quantity-decrease"
-                                                    onClick={() =>handleDecrease(product.id)}
+                                                    onClick={() =>
+                                                        handleDecrease(
+                                                            product.id
+                                                        )
+                                                    }
                                                     style={{ fontSize: "16px" }}
                                                 >
                                                     <FaMinus />
@@ -222,8 +232,16 @@ const ContainerOrderDetails = ({
                                                     type="text"
                                                     style={{ width: "36px" }}
                                                     value={product.quantity}
-                                                    onChange={(e) => handleQuantityChange(product.id, e )}
-                                                    disabled={ availableValue < finalTotal }
+                                                    onChange={(e) =>
+                                                        handleQuantityChange(
+                                                            product.id,
+                                                            e
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        availableValue <
+                                                        finalTotal
+                                                    }
                                                     readOnly={
                                                         availableValue <
                                                         finalTotal
@@ -234,9 +252,16 @@ const ContainerOrderDetails = ({
                                                 <button
                                                     className="quantity-increase"
                                                     type="button"
-                                                    onClick={() =>handleIncrease( product.id)}
+                                                    onClick={() =>
+                                                        handleIncrease(
+                                                            product.id
+                                                        )
+                                                    }
                                                     style={{ fontSize: "16px" }}
-                                                    disabled={availableValue < finalTotal}
+                                                    disabled={
+                                                        availableValue <
+                                                        finalTotal
+                                                    }
                                                 >
                                                     <FaPlus />
                                                 </button>
@@ -244,12 +269,18 @@ const ContainerOrderDetails = ({
                                         </td>
                                         <td className="align-middle">
                                             <strong>
-                                                {product.pivot.mrp_price * product.quantity} ৳
+                                                {product.pivot.mrp_price *
+                                                    product.quantity}{" "}
+                                                ৳
                                             </strong>
                                         </td>
                                         <td className="align-middle">
                                             <p
-                                                onClick={() =>handleDeleteSelectedProducts( product.id )}
+                                                onClick={() =>
+                                                    handleDeleteSelectedProducts(
+                                                        product.id
+                                                    )
+                                                }
                                                 className="text-danger"
                                                 title="Delete"
                                                 style={{
@@ -316,7 +347,7 @@ const ContainerOrderDetails = ({
                         </div>
                     </div>
                 </div>
-                {loading && <LodingFixed/>}
+                {loading && <LodingFixed />}
             </div>
         </>
     );
