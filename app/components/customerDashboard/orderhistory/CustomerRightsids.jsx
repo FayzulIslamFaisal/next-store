@@ -93,8 +93,10 @@ const CustomerRightsids = ({
                                                 >
                                                     {order_status ===
                                                         "Processing" &&
-                                                    orderItem?.order_product_type ===
-                                                        "2" ? (
+                                                    (orderItem?.order_product_type ===
+                                                        "2" ||
+                                                        orderItem?.order_product_type ===
+                                                            "3") ? (
                                                         <div className="dropdown">
                                                             <button
                                                                 className="btn text-success border-0 dropdown-toggle ps-0"
