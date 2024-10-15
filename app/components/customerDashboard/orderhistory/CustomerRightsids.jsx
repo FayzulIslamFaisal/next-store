@@ -214,6 +214,8 @@ const CustomerRightsids = ({
                                                         )} */}
                                                         {payment_status !==
                                                             "Paid" &&
+                                                            payment_status !==
+                                                                "Under Review" &&
                                                             order_status !==
                                                                 "Processing" &&
                                                             order_status !==
