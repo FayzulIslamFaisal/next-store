@@ -21,12 +21,15 @@ const PartnerDetailInfoRight = () => {
                         considered eligible for this discount facility.
                     </p>
                     <p className="pb-2 fs-5">
-                        <strong>Applicability: </strong> Applicable to all
-                        general customers of Nagadhat Bangladesh Ltd.
+                        <strong style={{ color: "#44bc9d" }}>
+                            Applicability:{" "}
+                        </strong>{" "}
+                        Applicable to all general customers of Nagadhat
+                        Bangladesh Ltd.
                     </p>
 
                     <p className="pb-2 fs-5 text-wrap">
-                        <strong>Facebook: </strong>
+                        <strong style={{ color: "#44bc9d" }}>Facebook: </strong>
                         <Link
                             className="text-wrap text-break"
                             href={`https://www.facebook.com/platerestaurantbd/`}
@@ -36,7 +39,7 @@ const PartnerDetailInfoRight = () => {
                     </p>
 
                     <p className="pb-2 fs-5 text-wrap">
-                        <strong>
+                        <strong style={{ color: "#44bc9d" }}>
                             <FaGlobe /> Website:{" "}
                         </strong>
                         <Link
@@ -47,7 +50,7 @@ const PartnerDetailInfoRight = () => {
                     </p>
 
                     <p className="pb-2 fs-5 text-wrap">
-                        <strong>
+                        <strong style={{ color: "#44bc9d" }}>
                             <FaAt /> E-mail:{" "}
                         </strong>
                         <Link href={`mailto:platerestaurantbd@gmail.com`}>
@@ -55,13 +58,13 @@ const PartnerDetailInfoRight = () => {
                         </Link>
                     </p>
                     <p className="pb-2 fs-5">
-                        <strong>
+                        <strong style={{ color: "#44bc9d" }}>
                             <FaPhoneVolume /> Hotline Line:{" "}
                         </strong>
                         <Link href={`tel:01778590590`}>01778590590</Link>
                     </p>
                     <p className="pb-2 fs-5 text-wrap">
-                        <strong>
+                        <strong style={{ color: "#44bc9d" }}>
                             <FaMapMarked /> Location/Address:{" "}
                         </strong>
                         <span>

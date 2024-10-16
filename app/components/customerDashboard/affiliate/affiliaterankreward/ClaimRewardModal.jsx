@@ -1,6 +1,7 @@
 "use client";
 
 import { postAffiliateRankRewards } from "@/app/services/rankreward/postAffiliateRankRewards";
+import { NagadhatPublicUrl } from "@/app/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -84,6 +85,11 @@ const ClaimRewardModal = ({
             );
         }
     };
+    const rewardImageUrl = rewardDetails?.reward_image
+        ? `${NagadhatPublicUrl}/${encodeURIComponent(
+              rewardDetails.reward_image
+          )}`
+        : "/images/placeholder--image.jpg";
 
     return (
         <div
@@ -137,15 +143,12 @@ const ClaimRewardModal = ({
                             </div>
                             <div className="rewards-gif-image-item col">
                                 <div
-                                    className=" position-relative w-100 "
+                                    className="position-relative w-100"
                                     style={{ height: "350px" }}
                                 >
                                     <Image
                                         fill
-                                        src={
-                                            rewardDetails?.reward_image ||
-                                            "/images/placeholder--image.jpg"
-                                        }
+                                        src={rewardImageUrl}
                                         alt={`${rewardDetails?.level}`}
                                         onClick={() =>
                                             rewardDetails?.status === 1 &&

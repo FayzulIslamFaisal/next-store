@@ -16,10 +16,10 @@ const PartnerDetailImage = () => {
                     />
                 </div>
                 <div className="row g-2 pb-4">
-                    <div className="col-md-4 col-sm-6">
+                    <div className="col-md-3 col-sm-6">
                         <div
                             className="position-relative w-100"
-                            style={{ height: "140px" }}
+                            style={{ height: "110px" }}
                         >
                             <Image
                                 fill
@@ -29,10 +29,10 @@ const PartnerDetailImage = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-md-4 col-sm-6">
+                    <div className="col-md-3 col-sm-6">
                         <div
                             className="position-relative w-100"
-                            style={{ height: "140px" }}
+                            style={{ height: "110px" }}
                         >
                             <Image
                                 fill
@@ -42,10 +42,10 @@ const PartnerDetailImage = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-md-4 col-sm-6">
+                    <div className="col-md-3 col-sm-6">
                         <div
                             className="position-relative w-100"
-                            style={{ height: "140px" }}
+                            style={{ height: "110px" }}
                         >
                             <Image
                                 fill
@@ -55,10 +55,10 @@ const PartnerDetailImage = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-md-4 col-sm-6">
+                    <div className="col-md-3 col-sm-6">
                         <div
                             className="position-relative w-100"
-                            style={{ height: "140px" }}
+                            style={{ height: "110px" }}
                         >
                             <Image
                                 fill
