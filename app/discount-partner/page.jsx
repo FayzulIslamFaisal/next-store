@@ -9,7 +9,6 @@ const DiscountPartner = () => {
     const searchParams = useSearchParams();
     const tab = searchParams.get("tab") || "basic-info";
 
-
     const handleTabClick = (tabId) => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.set("tab", tabId);
