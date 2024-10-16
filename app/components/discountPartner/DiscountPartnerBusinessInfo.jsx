@@ -6,7 +6,8 @@ import Image from "next/image";
 
 const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) => {
     
-
+    console.log(formData);
+    
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -209,7 +210,7 @@ const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) =>
                     </div>
                 </div>
             </div>
-            <DiscountPartnerComfarmModal/>
+            <DiscountPartnerComfarmModal formData={formData}/>
         </div>
     );
 };

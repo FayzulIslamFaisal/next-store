@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
-const DiscountPartnerComfarmModal = () => {
+const DiscountPartnerComfarmModal = ({formData}) => {
     const [isOpen, setIsOpen] = useState(true);
 
+    console.log(formData);
+    
     const closeModal = () => {
         setIsOpen(false);
     };
@@ -14,10 +16,10 @@ const DiscountPartnerComfarmModal = () => {
 
     return isOpen ? (
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nagadhat MoU Registration</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
