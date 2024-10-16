@@ -1,22 +1,11 @@
-"use client";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import DiscountPartnerComfarmModal from "./DiscountPartnerComfarmModal";
 import Dropzone from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import DiscountPartnerComfarmModal from "./DiscountPartnerComfarmModal";
+import Image from "next/image";
 
-const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
-    const [trade, setTrade] = useState(null);
-    const [tin, setTin] = useState(null);
-    const [formData, setFormData] = useState({
-        companyName: "",
-        ownerName: "",
-        location: "",
-        serviceCategory: ""
-    });
+const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) => {
+    
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -27,110 +16,112 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
     };
 
     const handleLogoDrop = (acceptedFiles) => {
-        setTrade(acceptedFiles[0]);  // Store the first selected file
+        setFormData((prevData) => ({
+            ...prevData,
+            trade_license_copy: acceptedFiles[0],  // Store the first selected file
+        }));
     };
+
     const handleTINDrop = (acceptedFiles) => {
-        setTin(acceptedFiles[0]);  // Store the first selected file
+        setFormData((prevData) => ({
+            ...prevData,
+            tin_vat_copy: acceptedFiles[0],  // Store the first selected file
+        }));
     };
-    
 
     return (
         <div className="accordion-item mb-4 border-0 rounded-bottom">
             <ToastContainer />
-            {/* <h2 className="accordion-header customer-dashboard-subtitle">
-                Business Info
-            </h2> */}
             <div>
                 <div className="accordion-body">
                     <div className="customer-manage-profile-from-area">
                         <form className="row">
                             <div className="col-md-6 pb-3">
                                 <label
-                                    htmlFor="company-name"
+                                    htmlFor="trade_license_number"
                                     className="form-label"
                                 >
                                     Trade License Number: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="company-name"
+                                    name="trade_license_number"
                                     className="form-control"
-                                    id="company-name"
-                                    value={formData.companyName}
+                                    id="trade_license_number"
+                                    value={formData.trade_license_number}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
                                 <label
-                                    htmlFor="owner-name"
+                                    htmlFor="tin_vat"
                                     className="form-label"
                                 >
                                     TIN / VAT: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="owner-name"
+                                    name="tin_vat"
                                     className="form-control"
-                                    id="owner-name"
+                                    id="tin_vat"
                                     required
-                                    value={formData.ownerName}
+                                    value={formData.tin_vat}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="location" className="form-label">
+                                <label htmlFor="facebook_link" className="form-label">
                                     Facebook Link: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="locatin"
+                                    name="facebook_link"
                                     className="form-control"
-                                    id="location"
-                                    required
-                                    value={formData.location}
+                                    id="facebook_link"
+                                    value={formData.facebook_link}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="location" className="form-label">
+                                <label htmlFor="website_link" className="form-label">
                                     Website Link: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="locatin"
+                                    name="website_link"
                                     className="form-control"
-                                    id="location"
-                                    required
-                                    value={formData.location}
+                                    id="website_link"
+                                    value={formData.website_link}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-12 pb-3">
-                                <label htmlFor="location" className="form-label">
+                                <label htmlFor="applicability" className="form-label">
                                     Applicability: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="locatin"
+                                    name="applicability"
                                     className="form-control"
-                                    id="location"
-                                    required
-                                    value={formData.location}
+                                    id="applicability"
+                                    value={formData.applicability}
                                     onChange={handleChange}
                                 />
                             </div>
+
+                            {/* File upload for Trade License Copy */}
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="trade" className="form-label">
-                                Trade License Copy: (optional)
+                                    Trade License Copy: (optional)
                                 </label>
                                 <Dropzone onDrop={handleLogoDrop}>
                                     {({ getRootProps, getInputProps }) => (
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-hidden" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                {!trade ? (
+                                                {!formData.trade_license_copy ? (
                                                     <div
-                                                        className=" opacity-50"
+                                                        className="opacity-50"
                                                         style={{ width: '100%', height: '150px' }}
                                                     >
                                                         <p className="fs-1"><IoCloudUploadOutline /></p>
@@ -145,8 +136,8 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
                                                         <Image
                                                             height={150}
                                                             width={200}
-                                                            src={URL.createObjectURL(trade)}
-                                                            alt="Company Logo"
+                                                            src={URL.createObjectURL(formData.trade_license_copy)}
+                                                            alt="Trade License"
                                                         />
                                                     </div>
                                                 )}
@@ -156,18 +147,19 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
                                 </Dropzone>
                             </div>
 
+                            {/* File upload for TIN / VAT Copy */}
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="trade" className="form-label">
-                                TIN / VAT Copy: (optional)
+                                <label htmlFor="tin" className="form-label">
+                                    TIN / VAT Copy: (optional)
                                 </label>
                                 <Dropzone onDrop={handleTINDrop}>
                                     {({ getRootProps, getInputProps }) => (
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-hidden" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                {!tin ? (
+                                                {!formData.tin_vat_copy ? (
                                                     <div
-                                                        className=" opacity-50"
+                                                        className="opacity-50"
                                                         style={{ width: '100%', height: '150px' }}
                                                     >
                                                         <p className="fs-1"><IoCloudUploadOutline /></p>
@@ -180,11 +172,10 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
                                                         style={{ width: '100%', height: '150px' }}
                                                     >
                                                         <Image
-                                                        className="h-100"
                                                             height={150}
                                                             width={200}
-                                                            src={URL.createObjectURL(tin)}
-                                                            alt="Company Logo"
+                                                            src={URL.createObjectURL(formData.tin_vat_copy)}
+                                                            alt="TIN / VAT Copy"
                                                         />
                                                     </div>
                                                 )}
@@ -193,6 +184,7 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
                                     )}
                                 </Dropzone>
                             </div>
+
                             <div className="d-flex justify-content-end gap-4">
                                 <button
                                     className="add-to-cart-link border-0 bg-danger"

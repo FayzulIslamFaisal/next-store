@@ -1,16 +1,9 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const DiscountPartnerContactInfo = ({handleTabClick}) => {
-    const [formData, setFormData] = useState({
-        companyName: "",
-        ownerName: "",
-        location: "",
-        serviceCategory: ""
-    });
+const DiscountPartnerContactInfo = ({ handleTabClick, formData, setFormData }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -20,112 +13,111 @@ const DiscountPartnerContactInfo = ({handleTabClick}) => {
         }));
     };
 
-
     return (
         <div className="accordion-item mb-4 border-0 rounded-bottom">
             <ToastContainer />
-            {/* <h2 className="accordion-header customer-dashboard-subtitle">
-                    Contact Info
-            </h2> */}
             <div>
                 <div className="accordion-body">
                     <div className="customer-manage-profile-from-area">
-                        <form className="row">
+                        <form
+                            className="row"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleTabClick("business-info")
+                                // Submit form data to server here
+                            }}
+                        >
                             <div className="col-md-6 pb-3">
-                                <label
-                                    htmlFor="company-name"
-                                    className="form-label"
-                                >
+                                <label htmlFor="business_contact_number" className="form-label">
                                     Business Contact Number: *
                                 </label>
                                 <input
                                     type="text"
-                                    name="company-name"
+                                    name="business_contact_number"
                                     className="form-control"
-                                    id="company-name"
-                                    value={formData.companyName}
+                                    id="business_contact_number"
+                                    value={formData.business_contact_number}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="col-md-6 pb-3">
+                                <label htmlFor="business_email" className="form-label">
+                                    Business Email: (optional)
+                                </label>
+                                <input
+                                    type="text"
+                                    name="business_email"
+                                    className="form-control"
+                                    id="business_email"
+                                    value={formData.business_email}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
                                 <label
-                                    htmlFor="owner-name"
+                                    htmlFor="responsible_person_name"
                                     className="form-label"
                                 >
-                                    Business Email: (optional)
+                                    Responsible Person Name: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="owner-name"
+                                    name="responsible_person_name"
                                     className="form-control"
-                                    id="owner-name"
-                                    required
-                                    value={formData.ownerName}
+                                    id="responsible_person_name"
+                                    value={formData.responsible_person_name}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="location" className="form-label">
-                                Responsible Person Name: (optional)
+                                <label
+                                    htmlFor="responsible_person_contact"
+                                    className="form-label"
+                                >
+                                    Responsible Person Contact: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="locatin"
+                                    name="responsible_person_contact"
                                     className="form-control"
-                                    id="location"
-                                    required
-                                    value={formData.location}
-                                    onChange={handleChange} 
+                                    id="responsible_person_contact"
+                                    value={formData.responsible_person_contact}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="location" className="form-label">
-                                Responsible Person Contact: (optional)
+                                <label
+                                    htmlFor="responsible_person_email"
+                                    className="form-label"
+                                >
+                                    Responsible Person Email: (optional)
                                 </label>
                                 <input
                                     type="text"
-                                    name="locatin"
+                                    name="responsible_person_email"
                                     className="form-control"
-                                    id="location"
-                                    required
-                                    value={formData.location}
-                                    onChange={handleChange} 
+                                    id="responsible_person_email"
+                                    value={formData.responsible_person_email}
+                                    onChange={handleChange}
                                 />
                             </div>
-                            <div className="col-md-6 pb-3">
-                                <label htmlFor="location" className="form-label">
-                                Responsible Person Email: (optional)
-                                </label>
-                                <input
-                                    type="text"
-                                    name="locatin"
-                                    className="form-control"
-                                    id="location"
-                                    required
-                                    value={formData.location}
-                                    onChange={handleChange} 
-                                />
-                            </div>
-                            
-                        </form>
-                        <div className="d-flex justify-content-end gap-4">
+                            <div className="d-flex justify-content-end gap-4">
                                 <button
+                                    type="button"
                                     className="add-to-cart-link border-0 bg-danger"
                                     onClick={() => handleTabClick("basic-info")}
                                 >
                                     Back
                                 </button>
-                                <button
+                                <input
                                     type="submit"
                                     className="add-to-cart-link border-0"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        // Submit form data to server here
-                                    }}
-                                >
-                                    Next
-                                </button>
+                                    title="Next"
+                                    value="Next"
+                                />
                             </div>
+                        </form>
                     </div>
                 </div>
             </div>
