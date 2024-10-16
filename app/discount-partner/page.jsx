@@ -4,6 +4,9 @@ import DiscountPartnerBusinessInfo from "../components/discountPartner/DiscountP
 import DiscountPartnerContactInfo from "../components/discountPartner/DiscountPartnerContactInfo";
 import { useSearchParams } from "next/navigation";
 import { DiscountPartnerTabTitle } from "../components/discountPartner/DiscountPartnerTabTitle";
+import { useState } from "react";
+import Image from "next/image";
+import banner from "@/public/images/discount-partner-2.jpg";
 
 const DiscountPartner = () => {
     const searchParams = useSearchParams();
@@ -18,29 +21,57 @@ const DiscountPartner = () => {
             `${window.location.pathname}?${newSearchParams.toString()}`
         );
     };
+    const [formData, setFormData] = useState({
+        companyName: "",
+        ownerName: "",
+        location: "",
+        serviceCategory: "",
+        logo: null,
+        gallery: [],
+        business_contact_number: "",
+        business_email: "",
+        responsible_person_name: "",
+        responsible_person_contact: "",
+        responsible_person_email: "",
+        trade_license_number: "", // Trade License Number
+        tin_vat: "", // TIN / VAT
+        facebook_link: "", // Facebook Link
+        website_link: "", // Website Link
+        applicability: "", // Applicability
+        trade_license_copy: null, // Trade License Copy (file)
+        tin_vat_copy: null, // TIN / VAT Copy (file)
+    });
 
     return (
         <div className="my-5">
             <div className="customer-manage-profile-info container">
-
-                <DiscountPartnerTabTitle handleTabClick={handleTabClick}/>
+                <div className="w-100">
+                    <Image className="w-100" src={banner} alt="" />
+                </div>
+                <DiscountPartnerTabTitle handleTabClick={handleTabClick} />
                 <div className="tab-content container-booking-body">
                     {tab === "basic-info" && (
-                        <DiscountPartnerBasicInfo 
-                        isActive={tab === "basic-info"} 
-                        handleTabClick={handleTabClick} 
+                        <DiscountPartnerBasicInfo
+                            isActive={tab === "basic-info"}
+                            handleTabClick={handleTabClick}
+                            formData={formData}
+                            setFormData={setFormData}
                         />
                     )}
                     {tab === "contact-info" && (
-                        <DiscountPartnerContactInfo 
-                        isActive={tab === "contact-info"}
-                        handleTabClick={handleTabClick}
+                        <DiscountPartnerContactInfo
+                            isActive={tab === "contact-info"}
+                            handleTabClick={handleTabClick}
+                            formData={formData}
+                            setFormData={setFormData}
                         />
                     )}
                     {tab === "business-info" && (
-                        <DiscountPartnerBusinessInfo 
-                        isActive={tab === "business-info"}
-                        handleTabClick={handleTabClick}
+                        <DiscountPartnerBusinessInfo
+                            isActive={tab === "business-info"}
+                            handleTabClick={handleTabClick}
+                            formData={formData}
+                            setFormData={setFormData}
                         />
                     )}
                 </div>
