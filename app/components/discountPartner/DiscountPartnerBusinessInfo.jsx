@@ -6,6 +6,7 @@ import Dropzone from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DiscountPartnerComfarmModal from "./DiscountPartnerComfarmModal";
 
 const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
     const [trade, setTrade] = useState(null);
@@ -200,8 +201,10 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
                                     Back
                                 </button>
                                 <button
-                                    type="submit"
                                     className="add-to-cart-link border-0"
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         // Submit form data to server here
@@ -214,6 +217,7 @@ const DiscountPartnerBusinessInfo = ({handleTabClick}) => {
                     </div>
                 </div>
             </div>
+            <DiscountPartnerComfarmModal/>
         </div>
     );
 };
