@@ -4,21 +4,14 @@ import { FaPhoneVolume } from "react-icons/fa";
 import { FaMapMarked } from "react-icons/fa";
 import { FaGlobe } from "react-icons/fa";
 
-const PartnerDetailInfoRight = () => {
+const PartnerDetailInfoRight = ({ partnerDetail }) => {
     return (
         <>
             <div className="col-md-6 col-12">
                 <div className="">
                     <h6 className="mb-2 fs-3 text-capitalize">Offer Details</h6>
                     <p className="pb-2 fs-6">
-                        Bangladesh Spine & Orthopaedic Hospital is offering
-                        up-to 30% discount on all Pathological Tests, up-to 20%
-                        discount on all imaging tests, and 10% discount on bed
-                        charge for all employees, family members of the
-                        employees and privilege card holders of Nagadhat
-                        Bangladesh Ltd. Persons availing health care services at
-                        BSOH through contact or any specific package will not be
-                        considered eligible for this discount facility.
+                        {partnerDetail?.company_brief || "N/A"}
                     </p>
                     <p className="pb-2 fs-5">
                         <strong style={{ color: "#44bc9d" }}>
@@ -32,9 +25,13 @@ const PartnerDetailInfoRight = () => {
                         <strong style={{ color: "#44bc9d" }}>Facebook: </strong>
                         <Link
                             className="text-wrap text-break"
-                            href={`https://www.facebook.com/platerestaurantbd/`}
+                            href={
+                                partnerDetail?.face_book_url ||
+                                `https://www.facebook.com`
+                            }
                         >
-                            https://www.facebook.com/platerestaurantbd/
+                            {partnerDetail?.face_book_url ||
+                                `https://www.facebook.com`}
                         </Link>
                     </p>
 
@@ -42,10 +39,8 @@ const PartnerDetailInfoRight = () => {
                         <strong style={{ color: "#44bc9d" }}>
                             <FaGlobe /> Website:{" "}
                         </strong>
-                        <Link
-                            href={`https://bangladesh-spine-and-orthopaedic-general-hospital.business.site/`}
-                        >
-                            https://bangladesh-spine-and-orthopaedic-general-hospital.business.site/
+                        <Link href={partnerDetail?.website_url || "N/A"}>
+                            {partnerDetail?.website_url || "N/A"}
                         </Link>
                     </p>
 
@@ -53,8 +48,8 @@ const PartnerDetailInfoRight = () => {
                         <strong style={{ color: "#44bc9d" }}>
                             <FaAt /> E-mail:{" "}
                         </strong>
-                        <Link href={`mailto:platerestaurantbd@gmail.com`}>
-                            platerestaurantbd@gmail.com
+                        <Link href={`mailto:${partnerDetail?.contact_email}`}>
+                            {partnerDetail?.contact_email || "N/A"}
                         </Link>
                     </p>
                     <p className="pb-2 fs-5">
@@ -67,10 +62,7 @@ const PartnerDetailInfoRight = () => {
                         <strong style={{ color: "#44bc9d" }}>
                             <FaMapMarked /> Location/Address:{" "}
                         </strong>
-                        <span>
-                            14/1 Progoti Soroni, Shahajadpur, Gulshan, Dhaka,
-                            Bangladesh, Dhaka, Bangladesh
-                        </span>
+                        <span>{partnerDetail?.location || "N/A"}</span>
                     </p>
                 </div>
             </div>
