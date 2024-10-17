@@ -1,11 +1,11 @@
 import PartnerDetailImage from "./PartnerDetailImage";
 import PartnerDetailInfoRight from "./PartnerDetailInfoRight";
 
-const PartnerDetailInfo = () => {
+const PartnerDetailInfo = ({ partnerDetail }) => {
     return (
         <div className="row pt-4">
-            <PartnerDetailImage />
-            <PartnerDetailInfoRight />
+            <PartnerDetailImage partnerDetail={partnerDetail} />
+            <PartnerDetailInfoRight partnerDetail={partnerDetail} />
         </div>
     );
 };
