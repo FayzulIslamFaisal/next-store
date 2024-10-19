@@ -4,8 +4,7 @@ import Dropzone from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Image from "next/image";
 
-const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) => {
-    
+const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -109,6 +108,35 @@ const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) =>
                                 />
                             </div>
 
+                            <div className="col-md-6 pb-3">
+                                <label htmlFor="company_brief" className="form-label">
+                                    Company Brief: (optional)
+                                </label>
+                                <textarea
+                                    type="text"
+                                    name="company_brief"
+                                    className="form-control"
+                                    id="company_brief"
+                                    rows={6}
+                                    value={formData.company_brief}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="col-md-6 pb-3">
+                                <label htmlFor="offer_details" className="form-label">
+                                    Offer Details: (optional)
+                                </label>
+                                <textarea
+                                    type="text"
+                                    name="offer_details"
+                                    className="form-control"
+                                    id="offer_details"
+                                    rows={6}
+                                    value={formData.offer_details}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
                             {/* File upload for Trade License Copy */}
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="trade" className="form-label">
@@ -197,10 +225,11 @@ const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) =>
                                     type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        // Submit form data to server here
-                                    }}
+                                    // onClick={(e) => {
+                                    //     e.preventDefault();
+                                    //     // Submit form data to server here
+                                    //     hendelDiscountPartnerInfo()
+                                    // }}
                                 >
                                     Save
                                 </button>
@@ -209,7 +238,7 @@ const DiscountPartnerBusinessInfo = ({handleTabClick, formData, setFormData}) =>
                     </div>
                 </div>
             </div>
-            <DiscountPartnerComfarmModal/>
+            <DiscountPartnerComfarmModal formData={formData} />
         </div>
     );
 };

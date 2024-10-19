@@ -1,7 +1,7 @@
 import { apiBaseUrl } from "@/app/utils";
 
 export const getServiceCategoryWithDiscountPartner = async (token) => {
-    if (!token) return null;
+    // if (!token) return null;
     try {
         const url = `${apiBaseUrl}/service-category-with-discount-partner`;
         const response = await fetch(url, {
@@ -10,7 +10,7 @@ export const getServiceCategoryWithDiscountPartner = async (token) => {
                 Accept: "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            next: { revalidate: 1 },
+            next: { revalidate: 100 },
         });
 
         return await response.json();
