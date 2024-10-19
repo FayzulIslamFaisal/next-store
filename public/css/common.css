@@ -339,3 +339,7 @@ body {
 .merchant-top-space .nh-service-area {
     padding-top: 0;
 }
+.affiliate-page-substr {
+    width: 55%;
+    margin: 0 auto;
+}
