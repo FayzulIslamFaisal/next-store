@@ -335,3 +335,7 @@ body {
     opacity: 0.5 !important;
     cursor: not-allowed !important; /* Optional, for a visual cue */
 }
+
+.merchant-top-space .nh-service-area {
+    padding-top: 0;
+}
