@@ -6,15 +6,14 @@ import logo from "@/public/images/nagadhat-squire-logo.jpeg"
 import handshake from "@/public/images/handshake.gif"
 import transparant from "@/public/images/transparant-blank.png"
 import { postDiscountPartnerInfo } from '@/app/services/discountPartner/postDiscountPartnerInfo';
+import Swal from 'sweetalert2';
 
 const DiscountPartnerComfarmModal = ({ formData }) => {
     const router = useRouter()
     const confirmSubmitForm = async () => {
-        console.log("hello");
-        
         // Create FormData to handle file uploads
         const formDataToSend = new FormData();
-        
+
         // Append regular fields
         formDataToSend.append("company_name", formData.company_name);
         formDataToSend.append("owner_name", formData.owner_name);
@@ -32,7 +31,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
         formDataToSend.append("applicability", formData.applicability);
         formDataToSend.append("company_brief", formData.company_brief);
         formDataToSend.append("offer_details", formData.offer_details);
-    
+
         // Append files if they exist
         if (formData.logo) {
             formDataToSend.append("logo", formData.logo); // Assuming formData.logo is a file
@@ -48,7 +47,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
         if (formData.tin_vat_copy) {
             formDataToSend.append("tin_vat_copy", formData.tin_vat_copy);
         }
-    
+
         try {
             const response = await postDiscountPartnerInfo(formDataToSend); // Send as FormData
             if (response.code === 200) {
@@ -61,17 +60,26 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
                 // emty formData
                 // router.push('/success-discount-partner');
             } else {
+                const modalElement = document.getElementById('exampleModal');
+                if (modalElement) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                }
                 toast.error(response.message);
+                // Swal.fire({
+                //     icon: "error",
+                //     title: "Oops...",
+                //     text: response?.message
+                // });
             }
         } catch (error) {
             console.error("Submission Error: ", error);
         }
     };
-    
+
 
     return (
         <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <ToastContainer />
             <div className="modal-dialog modal-lg modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -87,7 +95,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
                                 <Image className="img-fluid" src={handshake} width="100" height="100" alt="Handshake" />
                             </div>
                             <div>
-                            <Image className="img-fluid" src={formData.logo ? URL.createObjectURL(formData.logo): transparant} width="100" height="100" alt="Nagadhat Logo" />
+                                <Image className="img-fluid" src={formData.logo ? URL.createObjectURL(formData.logo) : transparant} width="100" height="100" alt="Nagadhat Logo" />
                             </div>
                         </div>
                         <div className="text-center">

@@ -3,9 +3,9 @@ import DiscountPartnerComfarmModal from "./DiscountPartnerComfarmModal";
 import Dropzone from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Image from "next/image";
+import { FaXmark } from "react-icons/fa6";
 
 const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) => {
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -25,6 +25,24 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
         setFormData((prevData) => ({
             ...prevData,
             tin_vat_copy: acceptedFiles[0],  // Store the first selected file
+        }));
+    };
+
+    // Function to remove trade license copy
+    const removeTradeLicense = (e) => {
+        e.stopPropagation()
+        setFormData((prevData) => ({
+            ...prevData,
+            trade_license_copy: null,  // Reset trade_license_copy to null
+        }));
+    };
+
+    // Function to remove TIN/VAT copy
+    const removeTINVAT = (e) => {
+        e.stopPropagation()
+        setFormData((prevData) => ({
+            ...prevData,
+            tin_vat_copy: null,  // Reset tin_vat_copy to null
         }));
     };
 
@@ -147,28 +165,31 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-hidden" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                {!formData.trade_license_copy ? (
-                                                    <div
-                                                        className="opacity-50"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <p className="fs-1"><IoCloudUploadOutline /></p>
-                                                        <h3>Drop Trade License</h3>
-                                                        <p>Drag 'n' drop a Trade License, or click to select file</p>
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        className="text-center"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <Image
-                                                            height={150}
-                                                            width={200}
-                                                            src={URL.createObjectURL(formData.trade_license_copy)}
-                                                            alt="Trade License"
-                                                        />
-                                                    </div>
-                                                )}
+                                                <div style={{ width: '100%', height: '150px' }}>
+                                                    {!formData.trade_license_copy ? (
+                                                        <div className="opacity-50">
+                                                            <p className="fs-1"><IoCloudUploadOutline /></p>
+                                                            <h3>Drop Trade License</h3>
+                                                            <p>Drag 'n' drop a Trade License, or click to select file</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center position-relative">
+                                                            <Image
+                                                                height={150}
+                                                                width={200}
+                                                                src={URL.createObjectURL(formData.trade_license_copy)}
+                                                                alt="Trade License"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle"
+                                                                onClick={removeTradeLicense}
+                                                            >
+                                                                <FaXmark/>
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </section>
                                     )}
@@ -185,28 +206,31 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-hidden" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                {!formData.tin_vat_copy ? (
-                                                    <div
-                                                        className="opacity-50"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <p className="fs-1"><IoCloudUploadOutline /></p>
-                                                        <h3>Drop TIN / VAT Copy</h3>
-                                                        <p>Drag 'n' drop a TIN / VAT copy, or click to select file</p>
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        className="text-center"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <Image
-                                                            height={150}
-                                                            width={200}
-                                                            src={URL.createObjectURL(formData.tin_vat_copy)}
-                                                            alt="TIN / VAT Copy"
-                                                        />
-                                                    </div>
-                                                )}
+                                                <div className="" style={{ width: '100%', height: '150px' }}>
+                                                    {!formData.tin_vat_copy ? (
+                                                        <div className="opacity-50">
+                                                            <p className="fs-1"><IoCloudUploadOutline /></p>
+                                                            <h3>Drop TIN / VAT Copy</h3>
+                                                            <p>Drag 'n' drop a TIN / VAT copy, or click to select file</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center position-relative">
+                                                            <Image
+                                                                height={150}
+                                                                width={200}
+                                                                src={URL.createObjectURL(formData.tin_vat_copy)}
+                                                                alt="TIN / VAT Copy"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle"
+                                                                onClick={removeTINVAT}
+                                                            >
+                                                                <FaXmark/>
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </section>
                                     )}
@@ -225,11 +249,6 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
-                                    // onClick={(e) => {
-                                    //     e.preventDefault();
-                                    //     // Submit form data to server here
-                                    //     hendelDiscountPartnerInfo()
-                                    // }}
                                 >
                                     Save
                                 </button>

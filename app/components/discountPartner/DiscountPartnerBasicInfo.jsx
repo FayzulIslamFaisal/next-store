@@ -9,6 +9,7 @@ import { getServiceCategoryWithDiscountPartner } from "@/app/services/discountPa
 
 const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => {
     const [category, setCategory] = useState([]);
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -32,16 +33,31 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
         }));
     };
 
+    const removeLogo = (e) => {
+        e.stopPropagation()
+        setFormData((prevData) => ({
+            ...prevData,
+            logo: null,
+        }));
+    };
+
+    const removeGalleryImage = (indexToRemove, e) => {
+        e.stopPropagation()
+        setFormData((prevData) => ({
+            ...prevData,
+            gallery: prevData.gallery.filter((_, index) => index !== indexToRemove),
+        }));
+    };
+
     // get category list
     useEffect(() => {
         const getCategoryList = async () => {
             // fetch data from API
             const response = await getServiceCategoryWithDiscountPartner();
-            console.log(response);
-            setCategory(response?.results)
+            setCategory(response?.results);
         };
-        getCategoryList()
-    }, [])
+        getCategoryList();
+    }, []);
 
     return (
         <div className="accordion-item border-0 rounded-bottom">
@@ -57,7 +73,7 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                             className="row"
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                handleTabClick("contact-info")
+                                handleTabClick("contact-info");
                             }}
                         >
                             <div className="col-md-6 pb-3">
@@ -133,28 +149,34 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-hidden" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                {!formData?.logo ? (
-                                                    <div
-                                                        className=" opacity-50"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <p className="fs-1"><IoCloudUploadOutline /></p>
-                                                        <h3>Drop Logo</h3>
-                                                        <p>Drag 'n' drop a logo, or click to select file</p>
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        className="text-center"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <Image
-                                                            height={150}
-                                                            width={200}
-                                                            src={URL.createObjectURL(formData?.logo)}
-                                                            alt="Company Logo"
-                                                        />
-                                                    </div>
-                                                )}
+                                                <div style={{ width: '100%', height: '150px' }}>
+                                                    {!formData?.logo ? (
+                                                        <div
+                                                            className=" opacity-50"
+                                                        >
+                                                            <p className="fs-1"><IoCloudUploadOutline /></p>
+                                                            <h3>Drop Logo</h3>
+                                                            <p>Drag 'n' drop a logo, or click to select file</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center position-relative">
+                                                            <Image
+                                                                height={150}
+                                                                width={150}
+                                                                src={URL.createObjectURL(formData?.logo)}
+                                                                alt="Company Logo"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle"
+                                                                onClick={(e) => removeLogo(e)}
+                                                            >
+                                                                &times;
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+
                                             </div>
                                         </section>
                                     )}
@@ -170,37 +192,44 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-y-auto" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                {formData?.gallery.length === 0 ? (
-                                                    <div
-                                                        className=" opacity-50"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        <p className="fs-1"><IoCloudUploadOutline /></p>
-                                                        <h3>Drop Gallery</h3>
-                                                        <p>Drag 'n' drop gallery photos, or click to select files</p>
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        className="text-center"
-                                                        style={{ width: '100%', height: '150px' }}
-                                                    >
-                                                        {formData?.gallery.map((file, index) => (
-                                                            <Image
-                                                                className="my-2 mx-3 border"
-                                                                key={index}
-                                                                height={70}
-                                                                width={100}
-                                                                src={URL.createObjectURL(file)}
-                                                                alt={`Gallery Image ${index + 1}`}
-                                                            />
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                <div style={{ width: '100%', height: '150px' }}>
+                                                    {formData?.gallery.length === 0 ? (
+                                                        <div
+                                                            className=" opacity-50"
+                                                        >
+                                                            <p className="fs-1"><IoCloudUploadOutline /></p>
+                                                            <h3>Drop Gallery</h3>
+                                                            <p>Drag 'n' drop gallery photos, or click to select files</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center">
+                                                            {formData?.gallery.map((file, index) => (
+                                                                <div key={index} className="d-inline-block position-relative">
+                                                                    <Image
+                                                                        className="my-2 mx-3 border"
+                                                                        height={70}
+                                                                        width={100}
+                                                                        src={URL.createObjectURL(file)}
+                                                                        alt={`Gallery Image ${index + 1}`}
+                                                                    />
+                                                                    <button
+                                                                        type="button"
+                                                                        className="btn btn-danger btn-sm py-0 position-absolute top-0 start-100 translate-middle"
+                                                                        onClick={(e) => removeGalleryImage(index, e)}
+                                                                    >
+                                                                        &times;
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </section>
                                     )}
                                 </Dropzone>
                             </div>
+
                             <div className="d-flex justify-content-end gap-4">
                                 <input
                                     type="submit"
@@ -212,8 +241,8 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                         </form>
                     </div>
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 
