@@ -4,7 +4,7 @@ const DiscountPartnerDetailsPage = ({ params }) => {
     const partnerId = params.id;
     return (
         <div className="container py-5">
-            <PartnerDetailsWrapper />
+            <PartnerDetailsWrapper partnerId={partnerId} />
         </div>
     );
 };

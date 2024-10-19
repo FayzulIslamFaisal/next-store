@@ -1,6 +1,10 @@
+import { NagadhatPublicUrl } from "@/app/utils";
 import Image from "next/image";
 
-const PartnerDetailImage = () => {
+const PartnerDetailImage = ({ partnerDetail }) => {
+    const imageUrl = partnerDetail?.company_logo
+        ? `${NagadhatPublicUrl}/${item?.company_logo}`
+        : `/images/placeholder--image.jpg`;
     return (
         <>
             <div className="col-md-6 col-12 ">
@@ -10,7 +14,7 @@ const PartnerDetailImage = () => {
                 >
                     <Image
                         fill
-                        src={`/images/1685792932_270252764_106906425207433_1238237773264254812_n.jpg`}
+                        src={imageUrl}
                         alt="image alt ss"
                         style={{ objectFit: "cover" }}
                     />
