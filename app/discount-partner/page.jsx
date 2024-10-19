@@ -22,10 +22,10 @@ const DiscountPartner = () => {
         );
     };
     const [formData, setFormData] = useState({
-        companyName: "",
-        ownerName: "",
+        company_name: "",
+        owner_name: "",
         location: "",
-        serviceCategory: "",
+        service_category: "",
         logo: null,
         gallery: [],
         business_contact_number: "",
@@ -38,6 +38,8 @@ const DiscountPartner = () => {
         facebook_link: "", // Facebook Link
         website_link: "", // Website Link
         applicability: "", // Applicability
+        offer_details: "", // offer details
+        company_brief: "", // Company brief
         trade_license_copy: null, // Trade License Copy (file)
         tin_vat_copy: null, // TIN / VAT Copy (file)
     });
@@ -46,7 +48,7 @@ const DiscountPartner = () => {
         <div className="my-5">
             <div className="customer-manage-profile-info container">
                 <div className="w-100">
-                    <Image className="w-100" src={banner} alt="" />
+                    <Image className="w-100 h-100" src={banner} alt="" />
                 </div>
                 <DiscountPartnerTabTitle handleTabClick={handleTabClick} />
                 <div className="tab-content container-booking-body">

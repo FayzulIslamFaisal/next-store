@@ -1,13 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Image from "next/image";
+import { getServiceCategoryWithDiscountPartner } from "@/app/services/discountPartner/getServiceCategoryWithDiscountPartner";
 
 const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => {
-
+    const [category, setCategory] = useState([]);
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -31,6 +32,17 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
         }));
     };
 
+    // get category list
+    useEffect(() => {
+        const getCategoryList = async () => {
+            // fetch data from API
+            const response = await getServiceCategoryWithDiscountPartner();
+            console.log(response);
+            setCategory(response?.results)
+        };
+        getCategoryList()
+    }, [])
+
     return (
         <div className="accordion-item border-0 rounded-bottom">
             <ToastContainer />
@@ -49,15 +61,15 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                             }}
                         >
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="company-name" className="form-label">
+                                <label htmlFor="company_name" className="form-label">
                                     Company Name: *
                                 </label>
                                 <input
                                     type="text"
-                                    name="companyName"
+                                    name="company_name"
                                     className="form-control"
-                                    id="company-name"
-                                    value={formData.companyName}
+                                    id="company_name"
+                                    value={formData.company_name}
                                     onChange={handleChange}
                                     required
                                 />
@@ -68,11 +80,11 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                 </label>
                                 <input
                                     type="text"
-                                    name="ownerName"
+                                    name="owner_name"
                                     className="form-control"
                                     id="owner-name"
                                     required
-                                    value={formData.ownerName}
+                                    value={formData.owner_name}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -92,26 +104,23 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                             </div>
 
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="serviceCategory" className="form-label">
-                                    Service Category:
+                                <label htmlFor="service_category" className="form-label">
+                                    Service Category: *
                                 </label>
                                 <select
                                     className="form-control"
-                                    name="serviceCategory"
+                                    name="service_category"
                                     id="service_category"
                                     required
-                                    value={formData.serviceCategory}
+                                    value={formData.service_category}
                                     onChange={handleChange}
                                 >
                                     <option value="">Select Category</option>
-                                    <option value="1">Brand Shop</option>
-                                    <option value="2">Restaurant</option>
-                                    <option value="3">Hotel</option>
-                                    <option value="4">Tour & Tourism</option>
-                                    <option value="5">Hospital</option>
-                                    <option value="6">Diagnostic Center</option>
-                                    <option value="7">Educational Institute</option>
-                                    <option value="8">Others</option>
+                                    {category.map((cat) => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -203,8 +212,8 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

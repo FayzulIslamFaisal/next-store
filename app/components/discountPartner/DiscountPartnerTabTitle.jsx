@@ -17,48 +17,48 @@ export const DiscountPartnerTabTitle = ({handleTabClick}) => {
         <>
             <div className="customer-setting-header tab-header border-0">
                 <ul
-                    className="nav nav-pills d-flex tab-continer"
+                    className="nav nav-pills d-flex tab-continer text-center"
                     id="myTab"
                     role="tablist"
                 >
                     <li className="nav-item">
-                        <button
+                        <p
                             className={`nav-link ${tab === "basic-info" ? "active" : ""} rounded-0`}
-                            id="basic-info"
-                            data-bs-toggle="tab"
+                            // id="basic-info"
+                            // data-bs-toggle="tab"
                             // data-bs-target="#discount-partner"
-                            type="button"
+                            // type="button"
                             // role="tab"
-                            onClick={() => handleTabClick("basic-info")}
+                            // onClick={() => handleTabClick("basic-info")}
                         >
                             Basic Info
-                        </button>
+                        </p>
                     </li>
                     <li className="nav-item">
-                        <button
+                        <p
                             className={`nav-link ${tab === "contact-info" ? "active" : ""} rounded-0 border-start-0 border-end-0`}
-                            id="contact-info"
-                            data-bs-toggle="tab"
+                            // id="contact-info"
+                            // data-bs-toggle="tab"
                             // data-bs-target="#contact-info"
-                            type="button"
+                            // type="button"
                             // role="tab"
-                            onClick={() => handleTabClick("contact-info")}
+                            // onClick={() => handleTabClick("contact-info")}
                         >
                             Contact Info
-                        </button>
+                        </p>
                     </li>
                     <li className="nav-item">
-                        <button
+                        <p
                             className={`nav-link ${tab === "business-info" ? "active" : ""} rounded-0`}
-                            id="business-info"
-                            data-bs-toggle="tab"
+                            // id="business-info"
+                            // data-bs-toggle="tab"
                             // data-bs-target="#business-info"
-                            type="button"
+                            // type="button"
                             // role="tab"
-                            onClick={() => handleTabClick("business-info")}
+                            // onClick={() => handleTabClick("business-info")}
                         >
                             Business Info
-                        </button>
+                        </p>
                     </li>
                 </ul>
             </div>
