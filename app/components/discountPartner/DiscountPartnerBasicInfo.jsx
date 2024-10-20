@@ -34,7 +34,7 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
     };
 
     const removeLogo = (e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         setFormData((prevData) => ({
             ...prevData,
             logo: null,
@@ -42,7 +42,7 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
     };
 
     const removeGalleryImage = (indexToRemove, e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         setFormData((prevData) => ({
             ...prevData,
             gallery: prevData.gallery.filter((_, index) => index !== indexToRemove),
@@ -78,13 +78,14 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                         >
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="company_name" className="form-label">
-                                    Company Name: *
+                                    Company Name: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <input
                                     type="text"
                                     name="company_name"
                                     className="form-control"
                                     id="company_name"
+                                    placeholder="Enter company name"
                                     value={formData.company_name}
                                     onChange={handleChange}
                                     required
@@ -92,13 +93,14 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                             </div>
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="owner-name" className="form-label">
-                                    Owner Name: *
+                                    Owner Name: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <input
                                     type="text"
                                     name="owner_name"
                                     className="form-control"
                                     id="owner-name"
+                                    placeholder="Enter owner's name"
                                     required
                                     value={formData.owner_name}
                                     onChange={handleChange}
@@ -106,13 +108,14 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                             </div>
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="location" className="form-label">
-                                    Location: *
+                                    Location: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <input
                                     type="text"
                                     name="location"
                                     className="form-control"
                                     id="location"
+                                    placeholder="Enter location"
                                     required
                                     value={formData.location}
                                     onChange={handleChange}
@@ -121,7 +124,7 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
 
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="service_category" className="form-label">
-                                    Service Category: *
+                                    Service Category: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <select
                                     className="form-control"
@@ -149,12 +152,12 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-hidden" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                <div style={{ width: '100%', height: '150px' }}>
+                                                <div style={{ width: "100%", height: "150px" }}>
                                                     {!formData?.logo ? (
-                                                        <div
-                                                            className=" opacity-50"
-                                                        >
-                                                            <p className="fs-1"><IoCloudUploadOutline /></p>
+                                                        <div className="opacity-50">
+                                                            <p className="fs-1">
+                                                                <IoCloudUploadOutline />
+                                                            </p>
                                                             <h3>Drop Logo</h3>
                                                             <p>Drag 'n' drop a logo, or click to select file</p>
                                                         </div>
@@ -176,7 +179,6 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                                         </div>
                                                     )}
                                                 </div>
-
                                             </div>
                                         </section>
                                     )}
@@ -192,19 +194,22 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                         <section className="form-control">
                                             <div className="text-center p-3 overflow-y-auto" {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                <div style={{ width: '100%', height: '150px' }}>
+                                                <div style={{ width: "100%", height: "150px" }}>
                                                     {formData?.gallery.length === 0 ? (
-                                                        <div
-                                                            className=" opacity-50"
-                                                        >
-                                                            <p className="fs-1"><IoCloudUploadOutline /></p>
+                                                        <div className="opacity-50">
+                                                            <p className="fs-1">
+                                                                <IoCloudUploadOutline />
+                                                            </p>
                                                             <h3>Drop Gallery</h3>
                                                             <p>Drag 'n' drop gallery photos, or click to select files</p>
                                                         </div>
                                                     ) : (
                                                         <div className="text-center">
                                                             {formData?.gallery.map((file, index) => (
-                                                                <div key={index} className="d-inline-block position-relative">
+                                                                <div
+                                                                    key={index}
+                                                                    className="d-inline-block position-relative"
+                                                                >
                                                                     <Image
                                                                         className="my-2 mx-3 border"
                                                                         height={70}
