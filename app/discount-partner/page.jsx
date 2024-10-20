@@ -42,6 +42,7 @@ const DiscountPartner = () => {
         company_brief: "", // Company brief
         trade_license_copy: null, // Trade License Copy (file)
         tin_vat_copy: null, // TIN / VAT Copy (file)
+        chack:false
     });
 
     return (

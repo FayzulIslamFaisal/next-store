@@ -4,8 +4,11 @@ import Dropzone from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Image from "next/image";
 import { FaXmark } from "react-icons/fa6";
+import { useState } from "react";
 
 const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) => {
+    const [chack, setChack] = useState(false);  // Correct initialization
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -28,18 +31,16 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
         }));
     };
 
-    // Function to remove trade license copy
     const removeTradeLicense = (e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         setFormData((prevData) => ({
             ...prevData,
             trade_license_copy: null,  // Reset trade_license_copy to null
         }));
     };
 
-    // Function to remove TIN/VAT copy
     const removeTINVAT = (e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         setFormData((prevData) => ({
             ...prevData,
             tin_vat_copy: null,  // Reset tin_vat_copy to null
@@ -54,10 +55,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                     <div className="customer-manage-profile-from-area">
                         <form className="row">
                             <div className="col-md-6 pb-3">
-                                <label
-                                    htmlFor="trade_license_number"
-                                    className="form-label"
-                                >
+                                <label htmlFor="trade_license_number" className="form-label">
                                     Trade License Number: (optional)
                                 </label>
                                 <input
@@ -65,15 +63,13 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     name="trade_license_number"
                                     className="form-control"
                                     id="trade_license_number"
+                                    placeholder="Enter trade license number"
                                     value={formData.trade_license_number}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="col-md-6 pb-3">
-                                <label
-                                    htmlFor="tin_vat"
-                                    className="form-label"
-                                >
+                                <label htmlFor="tin_vat" className="form-label">
                                     TIN / VAT: (optional)
                                 </label>
                                 <input
@@ -82,6 +78,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     className="form-control"
                                     id="tin_vat"
                                     required
+                                    placeholder="Enter TIN or VAT"
                                     value={formData.tin_vat}
                                     onChange={handleChange}
                                 />
@@ -95,6 +92,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     name="facebook_link"
                                     className="form-control"
                                     id="facebook_link"
+                                    placeholder="Enter Facebook page link"
                                     value={formData.facebook_link}
                                     onChange={handleChange}
                                 />
@@ -108,6 +106,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     name="website_link"
                                     className="form-control"
                                     id="website_link"
+                                    placeholder="Enter website link"
                                     value={formData.website_link}
                                     onChange={handleChange}
                                 />
@@ -121,6 +120,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     name="applicability"
                                     className="form-control"
                                     id="applicability"
+                                    placeholder="Enter applicability details"
                                     value={formData.applicability}
                                     onChange={handleChange}
                                 />
@@ -136,6 +136,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     className="form-control"
                                     id="company_brief"
                                     rows={6}
+                                    placeholder="Provide a brief description of your company"
                                     value={formData.company_brief}
                                     onChange={handleChange}
                                 />
@@ -150,6 +151,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     className="form-control"
                                     id="offer_details"
                                     rows={6}
+                                    placeholder="Describe the offer details"
                                     value={formData.offer_details}
                                     onChange={handleChange}
                                 />
@@ -185,7 +187,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                                                 className="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle"
                                                                 onClick={removeTradeLicense}
                                                             >
-                                                                <FaXmark/>
+                                                                <FaXmark />
                                                             </button>
                                                         </div>
                                                     )}
@@ -226,7 +228,7 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                                                 className="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle"
                                                                 onClick={removeTINVAT}
                                                             >
-                                                                <FaXmark/>
+                                                                <FaXmark />
                                                             </button>
                                                         </div>
                                                     )}
@@ -237,6 +239,19 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                 </Dropzone>
                             </div>
 
+                            <div className="col-md-6 pb-3 d-flex align-items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    name="chack"
+                                    id="chack"
+                                    required
+                                    onChange={() => setChack(!chack)}
+                                />
+                                <label htmlFor="chack" className="form-label mb-0">
+                                    I agree to Nagadhat's Terms and Conditions.
+                                </label>
+                            </div>
+
                             <div className="d-flex justify-content-end gap-4">
                                 <button
                                     className="add-to-cart-link border-0 bg-danger"
@@ -245,10 +260,11 @@ const DiscountPartnerBusinessInfo = ({ handleTabClick, formData, setFormData }) 
                                     Back
                                 </button>
                                 <button
-                                    className="add-to-cart-link border-0"
+                                    className={`add-to-cart-link border-0 ${!chack ? "disabled-button" : ""}`}
                                     type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
+                                    disabled={!chack}
                                 >
                                     Save
                                 </button>

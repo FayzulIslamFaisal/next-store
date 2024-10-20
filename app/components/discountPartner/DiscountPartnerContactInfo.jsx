@@ -23,19 +23,20 @@ const DiscountPartnerContactInfo = ({ handleTabClick, formData, setFormData }) =
                             className="row"
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                handleTabClick("business-info")
+                                handleTabClick("business-info");
                                 // Submit form data to server here
                             }}
                         >
                             <div className="col-md-6 pb-3">
                                 <label htmlFor="business_contact_number" className="form-label">
-                                    Business Contact Number: *
+                                    Business Contact Number: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <input
                                     type="text"
                                     name="business_contact_number"
                                     className="form-control"
                                     id="business_contact_number"
+                                    placeholder="Enter business contact number"
                                     value={formData.business_contact_number}
                                     onChange={handleChange}
                                     required
@@ -50,6 +51,7 @@ const DiscountPartnerContactInfo = ({ handleTabClick, formData, setFormData }) =
                                     name="business_email"
                                     className="form-control"
                                     id="business_email"
+                                    placeholder="Enter business email"
                                     value={formData.business_email}
                                     onChange={handleChange}
                                 />
@@ -66,6 +68,7 @@ const DiscountPartnerContactInfo = ({ handleTabClick, formData, setFormData }) =
                                     name="responsible_person_name"
                                     className="form-control"
                                     id="responsible_person_name"
+                                    placeholder="Enter responsible person's name"
                                     value={formData.responsible_person_name}
                                     onChange={handleChange}
                                 />
@@ -82,6 +85,7 @@ const DiscountPartnerContactInfo = ({ handleTabClick, formData, setFormData }) =
                                     name="responsible_person_contact"
                                     className="form-control"
                                     id="responsible_person_contact"
+                                    placeholder="Enter responsible person's contact"
                                     value={formData.responsible_person_contact}
                                     onChange={handleChange}
                                 />
@@ -98,6 +102,7 @@ const DiscountPartnerContactInfo = ({ handleTabClick, formData, setFormData }) =
                                     name="responsible_person_email"
                                     className="form-control"
                                     id="responsible_person_email"
+                                    placeholder="Enter responsible person's email"
                                     value={formData.responsible_person_email}
                                     onChange={handleChange}
                                 />

@@ -58,7 +58,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
                     modalInstance.hide();
                 }
                 // emty formData
-                // router.push('/success-discount-partner');
+                router.push('/success-discount-partner');
             } else {
                 const modalElement = document.getElementById('exampleModal');
                 if (modalElement) {
