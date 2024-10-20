@@ -343,3 +343,7 @@ body {
     width: 55%;
     margin: 0 auto;
 }
+.affiliate-direct-top-space .nh-service-area {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
