@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { IoMdOptions } from "react-icons/io";
 import {
     FaAngleRight,
     FaCog,
@@ -522,56 +523,80 @@ onClick={toggleSidebar}
                             Support
                         </Link>
                     </li>
+
                     <li className="nav-item customer-dashboard-nav-item">
                         <p
-                            className="nav-link customer-dashboard-nav-link dropdown-btn"
-                            onClick={() => toggleDropdown("settings")}
+                            className="nav-link customer-dashboard-nav-link dropdown-btn d-flex justify-content-between"
+                            onClick={() => toggleDropdown("others")}
                         >
-                            <FaCog className="nav-icon me-2" />
-                            Settings
+                            <span>
+                                <IoMdOptions className="nav-icon me-2 fw-bolder " />
+                                Others
+                            </span>
+
                             <FaAngleRight
-                                className={`dropdown ${
-                                    activeDropdown === "settings"
-                                        ? "rotate"
-                                        : ""
+                                className={`dropdown-arrow  ${
+                                    activeDropdown === "others" ? "rotate" : ""
                                 }`}
                             />
                         </p>
-                        <ul
-                            className={`dropdown-conteiner ${
-                                activeDropdown === "settings" ? "show" : ""
-                            }`}
-                        >
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    onClick={toggleSidebar}
-                                    className={`${
-                                        isActive("/passwordtxnotp")
-                                            ? "activ-link"
-                                            : ""
-                                    } nav-link customer-dashboard-nav-link`}
-                                    href="/passwordtxnotp"
+
+                        {activeDropdown === "others" && (
+                            <div className="dropdown-container show">
+                                <p
+                                    className="nav-link customer-dashboard-nav-link dropdown-btn d-flex justify-content-between"
+                                    onClick={() => toggleDropdown("settings")}
                                 >
-                                    <span className="dropdown-item-circle"></span>
-                                    Password & TXN OTP
-                                </Link>
-                            </li>
-                            <li className="dropdown-item customer-dashboard-dropdown-item">
-                                <Link
-                                    onClick={toggleSidebar}
-                                    className={`${
-                                        isActive("/customershippingaddress")
-                                            ? "activ-link"
-                                            : ""
-                                    } nav-link customer-dashboard-nav-link`}
-                                    href="/customershippingaddress"
-                                >
-                                    <span className="dropdown-item-circle"></span>
-                                    Shipping Address
-                                </Link>
-                            </li>
-                        </ul>
+                                    <span>
+                                        <FaCog className="nav-icon me-2" />
+                                        Settings
+                                    </span>
+
+                                    <FaAngleRight
+                                        className={`dropdown-arrow ${
+                                            activeDropdown === "settings"
+                                                ? "rotate"
+                                                : ""
+                                        }`}
+                                    />
+                                </p>
+                            </div>
+                        )}
+
+                        {activeDropdown === "settings" && (
+                            <ul className="dropdown-container show">
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        onClick={toggleSidebar}
+                                        className={`${
+                                            isActive("/passwordtxnotp")
+                                                ? "active-link"
+                                                : ""
+                                        } nav-link customer-dashboard-nav-link`}
+                                        href="/passwordtxnotp"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Password & TXN OTP
+                                    </Link>
+                                </li>
+                                <li className="dropdown-item customer-dashboard-dropdown-item">
+                                    <Link
+                                        onClick={toggleSidebar}
+                                        className={`${
+                                            isActive("/customershippingaddress")
+                                                ? "active-link"
+                                                : ""
+                                        } nav-link customer-dashboard-nav-link`}
+                                        href="/customershippingaddress"
+                                    >
+                                        <span className="dropdown-item-circle"></span>
+                                        Shipping Address
+                                    </Link>
+                                </li>
+                            </ul>
+                        )}
                     </li>
+
                     {/* <li className="nav-item customer-dashboard-nav-item">
                         <p
                             className="nav-link customer-dashboard-nav-link dropdown-btn"
