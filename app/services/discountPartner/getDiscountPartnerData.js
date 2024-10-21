@@ -1,8 +1,8 @@
 import { apiBaseUrl } from "@/app/utils";
 
-export const getDiscountPartnerData = async () => {
+export const getDiscountPartnerData = async (id) => {
     try {
-        const response = await fetch(`${apiBaseUrl}/get-request-with-discount-partner`, {
+        const response = await fetch(`${apiBaseUrl}/get-request-with-discount-partner/${id}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
