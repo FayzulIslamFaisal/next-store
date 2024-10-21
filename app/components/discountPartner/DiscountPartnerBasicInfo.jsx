@@ -127,7 +127,7 @@ const DiscountPartnerBasicInfo = ({ handleTabClick, setFormData, formData }) => 
                                     Service Category: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <select
-                                    className="form-control"
+                                    className="form-select"
                                     name="service_category"
                                     id="service_category"
                                     required
