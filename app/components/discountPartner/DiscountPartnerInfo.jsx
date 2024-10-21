@@ -13,7 +13,7 @@ const DiscountPartnerInfo = ({ partnerData }) => {
                         : `/images/placeholder--image.jpg`;
                     return (
                         <div key={item?.id} className="col-lg-3 col-md-6">
-                            <div className="bg-light text-center p-4 rounded-4 shadow position-relative h-100">
+                            <div className="text-center p-4 position-relative h-100 flash-sale-content-bg nh-hover-box-shadow ">
                                 <div
                                     className=" position-relative w-100 mb-3"
                                     style={{ height: "160px" }}
@@ -44,18 +44,18 @@ const DiscountPartnerInfo = ({ partnerData }) => {
                                         </strong>
                                     </p>
 
-                                    <p>
+                                    <p className="pb-3">
                                         {truncateTitle(
                                             item?.company_brief,
                                             100
                                         )}{" "}
-                                        <Link
-                                            href={`/discount-partners-page/${item?.slug}`}
-                                            className=" fw-semibold"
-                                        >
-                                            Reade More
-                                        </Link>
                                     </p>
+                                    <Link
+                                        href={`/discount-partners-page/${item?.slug}`}
+                                        className="w-100 add-to-cart-link rounded-2"
+                                    >
+                                        Read More
+                                    </Link>
                                 </div>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ const PartnerDetailImage = ({ partnerDetail }) => {
     const imageUrl = partnerDetail?.company_logo
         ? `${NagadhatPublicUrl}/${partnerDetail?.company_logo}`
         : `/images/placeholder--image.jpg`;
+
     return (
         <>
             <div className="col-md-6 col-12 ">
