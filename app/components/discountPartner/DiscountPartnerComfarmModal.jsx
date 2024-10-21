@@ -38,7 +38,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
         }
         if (formData.gallery) {
             formData.gallery.forEach((file, index) => {
-                formDataToSend.append(`gallery[${index}]`, file); // Append each file from gallery
+                formDataToSend.append(`images[${index}]`, file); // Append each file from gallery
             });
         }
         if (formData.trade_license_copy) {
