@@ -10,7 +10,7 @@ const DiscountPartnerInfo = ({ partnerData }) => {
                 partnerData?.map((item) => {
                     const imageUrl = item?.company_logo
                         ? `${NagadhatPublicUrl}/${item?.company_logo}`
-                        : `/images/flash-img4.jpg`;
+                        : `/images/placeholder--image.jpg`;
                     return (
                         <div key={item?.id} className="col-lg-3 col-md-6">
                             <div className="bg-light text-center p-4 rounded-4 shadow position-relative h-100">
