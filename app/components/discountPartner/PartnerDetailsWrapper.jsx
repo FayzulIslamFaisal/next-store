@@ -10,7 +10,7 @@ const PartnerDetailsWrapper = async ({ partnerId }) => {
         session?.accessToken,
         partnerId
     );
-    const partnerDetail = response?.results || [];
+    const partnerDetail = response?.results || {};
     const companyName = partnerDetail?.company_name;
 
     return (
