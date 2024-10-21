@@ -158,6 +158,9 @@ const Registration = () => {
                     //     router.push(`/otp?phone=${formData.phone}`);
                     //     return;
                     // }
+                    if (res.message == "Referrer User Not Found! Please try another Referrer.") {
+                        localStorage.removeItem("referrerID")
+                    }
                     alert(res.message);
                     return;
                 }

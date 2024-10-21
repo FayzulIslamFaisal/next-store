@@ -6,9 +6,9 @@ import logo from "@/public/images/nagadhat-squire-logo.jpeg"
 import handshake from "@/public/images/handshake.gif"
 import transparant from "@/public/images/transparant-blank.png"
 import { postDiscountPartnerInfo } from '@/app/services/discountPartner/postDiscountPartnerInfo';
-import Swal from 'sweetalert2';
 
 const DiscountPartnerComfarmModal = ({ formData }) => {
+    const [loading, setLoading] = useState(false);
     const router = useRouter()
     const confirmSubmitForm = async () => {
         // Create FormData to handle file uploads
@@ -49,6 +49,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
         }
 
         try {
+            setLoading(true);
             const response = await postDiscountPartnerInfo(formDataToSend); // Send as FormData
             if (response.code === 200) {
                 // Handle successful response
@@ -58,7 +59,7 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
                     modalInstance.hide();
                 }
                 // emty formData
-                router.push('/success-discount-partner');
+                router.push(`/success-discount-partner?id=${response.results.id}`);
             } else {
                 const modalElement = document.getElementById('exampleModal');
                 if (modalElement) {
@@ -74,7 +75,9 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
             }
         } catch (error) {
             console.error("Submission Error: ", error);
-        }
+        } finally {
+            setLoading(false);
+        };
     };
 
 
@@ -220,7 +223,14 @@ const DiscountPartnerComfarmModal = ({ formData }) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" onClick={confirmSubmitForm}>Save changes</button>
+                        <button
+                            type="button"
+                            className={`btn btn-primary ${loading ? 'disabled-button':""}`}
+                            onClick={confirmSubmitForm}
+                            disabled={loading}
+                        >
+                            Save changes
+                        </button>
                     </div>
                 </div>
             </div>

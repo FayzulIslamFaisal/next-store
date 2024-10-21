@@ -3,9 +3,11 @@ import congratulations from "@/public/images/congratulations.gif";
 import { getDiscountPartnerData } from "../services/discountPartner/getDiscountPartnerData";
 import Link from "next/link";
 
-const PartnerPage = async () => {
+const PartnerPage = async ({searchParams}) => {
+    // Get the id from search params
+    const { id } = searchParams;
     // fetch the partner information
-    const partnerData = await getDiscountPartnerData();
+    const partnerData = await getDiscountPartnerData(id);
     const partner = partnerData?.results;
 
     return (
