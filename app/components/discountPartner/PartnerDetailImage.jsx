@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const PartnerDetailImage = ({ partnerDetail }) => {
     const imageUrl = partnerDetail?.company_logo
-        ? `${NagadhatPublicUrl}/${item?.company_logo}`
+        ? `${NagadhatPublicUrl}/${partnerDetail?.company_logo}`
         : `/images/placeholder--image.jpg`;
     return (
         <>

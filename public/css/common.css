@@ -347,3 +347,29 @@ body {
     padding-top: 10px;
     padding-bottom: 30px;
 }
+
+.affiliate-dummy-info .slick-dots li {
+    margin: 0 2px;
+}
+.affiliate-dummy-info .slick-dots li button {
+    background: #6c757d;
+    border-radius: 50%;
+    width: 10px !important;
+    height: 10px !important;
+    transition: all .1s linear;
+}
+.affiliate-dummy-info .slick-dots li.slick-active button {
+    background: green;
+    width: 14px !important;
+    height: 14px !important;
+}
+.affiliate-dummy-info .slick-dots li button:before {
+    color: transparent;
+}
+.affiliate-Learn-More.add-to-cart-link {
+    background: #414042;
+}
+.circle-new-updated {
+    display: flex;
+    align-items: center;
+}
