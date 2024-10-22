@@ -1,16 +1,17 @@
 "use client";
 import { getAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/getAffiliateFinanceBankInfo";
 import { updateAffiliateFinanceBankInfo } from "@/app/services/affiliate-finance/updateAffiliateFinanceBankInfo";
+import { getDistrictForShipping } from "@/app/services/getDistrictForShipping";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const BankDetailsInfo = () => {
     const [bankInfo, setBankInfo] = useState({
-        holdername: '',
+        account_holder_name: '',
         bank_name: '',
-        district: '',
-        branch_name: '',
+        districts_id: '',
+        bank_branch_name: '',
         account_number: '',
         routing_number: ''
     });
@@ -29,16 +30,15 @@ const BankDetailsInfo = () => {
 
                     // Prefill the form with the data received from the API
                     setBankInfo({
-                        holdername: bankData.account_holder_name,
+                        account_holder_name: bankData.account_holder_name,
                         bank_name: bankData.bank_name,
-                        district: bankData.district.name,
-                        branch_name: bankData.bank_branch_name,
+                        districts_id: bankData.district.id,
+                        bank_branch_name: bankData.bank_branch_name,
                         account_number: bankData.account_number,
                         routing_number: bankData.routing_number
                     });
-                    setIsEditable(response.results.bank_edit === 1);
-                    // Set all available districts for the dropdown
-                    setDistricts(response.results.districts);
+                    setIsEditable(response.results.bank_edit === 3);
+                    
                 }
             } catch (error) {
                 console.error("Error fetching bank details", error);
@@ -48,6 +48,20 @@ const BankDetailsInfo = () => {
         fetchBankInfo();
     }, [session?.accessToken, update]);
 
+    useEffect(() => {
+        const fetchDistricts = async () => {
+            try {
+                const response = await getDistrictForShipping();
+                // Set all available districts for the dropdown
+                setDistricts(response.results.districts);
+            } catch (error) {
+                console.error("Error fetching bank details", error);
+            }
+        };
+
+        fetchDistricts();
+    }, []);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setBankInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
@@ -56,18 +70,24 @@ const BankDetailsInfo = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Update bank details 
-        const response = await updateAffiliateFinanceBankInfo(session.accessToken, bankInfo);
-        if (response.code === 200) {
-            toast.success('Bank details updated successfully');
-            setUpdate(!update)
-        } else {
-            toast.error(response.message);
-            console.error('Error updating bank details', response.message);
+        try {
+            const response = await updateAffiliateFinanceBankInfo(session.accessToken, bankInfo);
+            if (response.code === 200) {
+                toast.success('Bank details updated successfully');
+                setUpdate(!update);
+            } else {
+                toast.error(response.message);
+                console.error('Error updating bank details', response.message);
+            } 
+        } catch (error) {
+            toast.error(error.message);
+            console.error('Error updating bank details', error);
         }
     };
-
+    
     return (
         <div className="accordion-item mb-4 border-0 rounded-bottom">
+            <ToastContainer/>
             <h2 className="accordion-header">
                 <button
                     className="accordion-button shadow-none rounded-bottom bg-white customer-dashboard-subtitle"
@@ -89,18 +109,19 @@ const BankDetailsInfo = () => {
                     <div className="customer-manage-profile-from-area">
                         <form className="row" onSubmit={handleSubmit}>
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="holdername" className="form-label">
+                                <label htmlFor="account_holder_name" className="form-label">
                                     Account Holder Name: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <input
                                     type="text"
-                                    name="holdername"
+                                    name="account_holder_name"
                                     className="form-control"
-                                    id="holdername"
+                                    id="account_holder_name"
                                     placeholder="Enter Account Holder Name.."
-                                    value={bankInfo.holdername}
+                                    value={bankInfo.account_holder_name}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
+                                    required
                                 />
                             </div>
 
@@ -117,24 +138,26 @@ const BankDetailsInfo = () => {
                                     value={bankInfo.bank_name}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
+                                    required
                                 />
                             </div>
 
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="district" className="form-label">
+                                <label htmlFor="districts_id" className="form-label">
                                     District: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <select
                                     className="form-select district-list"
-                                    name="district"
-                                    id="district"
-                                    value={bankInfo.district}
+                                    name="districts_id"
+                                    id="districts_id"
+                                    value={bankInfo.districts_id}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
+                                    required
                                 >
                                     <option value="">Select District</option>
                                     {districts.map((district) => (
-                                        <option key={district.id} value={district.name}>
+                                        <option key={district.id} value={district.id}>
                                             {district.name}
                                         </option>
                                     ))}
@@ -142,18 +165,19 @@ const BankDetailsInfo = () => {
                             </div>
 
                             <div className="col-md-6 pb-3">
-                                <label htmlFor="branch_name" className="form-label">
+                                <label htmlFor="bank_branch_name" className="form-label">
                                     Branch Name: <span style={{ color: "red" }}>*</span>
                                 </label>
                                 <input
                                     type="text"
-                                    name="branch_name"
+                                    name="bank_branch_name"
                                     className="form-control"
-                                    id="branch_name"
+                                    id="bank_branch_name"
                                     placeholder="Enter Branch Name..."
-                                    value={bankInfo.branch_name}
+                                    value={bankInfo.bank_branch_name}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
+                                    required
                                 />
                             </div>
 
@@ -170,6 +194,7 @@ const BankDetailsInfo = () => {
                                     value={bankInfo.account_number}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
+                                    required
                                 />
                             </div>
 
@@ -186,6 +211,7 @@ const BankDetailsInfo = () => {
                                     value={bankInfo.routing_number}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
+                                    required
                                 />
                             </div>
 

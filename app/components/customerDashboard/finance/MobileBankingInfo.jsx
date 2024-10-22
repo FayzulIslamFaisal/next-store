@@ -8,10 +8,10 @@ import { toast } from "react-toastify";
 const MobileBankingInfo = () => {
     const { data: session } = useSession();
     const [mobileBankingInfo, setMobileBankingInfo] = useState({
-        bkash: "",
-        nagad: "",
-        rocket: "",
-        agent_banking: ""
+        bkash_number: "",
+        nagad_number: "",
+        rocket_number: "",
+        dbbl_agent_number: ""
     });
     const [isEditable, setIsEditable] = useState(true);
     const [update, setUpdate] = useState(true);
@@ -24,16 +24,17 @@ const MobileBankingInfo = () => {
                     if (response?.results?.data) {
                         const data = response.results.data;
                         setMobileBankingInfo({
-                            bkash: data.bkash_number || "",
-                            nagad: data.nagad_number || "",
-                            rocket: data.rocket_number || "",
-                            agent_banking: data.dbbl_agent_number || ""
+                            bkash_number: data.bkash_number || "",
+                            nagad_number: data.nagad_number || "",
+                            rocket_number: data.rocket_number || "",
+                            dbbl_agent_number: data.dbbl_agent_number || ""
                         });
-                        setIsEditable(data.mobile_edit === 1);
+                        setIsEditable(data.mobile_edit === 2);
                     }
                 }
             } catch (error) {
                 console.error("Error fetching bank details", error);
+                toast.error("Failed to fetch mobile banking info.");
             }
         };
 
@@ -53,7 +54,7 @@ const MobileBankingInfo = () => {
             const response = await updateAffiliateFinanceMobileBankInfo(session.accessToken, mobileBankingInfo);
             if (response.code === 200) {
                 toast.success('Mobile Banking details updated successfully');
-                setUpdate(!update)
+                setUpdate(!update);
             } else {
                 toast.error(response.message);
                 console.log('Error updating mobile banking details', response.message);
@@ -92,11 +93,11 @@ const MobileBankingInfo = () => {
                                 </label>
                                 <input
                                     type="number"
-                                    name="bkash"
+                                    name="bkash_number"
                                     className="form-control"
                                     id="bkash_number"
                                     placeholder="Enter Bkash Number..."
-                                    value={mobileBankingInfo.bkash}
+                                    value={mobileBankingInfo.bkash_number}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
                                 />
@@ -107,11 +108,11 @@ const MobileBankingInfo = () => {
                                 </label>
                                 <input
                                     type="number"
-                                    name="nagad"
+                                    name="nagad_number"
                                     className="form-control"
                                     id="nagad_number"
                                     placeholder="Enter Nagad Number..."
-                                    value={mobileBankingInfo.nagad}
+                                    value={mobileBankingInfo.nagad_number}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
                                 />
@@ -122,11 +123,11 @@ const MobileBankingInfo = () => {
                                 </label>
                                 <input
                                     type="number"
-                                    name="rocket"
+                                    name="rocket_number"
                                     className="form-control"
                                     id="rocket_number"
                                     placeholder="Enter Rocket Number..."
-                                    value={mobileBankingInfo.rocket}
+                                    value={mobileBankingInfo.rocket_number}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
                                 />
@@ -137,25 +138,25 @@ const MobileBankingInfo = () => {
                                 </label>
                                 <input
                                     type="number"
-                                    name="agent_banking"
+                                    name="dbbl_agent_number"
                                     className="form-control"
                                     id="agent_banking"
                                     placeholder="Enter DBBL Agent Number..."
-                                    value={mobileBankingInfo.agent_banking}
+                                    value={mobileBankingInfo.dbbl_agent_number}
                                     onChange={handleInputChange}
                                     disabled={!isEditable}
                                 />
                             </div>
                             <div className="pb-2">
-                                <span className="text-danger ">
-                                    {isEditable ?
-                                        "* You can update this information only once time." :
+                                <span className="text-danger">
+                                    {isEditable ? 
+                                        "* You can update this information only once time." : 
                                         "* You cannot update this information anymore."}
                                 </span>
                             </div>
                             <div className="">
                                 <input
-                                    className={`add-to-cart-link border-0 mx-auto ${!isEditable && "disabled-button"}`}
+                                    className={`add-to-cart-link border-0 mx-auto ${!isEditable ? "disabled-button" : ""}`}
                                     type="submit"
                                     value="Update Info"
                                     disabled={!isEditable}
