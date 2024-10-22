@@ -41,7 +41,7 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
             src: "/images/cash-on.png",
             alt: "Cash on Delivery",
         },
-        { id: "bkash", src: "/images/Bkash.png", alt: "Bkash" },
+        { id: "Bkash", src: "/images/Bkash.png", alt: "Bkash" },
 
         { id: "sslcommerz", src: "/images/sslcommerz.png", alt: "SSLCommerz" },
     ];
@@ -81,6 +81,9 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                 setSelectedOption(optionId);
                 break;
             case "With Bank":
+                setSelectedOption(optionId);
+                break;
+            case "Bkash":
                 setSelectedOption(optionId);
                 break;
             default:
