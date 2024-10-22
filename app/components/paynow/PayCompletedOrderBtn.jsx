@@ -1,6 +1,9 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { postOderPayment } from "@/app/services/postOderPayment";
+import { getBkashToken } from "@/app/services/placeorder/getBkashToken";
+import { toast } from "react-toastify";
+import { postPaymentWithBkash } from "@/app/services/placeorder/postPaymentWithBkash";
 
 const PayCompletedOrderBtn = ({
     session,
@@ -12,6 +15,10 @@ const PayCompletedOrderBtn = ({
     orderSummary,
 }) => {
     const router = useRouter();
+
+    console.log(orderSummary);
+    console.log(session);
+
 
     // function for handleSubmit
     const handleSubmit = async () => {
@@ -51,10 +58,31 @@ const PayCompletedOrderBtn = ({
         } else if (selectedOption === "Bkash") {
             // bkash pement option set
             try {
-                console.log("hello");
-                
+                const data = {
+                    mode: "0011",
+                    payerReference: session?.phone,
+                    callbackURL: `${window?.location?.origin}/bkash-callback`,
+                    amount: parseInt(orderSummary?.grand_total) ,
+                    currency: "BDT",
+                    intent: "sale",
+                    merchantInvoiceNumber: orderSummary?.order_id
+                }
+
+                const token = await getBkashToken();
+
+                console.log({ data }, { token });
+                const response = await postPaymentWithBkash(token, data);
+                console.log(response);
+                if (response?.data?.result?.bkashURL) {
+                    // Redirect user to the bKash payment page
+                    window.location.href = response.data.result.bkashURL;
+                } else {
+                    toast.error("Failed to initiate bKash payment.");
+                }
+
             } catch (error) {
-                
+                console.error("Bkash payment error:", error);
+                toast.error("Error processing Bkash payment.");
             }
         }
     };
@@ -74,8 +102,8 @@ const PayCompletedOrderBtn = ({
                 {orderSummary?.order_product_type === "1"
                     ? selectedOption
                     : selectedOption === "Cash On Delivery"
-                    ? "Later"
-                    : selectedOption}
+                        ? "Later"
+                        : selectedOption}
             </button>
         </>
     );
