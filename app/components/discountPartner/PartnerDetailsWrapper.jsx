@@ -23,9 +23,9 @@ const PartnerDetailsWrapper = async ({ partnerId }) => {
             </div>
             <PartnerDetailInfo partnerDetail={partnerDetail} />
 
-            <div className="pt-3 pt-md-4 d-flex justify-content-center">
+            <div className="pt-5 pt-md-4 d-flex justify-content-center">
                 <Link
-                    className="add-to-cart-link w-50 "
+                    className="add-to-cart-link w-50 w-md-50"
                     href={`/discount-partners-page`}
                 >
                     Back
