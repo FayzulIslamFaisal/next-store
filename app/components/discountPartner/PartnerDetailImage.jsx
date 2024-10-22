@@ -6,6 +6,7 @@ const PartnerDetailImage = ({ partnerDetail }) => {
         ? `${NagadhatPublicUrl}/${partnerDetail?.company_logo}`
         : `/images/placeholder--image.jpg`;
 
+    const partnerGallery = partnerDetail?.gallery;
     return (
         <>
             <div className="col-md-6 col-12 ">
@@ -21,58 +22,40 @@ const PartnerDetailImage = ({ partnerDetail }) => {
                     />
                 </div>
                 <div className="row g-2 pb-4">
-                    <div className="col-md-3 col-sm-6">
-                        <div
-                            className="position-relative w-100"
-                            style={{ height: "110px" }}
-                        >
-                            <Image
-                                fill
-                                src={`/images/1685792932_270252764_106906425207433_1238237773264254812_n.jpg`}
-                                alt="image alt"
-                                style={{ objectFit: "cover" }}
-                            />
+                    {partnerGallery && partnerGallery?.length > 0 ? (
+                        partnerGallery?.map((gallery) => {
+                            const { id, image } = gallery;
+                            return (
+                                <div key={id} className="col-md-3 col-sm-6">
+                                    <div
+                                        className="position-relative w-100"
+                                        style={{ height: "110px" }}
+                                    >
+                                        <Image
+                                            fill
+                                            src={`${NagadhatPublicUrl}/${image}`}
+                                            alt="image alt"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <div className="col-md-3 col-sm-6">
+                            <div
+                                className="position-relative w-100"
+                                style={{ height: "110px" }}
+                            >
+                                <Image
+                                    fill
+                                    src={`/images/placeholder--image.jpg`}
+                                    alt="image alt"
+                                    style={{ objectFit: "cover" }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <div
-                            className="position-relative w-100"
-                            style={{ height: "110px" }}
-                        >
-                            <Image
-                                fill
-                                src={`/images/1685792932_270252764_106906425207433_1238237773264254812_n.jpg`}
-                                alt="image alt"
-                                style={{ objectFit: "cover" }}
-                            />
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <div
-                            className="position-relative w-100"
-                            style={{ height: "110px" }}
-                        >
-                            <Image
-                                fill
-                                src={`/images/1685792932_270252764_106906425207433_1238237773264254812_n.jpg`}
-                                alt="image alt"
-                                style={{ objectFit: "cover" }}
-                            />
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <div
-                            className="position-relative w-100"
-                            style={{ height: "110px" }}
-                        >
-                            <Image
-                                fill
-                                src={`/images/1685792932_270252764_106906425207433_1238237773264254812_n.jpg`}
-                                alt="image alt"
-                                style={{ objectFit: "cover" }}
-                            />
-                        </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </>
