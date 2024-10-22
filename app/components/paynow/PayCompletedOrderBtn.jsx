@@ -48,6 +48,14 @@ const PayCompletedOrderBtn = ({
             setShowAgentModal(true);
         } else if (selectedOption === "With Bank") {
             setShowBankModal(true);
+        } else if (selectedOption === "Bkash") {
+            // bkash pement option set
+            try {
+                console.log("hello");
+                
+            } catch (error) {
+                
+            }
         }
     };
 
