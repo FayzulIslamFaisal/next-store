@@ -348,9 +348,12 @@ body {
     padding-bottom: 30px;
 }
 
+
+.partner_Images_slider .slick-dots li,
 .affiliate-dummy-info .slick-dots li {
     margin: 0 2px;
 }
+.partner_Images_slider .slick-dots li button,
 .affiliate-dummy-info .slick-dots li button {
     background: #6c757d;
     border-radius: 50%;
@@ -358,14 +361,17 @@ body {
     height: 10px !important;
     transition: all .1s linear;
 }
+.partner_Images_slider .slick-dots li.slick-active button,
 .affiliate-dummy-info .slick-dots li.slick-active button {
     background: green;
     width: 14px !important;
     height: 14px !important;
 }
+.partner_Images_slider .slick-dots li button:before,
 .affiliate-dummy-info .slick-dots li button:before {
     color: transparent;
 }
+
 .affiliate-Learn-More.add-to-cart-link {
     background: #414042;
 }
