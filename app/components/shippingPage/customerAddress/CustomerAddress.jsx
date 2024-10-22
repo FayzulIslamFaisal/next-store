@@ -134,7 +134,6 @@ const CustomerAddress = ({
     const findDefaultAddress = customerAddress?.find(
       (address, index) => address.id == id
     );
-    console.log(findDefaultAddress);
     
     setFormData({
       fullName: findDefaultAddress?.full_name,
@@ -577,7 +576,7 @@ const CustomerAddress = ({
                         <div className="shipping-deliver-edit-mail-input">
                           <label htmlFor="edit-email" className="form-label">Email</label>
                           <input
-                            type="text"
+                            type="email"
                             name="edit-email"
                             value={tempEmail}
                             className="form-control"

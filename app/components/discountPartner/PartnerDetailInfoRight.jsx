@@ -17,8 +17,7 @@ const PartnerDetailInfoRight = ({ partnerDetail }) => {
                         <strong style={{ color: "#44bc9d" }}>
                             Applicability:{" "}
                         </strong>{" "}
-                        Applicable to all general customers of Nagadhat
-                        Bangladesh Ltd.
+                        {partnerDetail?.applicability}
                     </p>
 
                     <p className="pb-2 fs-5 text-wrap">
