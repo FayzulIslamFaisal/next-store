@@ -8,10 +8,14 @@ import { toast, ToastContainer } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import DefaultLoader from "../defaultloader/DefaultLoader";
+// import PayWithBkashModal from "./PayWithBkashModal";
 const PayCompletedOrderBtn = dynamic(() => import("./PayCompletedOrderBtn"), {
     ssr: false,
 });
 const PayWithBankModal = dynamic(() => import("./PayWithBankModal"), {
+    ssr: false,
+});
+const PayWithBkashModal = dynamic(() => import("./PayWithBkashModal"), {
     ssr: false,
 });
 const PayWithAgentModal = dynamic(() => import("./PayWithAgentModal"), {
@@ -22,6 +26,7 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     const [selectedOption, setSelectedOption] = useState("");
     const [showAgentModal, setShowAgentModal] = useState(false);
     const [showBankModal, setShowBankModal] = useState(false);
+    const [showBkashModal, setShowBkashModal] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
     const searchParams = useSearchParams();
@@ -51,19 +56,19 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
     const filteredPaymentOptions =
         orderSummary?.order_product_type !== "1"
             ? paymentOptions
-                  .map((option) =>
-                      option.id === "Cash On Delivery"
-                          ? {
-                                id: "Cash On Delivery",
-                                src: "/images/Pay-Later.png",
-                                alt: "Pay later",
-                            }
-                          : option
-                  )
-                  .filter(
-                      (option) =>
-                          option.id !== "bkash" && option.id !== "sslcommerz"
-                  )
+                .map((option) =>
+                    option.id === "Cash On Delivery"
+                        ? {
+                            id: "Cash On Delivery",
+                            src: "/images/Pay-Later.png",
+                            alt: "Pay later",
+                        }
+                        : option
+                )
+                .filter(
+                    (option) =>
+                        option.id !== "bkash" && option.id !== "sslcommerz"
+                )
             : paymentOptions;
 
     const handleOptionClick = (optionId) => {
@@ -100,7 +105,7 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
             {isPending ? (
                 <DefaultLoader />
             ) : orderSummary?.payment_status === "Unpaid" ||
-              orderSummary?.payment_status === "Partial" ? (
+                orderSummary?.payment_status === "Partial" ? (
                 <>
                     <div className="pay-now-payment-option-bg bg-white">
                         <div className="pay-now-payment-option-title">
@@ -110,11 +115,10 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                             {filteredPaymentOptions.map((option) => (
                                 <div
                                     key={option.id}
-                                    className={`pay-now-payment-option-img-box rounded-3 ${
-                                        selectedOption === option.id
+                                    className={`pay-now-payment-option-img-box rounded-3 ${selectedOption === option.id
                                             ? "selected"
                                             : ""
-                                    }`}
+                                        }`}
                                     onClick={() => handleOptionClick(option.id)}
                                     style={{ cursor: "pointer" }}
                                 >
@@ -168,6 +172,7 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                                 selectedOption={selectedOption}
                                 setShowAgentModal={setShowAgentModal}
                                 setShowBankModal={setShowBankModal}
+                                setShowBkashModal={setShowBkashModal}
                                 isTermsChecked={isTermsChecked}
                                 orderSummary={orderSummary}
                             />
@@ -192,6 +197,14 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
                     showBankModal={showBankModal}
                     setShowBankModal={setShowBankModal}
                     orderSummary={orderSummary}
+                />
+            )}
+            {showBkashModal && (
+                <PayWithBkashModal
+                    showBkashModal={showBkashModal}
+                    setShowBkashModal={setShowBkashModal}
+                    orderSummary={orderSummary}
+                    session={session}
                 />
             )}
         </div>

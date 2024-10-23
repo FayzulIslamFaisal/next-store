@@ -11,6 +11,7 @@ const PayCompletedOrderBtn = ({
     selectedOption,
     setShowAgentModal,
     setShowBankModal,
+    setShowBkashModal,
     isTermsChecked,
     orderSummary,
 }) => {
@@ -56,34 +57,7 @@ const PayCompletedOrderBtn = ({
         } else if (selectedOption === "With Bank") {
             setShowBankModal(true);
         } else if (selectedOption === "Bkash") {
-            // bkash pement option set
-            try {
-                const data = {
-                    mode: "0011",
-                    payerReference: session?.phone,
-                    callbackURL: `${window?.location?.origin}/bkash-callback`,
-                    amount: parseInt(orderSummary?.grand_total) ,
-                    currency: "BDT",
-                    intent: "sale",
-                    merchantInvoiceNumber: orderSummary?.order_id
-                }
-
-                const token = await getBkashToken();
-
-                console.log({ data }, { token });
-                const response = await postPaymentWithBkash(token, data);
-                console.log(response);
-                if (response?.data?.result?.bkashURL) {
-                    // Redirect user to the bKash payment page
-                    window.location.href = response.data.result.bkashURL;
-                } else {
-                    toast.error("Failed to initiate bKash payment.");
-                }
-
-            } catch (error) {
-                console.error("Bkash payment error:", error);
-                toast.error("Error processing Bkash payment.");
-            }
+            setShowBkashModal(true);
         }
     };
 
