@@ -72,11 +72,11 @@ const PayNowPaymentOption = ({ orderSummary, isPending }) => {
             : paymentOptions;
 
     const handleOptionClick = (optionId) => {
-        if (!isTermsChecked) {
-            toast.error("Please first check the terms and conditions.");
-            setErrorMsg("Please first check the terms and conditions.");
-            return;
-        }
+        // if (!isTermsChecked) {
+        //     toast.error("Please first check the terms and conditions.");
+        //     setErrorMsg("Please first check the terms and conditions.");
+        //     return;
+        // }
 
         switch (optionId) {
             case "Cash On Delivery":
