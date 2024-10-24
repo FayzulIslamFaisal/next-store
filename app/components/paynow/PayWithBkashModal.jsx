@@ -10,7 +10,10 @@ const PayWithBkashModal = ({
     session,  // Added session prop
 }) => {
     const [paytype, setPayType] = useState(1);
-    const [amount, setAmount] = useState(orderSummary?.grand_total);
+    const [amount, setAmount] = useState(orderSummary?.grand_total - orderSummary?.total_paid);
+
+    console.log(orderSummary);
+    
 
     const handleAmountChange = (e) => {
         const inputAmount = parseInt(e.target.value);
@@ -29,14 +32,15 @@ const PayWithBkashModal = ({
                 mode: "0011",
                 payerReference: session?.phone,  // Assuming session is passed as prop
                 callbackURL: `${window?.location?.origin}/bkash-callback?orderId=${orderSummary?.order_id}`,
-                amount: amount,
+                amount: paytype === 1 ? orderSummary?.grand_total - orderSummary?.total_paid : amount,
                 currency: "BDT",
                 intent: "sale",
-                merchantInvoiceNumber: orderSummary?.order_id
+                merchantInvoiceNumber: orderSummary?.order_id,
+                paymentStatus: paytype
             };
 
             const token = await getBkashToken();
-            // console.log({ data }, { token });
+            // console.log({ data },  n { token });
             const response = await postPaymentWithBkash(token, data);
             // console.log(response);
 
@@ -95,20 +99,20 @@ const PayWithBkashModal = ({
                                         onChange={() => setPayType(2)}
                                         checked={paytype === 2}  // Controlled by paytype state
                                     />
-                                    Persil Pay
+                                    Partial Pay
                                 </label>
                             </div>
                             {
                                 paytype === 1 ? (
                                     <div className=" pb-3">
-                                        <p>You will pay the full amount.</p>
+                                        <p>You will pay the full amount : {paytype === 1 ? orderSummary?.grand_total - orderSummary?.total_paid : amount}</p>
                                     </div>
                                 ) : (
                                     <div className="form-group mb-3">
                                         <label className="form-label">
-                                            Persil Pay Amount{" "}
+                                            Partial Pay Amount{" "}
                                             <span className="praymary-color">
-                                                (Total payable: {orderSummary?.grand_total})
+                                                (Total payable: {orderSummary?.grand_total-orderSummary?.total_paid})
                                             </span>
                                         </label>
                                         <div className="input-group">
